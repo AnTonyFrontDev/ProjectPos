@@ -42,3 +42,11 @@ export const SideData = [
         name: 'Settings',
     },
 ]
+
+export const OptInventory =[
+    {
+        path: '/',
+        icon: "dashboard",
+        name: 'New Product',
+    },
+]
