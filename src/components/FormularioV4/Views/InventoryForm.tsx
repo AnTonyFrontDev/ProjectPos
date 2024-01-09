@@ -3,20 +3,22 @@ import React, { useState } from 'react';
 import { FormDataInventory, FormApi } from '../Config/interface';
 import { f_DataFieldsInventory } from '../Config/data';
 import { SendInventory } from '../Config/SendForm';
-import { useFormDataWithInventory } from '../Config/FormUtils';
+import { useFormDataWithOptionsNew } from '../Config/FormUtils';
 import { initialFormDataInventory } from '../Config/FormConfig';
 import Form from './Form';
 
-const InventoryForm: React.FC<FormApi> = ({ getSizes = async () => []   }) => {
+
+const InventoryForm: React.FC<FormApi> = ({getColors, getSizes, getProducts }) => {
   //#region Hooks
-  const { sizes, selectDisabled } = useFormDataWithInventory(getSizes);
+  const { sizes, colors, products } = useFormDataWithOptionsNew(['colors', 'products', 'sizes'])
+
 
   const initialFormData = initialFormDataInventory;
   const [formData, setFormData] = useState<FormDataInventory>(initialFormData);
   const handleSubmit = () => {
     SendInventory(formData);
   };
-  const dataFields = f_DataFieldsInventory(sizes);
+  const dataFields = f_DataFieldsInventory(sizes, colors, products);
   //#endregion
 
   return (
