@@ -12,11 +12,13 @@ export const f_DataFieldsType = () => [
   { label: 'Type', type: 'text', name: 'typeProd', required: true },
 ];
 
-export const f_DataFieldsInventory = (options: { id: number; value: string }[]) => [
+export interface IOption { id: number; value: string }
+
+export const f_DataFieldsInventory = (sizes: IOption[], colors: IOption[], products: IOption[]) => [
   { label: 'User', type: 'text', name: 'user', required: true },
-  { label: 'Product', type: 'select', name: 'fk_product', required: true, options },
-  { label: 'Size', type: 'select', name: 'fk_size', required: true, options },
-  { label: 'Colors', type: 'select', name: 'fk_color_primary', required: true, options},
+  { label: 'Product', type: 'select', name: 'fk_product', required: true, options: products },
+  { label: 'Size', type: 'select', name: 'fk_size', required: true, options: sizes },
+  { label: 'Colors', type: 'select', name: 'fk_color_primary', required: true, options: colors},
   { label: 'Quantity', type: 'number', name: 'quantity', required: true},
 ];
 
