@@ -13,12 +13,10 @@ const SearchFilter: React.FC<SearchFilterProps> = ({ onSearch }) => {
   const handleSearch = (value: string) => {
     console.log('Búsqueda:', value);
     onSearch(value);
-    // Aquí puedes realizar acciones relacionadas con la búsqueda
   };
 
   const handleFilterChange = (value: string) => {
     console.log('Filtro seleccionado:', value);
-    // Aquí puedes realizar acciones relacionadas con el cambio de filtro
   };
 
   return (

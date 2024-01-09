@@ -1,8 +1,11 @@
 import { Example1, Example2, Example3, Example5 } from '../components/example';
-import Table from '../components/tableExample'
-// import React from 'react'
+import ViewForm from '../../../components/FormularioV4/viewForm.tsx'
+// import ViewForm from '../../../components/FormularioV4/viewForm';
+import ButtonModal from '../../../components/Modal/ButtonModal';
+
 
 const Dashboard = () => {
+
   return (
     <div className="grid grid-cols-4 gap-8">
       {/* Div 1 */}
@@ -12,19 +15,16 @@ const Dashboard = () => {
 
       {/* Div 2 */}
       <div className="col-span-2 bg-gray-50 shadow-lg p-4 rounded-md flex justify-center">
-        {/* Contenido del segundo div */}
         <Example2/>
       </div>
 
       {/* Div 3 */}
       <div className="col-span-1 bg-gray-50 shadow-lg p-4 rounded-md flex justify-center">
-        {/* Contenido del tercer div */}
         <Example3/>
       </div>
 
       {/* Div 4 */}
       <div className="col-span-2 bg-gray-50 shadow-lg p-4 rounded-md flex justify-between">
-        {/* Contenido del cuarto div */}
         <Example5/>
         <Example5/>
       </div>
@@ -38,8 +38,13 @@ const Dashboard = () => {
       {/* Div 5 */}
       <div className="col-span-4 bg-gray-50 shadow-lg p-4 rounded-md">
         
-        {/* Contenido del quinto div */}
-        <Table/>
+        <ViewForm usarForm="Inventory"/>
+        <ButtonModal
+        buttonText="Abrir Modal Producto"
+        modalTitle="Formulario de Producto"
+        modalContent={<ViewForm usarForm="Product"/>}
+      />
+        
       </div>
     </div>
   )

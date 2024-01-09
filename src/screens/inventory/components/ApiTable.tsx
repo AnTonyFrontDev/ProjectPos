@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Table } from 'antd';
+import { Table, Tag } from 'antd';
 import { getInventory } from '../hooks/InventoryApi';
 
 interface Product {
@@ -57,6 +57,12 @@ const ApiTable = ({ searchTerm }: { searchTerm: string }) => {
                             title: 'Last Replenishment',
                             dataIndex: 'last_replenishment',
                             key: 'last_replenishment',
+                            render: (text: string) => {
+                                if (text.trim() === '') {
+                                    return <Tag color="green">New</Tag>;
+                                }
+                                return text;
+                            },
                         },
                     ];
                     setTableData(data);
