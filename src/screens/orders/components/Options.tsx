@@ -1,9 +1,9 @@
 
 // import React from 'react'
 import ButtonModal from '../../../components/Modal/ButtonModal';
-import ViewForm from '../../../components/FormularioV4/viewForm';
+// import ViewForm from '../../../components/FormularioV4/viewForm';
 import { APP_ICONS } from '../../../shared/constants/icons-constants';
-// import InventoryForm from '../../../components/FormInventory/InventoryForm';
+import InventoryForm from '../../../components/FormInventory/InventoryForm';
 const Options = () => {
 
   return (
@@ -15,8 +15,8 @@ const Options = () => {
             <ButtonModal
               buttonText="New Inventory"
               modalTitle=""
-              modalContent={<ViewForm usarForm="Inventory" />}
-              // modalContent={<InventoryForm/>}
+              // modalContent={<ViewForm usarForm="Product" />}
+              modalContent={<InventoryForm/>}
               iconType={"dashboard" as keyof typeof APP_ICONS}
               cssColor='green'
             />

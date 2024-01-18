@@ -9,7 +9,7 @@ import Form from './Form';
 
 const ProductForm: React.FC<FormApi> = ({ getTypes = async () => [] }) => {
 //#region Hooks
-  const { types, typeSelectDisabled } = useFormDataWithTypes(getTypes);
+  const { types } = useFormDataWithTypes(getTypes);
   const initialFormData = initialFormDataProducto;
   const [formData, setFormData] = useState<FormDataProducto>(initialFormData);
   const handleSubmit = () => {
@@ -22,7 +22,7 @@ const ProductForm: React.FC<FormApi> = ({ getTypes = async () => [] }) => {
       formDataFields={dataFields}
       formData={formData}
       setFormData={setFormData}
-      optionsSelectDisabled={typeSelectDisabled}
+      // optionsSelectDisabled={typeSelectDisabled}
       onSubmit={handleSubmit}
     />
   );

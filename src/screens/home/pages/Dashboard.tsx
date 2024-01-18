@@ -1,7 +1,15 @@
 import { Example1, Example2, Example3, Example5 } from '../components/example';
-import ViewForm from '../../../components/FormularioV4/viewForm.tsx'
+// import ViewForm from '../../../components/FormularioV4/viewForm.tsx'
 // import ViewForm from '../../../components/FormularioV4/viewForm';
-import ButtonModal from '../../../components/Modal/ButtonModal';
+// import ButtonModal from '../../../components/Modal/ButtonModal';
+import ApiTable from '../../../components/Tabla/apiTable'
+// import Options from "../components/Options";
+// import SearchFilter from '../components/SearchFilter';
+// import { useState } from 'react'
+// import { getInventory } from "../../../shared/Api/InventoryApi";
+import { productTable } from "../../../components/Tabla/tData";
+// import DetalleProducto from "../components/DetalleInventario";
+import { getProducts } from "../../../shared/Api/ProductsApi";
 
 
 const Dashboard = () => {
@@ -37,14 +45,15 @@ const Dashboard = () => {
 
       {/* Div 5 */}
       <div className="col-span-4 bg-gray-50 shadow-lg p-4 rounded-md">
-        
-        <ViewForm usarForm="Inventory"/>
-        <ButtonModal
-        buttonText="Abrir Modal Producto"
-        modalTitle="Formulario de Producto"
-        modalContent={<ViewForm usarForm="Product"/>}
-      />
-        
+      <ApiTable
+          getApiData={getProducts}
+          columns={productTable}
+          // searchTerm={searchTerm}
+          // filterColumn={filterColumn}
+          // sortDirection={sortDirection}
+          // handleTableRowClick={handleTableRowClick}
+        />
+    
       </div>
     </div>
   )

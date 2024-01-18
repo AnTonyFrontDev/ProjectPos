@@ -1,46 +1,54 @@
-import { Option } from "./interface"
-import { getProducts } from '../../../screens/inventory/hooks/ProductsApi';
-import { getColors, getSizes } from '../../screens/inventory/hooks/InventoryApi';
+import { IOption } from "./interface"
+import { getProducts } from '../../../shared/Api/ProductsApi';
+import { getColors, getSizes } from '../../../shared/Api/InventoryApi';
 // FormUtils.ts
+import { useState, useEffect } from 'react';
+// import { getClients } from "../../../shared/Api/CustomersApi";
 
 export type OptionDataTypes = 'colors' | 'products' | 'sizes';
 
 export type OptionDataObject = {
-  [N in OptionDataTypes]: Option[]
+  [N in OptionDataTypes]: IOption[]
 }
 
 export const useFormDataWithOptionsNew = (optionTypes: OptionDataTypes[]): OptionDataObject => {
   const [data, setData] = useState<OptionDataObject>({} as OptionDataObject);
 
-  const [options, setOptions] = useState<{ id: number; value: string }[]>([]);
-  const [selectDisabled, setSelectDisabled] = useState(true);
+  // const [options, setOptions] = useState<{ id: number; value: string }[]>([]);
+  // const [selectDisabled, setSelectDisabled] = useState(true);
 
-  useEffect(() => {
+  const GetData = async () => {
     const newData: OptionDataObject = {} as OptionDataObject;
 
-    await Promise.all(optionTypes.map( type => {
+    await Promise.all(optionTypes.map( async (type) => {
 
       if(type === 'colors') {
-        newData.colors = await getColors()
+        newData.colors = (await getColors()).map((color : any) => ({ id: color.id, value: color.colorname }))
       }
 
       if(type === 'products') {
-        newData.products = await getProducts()
+        newData.products = (await getProducts()).map((product : any) => ({ id: product.id, value: product.name_prod }))
       }
 
       if(type === 'sizes') {
-        newData.sizes = await getSizes()
+        newData.sizes = (await getSizes()).map((size : any) => ({ id: size.id, value: size.size }))
       }
-      
+
     })).catch(error => {
       console.error('Error fetching data:', error);
     });
 
     setData(newData);
-  }, [getData]);
+  }
+
+  useEffect(() => {
+    GetData()
+  }, []);
 
   return { ...data };
 };
+
+
 
 export const useFormDataWithOptions = (getData: () => Promise<{ id: number; value: string }[]>) => {
   const [options, setOptions] = useState<{ id: number; value: string }[]>([]);
@@ -66,34 +74,8 @@ export const useFormDataWithOptions = (getData: () => Promise<{ id: number; valu
 };
 
 // FormUtils.ts
-import { useState, useEffect } from 'react';
 
-export const useFormDataWithInventory = (getSizes: () => Promise<{ id: number; size: string }[]>) => {
-  const [sizes, setSizes] = useState<{ id: number; value: string }[]>([]);
-  const [selectDisabled, setSelectDisabled] = useState(true);
-
-  useEffect(() => {
-    const fetchTypes = async () => {
-      try {
-        const typesData = await getSizes();
-
-        // Transformar las opciones a tener 'value' en lugar de 'type'
-        const options = typesData.map(size => ({ id: size.id, value: size.size }));
-
-        setSizes([{ id: 0, value: 'Select Option' }, ...options]);
-        setSelectDisabled(false);
-      } catch (error) {
-        console.error('Error fetching types:', error);
-      }
-    };
-
-    fetchTypes();
-  }, [getSizes]);
-
-  return { sizes, selectDisabled };
-};
-
-
+// import { getColors } from '../../../screens/inventory/hooks/InventoryApi';
 
 export const useFormDataWithTypes = (getTypes: () => Promise<{ id: number; type: string }[]>) => {
   const [types, setTypes] = useState<{ id: number; value: string }[]>([]);

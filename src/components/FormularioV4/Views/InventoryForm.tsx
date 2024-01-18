@@ -8,7 +8,7 @@ import { initialFormDataInventory } from '../Config/FormConfig';
 import Form from './Form';
 
 
-const InventoryForm: React.FC<FormApi> = ({getColors, getSizes, getProducts }) => {
+const InventoryForm: React.FC<FormApi> = () => {
   //#region Hooks
   const { sizes, colors, products } = useFormDataWithOptionsNew(['colors', 'products', 'sizes'])
 
@@ -26,7 +26,7 @@ const InventoryForm: React.FC<FormApi> = ({getColors, getSizes, getProducts }) =
       formDataFields={dataFields}
       formData={formData}
       setFormData={setFormData}
-      optionsSelectDisabled={selectDisabled}
+      // optionsSelectDisabled={selectDisabled}
       onSubmit={handleSubmit}
     />
   );

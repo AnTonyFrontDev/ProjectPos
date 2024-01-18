@@ -1,3 +1,4 @@
+//AppIcon.tsx
 import {Icon, IconProps} from "@iconify/react";
 import {APP_ICONS} from "../../shared/constants/icons-constants";
 

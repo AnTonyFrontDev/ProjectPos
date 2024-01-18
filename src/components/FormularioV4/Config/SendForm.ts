@@ -1,7 +1,8 @@
 //SendForm.ts
-import { saveInventory } from "../../../screens/inventory/hooks/InventoryApi";
-import { addType, saveProduct } from "../../../screens/inventory/hooks/ProductsApi";
-import { FormDataProducto, FormDataType, FormDataInventory } from './interface';
+import { saveClient } from "../../../shared/Api/CustomersApi";
+import { saveInventory } from "../../../shared/Api/InventoryApi";
+import { addType, saveProduct } from "../../../shared/Api/ProductsApi";
+import { FormDataProducto, FormDataType, FormDataInventory, FormDataClient } from './interface';
 
 export const SendProduct = async <T extends FormDataProducto>(formData: T): Promise<void> => {
     try {
@@ -24,6 +25,16 @@ export const SendTypes = async <T extends FormDataType>(formData: T): Promise<vo
 export const SendInventory = async <T extends FormDataInventory>(formData: T): Promise<void> => {
   try {
     await saveInventory(formData);
+    console.log('Inventory saved successfully');
+  } catch (error) {
+    console.error('Error saving inventory:', error);
+  }
+};
+
+
+export const SendClient = async <T extends FormDataClient>(formData: T): Promise<void> => {
+  try {
+    await saveClient(formData);
     console.log('Inventory saved successfully');
   } catch (error) {
     console.error('Error saving inventory:', error);

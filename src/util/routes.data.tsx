@@ -7,7 +7,7 @@ export const SideData = [
         name: 'Dashboard',
     },
     {
-        path: '/',
+        path: '/order',
         icon: "order",
         name: 'Order',
     },
@@ -17,12 +17,17 @@ export const SideData = [
         name: 'Inventory',
     },
     {
+        path: '/product',
+        icon: "inventory",
+        name: 'Product',
+    },
+    {
         path: '/',
         icon: "billing",
         name: 'Billing',
     },
     {
-        path: '/',
+        path: '/customers',
         icon: "user",
         name: 'Customers',
     },

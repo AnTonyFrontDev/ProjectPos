@@ -1,13 +1,14 @@
-// Inventory.tsx
+// Producto.tsx
 import BreadcrumbData from "../../../components/Breadcrumb"
 // import ApiTable from '../components/ApiTable';
 import ApiTable from '../../../components/Tabla/apiTable'
 import Options from "../components/Options";
 import SearchFilter from '../components/SearchFilter';
 import { useState } from 'react'
-import { getInventory } from "../../../shared/Api/InventoryApi";
-import { tableColumns } from "../../../components/Tabla/tData";
+// import { getInventory } from "../../../shared/Api/InventoryApi";
+import { productTable } from "../../../components/Tabla/tData";
 import DetalleProducto from "../components/DetalleInventario";
+import { getProducts } from "../../../shared/Api/ProductsApi";
 
 
 const Inventory = () => {
@@ -52,14 +53,14 @@ const Inventory = () => {
           onSearch={handleSearch}
           onFilterChange={handleFilterChange}
           onSortToggle={handleSortToggle}
-          columns={tableColumns}
+          columns={productTable}
         />
         <Options />
       </div>
       <div className="mt-10">
         <ApiTable
-          getApiData={getInventory}
-          columns={tableColumns}
+          getApiData={getProducts}
+          columns={productTable}
           searchTerm={searchTerm}
           filterColumn={filterColumn}
           sortDirection={sortDirection}

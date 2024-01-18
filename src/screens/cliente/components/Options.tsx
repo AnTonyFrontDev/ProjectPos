@@ -13,9 +13,9 @@ const Options = () => {
           <div className="flex">
             {/* <AppIcon type="dashboard" className="cursor-pointer mx-2" width={18} /> */}
             <ButtonModal
-              buttonText="New Inventory"
+              buttonText="New Client"
               modalTitle=""
-              modalContent={<ViewForm usarForm="Inventory" />}
+              modalContent={<ViewForm usarForm="Client" />}
               // modalContent={<InventoryForm/>}
               iconType={"dashboard" as keyof typeof APP_ICONS}
               cssColor='green'

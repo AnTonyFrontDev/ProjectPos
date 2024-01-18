@@ -8,23 +8,22 @@ export interface FormProps<T> {
         type: string;
         name: string;
         required: boolean;
-        options?: Option[];
+        options?: IOption[];
     }[];
-    formData: T; 
+    formData: T;
     setFormData: React.Dispatch<React.SetStateAction<T>>;
-    optionsSelectDisabled?: boolean;
     onSubmit: () => void;
 };
 
 export interface ViewFormProps {
-    usarForm: string; 
+    usarForm: string;
 };
-  
+
 export interface FormComponents {
     [key: string]: React.ReactNode;
 };
 
-export interface Option {
+export interface IOption {
     id: number;
     value: string;
 };
@@ -34,13 +33,13 @@ export interface FieldConfig<T> {
     type: string;
     name: keyof T;
     required?: boolean;
-    options?: Option[];
-  }
-  
-  export interface ViewFormProps {
+    options?: IOption[];
+}
+
+export interface ViewFormProps {
     usarForm: string;
-  }
-  
+}
+
 
 export interface FormApi {
     getTypes?: () => Promise<{ id: number; type: string }[]>;
@@ -75,13 +74,22 @@ export interface FormDataInventory {
     user: number;
     fk_product: number;
     fk_size: number;
-    inventoryColors: {
-      id: number;
-      user: number;
-      fk_color_primary: number;
-      fk_color_secondary: number;
-      quantity: number;
-      fk_inventory: number;
-    }[];
-  }
+    fk_color_primary: number;
+    fk_color_secondary: number;
+    quantity: number;
+
+}
+
+export interface FormDataClient {
+    id: number;
+    user: number;
+    date: string;
+    f_name: string;
+    l_name: string;
+    f_surname: string;
+    l_surname: string;
+    rnc: string;
+    dni: string;
+}
+
 //#region Inventario 

@@ -5,31 +5,32 @@ import ApiTable from '../../../components/Tabla/apiTable'
 import Options from "../components/Options";
 import SearchFilter from '../components/SearchFilter';
 import { useState } from 'react'
-import { getInventory } from "../../../shared/Api/InventoryApi";
-import { tableColumns } from "../../../components/Tabla/tData";
-import DetalleProducto from "../components/DetalleInventario";
+
+import { customersTable } from "../../../components/Tabla/tData";
+// import DetalleProducto from "../components/DetalleInventario";
+import { getClients } from "../../../shared/Api/CustomersApi";
 
 
 const Inventory = () => {
   const routes = [
     { title: 'Home', path: '/' },
     { title: 'Dashboard', path: '/' },
-    { title: 'Inventory', path: '/inventory' }
+    { title: 'Customers', path: '/Customers' }
   ];
 
   // const [searchTerm, setSearchTerm] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [filterColumn, setFilterColumn] = useState<string>('');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
-  const [detalleVisible, setDetalleVisible] = useState(false);
-  const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
+  // const [detalleVisible, setDetalleVisible] = useState(false);
+  // const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
 
-  const handleTableRowClick = (record: any) => {
-    // Al hacer clic en una fila, establece el ID del producto seleccionado y muestra el detalle
-    setSelectedProductId(record.id);
-    console.log(record.id);
-    setDetalleVisible(true);
-  };
+  // const handleTableRowClick = (record: any) => {
+  //   // Al hacer clic en una fila, establece el ID del producto seleccionado y muestra el detalle
+  //   setSelectedProductId(record.id);
+  //   console.log(record.id);
+  //   setDetalleVisible(true);
+  // };
 
   const handleSearch = (value: string) => {
     setSearchTerm(value);
@@ -52,22 +53,22 @@ const Inventory = () => {
           onSearch={handleSearch}
           onFilterChange={handleFilterChange}
           onSortToggle={handleSortToggle}
-          columns={tableColumns}
+          columns={customersTable}
         />
         <Options />
       </div>
       <div className="mt-10">
         <ApiTable
-          getApiData={getInventory}
-          columns={tableColumns}
+          getApiData={getClients}
+          columns={customersTable}
           searchTerm={searchTerm}
           filterColumn={filterColumn}
           sortDirection={sortDirection}
-          handleTableRowClick={handleTableRowClick}
+          // handleTableRowClick={handleTableRowClick}
         />
-        {detalleVisible && selectedProductId && (
+        {/* {detalleVisible && selectedProductId && (
         <DetalleProducto productId={selectedProductId} />
-      )}
+      )} */}
       </div>
     </div>
   )
