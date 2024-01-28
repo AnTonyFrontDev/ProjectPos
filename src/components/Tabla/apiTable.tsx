@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 interface GenericTableProps {
   getApiData: () => Promise<any[]>;
   columns: any[];
-  searchTerm?: string;
+  searchTerm: string;
   filterColumn?: string;
   sortDirection?: 'asc' | 'desc';
   handleTableRowClick?: any;
@@ -26,23 +26,22 @@ const GenericTable: React.FC<GenericTableProps> = ({ getApiData, columns, search
           )
         );
 
-        // Apply column filter
+        
         if (filterColumn) {
           filteredData = filteredData.filter(item => item[filterColumn] !== undefined && item[filterColumn] !== null);
         }
 
-        // Apply sorting
-        // Apply sorting based on filterColumn and sortDirection
+        
         if (filterColumn) {
           filteredData = filteredData.sort((a, b) => {
             const aValue = a[filterColumn];
             const bValue = b[filterColumn];
 
             if (typeof aValue === 'string' && typeof bValue === 'string') {
-              // Sorting for string values
+              
               return sortDirection === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
             } else {
-              // Sorting for other types (numbers, dates, etc.)
+              
               return sortDirection === 'asc' ? aValue - bValue : bValue - aValue;
             }
           });
@@ -67,7 +66,7 @@ const GenericTable: React.FC<GenericTableProps> = ({ getApiData, columns, search
         }),
       }))}
       
-    // Resto de las propiedades
+    
     />
   );
 };

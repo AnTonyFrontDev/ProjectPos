@@ -18,9 +18,15 @@ export const initialFormDataInventory: FormDataInventory = {
   user: 0,
   fk_product: 0,
   fk_size: 0,
-  fk_color_primary: 0,
-  fk_color_secondary: 0,
-  quantity: 0,
+  inventoryColors: [
+    {
+      user: 0,
+      fk_color_primary: 0,
+      fk_color_secondary: 0,
+      quantity: 0,
+
+    }
+  ]
 
 
 };

@@ -74,9 +74,14 @@ export interface FormDataInventory {
     user: number;
     fk_product: number;
     fk_size: number;
-    fk_color_primary: number;
-    fk_color_secondary: number;
-    quantity: number;
+    inventoryColors: [
+        {
+            user: number;
+            fk_color_primary: number;
+            fk_color_secondary: number;
+            quantity: number;
+        }
+    ]
 
 }
 

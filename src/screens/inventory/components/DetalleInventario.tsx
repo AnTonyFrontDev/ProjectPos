@@ -40,7 +40,7 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ productId }) => {
         <Descriptions.Item label="Cantidad Total en Inventario">{totalQuantity}</Descriptions.Item>
         <Descriptions.Item label="Tallas Disponibles">
           {availableSizes && availableSizes.map((size: any) => (
-            <div key={size.idInventory}>{`${size.size}: ${size.quantity}`}</div>
+            <div key={size.idInventory}>{`${size.size}: ${size.quantity} ‎`}</div>
           ))}
         </Descriptions.Item>
         <Descriptions.Item label="Colores Disponibles">

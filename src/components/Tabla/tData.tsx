@@ -17,9 +17,6 @@ interface AvailableSizesColumn {
 export const tableColumns: (AvailableSizesColumn | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
   { title: 'Nombre del Producto', dataIndex: 'product_name', key: 'product_name' },
-  { title: 'Precio', dataIndex: 'price', key: 'price' },
-  { title: 'Cantidad', dataIndex: 'quantity', key: 'quantity' },
-  { title: 'Última Reposición', dataIndex: 'last_replenishment', key: 'last_replenishment' },
   {
     title: 'Tallas Disponibles',
     dataIndex: 'availableSizes',
@@ -34,6 +31,9 @@ export const tableColumns: (AvailableSizesColumn | any)[] = [
       );
     },
   },
+  { title: 'Cantidad', dataIndex: 'quantity', key: 'quantity' },
+  { title: 'Precio', dataIndex: 'price', key: 'price' },
+  { title: 'Última Reposición', dataIndex: 'last_replenishment', key: 'last_replenishment' },
   // Agrega más columnas según tus necesidades
 ];
 
