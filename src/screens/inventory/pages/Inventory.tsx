@@ -1,12 +1,12 @@
 // Inventory.tsx
-import BreadcrumbData from "../../../components/Breadcrumb"
+import BreadcrumbData from "@/components/Breadcrumb"
 // import ApiTable from '../components/ApiTable';
-import ApiTable from '../../../components/Tabla/apiTable'
+import ApiTable from '@/components/Tabla/apiTable'
 import Options from "../components/Options";
 import SearchFilter from '../components/SearchFilter';
 import { useState } from 'react'
-import { getInventory } from "../../../shared/Api/InventoryApi";
-import { tableColumns } from "../../../components/Tabla/tData";
+import { getInventory } from "@/shared/Api/InventoryApi";
+import { tableColumns } from "@/components/Tabla/tData";
 import DetalleProducto from "../components/DetalleInventario";
 
 

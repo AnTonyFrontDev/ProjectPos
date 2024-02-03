@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { ProductsFilterApi } from "../../../shared/Api/Products/productsFilterApi";
-import { IProductGet } from "../../../shared/interfaces/screens/Product/IProductGet";
+import { ProductsFilterApi } from "@/shared/Api/Products/productsFilterApi";
+import { IProductGet } from "@/shared/interfaces/Product/IProductGet";
 const productFilter : ProductsFilterApi = new ProductsFilterApi();
 const FilterProducts = (props:{ onProductSelect :(productId:string) => void}) => {
   //estado para cuando filtren los productos

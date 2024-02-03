@@ -1,4 +1,4 @@
-import { ISizeGet } from "../../interfaces/screens/size/ISizeGet";
+import { ISizeGet } from "../../interfaces/size/ISizeGet";
 import axios from "axios";
 
 const getApi = async (url: string) => {

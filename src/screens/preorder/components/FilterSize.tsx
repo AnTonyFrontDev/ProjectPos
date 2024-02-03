@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { SizeApiFilter} from "../../../shared/Api/Size/SizeApiFilter";
-import { ISizeGet } from "../../../shared/interfaces/screens/size/ISizeGet";
+import { SizeApiFilter} from "@/shared/Api/Size/SizeApiFilter";
+import { ISizeGet } from "@/shared/interfaces/size/ISizeGet";
 
 const sizeApiFilter : SizeApiFilter = new SizeApiFilter();
 const FilterSize = (props : { onSizeSelected : (sizeId:string) => void})=>{

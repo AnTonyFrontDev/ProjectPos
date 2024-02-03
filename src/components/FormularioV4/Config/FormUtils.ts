@@ -1,10 +1,8 @@
 import { IOption } from "./interface"
-import { getProducts } from '../../../shared/Api/ProductsApi';
-import { getColors, getSizes } from '../../../shared/Api/InventoryApi';
+import { getProducts } from '@/shared/Api/ProductsApi';
+import { getColors, getSizes } from '@/shared/Api/InventoryApi';
 // FormUtils.ts
 import { useState, useEffect } from 'react';
-// import { getClients } from "../../../shared/Api/CustomersApi";
-
 export type OptionDataTypes = 'colors' | 'products' | 'sizes';
 
 export type OptionDataObject = {
@@ -13,9 +11,6 @@ export type OptionDataObject = {
 
 export const useFormDataWithOptionsNew = (optionTypes: OptionDataTypes[]): OptionDataObject => {
   const [data, setData] = useState<OptionDataObject>({} as OptionDataObject);
-
-  // const [options, setOptions] = useState<{ id: number; value: string }[]>([]);
-  // const [selectDisabled, setSelectDisabled] = useState(true);
 
   const GetData = async () => {
     const newData: OptionDataObject = {} as OptionDataObject;
@@ -74,8 +69,6 @@ export const useFormDataWithOptions = (getData: () => Promise<{ id: number; valu
 };
 
 // FormUtils.ts
-
-// import { getColors } from '../../../screens/inventory/hooks/InventoryApi';
 
 export const useFormDataWithTypes = (getTypes: () => Promise<{ id: number; type: string }[]>) => {
   const [types, setTypes] = useState<{ id: number; value: string }[]>([]);

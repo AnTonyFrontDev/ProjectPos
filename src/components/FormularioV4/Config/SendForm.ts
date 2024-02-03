@@ -1,7 +1,7 @@
 //SendForm.ts
-import { saveClient } from "../../../shared/Api/CustomersApi";
-import { saveInventory } from "../../../shared/Api/InventoryApi";
-import { addType, saveProduct } from "../../../shared/Api/ProductsApi";
+import { saveClient } from "@/shared/Api/Customers/CustomersApi";
+import { saveInventory } from "@/shared/Api/InventoryApi";
+import { addType, saveProduct } from "@/shared/Api/ProductsApi";
 import { FormDataProducto, FormDataType, FormDataInventory, FormDataClient } from './interface';
 
 export const SendProduct = async <T extends FormDataProducto>(formData: T): Promise<void> => {

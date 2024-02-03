@@ -1,14 +1,13 @@
 // Inventory.tsx
-import BreadcrumbData from "../../../components/Breadcrumb"
+import BreadcrumbData from "@/components/Breadcrumb"
 // import ApiTable from '../components/ApiTable';
-import ApiTable from '../../../components/Tabla/apiTable'
+import ApiTable from '@/components/Tabla/apiTable'
 import Options from "../components/Options";
 import SearchFilter from '../components/SearchFilter';
 import { useState } from 'react'
 
-import { customersTable } from "../../../components/Tabla/tData";
-// import DetalleProducto from "../components/DetalleInventario";
-import { getClients } from "../../../shared/Api/CustomersApi";
+import { customersTable } from "@/components/Tabla/tData";
+import { getClients } from "@/shared/Api/Customers/CustomersApi";
 
 
 const Inventory = () => {

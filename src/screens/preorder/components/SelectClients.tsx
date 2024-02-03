@@ -1,8 +1,7 @@
 // // import { Modal } from "antd";
-// import {getClients} from "../../../shared/Api/CustomersApi"
 import { useState } from "react";
-import { IClientGet } from "../../../shared/interfaces/screens/client/IClientGet";
-import { CustomersFilterApi } from "../../../shared/Api/customersApiFilter";
+import { IClientGet } from "@/shared/interfaces/Client/IClientGet";
+import { CustomersFilterApi } from "@/shared/Api/Customers/customersApiFilter";
 
 //controlador de filtros
 const filterController: CustomersFilterApi = new CustomersFilterApi();

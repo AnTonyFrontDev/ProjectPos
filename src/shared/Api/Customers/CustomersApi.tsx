@@ -1,5 +1,5 @@
 import axios from "axios";
-import {FormDataClient} from '../../components/FormularioV4/Config/interface'
+import {FormDataClient} from '@/components/FormularioV4/Config/interface'
 
 
 export const getClients = async () => {

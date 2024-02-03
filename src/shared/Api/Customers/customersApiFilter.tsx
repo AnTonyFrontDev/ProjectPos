@@ -1,4 +1,4 @@
-import { IClientGet } from "../interfaces/screens/client/IClientGet";
+import { IClientGet } from "../../interfaces/Client/IClientGet";
 import axios from "axios";
 
 const getApi = async (url:string)=>{

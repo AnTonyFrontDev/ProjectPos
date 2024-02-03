@@ -1,4 +1,4 @@
-import { IProductGet } from "../../interfaces/screens/Product/IProductGet";
+import { IProductGet } from "../../interfaces/Product/IProductGet";
 import axios from "axios";
 
 const getApi = async (url: string) => {
