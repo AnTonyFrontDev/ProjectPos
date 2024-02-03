@@ -7,6 +7,7 @@ import homeRouter from "./screens/home/router";
 import invetoryRouter from "./screens/inventory/router";
 import customersRouter from "./screens/cliente/router";
 import productRouter from "./screens/producto/router";
+import preOrderRouter from "./screens/preorder/router"
 // import dashboardRouter from "@/screens/dashboard/router";
 
 
@@ -33,4 +34,10 @@ export const privateRoutes: RouteObject[] = [
     element: <MainLayout />,
     children: [productRouter].flat(),
   },
+  {
+    path:"/preOrder",
+    element:<MainLayout/>,
+    children: [preOrderRouter].flat()
+  }
+
 ].flat();
