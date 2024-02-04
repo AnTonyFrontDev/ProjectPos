@@ -1,9 +1,9 @@
 import React from 'react';
-import { FormProps, IOption } from '../Config/interface';
+import { IFormProps, IOption } from '../Config/interface';
 
 // Form.tsx
 
-const Form: React.FC<FormProps<any>> = ({ formDataFields, formData, setFormData, onSubmit }) => {
+const Form: React.FC<IFormProps<any>> = ({ formDataFields, formData, setFormData, onSubmit }) => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     console.log('Cambio en', e.target.name, 'Valor:', e.target.value);

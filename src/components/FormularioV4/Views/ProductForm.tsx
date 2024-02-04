@@ -1,17 +1,16 @@
 //ProjectForm.tsx
 import React, { useState} from 'react';
-import { FormDataProducto, FormApi } from '../Config/interface';
 import { f_DataFieldsProduct } from '../Config/data';
 import { SendProduct } from '../Config/SendForm';
-import { useFormDataWithTypes } from '../Config/FormUtils';
-import { initialFormDataProducto } from '../Config/FormConfig';
+import { useFormDataWithOptionsNew } from '../Config/FormUtils';
 import Form from './Form';
+import { ProductDto } from '@/shared/interfaces/Product/IProduct';
 
-const ProductForm: React.FC<FormApi> = ({ getTypes = async () => [] }) => {
+const ProductForm: React.FC = () => {
 //#region Hooks
-  const { types } = useFormDataWithTypes(getTypes);
-  const initialFormData = initialFormDataProducto;
-  const [formData, setFormData] = useState<FormDataProducto>(initialFormData);
+  const { types } = useFormDataWithOptionsNew(['types']);
+
+  const [formData, setFormData] = useState<ProductDto>(new ProductDto());
   const handleSubmit = () => {
     SendProduct(formData);
   };

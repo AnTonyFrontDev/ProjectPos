@@ -7,7 +7,7 @@ import SearchFilter from '../components/SearchFilter';
 import { useState } from 'react'
 import { productTable } from "@/components/Tabla/tData";
 import DetalleProducto from "../components/DetalleInventario";
-import { getProducts } from "../../../shared/Api/ProductsApi";
+import { getProducts } from "@/shared/Api/ProductsApi";
 
 
 const Inventory = () => {

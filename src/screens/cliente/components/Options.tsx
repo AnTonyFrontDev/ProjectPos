@@ -16,6 +16,7 @@ const Options = () => {
               buttonText="New Client"
               modalTitle=""
               modalContent={<ViewForm usarForm="Client" />}
+              // modalContent={<ViewForm usarForm="Client" />}
               // modalContent={<InventoryForm/>}
               iconType={"dashboard" as keyof typeof APP_ICONS}
               cssColor='green'

@@ -1,6 +1,6 @@
 //AppIcon.tsx
 import {Icon, IconProps} from "@iconify/react";
-import {APP_ICONS} from "../../shared/constants/icons-constants";
+import {APP_ICONS} from "@/shared/constants/icons-constants";
 
 export interface AppIconProps extends Partial<IconProps> {
     type: keyof typeof APP_ICONS;

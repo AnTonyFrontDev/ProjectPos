@@ -1,9 +1,9 @@
 import { IOption } from "./interface"
-import { getProducts } from '@/shared/Api/ProductsApi';
+import { getProducts, getTypes } from '@/shared/Api/ProductsApi';
 import { getColors, getSizes } from '@/shared/Api/InventoryApi';
 // FormUtils.ts
 import { useState, useEffect } from 'react';
-export type OptionDataTypes = 'colors' | 'products' | 'sizes';
+export type OptionDataTypes = 'colors' | 'products' | 'sizes' | 'types';
 
 export type OptionDataObject = {
   [N in OptionDataTypes]: IOption[]
@@ -29,6 +29,11 @@ export const useFormDataWithOptionsNew = (optionTypes: OptionDataTypes[]): Optio
         newData.sizes = (await getSizes()).map((size : any) => ({ id: size.id, value: size.size }))
       }
 
+      if(type === 'types') {
+        newData.types = (await getTypes()).map((types : any) => ({ id: types.id, value: types.type }))
+        console.log(newData.types)
+      }
+
     })).catch(error => {
       console.error('Error fetching data:', error);
     });
@@ -41,31 +46,6 @@ export const useFormDataWithOptionsNew = (optionTypes: OptionDataTypes[]): Optio
   }, []);
 
   return { ...data };
-};
-
-
-
-export const useFormDataWithOptions = (getData: () => Promise<{ id: number; value: string }[]>) => {
-  const [options, setOptions] = useState<{ id: number; value: string }[]>([]);
-  const [selectDisabled, setSelectDisabled] = useState(true);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getData();
-        const transformedOptions = data.map(item => ({ id: item.id, value: item.value }));
-
-        setOptions([{ id: 0, value: 'Select Option' }, ...transformedOptions]);
-        setSelectDisabled(false);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
-  }, [getData]);
-
-  return { options, selectDisabled };
 };
 
 // FormUtils.ts

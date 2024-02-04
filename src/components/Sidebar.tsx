@@ -1,7 +1,7 @@
 // import React from 'react'
 
 import { Fragment } from "react"
-import { SideData } from "../util/routes.data"
+import { SideData } from "@/util/routes.data"
 import { AppIcon } from "./ui/AppIcon"
 import { Link } from "react-router-dom"
 

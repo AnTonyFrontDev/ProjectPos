@@ -2,7 +2,7 @@
 //interface.ts
 
 //#region Formulario Post
-export interface FormProps<T> {
+export interface IFormProps<T> {
     formDataFields: {
         label: string;
         type: string;
@@ -15,11 +15,11 @@ export interface FormProps<T> {
     onSubmit: () => void;
 };
 
-export interface ViewFormProps {
+export interface IViewFormProps {
     usarForm: string;
 };
 
-export interface FormComponents {
+export interface IFormComponents {
     [key: string]: React.ReactNode;
 };
 
@@ -27,19 +27,6 @@ export interface IOption {
     id: number;
     value: string;
 };
-
-export interface FieldConfig<T> {
-    label: string;
-    type: string;
-    name: keyof T;
-    required?: boolean;
-    options?: IOption[];
-}
-
-export interface ViewFormProps {
-    usarForm: string;
-}
-
 
 export interface FormApi {
     getTypes?: () => Promise<{ id: number; type: string }[]>;
@@ -70,31 +57,7 @@ export interface FormDataType {
     [key: string]: number | string;
 };
 //#endregion
-export interface FormDataInventory {
-    user: number;
-    fk_product: number;
-    fk_size: number;
-    inventoryColors: [
-        {
-            user: number;
-            fk_color_primary: number;
-            fk_color_secondary: number;
-            quantity: number;
-        }
-    ]
 
-}
 
-export interface FormDataClient {
-    id: number;
-    user: number;
-    date: string;
-    f_name: string;
-    l_name: string;
-    f_surname: string;
-    l_surname: string;
-    rnc: string;
-    dni: string;
-}
 
 //#region Inventario 

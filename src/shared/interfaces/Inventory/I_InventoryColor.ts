@@ -19,8 +19,8 @@ export class InventoryColorDto implements IInventoryColor{
 
     constructor(){
         this.id = 0;
-        this.user = 0;
-        this.date = "00/00/0000";
+        this.user = 1;
+        this.date = "2024-02-04T17:08:42.184Z";
         this.fk_color_primary = 0;
         this.fk_color_secondary = 0;
         this.quantity = 0;

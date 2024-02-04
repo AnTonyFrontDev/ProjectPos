@@ -1,8 +1,8 @@
 // InventoryForm.tsx
 import React, { useState, useEffect } from 'react';
 import { Form, Input, Select, Button } from 'antd';
-import { getColors, getSizes, saveInventory } from '../../shared/Api/InventoryApi';
-import { getProducts } from '../../shared/Api/ProductsApi';
+import { getColors, getSizes, saveInventory } from '@/shared/Api/InventoryApi';
+import { getProducts } from '@/shared/Api/ProductsApi';
 
 const { Option } = Select;
 

@@ -2,21 +2,20 @@ import React from 'react';
 import ProductForm from './Views/ProductForm';
 import TypesForm from './Views/TypesForm';
 import InventoryForm from './Views/InventoryForm';
-import ClientForm from './Views/ClientForm';
+// import ClientForm from './Views/ClientForm';
+import FormClient from '@/screens/cliente/components/FormClient'
+import { IViewFormProps, IFormComponents } from './Config/interface';
 
-import { getTypes, saveProduct, addType } from '../../shared/Api/ProductsApi';
-import { ViewFormProps, FormComponents } from './Config/interface';
-
-const formComponents : FormComponents = {
-  Product: <ProductForm getTypes={getTypes} saveProduct={saveProduct} />,
-  Types: <TypesForm getTypes={getTypes} addType={addType} />,
+const formComponents : IFormComponents = {
+  Product: <ProductForm/>,
+  Types: <TypesForm/>,
   Inventory: <InventoryForm />,
-  Client: <ClientForm />,
+  // Client: <ClientForm />,
+  Client: <FormClient />,
   // Agrega más formularios según sea necesario
 };
 
-
-const ViewForm: React.FC<ViewFormProps> = ({ usarForm }) => {
+const ViewForm: React.FC<IViewFormProps> = ({ usarForm }) => {
   const selectedForm = formComponents[usarForm];
 
   return (
