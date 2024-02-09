@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { ColorFilterApi } from "../../../shared/Api/Color/ColorApiFilter";
-import { IColorGet } from "../../../shared/interfaces/screens/Color/IColorGet";
+import { ColorFilterApi } from "@/shared/Api/Color/ColorApiFilter";
+import { IColorGet } from "@/shared/interfaces/Color/IColorGet";
 
 const FilterColor = (props : { onColorSelected : (sizeId:string) => void})=>{
     //colors

@@ -1,6 +1,7 @@
 // ProductsApi.tsx
 import axios from 'axios';
-import { FormDataProducto, FormDataType } from '../../components/FormularioV4/Config/interface';
+import { FormDataType } from '@/components/FormularioV4/Config/interface';
+import { IProduct } from '../interfaces/Product/IProduct';
 // import { DetalleProductoProps } from '../interfaces/I_inventario';
 
 
@@ -87,7 +88,7 @@ export const getInventoryById = async (productId: number) => {
 
 
 
-export const saveProduct = async (formData: FormDataProducto) => {
+export const saveProduct = async (formData: IProduct) => {
     try {
         const formattedData = {
             user: formData.user,

@@ -1,20 +1,17 @@
 // InventoryForm.tsx
 import React, { useState } from 'react';
-import { FormDataInventory, FormApi } from '../Config/interface';
 import { f_DataFieldsInventory } from '../Config/data';
 import { SendInventory } from '../Config/SendForm';
 import { useFormDataWithOptionsNew } from '../Config/FormUtils';
-import { initialFormDataInventory } from '../Config/FormConfig';
 import Form from './Form';
+import { InventoryDto } from '@/shared/interfaces/Inventory/I_Inventory';
 
 
-const InventoryForm: React.FC<FormApi> = () => {
+const InventoryForm: React.FC = () => {
   //#region Hooks
   const { sizes, colors, products } = useFormDataWithOptionsNew(['colors', 'products', 'sizes'])
 
-
-  const initialFormData = initialFormDataInventory;
-  const [formData, setFormData] = useState<FormDataInventory>(initialFormData);
+  const [formData, setFormData] = useState<InventoryDto>(new InventoryDto());
   const handleSubmit = () => {
     SendInventory(formData);
   };

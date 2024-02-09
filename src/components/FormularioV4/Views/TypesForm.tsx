@@ -1,12 +1,12 @@
 //TypesForm.tsx
 import React, { useState} from 'react';
-import { FormDataType, FormApi } from '../Config/interface';
+import { FormDataType } from '../Config/interface';
 import { f_DataFieldsType } from '../Config/data';
 import { SendTypes } from '../Config/SendForm';
 import { initialFormDataType } from '../Config/FormConfig';
 import Form from './Form';
 
-const TypesForm: React.FC<FormApi> = () => {
+const TypesForm: React.FC = () => {
 //#region Hooks
   const initialFormData = initialFormDataType;
   const [formData, setFormData] = useState<FormDataType>(initialFormData);

@@ -1,12 +1,11 @@
 //data.ts
 import {IOption} from './interface'
 
-export const f_DataFieldsProduct = (options: { id: number; value: string }[]) => [
-  // { label: 'User', type: 'text', name: 'user', required: true },
+export const f_DataFieldsProduct = (types: IOption[]) => [
   { label: 'Product Name', type: 'text', name: 'name_prod', required: true },
   { label: 'Description', type: 'textarea', name: 'description', required: true },
   { label: 'Sale Price', type: 'number', name: 'sale_price', required: true },
-  { label: 'Type', type: 'select', name: 'fk_type', required: true, options },
+  { label: 'Type', type: 'select', name: 'fk_type', required: true, options: types },
 ];
 
 export const f_DataFieldsType = () => [
@@ -16,7 +15,6 @@ export const f_DataFieldsType = () => [
 // export interface IOption { id: number; value: string }
 
 export const f_DataFieldsInventory = (sizes: IOption[], colors: IOption[], products: IOption[]) => [
-  // { label: 'User', type: 'text', name: 'user', required: true },
   { label: 'Product', type: 'select', name: 'fk_product', required: true, options: products },
   { label: 'Size', type: 'select', name: 'fk_size', required: true, options: sizes },
   { label: 'Colors', type: 'select', name: 'fk_color_primary', required: true, options: colors},
@@ -31,5 +29,7 @@ export const f_DataFieldsClient = () => [
   { label: 'Segundo Apellido', type: 'text', name: 'l_surname', required: true },
   { label: 'RNC', type: 'text', name: 'rnc', required: true },
   { label: 'DNI', type: 'text', name: 'dni', required: true },
+  { label: 'Tipo de Teléfono', type: 'text', name: 'type', required: true },
+  { label: 'Número de Teléfono', type: 'text', name: 'number', required: true },
 ];
 

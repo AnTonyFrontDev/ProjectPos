@@ -1,14 +1,13 @@
 // Producto.tsx
-import BreadcrumbData from "../../../components/Breadcrumb"
+import BreadcrumbData from "@/components/Breadcrumb"
 // import ApiTable from '../components/ApiTable';
-import ApiTable from '../../../components/Tabla/apiTable'
+import ApiTable from '@/components/Tabla/apiTable'
 import Options from "../components/Options";
 import SearchFilter from '../components/SearchFilter';
 import { useState } from 'react'
-// import { getInventory } from "../../../shared/Api/InventoryApi";
-import { productTable } from "../../../components/Tabla/tData";
+import { productTable } from "@/components/Tabla/tData";
 import DetalleProducto from "../components/DetalleInventario";
-import { getProducts } from "../../../shared/Api/ProductsApi";
+import { getProducts } from "@/shared/Api/ProductsApi";
 
 
 const Inventory = () => {

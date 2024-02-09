@@ -1,4 +1,4 @@
-import { IColorGet } from "../../interfaces/screens/Color/IColorGet";
+import { IColorGet } from "../../interfaces/Color/IColorGet";
 import axios from "axios";
 
 const getApi = async (url: string) => {

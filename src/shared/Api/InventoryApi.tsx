@@ -1,6 +1,8 @@
 // InventoryApi.tsx
 import axios from 'axios';
-import { FormDataInventory } from '../../components/FormularioV4/Config/interface';
+// import { FormDataInventory } from '@/components/FormularioV4/Config/interface';
+import { IInventory } from '../interfaces/Inventory/I_Inventory';
+import { IInventoryColor } from '../interfaces/Inventory/I_InventoryColor';
 
 export const getInventory = async () => {
     try {
@@ -13,19 +15,21 @@ export const getInventory = async () => {
     }
 };
 
-export const saveInventory = async (formData: FormDataInventory) => {
+export const saveInventory = async (formData: IInventory) => {
     try {
-        // Asegúrate de que inventoryColors sea un array antes de mapearlo
-        // const inventoryColors = Array.isArray(formData.inventoryColors) ? formData.inventoryColors : [];
+        
+        const inventoryColors: IInventoryColor[] = Array.isArray(formData.inventoryColors) ? formData.inventoryColors : [];
         console.log(formData);
 
         const formattedData = {
             user: formData.user,
             fk_product: formData.fk_product,
             fk_size: formData.fk_size,
-            fk_color_primary: formData.fk_color_primary,
-            fk_color_secondary: formData.fk_color_secondary,
-            quantity: formData.quantity,
+            inventoryColors: inventoryColors.map(color => ({
+                fk_color_primary: color.fk_color_primary,
+                fk_color_secondary: color.fk_color_secondary,
+                quantity: color.quantity,
+            })),
         };
 
 

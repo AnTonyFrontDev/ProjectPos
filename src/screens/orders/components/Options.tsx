@@ -1,9 +1,8 @@
 
 // import React from 'react'
-import ButtonModal from '../../../components/Modal/ButtonModal';
-// import ViewForm from '../../../components/FormularioV4/viewForm';
-import { APP_ICONS } from '../../../shared/constants/icons-constants';
-import InventoryForm from '../../../components/FormInventory/InventoryForm';
+import ButtonModal from '@/components/Modal/ButtonModal';
+import { APP_ICONS } from '@/shared/constants/icons-constants';
+import InventoryForm from '@/components/FormInventory/InventoryForm';
 const Options = () => {
 
   return (

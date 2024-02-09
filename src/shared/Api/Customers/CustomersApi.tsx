@@ -1,5 +1,5 @@
 import axios from "axios";
-import {FormDataClient} from '../../components/FormularioV4/Config/interface'
+import { IClientPost } from "@/shared/interfaces/Client/IClientPost";
 
 
 export const getClients = async () => {
@@ -25,22 +25,9 @@ export const getAllClients = async () => {
 };
 
 
-  export const saveClient = async (formData: FormDataClient) => {
+  export const saveClient = async (formData: IClientPost) => {
       try {
-          const formattedData = {
-              id: formData.id,
-              user: formData.user,
-              date: formData.date,
-              f_name: formData.f_name,
-              l_name: formData.l_name,
-              f_surname: formData.f_surname,
-              l_surname: formData.l_surname,
-              rnc: formData.rnc,
-              dni: formData.dni,
-          };
-  
-          console.log(formattedData);
-  
+        const formattedData = formData 
           const response = await axios.post('https://localhost:7065/api/Client/SaveClient', formattedData, {
               headers: {
                   'Content-Type': 'application/json',

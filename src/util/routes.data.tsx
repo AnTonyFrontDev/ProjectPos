@@ -7,11 +7,6 @@ export const SideData = [
         name: 'Dashboard',
     },
     {
-        path: '/order',
-        icon: "order",
-        name: 'Order',
-    },
-    {
         path: '/inventory',
         icon: "inventory",
         name: 'Inventory',
@@ -20,6 +15,16 @@ export const SideData = [
         path: '/product',
         icon: "inventory",
         name: 'Product',
+    },
+    {
+        path: '/preOrder',
+        icon: "order",
+        name: 'preOrder',
+    },
+    {
+        path: '/Order',
+        icon: "order",
+        name: 'Order',
     },
     {
         path: '/',

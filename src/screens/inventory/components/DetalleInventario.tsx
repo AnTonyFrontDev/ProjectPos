@@ -1,9 +1,8 @@
 //DetalleInventario.tsx
 import React, { useEffect, useState } from 'react';
 import { Descriptions } from 'antd';
-import { getInventoryById } from '../../../shared/Api/ProductsApi';
-import { DetalleProductoProps } from '../../../shared/interfaces/I_inventario';
-// import { ColorInfo } from '../../../shared/interfaces/I_apiData'
+import { getInventoryById } from '@/shared/Api/ProductsApi';
+import { DetalleProductoProps } from '@/shared/interfaces/I_inventario';
 
 const DetalleProducto: React.FC<DetalleProductoProps> = ({ productId }) => {
   const [detalleProducto, setDetalleProducto] = useState<any>(null);
