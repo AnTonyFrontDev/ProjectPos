@@ -41,7 +41,7 @@ const FilterSize = (props : { onSizeSelected : (sizeId:string) => void})=>{
 
             {sizes.length !== 0 && (
                 <select onChange={handleSelectedSize}>
-                    <option value="0" hidden>Selecciona un size</option>
+                    <option value="" hidden>Selecciona un size</option>
                     {sizes.map((size)=>(
                         <option key={size.id} value={size.id}>{size.size}</option>
                     ))}

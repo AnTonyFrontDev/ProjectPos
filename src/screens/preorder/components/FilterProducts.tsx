@@ -40,7 +40,7 @@ const FilterProducts = (props:{ onProductSelect :(productId:string) => void}) =>
       <button type="button" onClick={filterClick}>Filtar por: {filter}</button>
       {products.length !== 0 &&(
         <select onChange={handleSelectProduct}>
-            <option value="0" hidden>Selecciona un producto</option>
+            <option value="" hidden>Selecciona un producto</option>
             {products.map((product)=>(
                 <option value={product.id} key={product.id}>{product.name_prod}</option>
             ))}

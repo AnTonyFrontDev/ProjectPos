@@ -39,7 +39,7 @@ const FilterColor = (props : { onColorSelected : (sizeId:string) => void})=>{
 
             {colors.length !== 0 &&(
                 <select onChange={handleSelectedColor}>
-                    <option value="0" hidden>Selecciona un color</option>
+                    <option value="" hidden>Selecciona un color</option>
                     {colors.map((color)=>(
                         <option value={color.id} key={color.id}>{color.colorname} #{color.code}</option>
                     ))}
