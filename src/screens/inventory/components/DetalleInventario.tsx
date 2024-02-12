@@ -10,9 +10,12 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ productId }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const productoData = await getInventoryById(productId);
-        setDetalleProducto(productoData);
-        console.log(productoData)
+        if (productId !== undefined) { 
+          const productIdNumber = Number(productId);
+          const productData = await getInventoryById(productIdNumber);
+          setDetalleProducto(productData);
+          console.log(productData);
+        }
       } catch (error) {
         console.error('Error al obtener detalle del producto:', error);
       }

@@ -1,0 +1,36 @@
+import { useState } from 'react';
+import { InventoryColorDto } from '../../../shared/interfaces/Inventory/I_InventoryColor';
+import { InventoryDto } from '@/shared/interfaces/Inventory/I_Inventory';
+import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';
+import { saveInventory } from '@/shared/Api/InventoryApi';
+
+export const useInventoryForm = () => {
+  const [formData, setFormData] = useState<InventoryDto>(new InventoryDto());
+  const currentDate = new Date().toISOString();
+  const newExistence: InventoryColorDto = new InventoryColorDto();
+  newExistence.date = currentDate;
+
+  const addExistence = () => {
+    newExistence.date = currentDate;
+
+    setFormData((prevInventory) => ({
+      ...prevInventory,
+      inventoryColors: [...prevInventory.inventoryColors, newExistence],
+    }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Puedes realizar acciones adicionales aquí antes de enviar el inventario a la base de datos
+    console.log('Inventario:', formData);
+    GenericRequest(formData, saveInventory,"inventario enviado con exito");
+  };
+
+  const handleAddInventory = () => {
+    // Puedes realizar acciones adicionales aquí antes de enviar el inventario a la base de datos
+    console.log('Inventario:', formData);
+    // SendInventory(formData);
+  };
+
+  return { formData, setFormData, addExistence, handleSubmit, handleAddInventory };
+};

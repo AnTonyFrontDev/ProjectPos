@@ -1,7 +1,8 @@
 import React from 'react';
 import ProductForm from './Views/ProductForm';
 import TypesForm from './Views/TypesForm';
-import InventoryForm from './Views/InventoryForm';
+// import InventoryForm from './Views/InventoryForm';
+import InventoryForm from '@/screens/inventory/components/InventoryForm';
 // import ClientForm from './Views/ClientForm';
 import FormClient from '@/screens/cliente/components/FormClient'
 import { IViewFormProps, IFormComponents } from './Config/interface';

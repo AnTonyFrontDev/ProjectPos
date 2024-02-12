@@ -28,26 +28,6 @@ export interface IOption {
     value: string;
 };
 
-export interface FormApi {
-    getTypes?: () => Promise<{ id: number; type: string }[]>;
-    getProducts?: () => Promise<{ id: number; name_prod: string }[]>;
-    getSizes?: () => Promise<{ id: number; size: string }[]>;
-    getColors?: () => Promise<{ id: number; colorname: string }[]>;
-    addType?: (formData: FormDataType) => Promise<any>;
-    saveProduct?: (formData: FormDataProducto) => Promise<any>;
-};
-
-//#endregion
-
-//#region Producto
-export interface FormDataProducto {
-    user: number;
-    name_prod: string;
-    description: string;
-    sale_price: number;
-    fk_type: number;
-    [key: string]: number | string;
-};
 //#endregion
 
 //#region ProdType 

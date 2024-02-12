@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { ProductsFilterApi } from "@/shared/Api/Products/productsFilterApi";
 import { IProductGet } from "@/shared/interfaces/Product/IProductGet";
+
 const productFilter : ProductsFilterApi = new ProductsFilterApi();
+
 const FilterProducts = (props:{ onProductSelect :(productId:string) => void}) => {
   //estado para cuando filtren los productos
   const [products,setProducts] = useState<IProductGet[]>([]);
@@ -13,6 +15,7 @@ const FilterProducts = (props:{ onProductSelect :(productId:string) => void}) =>
   const handleFilter = (event: React.ChangeEvent<HTMLSelectElement>)=>{
     setFilter(event.target.value);
   }
+  
   //handler para manejar el producto seleccionado
   const handleSelectProduct = (event : React.ChangeEvent<HTMLSelectElement>)=>{
     props.onProductSelect(event.target.value);
@@ -37,9 +40,9 @@ const FilterProducts = (props:{ onProductSelect :(productId:string) => void}) =>
       </select>
       <input type="text" value={inputFilter} onChange={handleInputFilter}/>
 
-      <button type="button" onClick={filterClick}>Filtar por: {filter}</button>
+      <button type="button" onClick={filterClick}>Filtrar por: {filter}</button>
       {products.length !== 0 &&(
-        <select onChange={handleSelectProduct}>
+        <select onChange={handleSelectProduct} required>
             <option value="0" hidden>Selecciona un producto</option>
             {products.map((product)=>(
                 <option value={product.id} key={product.id}>{product.name_prod}</option>
