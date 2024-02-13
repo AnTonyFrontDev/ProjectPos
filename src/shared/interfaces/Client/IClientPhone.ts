@@ -1,4 +1,4 @@
-export interface IClientPhone {
+export interface    IClientPhone {
     id: number;
     user: number;
     date: string;

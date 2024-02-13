@@ -8,7 +8,7 @@ const InventoryDetail = () => {
     return (
       <div>
         <h1>Detalle Inventario</h1>
-        <Detail productId={productId} />
+        <Detail Id={productId} />
       </div>
     );
   };

@@ -1,4 +1,4 @@
-export interface DetalleProductoProps {
-    productId: number;
+export interface DetalleProps {
+    Id: number;
   }
   

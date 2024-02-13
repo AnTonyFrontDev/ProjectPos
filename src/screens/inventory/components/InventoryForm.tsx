@@ -6,28 +6,7 @@ import FilterColor from './SelectFilter/FilterColorI'
 // import { InventoryColorDto } from '../../../shared/interfaces/Inventory/I_InventoryColor';
 const InventoryForm: React.FC = () => {
     //custom hooks useInventoryForm
-    const { formData, setFormData, addExistence, handleSubmit, handleAddInventory } = useInventoryForm();
-
-    const handleProductSelect = (productId: string) => {
-        setFormData({ ...formData, fk_product: Number(productId) });
-    };
-
-    const handleSizeSelect = (sizeId: string) => {
-        setFormData({ ...formData, fk_size: Number(sizeId) });
-    };
-
-    const handleColorSelect = (sizeId: string, isPrimary: boolean, index: number) => {
-        setFormData((prevInventory) => ({
-            ...prevInventory,
-            inventoryColors: prevInventory.inventoryColors.map((item, i) =>
-                i === index
-                    ? isPrimary
-                        ? { ...item, fk_color_primary: Number(sizeId) }
-                        : { ...item, fk_color_secondary: Number(sizeId) }
-                    : item
-            ),
-        }));
-    };
+    const { formData, setFormData, addExistence, handleSubmit, handleAddInventory, handleProductSelect, handleSizeSelect, handleColorSelect } = useInventoryForm();
 
 
     return (

@@ -66,7 +66,7 @@ const GenericTable: React.FC<GenericTableProps> = ({ getApiData, columns, search
         }),
       }))}
       
-    
+      
     />
   );
 };

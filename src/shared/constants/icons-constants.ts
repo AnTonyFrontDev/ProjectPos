@@ -19,5 +19,6 @@ export const APP_ICONS = {
     inventory: 'ic:outline-inventory-2',
     billing: 'solar:bill-list-linear',
     orders:'material-symbols:orders-outline-rounded',
-    reports: 'mingcute:inventory-line'
+    reports: 'mingcute:inventory-line',
+    colors: 'solar:t-shirt-bold-duotone'
 }

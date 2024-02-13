@@ -9,42 +9,42 @@ export const SideData = [
     {
         path: '/inventory',
         icon: "inventory",
-        name: 'Inventory',
+        name: 'Inventario',
     },
     {
         path: '/product',
         icon: "inventory",
-        name: 'Product',
+        name: 'Productos',
     },
     {
         path: '/preOrder',
         icon: "order",
-        name: 'preOrder',
+        name: 'Pedidos',
     },
     {
         path: '/Order',
         icon: "order",
-        name: 'Order',
+        name: 'Ordenes',
     },
     {
         path: '/',
         icon: "billing",
-        name: 'Billing',
+        name: 'Facturacion',
     },
     {
         path: '/customers',
         icon: "user",
-        name: 'Customers',
+        name: 'Clientes',
     },
     {
         path: '/',
         icon: "orders",
-        name: 'Work Orders',
+        name: 'Atributos',
     },
     {
         path: '/',
         icon: "reports",
-        name: 'Inventory Reports',
+        name: 'Reportes',
     },
     {
         path: '/',

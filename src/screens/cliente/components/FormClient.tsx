@@ -1,11 +1,9 @@
 // TuComponente.tsx
 
-import useClientForm from "../hooks/useClientForm";
-import usePhoneForm from "../hooks/usePhoneForm";
+import { useClientForm } from "../hooks/useClientForm";
 
 const ClientForm = () => {
-    const { formData, handleInputChange, handleSubmit } = useClientForm();
-    const { clientPost, addPhone, handlePhoneInputChange } = usePhoneForm();
+    const { formData, handleInputChange, addPhone, handlePhoneInputChange, handleSubmit } = useClientForm();
 
     return (
         <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8">
@@ -77,7 +75,7 @@ const ClientForm = () => {
             </div>
 
             {/* Sección de teléfonos */}
-            {clientPost.phonesClient.map((phone, index) => (
+            {formData.phonesClient.map((phone, index) => (
                 <div className="mb-4" key={index}>
                     <label className="text-sm font-medium text-gray-600">Phone Type</label>
                     <input

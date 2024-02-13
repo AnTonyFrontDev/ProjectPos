@@ -1,33 +1,43 @@
-// useClientForm.ts
-
-import { SendClient } from '@/components/FormularioV4/Config/SendForm';
 import { useState } from 'react';
+import { ClientPhoneDto } from '../../../shared/interfaces/Client/IClientPhone';
 import { ClientPostDto, IClientPost } from '../../../shared/interfaces/Client/IClientPost';
+import { saveClient } from '@/shared/Api/Customers/CustomersApi';
+import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';
 
-const useClientForm = () => {
+export const useClientForm = () => {
   const [formData, setFormData] = useState<IClientPost>(new ClientPostDto());
+
+  const addPhone = () => {
+    setFormData((prevClientPost) => ({
+      ...prevClientPost,
+      phonesClient: [...prevClientPost.phonesClient, { ...new ClientPhoneDto() }],
+    }));
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handlePhoneInputChange = (index: number, field: string, value: string) => {
+    setFormData((prevClientPost) => {
+      const updatedPhonesClient = prevClientPost.phonesClient.map((phone, i) =>
+        i === index ? { ...phone, [field]: value } : phone
+      );
+
+      return {
+        ...prevClientPost,
+        phonesClient: updatedPhonesClient,
+      };
+    });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    try {
-      await SendClient(formData);
-      console.log('Client data submitted successfully');
-    } catch (error) {
-      console.error('Error submitting client data:', error);
-    }
+    // Additional actions before sending the client data to the database
+    console.log('Client Data:', formData);
+    GenericRequest(formData, saveClient, "Client data submitted successfully");
   };
 
-  return {
-    formData,
-    handleInputChange,
-    handleSubmit,
-  };
+  return { formData, handleInputChange, addPhone, handlePhoneInputChange, handleSubmit };
 };
-
-export default useClientForm;
