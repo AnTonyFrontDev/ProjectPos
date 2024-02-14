@@ -12,9 +12,9 @@ const Options = () => {
         <li>
           <div className="flex">
             <ButtonModal
-              buttonText="New Bank"
+              buttonText="New Size Category"
               modalTitle=""
-              modalContent={<ViewForm usarForm="Bank" />}
+              modalContent={<ViewForm usarForm="CSize" />}
               iconType={"dashboard" as keyof typeof APP_ICONS}
               cssColor='green'
             />

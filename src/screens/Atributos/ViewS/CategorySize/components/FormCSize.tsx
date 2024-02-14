@@ -1,18 +1,18 @@
 // import React from 'react';
-import { useBankForm } from "../hooks/useBankForm";
+import { useCategorySizeForm } from "../hooks/useCSizeForm";
 
-const BankForm = () => {
-    const { formData, handleInputChange, handleSubmit } = useBankForm();
+const CategorySizeForm = () => {
+    const { formData, handleInputChange, handleSubmit } = useCategorySizeForm();
 
     return (
         <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8">
-            {/* Campos del formulario del banco */}
+            {/* Campos del formulario de CategorySize */}
             <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">Name</label>
+                <label className="block text-sm font-medium text-gray-600">Category</label>
                 <input
                     type="text"
-                    name="name"
-                    value={formData.name}
+                    name="category"
+                    value={formData.category}
                     onChange={handleInputChange}
                     className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                 />
@@ -26,4 +26,4 @@ const BankForm = () => {
     );
 };
 
-export default BankForm;
+export default CategorySizeForm;
