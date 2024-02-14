@@ -25,7 +25,7 @@ export class ClientPostDto implements IClientPost {
   
     constructor() {
       this.user = 1;
-      this.date = "2024-02-03T23:18:24.519Z";
+      this.date = new Date().toISOString();
       this.f_name = "";
       this.l_name = "";
       this.f_surname = "";

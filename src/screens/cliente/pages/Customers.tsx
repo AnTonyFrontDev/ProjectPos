@@ -1,4 +1,4 @@
-// Inventory.tsx
+// Customers.tsx
 import BreadcrumbData from "@/components/Breadcrumb"
 import ApiTable from '@/components/Tabla/apiTable'
 import Options from "../components/Options";
@@ -19,11 +19,9 @@ const Customers = () => {
 
   const navigate = useNavigate();
 
-  // const [searchTerm, setSearchTerm] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [filterColumn, setFilterColumn] = useState<string>('');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
-  // const [detalleVisible, setDetalleVisible] = useState(false);
   const [selectedClientId, setSelectedClientId] = useState<number | null>(null);
 
   useEffect(() => {
@@ -75,9 +73,7 @@ const Customers = () => {
           sortDirection={sortDirection}
           handleTableRowClick={handleTableRowClick}
         />
-        {/* {detalleVisible && selectedProductId && (
-        <DetalleProducto productId={selectedProductId} />
-      )} */}
+
       </div>
     </div>
   )

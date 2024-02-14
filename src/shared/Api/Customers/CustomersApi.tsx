@@ -2,8 +2,6 @@ import axios from "axios";
 import { IClientPost } from "@/shared/interfaces/Client/IClientPost";
 import { IClientUpdate } from "@/shared/interfaces/Client/IClientUpdate";
 import { IClientRemove } from "@/shared/interfaces/Client/IClientRemove";
-import { IClientPhone } from "@/shared/interfaces/Client/IClientPhone";
-
 
 export const getClients = async () => {
     try {
@@ -38,43 +36,21 @@ export const getAllClients = async () => {
     }
 };
 
+export const saveClient = async (formData: IClientPost) => {
+    try {
+        const response = await axios.post('https://localhost:7065/api/Client/SaveClient', formData, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
 
-  export const saveClient = async (formData: IClientPost) => {
-      try {
-        const phones : IClientPhone[] = Array.isArray(formData.phonesClient) ? formData.phonesClient : [];
-        console.log(formData);
-        const currentDate = new Date();
-        const formattedData = {
-            user: '1',
-            date: currentDate,
-            f_name: formData.f_name,
-            l_name: formData.l_name,
-            f_surname: formData.f_surname,
-            l_surname: formData.l_surname,
-            rnc: formData.rnc,
-            dni: formData.dni,
-            phonesClient: phones.map(phone => ({
-                id: 0,
-                user: 1,
-                date: currentDate,
-                type: phone.type,
-                number: phone.number,
-                fk_client: 0,
-            })),
-        };
-        console.log(formattedData);
-          const response = await axios.post('https://localhost:7065/api/Client/SaveClient', formattedData, {
-              headers: {
-                  'Content-Type': 'application/json',
-              },
-          });
-  
-          return response.data;
-      } catch (error) {
-          console.error('Error saving client:', error);
-          throw error;
-      }
-  };
+        return response.data;
+    } catch (error) {
+        console.error('Error al guardar el cliente:', error);
+        throw error;
+    }
+};
+
 
   export const UpdateClient = async (formData: IClientUpdate) => {
     try {

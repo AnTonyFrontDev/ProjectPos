@@ -3,6 +3,18 @@ import { IProductRemove } from "@/shared/interfaces/Product/IProductRemove";
 import { IProductUpdate } from "@/shared/interfaces/Product/IProductUpdate";
 import axios from "axios";
 
+export const getProductById = async (productId: number) => {
+  try {
+    const response = await axios.get(`https://localhost:7065/api/Product/GetProduct?id=${productId}`);
+    console.log(response.data.data);
+    return response.data.data[0];
+  } catch (error) {
+    console.error('Error fetching product details:', error);
+    throw error;
+  }
+};
+
+
 export const SaveProduct = async (formData: IProductPost) => {
   try {
     const formattedData = formData;

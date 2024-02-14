@@ -18,7 +18,7 @@ export class ClientPhoneDto implements IClientPhone {
     constructor() {
         this.id = 0;
         this.user = 1;
-        this.date = "2024-02-03T23:18:24.519Z";
+        this.date = new Date().toISOString();
         this.type = "";
         this.number = "";
         this.fk_client = 0;
