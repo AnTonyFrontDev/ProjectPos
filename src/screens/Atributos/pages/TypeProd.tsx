@@ -1,8 +1,14 @@
 // import React from 'react'
+import { View } from "../ViewS/TypeProd";
 
 const TypeProd = () => {
   return (
-    <div>TypeProd</div>
+    <div>
+    <div>
+        TypeProd
+    </div>
+    <View/>
+</div>
   )
 }
 

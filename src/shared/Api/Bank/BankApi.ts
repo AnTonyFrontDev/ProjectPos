@@ -3,6 +3,18 @@ import { IBankRemove } from "@/shared/interfaces/Bank/IBankRemove";
 import { IBankUpdate } from "@/shared/interfaces/Bank/IBankUpdate";
 import axios from "axios";
 
+export const getBanks = async () => {
+  try {
+      const response = await axios.get('https://localhost:7065/api/Bank/GetBanks?Page=1&ItemsPerPage=20');
+      console.log(response.data.data);
+      return response.data.data;
+  } catch (error) {
+      console.error('Error fetching banks:', error);
+      throw error;
+  }
+};
+
+
 export const SaveBank = async (formData: IBankPost) => {
   try {
     const formattedData = formData;

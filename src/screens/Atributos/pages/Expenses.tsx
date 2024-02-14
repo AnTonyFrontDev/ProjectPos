@@ -1,8 +1,14 @@
 // import React from 'react'
+import { View } from "../ViewS/Expenses";
 
 const Expenses = () => {
   return (
-    <div>Expenses</div>
+    <div>
+    <div>
+        Expenses
+    </div>
+    <View/>
+</div>
   )
 }
 

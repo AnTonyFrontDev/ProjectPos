@@ -10,9 +10,10 @@ interface GenericTableProps {
   filterColumn?: string;
   sortDirection?: 'asc' | 'desc';
   handleTableRowClick?: any;
+  showActions?: boolean;
 }
 
-const GenericTable: React.FC<GenericTableProps> = ({ getApiData, columns, searchTerm, filterColumn, sortDirection, handleTableRowClick }) => {
+const GenericTable: React.FC<GenericTableProps> = ({ getApiData, columns, searchTerm, filterColumn, sortDirection, handleTableRowClick, showActions }) => {
   const [data, setData] = useState<any[]>([]);
 
   useEffect(() => {
@@ -56,10 +57,48 @@ const GenericTable: React.FC<GenericTableProps> = ({ getApiData, columns, search
     fetchData();
   }, [getApiData, searchTerm, filterColumn, sortDirection]);
 
+// ... (código anterior)
+
+const handleEdit = (record: any) => {
+  console.log('Edit:', record);
+};
+
+const handleDelete = (record: any) => {
+  console.log('Delete:', record);
+};
+
+const actionsColumn = showActions
+    ? [
+        {
+          title: 'Actions',
+          key: 'actions',
+          render: ( record: any) => (
+            <span>
+              <button 
+                className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-2 rounded'
+                onClick={() => handleEdit(record)}
+              >
+                Edit
+              </button>
+              <button 
+                className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'
+                onClick={() => handleDelete(record)}
+              >
+                Delete
+              </button>
+            </span>
+          ),
+        },
+      ]
+    : [];
+
+// ... (código posterior)
+
+
   return (
     <Table
       dataSource={data}
-      columns={columns.map(column => ({
+      columns={[...columns, ...actionsColumn].map(column => ({
         ...column,
         onCell: (record: any) => ({
           onClick: () => handleTableRowClick(record),
@@ -77,6 +116,7 @@ GenericTable.propTypes = {
   searchTerm: PropTypes.string.isRequired,
   filterColumn: PropTypes.string.isRequired,
   sortDirection: PropTypes.oneOf(['asc', 'desc'] as const).isRequired,
+  showActions: PropTypes.bool,
 };
 
 export default GenericTable;

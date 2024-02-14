@@ -1,8 +1,14 @@
 // import React from 'react'
+import { View } from "../ViewS/Size";
 
 const Size = () => {
   return (
-    <div>Size</div>
+    <div>
+    <div>
+        Size
+    </div>
+    <View/>
+</div>
   )
 }
 

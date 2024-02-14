@@ -1,55 +1,88 @@
-import { RouteObject } from "react-router-dom";
+import { lazy, Suspense } from 'react';
+import { RouteObject } from 'react-router-dom';
 
-import Atributos from "./pages/Atributos"
-import Bank from "./pages/Bank";
-import CategorySize from "./pages/CategorySize";
-import Size from "./pages/Size";
-import Payment from "./pages/Payment";
-import PaymentType from "./pages/PaymentType";
-import TypeProd from "./pages/TypeProd";
-import Color from "./pages/Color";
-import Expenses from "./pages/Expenses";
+const Atributos = lazy(() => import('./pages/Atributos'));
+const Bank = lazy(() => import('./pages/Bank'));
+const Color = lazy(() => import('./pages/Color'));
+const Size = lazy(() => import('./pages/Size'));
+const Payment = lazy(() => import('./pages/Payment'));
+const PaymentType = lazy(() => import('./pages/PaymentType'));
+const TypeProd = lazy(() => import('./pages/TypeProd'));
+const CategorySize = lazy(() => import('./pages/CategorySize'));
+const Expenses = lazy(() => import('./pages/Expenses'));
 
 const router: RouteObject[] = [
   {
-    path: "/atributos",
-    element: <Atributos/>,
+    path: '/atributos',
+    element: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <Atributos />
+      </Suspense>
+    ),
   },
   {
-    path: "/atributos/Bank", 
-    element: <Bank/>,
+    path: '/atributos/Bank',
+    element: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <Bank />
+      </Suspense>
+    ),
   },
   {
-    path: "/atributos/Color", 
-    element: <Color/>,
+    path: '/atributos/Color',
+    element: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <Color />
+      </Suspense>
+    ),
   },
   {
-    path: "/atributos/Size", 
-    element: <Size/>,
+    path: '/atributos/Size',
+    element: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <Size />
+      </Suspense>
+    ),
   },
   {
-    path: "/atributos/Payment", 
-    element: <Payment/>,
+    path: '/atributos/Payment',
+    element: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <Payment />
+      </Suspense>
+    ),
   },
   {
-    path: "/atributos/PaymentType", 
-    element: <PaymentType/>,
+    path: '/atributos/PaymentType',
+    element: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <PaymentType />
+      </Suspense>
+    ),
   },
   {
-    path: "/atributos/TypeProd", 
-    element: <TypeProd/>,
+    path: '/atributos/TypeProd',
+    element: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <TypeProd />
+      </Suspense>
+    ),
   },
   {
-    path: "/atributos/CategorySize", 
-    element: <CategorySize/>,
+    path: '/atributos/CategorySize',
+    element: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <CategorySize />
+      </Suspense>
+    ),
   },
   {
-    path: "/atributos/CategorySize", 
-    element: <CategorySize/>,
-  },
-  {
-    path: "/atributos/Expenses", 
-    element: <Expenses/>,
+    path: '/atributos/Expenses',
+    element: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <Expenses />
+      </Suspense>
+    ),
   },
 ];
 

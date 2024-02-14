@@ -8,3 +8,9 @@ export interface IClientGet {
     dni: string
   }
   
+export interface ICustomersColumns {
+  title: string;
+  dataIndex: string;
+  key: string;
+  render?: (data: IClientGet) => React.ReactNode;
+}

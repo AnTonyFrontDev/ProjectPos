@@ -6,3 +6,9 @@ export interface IProductGet {
     type: string
   }
   
+  export interface ProductColumns {
+    title: string;
+    dataIndex: string;
+    key: string;
+    render?: (data: IProductGet) => React.ReactNode;
+  }

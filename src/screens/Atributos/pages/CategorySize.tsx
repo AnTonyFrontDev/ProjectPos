@@ -1,8 +1,14 @@
 // import React from 'react'
+import { View } from "../ViewS/CategorySize";
 
 const CategorySize = () => {
   return (
-    <div>CategorySize</div>
+    <div>
+    <div>
+        CategorySize
+    </div>
+    <View/>
+</div>
   )
 }
 

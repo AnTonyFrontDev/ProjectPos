@@ -1,9 +1,15 @@
 // import React from 'react'
+import { View } from "../ViewS/Bank";
 
-const Bank = () => {
+const BankView = () => {
   return (
-    <div>Bank</div>
+    <div>
+        <div>
+            Bank
+        </div>
+        <View/>
+    </div>
   )
 }
 
-export default Bank
+export default BankView

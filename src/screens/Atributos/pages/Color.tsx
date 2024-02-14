@@ -1,8 +1,14 @@
 // import React from 'react'
+import { View } from "../ViewS/Color";
 
 const Color = () => {
   return (
-    <div>Color</div>
+    <div>
+    <div>
+        Color
+    </div>
+    <View/>
+</div>
   )
 }
 
