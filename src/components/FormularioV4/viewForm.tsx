@@ -10,6 +10,8 @@ const FormClient = lazy(() => import('@/screens/cliente/components/FormClient'))
 const FormBank = lazy(() => import('@/screens/Atributos/ViewS/Bank/components/FormBank'));
 const FormCSize = lazy(() => import('@/screens/Atributos/ViewS/CategorySize/components/FormCSize'));
 const FormColor = lazy(() => import('@/screens/Atributos/ViewS/Color/components/FormColor'));
+const FormSize = lazy(() => import('@/screens/Atributos/ViewS/Size/components/FormSize'));
+
 
 
 const formComponents: IFormComponents = {
@@ -21,6 +23,7 @@ const formComponents: IFormComponents = {
   Bank: <Suspense fallback={<div>Loading...</div>}><FormBank /></Suspense>,
   CSize: <Suspense fallback={<div>Loading...</div>}><FormCSize /></Suspense>,
   Color: <Suspense fallback={<div>Loading...</div>}><FormColor /></Suspense>,
+  Size: <Suspense fallback={<div>Loading...</div>}><FormSize /></Suspense>,
   // Agrega más formularios según sea necesario
 };
 

@@ -11,13 +11,17 @@ const Options = () => {
       <ul>
         <li>
           <div className="flex">
+            {/* <AppIcon type="dashboard" className="cursor-pointer mx-2" width={18} /> */}
             <ButtonModal
-              buttonText="Nuevo Size"
+              buttonText="New Client"
               modalTitle=""
-              modalContent={<ViewForm usarForm="Size" />}
+              modalContent={<ViewForm usarForm="Client" />}
+              // modalContent={<ViewForm usarForm="Client" />}
+              // modalContent={<InventoryForm/>}
               iconType={"dashboard" as keyof typeof APP_ICONS}
               cssColor='green'
             />
+            
           </div>
         </li>
       </ul>

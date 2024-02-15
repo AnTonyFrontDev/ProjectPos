@@ -16,8 +16,8 @@ export interface IColorPost {
   
     constructor() {
       this.id = 0;
-      this.user = 0;
-      this.date = '';
+      this.user = 1;
+      this.date = new Date().toISOString();
       this.colorname = '';
       this.code = '';
     }

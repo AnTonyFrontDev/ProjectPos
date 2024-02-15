@@ -60,7 +60,7 @@ const InventoryForm: React.FC = () => {
 
             {/* Botón para agregar el inventario */}
             {/* <button type="button" onClick={handleSubmit}> */}
-            <button type="button" onClick={handleAddInventory}>
+            <button type="button" onClick={handleSubmit}>
                 Agregar Inventario
             </button>
         </form>

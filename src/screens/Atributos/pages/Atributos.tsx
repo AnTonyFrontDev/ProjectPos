@@ -8,16 +8,10 @@ const Atributos = () => {
         <h1 className="text-4xl text-center font-bold mb-8">Menú de Atributos</h1>
         <div className="grid grid-cols-2 gap-8">
           <Link
-            to="/atributos/Payment"
-            className="text-blue-500 hover:underline block p-6 bg-blue-100 rounded-md shadow-md"
-          >
-            Payment
-          </Link>
-          <Link
             to="/atributos/PaymentType"
             className="text-green-500 hover:underline block p-6 bg-green-100 rounded-md shadow-md"
           >
-            PaymentType
+            Tipo de Pago
           </Link>
           <Link
             to="/atributos/Color"
@@ -29,7 +23,7 @@ const Atributos = () => {
             to="/atributos/Bank"
             className="text-yellow-500 hover:underline block p-6 bg-yellow-100 rounded-md shadow-md"
           >
-            Bank
+            Banco
           </Link>
           <Link
             to="/atributos/Size"
@@ -41,13 +35,13 @@ const Atributos = () => {
             to="/atributos/CategorySize"
             className="text-purple-500 hover:underline block p-6 bg-purple-100 rounded-md shadow-md"
           >
-            CategorySize
+            Categorias de Size
           </Link>
           <Link
             to="/atributos/TypeProd"
             className="text-pink-500 hover:underline block p-6 bg-pink-100 rounded-md shadow-md"
           >
-            TypeProd
+            Tipo Producto
           </Link>
           <Link
             to="/atributos/Expenses"

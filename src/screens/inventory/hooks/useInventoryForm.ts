@@ -3,12 +3,16 @@ import { InventoryColorDto } from '../../../shared/interfaces/Inventory/I_Invent
 import { InventoryDto } from '@/shared/interfaces/Inventory/I_Inventory';
 import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';
 import { saveInventory } from '@/shared/Api/InventoryApi';
+import { useNavigate } from 'react-router-dom';
 
 export const useInventoryForm = () => {
   const [formData, setFormData] = useState<InventoryDto>(new InventoryDto());
   const currentDate = new Date().toISOString();
   const newExistence: InventoryColorDto = new InventoryColorDto();
   newExistence.date = currentDate;
+  const navigate = useNavigate();
+
+  
 
   const addExistence = () => {
     newExistence.date = currentDate;
@@ -45,8 +49,15 @@ export const useInventoryForm = () => {
     e.preventDefault();
     // Puedes realizar acciones adicionales aquí antes de enviar el inventario a la base de datos
     console.log('Inventario:', formData);
-    GenericRequest(formData, saveInventory, "inventario enviado con exito");
-  };
+    GenericRequest(formData, saveInventory, "inventario enviado con éxito")
+        .then(() => {
+            console.log('Inventario enviado con éxito');
+            navigate('/inventory', { replace: true });
+        })
+        .catch((error) => {
+            console.error('Error al enviar el inventario:', error);
+        });
+};
 
   const handleAddInventory = () => {
     // Puedes realizar acciones adicionales aquí antes de enviar el inventario a la base de datos

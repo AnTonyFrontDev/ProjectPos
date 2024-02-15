@@ -7,7 +7,7 @@ export const getProductById = async (productId: number) => {
   try {
     const response = await axios.get(`https://localhost:7065/api/Product/GetProduct?id=${productId}`);
     console.log(response.data.data);
-    return response.data.data[0];
+    return response.data.data;
   } catch (error) {
     console.error('Error fetching product details:', error);
     throw error;

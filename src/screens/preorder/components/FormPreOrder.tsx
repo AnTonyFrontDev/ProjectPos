@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { IProductsDtoAdd } from "../../../shared/interfaces/screens/preorder/ProductToAdd";
+// import { IProductsDtoAdd } from "@/shared/interfaces/screens/preorder/ProductToAdd";
+import {IProductsDtoAdd} from '@/shared/interfaces/Preorder/ProductToAdd'
 import Order from "./Order";
 import SelectClients from "./SelectClients";
-import { IPreOrder } from "../../../shared/interfaces/screens/preorder/IPreOrder";
+import { IPreOrder } from "@/shared/interfaces/Preorder/IPreOrder";
 import axios from "axios";
 
 //quitar de aqui

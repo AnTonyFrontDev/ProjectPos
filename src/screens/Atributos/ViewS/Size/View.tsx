@@ -1,28 +1,25 @@
-// Banks.tsx
+// SizeView.tsx
+import { useEffect, useState } from 'react';
 import BreadcrumbData from "@/components/Breadcrumb";
 import ApiTable from '@/components/Tabla/apiTable';
-import Options from "../Bank/components/Options";
-import SearchFilter from '../Bank/components/SearchFilter';
-import { useEffect, useState } from 'react';
+import Options from "../Size/components/Options";
+import SearchFilter from '../Size/components/SearchFilter';
+import { getSizes } from "@/shared/Api/Size/SizeApi";
+import { sizeTable } from '@/components/Tabla/tData';
 
-import { banksTable } from "@/components/Tabla/tData";
-import { getBanks } from "@/shared/Api/Bank/BankApi";
-
-const View = () => {
+const SizeView = () => {
   const routes = [
-    // { title: 'Home', path: '/' },
     { title: 'Dashboard', path: '/' },
     { title: 'Atributos', path: '/atributos' },
-    { title: 'Banks', path: '/atributos/Banks' }
+    { title: 'Sizes', path: '/atributos/Sizes' }
   ];
-
 
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [filterColumn, setFilterColumn] = useState<string>('');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
 
   useEffect(() => {
-    // Puedes realizar alguna acción específica cuando cambia la lista de bancos
+    // Puedes realizar alguna acción específica cuando cambia la lista de tamaños
   }, [searchTerm, filterColumn, sortDirection]);
 
   const handleSearch = (value: string) => {
@@ -33,7 +30,7 @@ const View = () => {
     setFilterColumn(value);
   };
 
-  // Function to toggle sorting direction
+  // Función para cambiar la dirección de ordenación
   const handleSortToggle = () => {
     setSortDirection((prevSortDirection) => (prevSortDirection === 'asc' ? 'desc' : 'asc') as 'asc' | 'desc');
   };
@@ -46,14 +43,14 @@ const View = () => {
           onSearch={handleSearch}
           onFilterChange={handleFilterChange}
           onSortToggle={handleSortToggle}
-          columns={banksTable}
+          columns={sizeTable}
         />
         <Options />
       </div>
       <div className="mt-10">
         <ApiTable
-          getApiData={getBanks}
-          columns={banksTable}
+          getApiData={getSizes}
+          columns={sizeTable}
           searchTerm={searchTerm}
           filterColumn={filterColumn}
           sortDirection={sortDirection}
@@ -64,4 +61,4 @@ const View = () => {
   );
 };
 
-export default View;
+export default SizeView;

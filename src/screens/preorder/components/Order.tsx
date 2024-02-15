@@ -2,8 +2,8 @@ import { useState } from "react";
 import FilterColor from "./FilterColor";
 import FilterProducts from "./FilterProducts";
 import FilterSize from "./FilterSize";
-import { IProductsDtoAdd, ProductsDtoAdd } from "@/shared/interfaces/Preorder/ProductToAdd";
-
+import {IProductsDtoAdd, ProductsDtoAdd} from '@/shared/interfaces/Preorder/ProductToAdd'
+// import { IProductsDtoAdd, ProductsDtoAdd } from "@/shared/interfaces/Preorder/ProductToAdd";
 const newProductToAdd: IProductsDtoAdd = new ProductsDtoAdd();
 
 const Order = ({ productToAddList, setProductToAddList }) => {
