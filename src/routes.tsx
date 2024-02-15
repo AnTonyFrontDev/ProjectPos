@@ -10,6 +10,7 @@ import productRouter from "./screens/producto/router";
 import preOrderRouter from "./screens/preorder/router"
 import AtributosRouter from './screens/Atributos/router'
 import OrderRouter from "./screens/orders/router";
+import ReportPreOrderRouter from "./screens/report/reportPreOrder/router"
 
 export const publicRoutes = [].flat();
 
@@ -49,5 +50,9 @@ export const privateRoutes: RouteObject[] = [
     element:<MainLayout/>,
     children: [OrderRouter].flat()
   },
-
+  {
+    path:"/reporDiffItems",
+    element:<MainLayout/>,
+    children: [ReportPreOrderRouter].flat()
+  },
 ].flat();
