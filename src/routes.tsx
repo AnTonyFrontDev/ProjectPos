@@ -9,6 +9,7 @@ import customersRouter from "./screens/cliente/router";
 import productRouter from "./screens/producto/router";
 import preOrderRouter from "./screens/preorder/router"
 import AtributosRouter from './screens/Atributos/router'
+import OrderRouter from "./screens/orders/router";
 
 export const publicRoutes = [].flat();
 
@@ -42,6 +43,11 @@ export const privateRoutes: RouteObject[] = [
     path:"/atributos",
     element:<MainLayout/>,
     children: [AtributosRouter].flat()
+  },
+  {
+    path:"/AddOrder",
+    element:<MainLayout/>,
+    children: [OrderRouter].flat()
   },
 
 ].flat();
