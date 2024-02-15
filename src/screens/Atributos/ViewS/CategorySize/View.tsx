@@ -1,28 +1,26 @@
-// Banks.tsx
-import BreadcrumbData from "@/components/Breadcrumb";
-import ApiTable from '@/components/Tabla/apiTable';
-import Options from "../Bank/components/Options";
-import SearchFilter from '../Bank/components/SearchFilter';
+// CategorySize.tsx
 import { useEffect, useState } from 'react';
+import BreadcrumbData from '@/components/Breadcrumb';
+import ApiTable from '@/components/Tabla/apiTable';
+import Options from '../CategorySize/components/Options';
+import SearchFilter from '../CategorySize/components/SearchFilter';
 
-import { banksTable } from "@/components/Tabla/tData";
-import { getBanks } from "@/shared/Api/Bank/BankApi";
+import { categorySizeTable } from '@/components/Tabla/tData';
+import { getCategorySizes } from '@/shared/Api/CategorySize/CategorySizeApi';
 
 const View = () => {
   const routes = [
-    // { title: 'Home', path: '/' },
     { title: 'Dashboard', path: '/' },
     { title: 'Atributos', path: '/atributos' },
-    { title: 'Banks', path: '/atributos/Banks' }
+    { title: 'CategorySize', path: '/atributos/CategorySize' }
   ];
-
 
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [filterColumn, setFilterColumn] = useState<string>('');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
 
   useEffect(() => {
-    // Puedes realizar alguna acción específica cuando cambia la lista de bancos
+    // Puedes realizar alguna acción específica cuando cambia la lista de CategorySize
   }, [searchTerm, filterColumn, sortDirection]);
 
   const handleSearch = (value: string) => {
@@ -46,14 +44,14 @@ const View = () => {
           onSearch={handleSearch}
           onFilterChange={handleFilterChange}
           onSortToggle={handleSortToggle}
-          columns={banksTable}
+          columns={categorySizeTable}
         />
         <Options />
       </div>
       <div className="mt-10">
         <ApiTable
-          getApiData={getBanks}
-          columns={banksTable}
+          getApiData={getCategorySizes}
+          columns={categorySizeTable}
           searchTerm={searchTerm}
           filterColumn={filterColumn}
           sortDirection={sortDirection}

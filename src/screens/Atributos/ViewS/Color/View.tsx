@@ -1,28 +1,26 @@
-// Banks.tsx
+// Colors.tsx
 import BreadcrumbData from "@/components/Breadcrumb";
 import ApiTable from '@/components/Tabla/apiTable';
-import Options from "../Bank/components/Options";
-import SearchFilter from '../Bank/components/SearchFilter';
+import Options from "../Color/components/Options";
+import SearchFilter from '../Color/components/SearchFilter';
 import { useEffect, useState } from 'react';
 
-import { banksTable } from "@/components/Tabla/tData";
-import { getBanks } from "@/shared/Api/Bank/BankApi";
+import { colorTable } from "@/components/Tabla/tData";
+import { getColors } from "@/shared/Api/Color/ColorApi";
 
-const View = () => {
+const ColorView = () => {
   const routes = [
-    // { title: 'Home', path: '/' },
     { title: 'Dashboard', path: '/' },
     { title: 'Atributos', path: '/atributos' },
-    { title: 'Banks', path: '/atributos/Banks' }
+    { title: 'Colors', path: '/atributos/Colors' }
   ];
-
 
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [filterColumn, setFilterColumn] = useState<string>('');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
 
   useEffect(() => {
-    // Puedes realizar alguna acción específica cuando cambia la lista de bancos
+    // Puedes realizar alguna acción específica cuando cambia la lista de colores
   }, [searchTerm, filterColumn, sortDirection]);
 
   const handleSearch = (value: string) => {
@@ -33,7 +31,6 @@ const View = () => {
     setFilterColumn(value);
   };
 
-  // Function to toggle sorting direction
   const handleSortToggle = () => {
     setSortDirection((prevSortDirection) => (prevSortDirection === 'asc' ? 'desc' : 'asc') as 'asc' | 'desc');
   };
@@ -46,22 +43,22 @@ const View = () => {
           onSearch={handleSearch}
           onFilterChange={handleFilterChange}
           onSortToggle={handleSortToggle}
-          columns={banksTable}
+          columns={colorTable} // Asegúrate de tener la tabla correcta para los colores
         />
         <Options />
       </div>
       <div className="mt-10">
         <ApiTable
-          getApiData={getBanks}
-          columns={banksTable}
+          getApiData={getColors}
+          columns={colorTable} // Asegúrate de tener la tabla correcta para los colores
           searchTerm={searchTerm}
           filterColumn={filterColumn}
           sortDirection={sortDirection}
-          showActions={true} 
+          showActions={true}
         />
       </div>
     </div>
   );
 };
 
-export default View;
+export default ColorView;
