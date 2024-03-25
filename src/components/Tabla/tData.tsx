@@ -8,6 +8,7 @@ import { TypeProdColumns } from '../../shared/interfaces/Product/TypeProd/ITypeP
 import { CategorySizeColumns } from '../../shared/interfaces/size/CategorySize/ICategorySizeGet';
 import { ProductColumns } from '../../shared/interfaces/Product/IProductGet';
 import { ICustomersColumns, IClientGet } from '../../shared/interfaces/Client/IClientGet';
+import { PaymentTypeColumns } from '../../shared/interfaces/payment/paymentType/IPayment';
 
 interface Size {
   idInventory: number;
@@ -95,6 +96,11 @@ export const sizeTable: (ISizeGet | any)[] = [
   { title: 'Categoría', dataIndex: 'category', key: 'category' },
 ];
 export const typeProdTable: (TypeProdColumns | any)[] = [
+  { title: 'ID', dataIndex: 'id', key: 'id' },
+  { title: 'Tipo', dataIndex: 'type', key: 'type' },
+];
+
+export const paymentTypeTable: (PaymentTypeColumns | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
   { title: 'Tipo', dataIndex: 'type', key: 'type' },
 ];

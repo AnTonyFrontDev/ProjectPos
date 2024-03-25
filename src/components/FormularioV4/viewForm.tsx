@@ -11,6 +11,7 @@ const FormBank = lazy(() => import('@/screens/Atributos/ViewS/Bank/components/Fo
 const FormCSize = lazy(() => import('@/screens/Atributos/ViewS/CategorySize/components/FormCSize'));
 const FormColor = lazy(() => import('@/screens/Atributos/ViewS/Color/components/FormColor'));
 const FormSize = lazy(() => import('@/screens/Atributos/ViewS/Size/components/FormSize'));
+const FormPaymentType = lazy(() => import('@/screens/Atributos/ViewS/PaymentType/components/FormPaymentType'));
 
 
 
@@ -24,6 +25,7 @@ const formComponents: IFormComponents = {
   CSize: <Suspense fallback={<div>Loading...</div>}><FormCSize /></Suspense>,
   Color: <Suspense fallback={<div>Loading...</div>}><FormColor /></Suspense>,
   Size: <Suspense fallback={<div>Loading...</div>}><FormSize /></Suspense>,
+  TypePay: <Suspense fallback={<div>Loading...</div>}><FormPaymentType /></Suspense>,
   // Agrega más formularios según sea necesario
 };
 

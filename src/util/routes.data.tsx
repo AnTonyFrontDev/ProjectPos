@@ -12,6 +12,11 @@ export const SideData = [
         name: 'Inventario',
     },
     {
+        path: '/NewInventory',
+        icon: "inventory",
+        name: 'Compra',
+    },
+    {
         path: '/product',
         icon: "inventory",
         name: 'Productos',
@@ -46,11 +51,11 @@ export const SideData = [
         icon: "reports",
         name: 'Reportes',
     },
-    {
-        path: '/',
-        icon: "settings",
-        name: 'Settings',
-    },
+    // {
+    //     path: '/',
+    //     icon: "settings",
+    //     name: 'Settings',
+    // },
 ]
 
 export const OptInventory =[

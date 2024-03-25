@@ -6,7 +6,7 @@ import Options from '../CategorySize/components/Options';
 import SearchFilter from '../CategorySize/components/SearchFilter';
 
 import { categorySizeTable } from '@/components/Tabla/tData';
-import { getCategorySizes } from '@/shared/Api/CategorySize/CategorySizeApi';
+import { RemoveCategorySize, UpdateCategorySize, getCategorySizeById, getCategorySizes } from '@/shared/Api/CategorySize/CategorySizeApi';
 
 const View = () => {
   const routes = [
@@ -50,7 +50,11 @@ const View = () => {
       </div>
       <div className="mt-10">
         <ApiTable
+          idApiData={getCategorySizeById}
+          useForm="CSize"
           getApiData={getCategorySizes}
+          putApiData={UpdateCategorySize}
+          delApiData={RemoveCategorySize}
           columns={categorySizeTable}
           searchTerm={searchTerm}
           filterColumn={filterColumn}

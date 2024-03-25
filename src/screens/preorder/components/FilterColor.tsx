@@ -1,52 +1,66 @@
-import { useState } from "react";
-import { ColorFilterApi } from "@/shared/Api/Color/ColorApiFilter";
-import { IColorGet } from "@/shared/interfaces/Color/IColorGet";
+import React, { useState } from 'react';
+import { Select, Input, Button } from 'antd';
+import { ColorFilterApi } from '@/shared/Api/Color/ColorApiFilter';
+import { IColorGet } from '@/shared/interfaces/Color/IColorGet';
 
-const FilterColor = (props : { onColorSelected : (sizeId:string) => void})=>{
-    //colors
-    const [colors,setColors] = useState<IColorGet[]>([]);
-    //filtro
-    const [filter,setFilter] = useState("name"); 
-    //valor a filtrar
-    const [inputFilter,setInputFilter] = useState("");
+const { Option } = Select;
+// const colorFilterApi = new ColorFilterApi();
 
-    //handler inputFilter 
-    const handleInputFilter = (event:React.ChangeEvent<HTMLInputElement>)=>{
-        setInputFilter(event.target.value);
-    }
-    //handler para saber por que filtrar
-    const handleFilter = (event:React.ChangeEvent<HTMLSelectElement>)=>{
-        setFilter(event.target.value);
-    }
-    //handler para filtrar
-    const filterClick = async()=>{
-        const list = await ColorFilterApi.filterBy(filter,inputFilter);
-        setColors(list);
-    }
-    //handler para manejar el color seleccionado
-    const handleSelectedColor = (event : React.ChangeEvent<HTMLSelectElement>)=>{
-        props.onColorSelected(event.target.value);
-    }
-    return(
-        <div>
-            <select onChange={handleFilter}>
-                <option hidden value={filter}>Filtrar por:</option>
-                <option value="name">Por nombre</option>
-                <option value="colorCode">Por codigo de color</option>
-            </select>
-            <input type="text" value={inputFilter} onChange={handleInputFilter}/>
-            <button type="button" onClick={filterClick}>Filtrar</button>
+const FilterColor = (props: { onColorSelected: (colorId: string) => void }) => {
+  const [colors, setColors] = useState<IColorGet[]>([]);
+  const [filter, setFilter] = useState('name');
+  const [inputFilter, setInputFilter] = useState('');
 
-            {colors.length !== 0 &&(
-                <select onChange={handleSelectedColor}>
-                    <option value="" hidden>Selecciona un color</option>
-                    {colors.map((color)=>(
-                        <option value={color.id} key={color.id}>{color.colorname} #{color.code}</option>
-                    ))}
-                </select>
-            )}
-        </div>
-    )
-}
+  const handleInputFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputFilter(e.target.value);
+  };
+
+  const handleFilter = (value: string) => {
+    setFilter(value);
+  };
+
+  const filterClick = async () => {
+    const list = await ColorFilterApi.filterBy(filter, inputFilter);
+    setColors(list);
+  };
+
+  const handleSelectedColor = (value: string) => {
+    props.onColorSelected(value);
+  };
+
+  return (
+    <div>
+      <Select value={filter} onChange={handleFilter} style={{ width: 150, marginRight: 8 }}>
+        <Option value="name">Por nombre</Option>
+        <Option value="colorCode">Por código de color</Option>
+      </Select>
+
+      <Input
+        type="text"
+        value={inputFilter}
+        onChange={handleInputFilter}
+        style={{ width: 200, marginRight: 8 }}
+        placeholder={`Filtrar por ${filter}`}
+      />
+
+      <Button type="default" onClick={filterClick} style={{ marginRight: 8 }}>
+        Filtrar
+      </Button>
+
+      {colors.length !== 0 && (
+        <Select onChange={handleSelectedColor} style={{ width: 200 }}>
+          <Option value="" hidden>
+            Selecciona un color
+          </Option>
+          {colors.map((color) => (
+            <Option key={color.id} value={color.id}>
+              {`${color.colorname} #${color.code}`}
+            </Option>
+          ))}
+        </Select>
+      )}
+    </div>
+  );
+};
 
 export default FilterColor;

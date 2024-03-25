@@ -13,6 +13,16 @@ export const getCategorySizes = async () => {
   }
 };
 
+export const getCategorySizeById = async (categorySizeId : number) => {
+  try {
+    const response = await axios.get(`https://localhost:7065/api/CategorySize/GetCategorySize?id=${categorySizeId}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching category size with ID ${categorySizeId}:`, error);
+    throw error;
+  }
+};
+
 export const SaveCategorySize = async (formData: ICategorySizePost) => {
   try {
     const formattedData = formData;
@@ -56,13 +66,13 @@ export const UpdateCategorySize = async (formData: ICategorySizeUpdate) => {
   export const RemoveCategorySize = async (formData: ICategorySizeRemove) => {
     try {
       const formattedData = formData;
-      const response = await axios.post(
-        "https://localhost:7065/api/CategorySize/UpdateCategorySize",
-        formattedData,
+      const response = await axios.delete(
+        "https://localhost:7065/api/CategorySize/RemoveCategorySize",
         {
           headers: {
             "Content-Type": "application/json",
           },
+          data: formattedData,
         }
       );
   

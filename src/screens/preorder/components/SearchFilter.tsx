@@ -1,4 +1,3 @@
-// SearchFilter.tsx
 import { Input, Select } from 'antd';
 
 const { Search } = Input;
@@ -28,10 +27,10 @@ const SearchFilter = <T,>({ onSearch, onFilterChange, onSortToggle, columns }: S
   };
 
   return (
-    <div className="flex items-center space-x-4">
+    <div className="flex items-center space-x-4 p-4 bg-gray-100 rounded-md">
       <Search placeholder="Buscar..." onSearch={handleSearch} style={{ width: 200 }} />
       <Select placeholder="Filtrar por" onChange={handleFilterChange} style={{ width: 150 }}>
-        {columns.map(column => (
+        {columns.map((column) => (
           <Option key={column.dataIndex as string} value={column.title}>
             {column.title}
           </Option>

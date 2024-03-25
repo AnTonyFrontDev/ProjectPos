@@ -15,9 +15,8 @@ const Options = () => {
             <ButtonModal
               buttonText="New Client"
               modalTitle=""
+              size={16}
               modalContent={<ViewForm usarForm="Client" />}
-              // modalContent={<ViewForm usarForm="Client" />}
-              // modalContent={<InventoryForm/>}
               iconType={"dashboard" as keyof typeof APP_ICONS}
               cssColor='green'
             />

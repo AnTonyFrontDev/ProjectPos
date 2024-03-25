@@ -1,55 +1,70 @@
-import { useState } from "react";
-import { SizeApiFilter} from "@/shared/Api/Size/SizeApiFilter";
-import { ISizeGet } from "@/shared/interfaces/size/ISizeGet";
+import React, { useState } from 'react';
+import { SizeApiFilter } from '@/shared/Api/Size/SizeApiFilter';
+import { ISizeGet } from '@/shared/interfaces/size/ISizeGet';
+import { Select, Input, Button } from 'antd';
 
-const sizeApiFilter : SizeApiFilter = new SizeApiFilter();
-const FilterSize = (props : { onSizeSelected : (sizeId:string) => void})=>{
+const { Option } = Select;
+const sizeApiFilter: SizeApiFilter = new SizeApiFilter();
 
-    //estado para los sizes
-    const [sizes,setSizes] = useState<ISizeGet[]>([]);
-    //estado para el filtro
-    const [filter,setFilter] = useState('name');
-    //estado para el input
-    const [inputFilter,setInputFilter] = useState('');
-    //handler para manejar el filtro
-    const handlerFilter = (event : React.ChangeEvent<HTMLSelectElement>)=>{
-        setFilter(event.target.value);
-    }
-    //handler para manejar el input de filtro
-    const handlerInputFilter = (event : React.ChangeEvent<HTMLInputElement>)=>{
-        setInputFilter(event.target.value);
-    }
-    //handler para filtrar
-    const handleBtnFilter = async ()=>{
-        const list = await sizeApiFilter.filterBy(filter,inputFilter);
-        setSizes(list);
-    }
-    //handler para manejar el size seleccionado
-    const handleSelectedSize = (event : React.ChangeEvent<HTMLSelectElement>)=>{
-        props.onSizeSelected(event.target.value);
-    }
-    return(
-        <div>
-            <select onChange={handlerFilter}>
-                <option value={filter} hidden>Selecciona una opcion</option>
-                <option value="name">Por nombre</option>
-                <option value="category">Por categoria</option>
-            </select>
+const FilterSize = (props: { onSizeSelected: (sizeId: string) => void }) => {
+  const [sizes, setSizes] = useState<ISizeGet[]>([]);
+  const [filter, setFilter] = useState('name');
+  const [inputFilter, setInputFilter] = useState('');
 
-            <input type="text" value={inputFilter} onChange={handlerInputFilter}/>
-            <button type="button" onClick={handleBtnFilter}>Filtrar</button>
+  const handlerFilter = (value: string) => {
+    setFilter(value);
+  };
 
-            {sizes.length !== 0 && (
-                <select onChange={handleSelectedSize}>
-                    <option value="" hidden>Selecciona un size</option>
-                    {sizes.map((size)=>(
-                        <option key={size.id} value={size.id}>{size.size}</option>
-                    ))}
-                </select>
-            )}
-        </div>
-    )
-}
+  const handlerInputFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputFilter(e.target.value);
+  };
 
+  const handleBtnFilter = async () => {
+    const list = await sizeApiFilter.filterBy(filter, inputFilter);
+    setSizes(list);
+  };
+
+  const handleSelectedSize = (value: string) => {
+    props.onSizeSelected(value);
+  };
+
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+      <Select
+        value={filter}
+        style={{ width: 190 }}
+        onChange={handlerFilter}
+      >
+        <Option value="name">Por nombre</Option>
+        <Option value="category">Por categoría</Option>
+      </Select>
+
+      <Input
+        value={inputFilter}
+        onChange={handlerInputFilter}
+        placeholder={`Filtrar por ${filter}`}
+        style={{ width: 200 }}
+      />
+
+      <Button type="default" onClick={handleBtnFilter}>
+        Filtrar
+      </Button>
+
+      {sizes.length !== 0 && (
+        <Select
+          onChange={handleSelectedSize}
+          style={{ width: 200 }}
+          placeholder="Selecciona un tamaño"
+        >
+          {sizes.map((size) => (
+            <Option key={size.id} value={size.id}>
+              {size.size}
+            </Option>
+          ))}
+        </Select>
+      )}
+    </div>
+  );
+};
 
 export default FilterSize;

@@ -67,6 +67,7 @@ const Customers = () => {
       <div className="mt-10">
         <ApiTable
           getApiData={getClients}
+          
           columns={customersTable}
           searchTerm={searchTerm}
           filterColumn={filterColumn}

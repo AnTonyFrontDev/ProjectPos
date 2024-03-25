@@ -5,3 +5,10 @@ export interface IPaymentTypePost {
     type: string
   }
   
+  export class PaymentTypePostDto implements IPaymentTypePost {
+    id: number = 0;
+    user: number = 0;
+    date: string = '';
+    type: string = '';
+  }
+  

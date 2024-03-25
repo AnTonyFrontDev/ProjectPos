@@ -5,6 +5,9 @@ import PropTypes from 'prop-types';
 
 interface GenericTableProps {
   getApiData: () => Promise<any[]>;
+  idApiData?: (id: number) => Promise<any[]>;
+  putApiData?: (data: any) => Promise<any[]>;
+  delApiData?: (id: any) => Promise<any[]>;
   columns: any[];
   searchTerm: string;
   filterColumn?: string;
@@ -13,36 +16,44 @@ interface GenericTableProps {
   showActions?: boolean;
 }
 
-const GenericTable: React.FC<GenericTableProps> = ({ getApiData, columns, searchTerm, filterColumn, sortDirection, handleTableRowClick, showActions }) => {
+const GenericTable: React.FC<GenericTableProps> = ({
+  getApiData, 
+  putApiData, 
+  delApiData, 
+  columns, 
+  searchTerm, 
+  filterColumn, 
+  sortDirection, 
+  handleTableRowClick, 
+  showActions }) => {
   const [data, setData] = useState<any[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const apiData = await getApiData();
-        // Apply search filter
+        
         let filteredData = apiData.filter(item =>
           Object.values(item).some(value =>
             typeof value === 'string' && value.toLowerCase().includes(searchTerm.toLowerCase())
           )
         );
 
-        
         if (filterColumn) {
           filteredData = filteredData.filter(item => item[filterColumn] !== undefined && item[filterColumn] !== null);
         }
 
-        
         if (filterColumn) {
           filteredData = filteredData.sort((a, b) => {
             const aValue = a[filterColumn];
             const bValue = b[filterColumn];
 
             if (typeof aValue === 'string' && typeof bValue === 'string') {
-              
+
               return sortDirection === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
             } else {
-              
+
               return sortDirection === 'asc' ? aValue - bValue : bValue - aValue;
             }
           });
@@ -57,42 +68,58 @@ const GenericTable: React.FC<GenericTableProps> = ({ getApiData, columns, search
     fetchData();
   }, [getApiData, searchTerm, filterColumn, sortDirection]);
 
-// ... (código anterior)
 
-const handleEdit = (record: any) => {
-  console.log('Edit:', record);
-};
 
-const handleDelete = (record: any) => {
-  console.log('Delete:', record);
-};
+  const handleEdit = async (record: any) => {
+    console.log('Edit:', record);
+    if (putApiData) {
+      try {
+        await putApiData(record.id);
+        setIsModalOpen(true);
+      } catch (error) {
+        console.error('Error al editar el registro', error);
+      }
+    }
+  };
 
-const actionsColumn = showActions
+
+  const handleDelete = async (record: any) => {
+    console.log('Delete:', record);
+    if (delApiData) {
+      try {
+        await delApiData(record);
+      } catch (error) {
+        console.error('Error al eliminar el registro', error);
+      }
+    }
+  };
+
+  const actionsColumn = showActions
     ? [
-        {
-          title: 'Actions',
-          key: 'actions',
-          render: ( record: any) => (
-            <span>
-              <button 
-                className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-2 rounded'
-                onClick={() => handleEdit(record)}
-              >
-                Edit
-              </button>
-              <button 
-                className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'
-                onClick={() => handleDelete(record)}
-              >
-                Delete
-              </button>
-            </span>
-          ),
-        },
-      ]
+      {
+        title: 'Actions',
+        key: 'actions',
+        render: (record: any) => (
+          <span>
+            <button
+              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-2 rounded'
+              onClick={() => handleEdit(record)}
+            >
+              Edit
+            </button>
+            <button
+              className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'
+              onClick={() => handleDelete(record)}
+            >
+              Delete
+            </button>
+          </span>
+        ),
+      },
+    ]
     : [];
 
-// ... (código posterior)
+  // ... (código posterior)
 
 
   return (
@@ -104,8 +131,8 @@ const actionsColumn = showActions
           onClick: () => handleTableRowClick(record),
         }),
       }))}
-      
-      
+
+
     />
   );
 };

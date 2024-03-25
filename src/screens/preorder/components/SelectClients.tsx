@@ -1,68 +1,64 @@
-// // import { Modal } from "antd";
-import { useState } from "react";
-import { IClientGet } from "@/shared/interfaces/Client/IClientGet";
-import { CustomersFilterApi } from "@/shared/Api/Customers/customersApiFilter";
+import React, { useState } from 'react';
+import { Select, Input, Button } from 'antd';
+import { IClientGet } from '@/shared/interfaces/Client/IClientGet';
+import { CustomersFilterApi } from '@/shared/Api/Customers/customersApiFilter';
 
-//controlador de filtros
+const { Option } = Select;
 const filterController: CustomersFilterApi = new CustomersFilterApi();
 
-const SelectClients = (props: { onClientSelect : (clientId : string) => void  }) => {
-    //handler del select de clientes
-  const handleClientSelect = (event : React.ChangeEvent<HTMLSelectElement>) =>{
-    const clientId = event.target.value;
-    props.onClientSelect(clientId);
-  }
-  //estado para la opcion seleccionada
-  const [selectedOption, setSelectedOption] = useState("fullName");
-  //estado para el filtro
-  const [filter, setFilter] = useState("");
-  //estado para los clientes
+const SelectClients = (props: { onClientSelect: (clientId: string) => void }) => {
+  const [selectedOption, setSelectedOption] = useState('fullName');
+  const [filter, setFilter] = useState('');
   const [clients, setClients] = useState<IClientGet[]>([]);
-  //handler para manejar sobre que tipo vamos a filtrar 
-  const changeOption = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedOption(event.target.value);
+
+  const changeOption = (value: string) => {
+    setSelectedOption(value);
   };
-  //handler del input para filtrar
-  const changeInputFilter = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFilter(event.target.value);
-}
+
+  const changeInputFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFilter(e.target.value);
+  };
 
   const handleFilter = async () => {
-    
     const list = await filterController.filterBy(selectedOption, filter);
     setClients(list);
-    
   };
+
+  const handleClientSelect = (value: string) => {
+    props.onClientSelect(value);
+  };
+
   return (
     <div>
       <h2>Valor actual {selectedOption}</h2>
-      <select value={selectedOption} onChange={changeOption}>
-        <option value="fullName" defaultValue={"fullName"}>
-          Nombre completo
-        </option>
-        <option value="rnc">RNC</option>
-        <option value="cedula">Cedula</option>
-      </select>
-      <input type="text" value={filter} onChange={changeInputFilter}/>
-      <button onClick={handleFilter} type="button">
+      <Select value={selectedOption} onChange={changeOption} style={{ width: 190, marginRight: 8 }}>
+        <Option value="fullName">Nombre completo</Option>
+        <Option value="rnc">RNC</Option>
+        <Option value="cedula">Cedula</Option>
+      </Select>
+      <Input
+        type="text"
+        value={filter}
+        onChange={changeInputFilter}
+        style={{ width: 200, marginRight: 8 }}
+        placeholder={`Filtrar por ${selectedOption}`}
+      />
+      <Button type="default" onClick={handleFilter} style={{ marginRight: 8 }}>
         Filtrar
-      </button>
+      </Button>
 
       {clients.length > 0 && (
-        <select onChange={handleClientSelect} > 
-        <option value="" hidden>Selecciona una opción </option>
+        <Select onChange={handleClientSelect} style={{ width: 200 }}>
+          <Option value="" hidden>
+            Selecciona una opción
+          </Option>
           {clients.map((client) => (
-            <option key={client.id} value={client.id}>
-              {client.f_name} {client.l_name}
-            </option>
+            <Option key={client.id} value={client.id}>
+              {`${client.f_name} ${client.l_name}`}
+            </Option>
           ))}
-        </select>
+        </Select>
       )}
-
-      {/* {props.clients.map(client =>(
-           
-
-        ))} */}
     </div>
   );
 };
