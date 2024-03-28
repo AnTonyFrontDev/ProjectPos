@@ -1,98 +1,201 @@
-import { useInventoryForm } from '@/screens/inventory/hooks/useInventoryForm';
-import FilterColor from '@/screens/preorder/components/FilterColor';
-import FilterProducts from '@/screens/preorder/components/FilterProducts';
-import FilterSize from '@/screens/preorder/components/FilterSize';
-import { Table, Button } from 'antd';
-import React from 'react';
-// import FilterProducts from './FilterProducts'; // Asegúrate de importar tus componentes necesarios
-// import FilterSize from './FilterSize';
-// import FilterColor from './FilterColor';
+import React, { useState } from 'react';
+import Select from 'react-select';
+import { IOrderPost, IOrderProduct } from '@/shared/interfaces/order/IOrderPost';
+import ButtonModal from '@/components/Modal/ButtonModal';
+import ViewForm from '@/components/FormularioV4/viewForm';
+import { SaveOrder } from '@/shared/Api/Order/OrderApi';
+import useColorOptions from '@/screens/AddInventory/hooks/useColorOptions';
+import useClientOptions from '@/screens/AddInventory/hooks/useClientOptions';
+import usePreOrderOptions from '@/screens/AddInventory/hooks/usePreOrderOptions';
 
 
-const Order: React.FC = () => {
-    const { formData, setFormData, addExistence, handleSubmit, handleAddInventory, handleProductSelect, handleSizeSelect, handleColorSelect } = useInventoryForm();
+const tableHeadClasses = "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider";
+const tableSelectsClasses = "block w-full py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm";
+const formInputsClasses = "px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500";
 
-    const data = [
-        { key: '1', cliente: 'Cliente 1', producto: 'Producto 1', size: 'M', colores: 'Azul', cantidad: 2, precioUnitario: 10 },
-        { key: '2', cliente: 'Cliente 2', producto: 'Producto 2', size: 'L', colores: 'Rojo', cantidad: 1, precioUnitario: 15 },
-        // ... más datos
-      ];
-    
-      // Columnas de la tabla
-      const columns = [
-        { title: 'Cliente', dataIndex: 'cliente', key: 'cliente' },
-        { title: 'Producto', dataIndex: 'producto', key: 'producto' },
-        { title: 'Size', dataIndex: 'size', key: 'size' },
-        { title: 'Colores', dataIndex: 'colores', key: 'colores' },
-        { title: 'Cantidad', dataIndex: 'cantidad', key: 'cantidad' },
-        { title: 'Precio Unitario', dataIndex: 'precioUnitario', key: 'precioUnitario' },
-        { title: 'Total', dataIndex: 'total', key: 'total', render: (_, record) => record.cantidad * record.precioUnitario },
-      ];
+const AddOrder = () => {
+  const [formData, setFormData] = useState<IOrderPost>({
+    id: 0,
+    user: 1,
+    date: new Date().toISOString(),
+    fkClient: 0,
+    fkUser: 0,
+    checked: true,
+    fkPreOrder: 0,
+    descriptionJob: "",
+    products: [],
+  });
+  const [tableData, setTableData] = useState<IOrderProduct[]>([]);
+  const { PreOrderOptions } = usePreOrderOptions();
+  const { clientOptions } = useClientOptions();
+  const { colorOptions } = useColorOptions();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleAddRow = () => {
+    const newRow: IOrderProduct = {
+      fkOrder: formData.id,
+      fkInventoryColor: 0,
+      quantity: 0,
+    };
+    setTableData([...tableData, newRow]);
+  };
+
+  const handleSave = async () => {
+    // if (!formData.fkClient || !formData.descriptionJob || !tableData.length) {
+    //   alert('Por favor completa todos los campos.');
+    //   return;
+    // }
+
+    try {
+      const formDataWithProducts = {
+        ...formData,
+        products: tableData,
+      };
+      await AddOrder(formDataWithProducts);
+      setFormData({
+        id: 0,
+        user: 1,
+        date: new Date().toISOString(),
+        fkClient: 0,
+        fkUser: 0,
+        checked: true,
+        fkPreOrder: 0,
+        descriptionJob: "",
+        products: [],
+      });
+      setTableData([]);
+      alert('Orden guardada exitosamente');
+    } catch (error) {
+      console.error('Error al guardar la orden:', error);
+      alert('Error al guardar la orden. Por favor, inténtalo de nuevo.');
+    }
+  };
+
+  const handleSelectChange = (value: number, rowIndex: number, fieldName: keyof IOrderProduct) => {
+    const updatedTableData = [...tableData];
+    updatedTableData[rowIndex][fieldName] = value;
+    setTableData(updatedTableData);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, rowIndex: number, fieldName: keyof IOrderProduct) => {
+    const { value } = e.target;
+    const updatedTableData = [...tableData];
+    updatedTableData[rowIndex][fieldName] = parseInt(value, 10);
+    setTableData(updatedTableData);
+  };
+
+  const handleChangeClient = (value: number) => {
+    setFormData({
+      ...formData,
+      fkClient: value
+    });
+  };
+
   return (
-    <div>
-
-    
-    <form onSubmit={handleSubmit} className="p-8">
-      {/* Primera columna */}
-      <div className="mb-6">
-        <FilterProducts onProductSelect={handleProductSelect} />
-        <FilterSize onSizeSelected={handleSizeSelect} />
-
+    <div className="container mx-auto">
+      <h1 className="text-2xl font-bold mb-4">Agregar Orden</h1>
+      <div className='flex gap-4'>
+        <div className='flex flex-col'>
+          <label className='mb-1'>Cliente:</label>
+          <Select
+            className={tableSelectsClasses}
+            options={clientOptions.map(client => ({
+              value: client.id,
+              label: client.f_name +" "+client.l_name + " " + client.f_surname +" "+client.l_surname
+            }))}
+            value={{
+              value: clientOptions.find(client => client.id === formData.fkClient)?.id || 0,
+              label: `${clientOptions.find(client => client.id === formData.fkClient)?.f_name || ""} 
+               ${clientOptions.find(client => client.id === formData.fkClient)?.l_name || ""}
+               ${clientOptions.find(client => client.id === formData.fkClient)?.f_surname || ""}
+               ${clientOptions.find(client => client.id === formData.fkClient)?.l_surname || ""}`
+            }}
+            onChange={(selectedOption) => handleChangeClient(selectedOption?.value || 0)}
+            isSearchable
+          />
+        </div>
+        <div className='flex flex-col'>
+          <label>Pedido:</label>
+          <Select
+            className={tableSelectsClasses}
+            options={clientOptions.map(client => ({
+              value: client.id,
+              label: client.f_name +" "+client.l_name + " " + client.f_surname +" "+client.l_surname
+            }))}
+            value={{
+              value: clientOptions.find(client => client.id === formData.fkClient)?.id || 0,
+              label: `${clientOptions.find(client => client.id === formData.fkClient)?.f_name || ""} 
+               ${clientOptions.find(client => client.id === formData.fkClient)?.l_name || ""}
+               ${clientOptions.find(client => client.id === formData.fkClient)?.f_surname || ""}
+               ${clientOptions.find(client => client.id === formData.fkClient)?.l_surname || ""}`
+            }}
+            onChange={(selectedOption) => handleChangeClient(selectedOption?.value || 0)}
+            isSearchable
+          />
+        </div>
+        <div className='flex flex-col'>
+          <label>Descripcion:</label>
+          <input type="text" name="descriptionJob" value={formData.descriptionJob} onChange={handleChange}
+            className={formInputsClasses} />
+        </div>
+        <div className='flex'>
+          <button
+            onClick={handleSave}
+            className="bg-green-500 hover:bg-green-700 text-white font-bold mx-2 mt-5 py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          >
+            Guardar
+          </button>
+        </div>
       </div>
 
-      {/* Segunda columna */}
-      <div className="mb-6">
-        <hr className="my-4" />
+      <table className="min-w-full divide-y divide-gray-200 mt-3">
+        <thead className="bg-gray-50">
+          <tr>
+            <th className={tableHeadClasses}>#</th>
+            <th className={tableHeadClasses}>Producto</th>
+            <th className={tableHeadClasses}>Cantidad</th>
+          </tr>
+        </thead>
+        <tbody className="bg-white divide-y divide-gray-200">
+          {tableData.map((row, index) => (
+            <tr key={index}>
+              <td className="w-14 px-6 py-4">{index + 1}</td>
+              <td>
+                
+              </td>
+              <td className='w-14'>
+                <input
+                  type="number"
+                  value={row.quantity}
+                  onChange={(e) => handleInputChange(e, index, 'quantity')}
+                  className="w-full px-2 py-1 rounded-md border border-gray-300 focus:outline-none focus:border-indigo-500"
+                  min="0"
 
-        {/* Iterar sobre las existencias y mostrar un formulario para cada una */}
-        {formData.inventoryColors.map((existence, index) => (
-          <div key={index} className="mb-4">
-            <FilterColor onColorSelected={(sizeId) => handleColorSelect(sizeId, true, index)} />
-            <FilterColor onColorSelected={(sizeId) => handleColorSelect(sizeId, false, index)} />
-
-            <label htmlFor={`quantity-${index}`} className="block mt-2">Cantidad:</label>
-            <input
-              type="number"
-              id={`quantity-${index}`}
-              name={`quantity-${index}`}
-              value={existence.quantity}
-              onChange={(e) =>
-                setFormData((prevInventory) => ({
-                  ...prevInventory,
-                  inventoryColors: prevInventory.inventoryColors.map((item, i) =>
-                    i === index ? { ...item, quantity: Number(e.target.value) } : item
-                  ),
-                }))
-              }
-              required
-              className="mt-1 p-2 border border-gray-300 rounded w-full"
-            />
-          </div>
-        ))}
-        
-
-        {/* Botón para agregar nueva existencia */}
-        <Button type="default" onClick={addExistence} className="bg-primary px-4 rounded">
-          Agregar Existencia
-        </Button>
-      </div>
-
-      {/* Tercera columna */}
-      <div>
-        {/* Botón para agregar el inventario */}
-        <Button type="default" onClick={handleSubmit} className="bg-secondary px-4 rounded">
-          Agregar Inventario
-        </Button>
-      </div>
-    </form>
-
-    
-
-    <Table dataSource={data} columns={columns} className="mt-4" />
-
+                />
+              </td>
+            </tr>
+          ))}
+          <tr>
+            <td className="px-2 py-2">
+              <button
+                onClick={handleAddRow}
+                className="bg-green-500 hover:bg-green-700 text-white font-bold mx-2 py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              >
+                +
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    
   );
 };
 
-export default Order;
+export default AddOrder;

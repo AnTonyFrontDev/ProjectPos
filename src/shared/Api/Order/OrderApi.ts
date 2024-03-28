@@ -1,6 +1,6 @@
 import { IOrderPost } from "@/shared/interfaces/order/IOrderPost";
 import axios from "axios";
-import { url } from "../Common/url";
+import { URL } from "../Common/url";
 import { IOrderUpdateStatus } from "@/shared/interfaces/order/IOrderUpdateStatus";
 import { IPreOrderKeys } from "@/shared/interfaces/Preorder/IPreOrderKeys";
 import { IInventoryToAddOrder } from "@/shared/interfaces/Inventory/IInventoryToAddOrder";
@@ -9,7 +9,7 @@ export const SaveOrder = async (formData: IOrderPost) => {
     try {
       const formattedData = formData;
       const response = await axios.post(
-        `${url}/Order/AddOrder`,
+        `${URL}/Order/AddOrder`,
         formattedData,
         {
           headers: {
@@ -29,7 +29,7 @@ export const SaveOrder = async (formData: IOrderPost) => {
     try {
       const formattedData = formData;
       const response = await axios.post(
-        `${url}/Order/UpdateStatusOrder`,
+        `${URL}/Order/UpdateStatusOrder`,
         formattedData,
         {
           headers: {
@@ -50,7 +50,7 @@ export const SaveOrder = async (formData: IOrderPost) => {
     try {
       const formattedData = formData;
       const response = await axios.post(
-        `${url}/Order/GetInvColorAvailableToAddOrder`,
+        `${URL}/Order/GetInvColorAvailableToAddOrder`,
         formattedData,
         {
           headers: {

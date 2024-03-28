@@ -7,22 +7,12 @@ import { AddBuy } from '@/shared/Api/BuyInventory/BuyApi';
 import { IBuyPost, IInventoryDetailDto } from '@/shared/interfaces/BuyInventory/IBuyInvPost';
 import ButtonModal from '@/components/Modal/ButtonModal';
 import ViewForm from '@/components/FormularioV4/viewForm';
-import { APP_ICONS } from '@/shared/constants/icons-constants';
-import { Popover } from 'antd';
+
 
 const tableHeadClasses = "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider";
 const tableSelectsClasses = "block w-full py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
 const formInputsClasses = "px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
 
-// interface TableRow {
-//     fK_BUY_INVENTORY: number;
-//     FK_PRODUCT: number;
-//     quantity: number;
-//     price: number;
-//     fK_SIZE: number;
-//     coloR_PRIMARY: number;
-//     coloR_SECONDARY: number;
-// }
 
 const AddInventory = () => {
     const [formData, setFormData] = useState<IBuyPost>({
@@ -85,6 +75,7 @@ const AddInventory = () => {
             console.error('Error al guardar la compra:', error);
             alert('Error al guardar la compra. Por favor, inténtalo de nuevo.');
         }
+        handleTest();
     };
 
     const handleTest = () => {
@@ -101,6 +92,7 @@ const AddInventory = () => {
         const updatedTableData = [...tableData];
         updatedTableData[rowIndex][fieldName] = value;
         setTableData(updatedTableData);
+
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, rowIndex: number, fieldName: keyof IInventoryDetailDto) => {

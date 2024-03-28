@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getProducts } from '@/shared/Api/ProductsApi';
 import { IProduct } from '../../../shared/interfaces/Product/IProduct';
-import { getColors } from '@/shared/Api/Color/ColorApi';
-getColors
+
 
 const useProductOptions = () => {
     const [productOptions, setProductOptions] = useState<IProduct[]>([]);
