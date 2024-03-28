@@ -58,17 +58,22 @@ const AddOrder = () => {
         ...formData,
         products: tableData,
       };
-      await AddOrder(formDataWithProducts);
+      await SaveOrder(formDataWithProducts);
+
       setFormData({
         id: 0,
-        user: 1,
+        user: 0,
         date: new Date().toISOString(),
         fkClient: 0,
         fkUser: 0,
         checked: true,
         fkPreOrder: 0,
         descriptionJob: "",
-        products: [],
+        products: [{
+          fkOrder: 0,
+          fkInventoryColor: 0,
+          quantity: 0,
+        }],
       });
       setTableData([]);
       alert('Orden guardada exitosamente');
@@ -108,7 +113,7 @@ const AddOrder = () => {
             className={tableSelectsClasses}
             options={clientOptions.map(client => ({
               value: client.id,
-              label: client.f_name +" "+client.l_name + " " + client.f_surname +" "+client.l_surname
+              label: client.f_name + " " + client.l_name + " " + client.f_surname + " " + client.l_surname
             }))}
             value={{
               value: clientOptions.find(client => client.id === formData.fkClient)?.id || 0,
@@ -127,7 +132,7 @@ const AddOrder = () => {
             className={tableSelectsClasses}
             options={clientOptions.map(client => ({
               value: client.id,
-              label: client.f_name +" "+client.l_name + " " + client.f_surname +" "+client.l_surname
+              label: client.f_name + " " + client.l_name + " " + client.f_surname + " " + client.l_surname
             }))}
             value={{
               value: clientOptions.find(client => client.id === formData.fkClient)?.id || 0,
@@ -168,7 +173,7 @@ const AddOrder = () => {
             <tr key={index}>
               <td className="w-14 px-6 py-4">{index + 1}</td>
               <td>
-                
+
               </td>
               <td className='w-14'>
                 <input
