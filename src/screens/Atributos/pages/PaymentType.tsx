@@ -1,8 +1,11 @@
 // import React from 'react'
+import { View } from "../ViewS/PaymentType";
 
 const PaymentType = () => {
   return (
-    <div>PaymentType</div>
+    <div>PaymentType
+      <View/>
+    </div>
   )
 }
 

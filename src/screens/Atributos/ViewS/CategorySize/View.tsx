@@ -1,11 +1,11 @@
 // CategorySize.tsx
 import { useEffect, useState } from 'react';
 import BreadcrumbData from '@/components/Breadcrumb';
-import ApiTable from '@/components/Tabla/apiTable';
+import ApiTable from '@/components/Generics/Tabla/apiTable';
 import Options from '../CategorySize/components/Options';
 import SearchFilter from '../CategorySize/components/SearchFilter';
 
-import { categorySizeTable } from '@/components/Tabla/tData';
+import { categorySizeTable } from '@/components/Generics/Tabla/tData';
 import { RemoveCategorySize, UpdateCategorySize, getCategorySizeById, getCategorySizes } from '@/shared/Api/CategorySize/CategorySizeApi';
 
 const View = () => {

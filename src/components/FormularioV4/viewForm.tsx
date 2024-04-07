@@ -12,6 +12,7 @@ const FormCSize = lazy(() => import('@/screens/Atributos/ViewS/CategorySize/comp
 const FormColor = lazy(() => import('@/screens/Atributos/ViewS/Color/components/FormColor'));
 const FormSize = lazy(() => import('@/screens/Atributos/ViewS/Size/components/FormSize'));
 const FormPaymentType = lazy(() => import('@/screens/Atributos/ViewS/PaymentType/components/FormPaymentType'));
+const FormExpenses = lazy(() => import('@/screens/Atributos/ViewS/Expenses/components/FormExpenses'));
 
 
 
@@ -26,6 +27,7 @@ const formComponents: IFormComponents = {
   Color: <Suspense fallback={<div>Loading...</div>}><FormColor /></Suspense>,
   Size: <Suspense fallback={<div>Loading...</div>}><FormSize /></Suspense>,
   TypePay: <Suspense fallback={<div>Loading...</div>}><FormPaymentType /></Suspense>,
+  Expenses: <Suspense fallback={<div>Loading...</div>}><FormExpenses /></Suspense>,
   // Agrega más formularios según sea necesario
 };
 

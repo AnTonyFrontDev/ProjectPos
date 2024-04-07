@@ -3,7 +3,7 @@ import { IPreOrderGet } from '@/shared/interfaces/Preorder/IPreOrderGet';
 import { getPreOrders } from '@/shared/Api/PreOrder/PreOrderApi';
 
 const usePreOrderOptions = () => {
-    const [PreOrderOptions, setPreOrderOptions] = useState<IPreOrderGet[]>([]);
+    const [preOrderOptions, setPreOrderOptions] = useState<IPreOrderGet[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<Error | null>(null);
 
@@ -23,7 +23,7 @@ const usePreOrderOptions = () => {
         fetchPreOrder();
     }, []);
 
-    return { PreOrderOptions, isLoading, error };
+    return { preOrderOptions, isLoading, error };
 };
 
 export default usePreOrderOptions;

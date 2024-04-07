@@ -1,19 +1,19 @@
 // Banks.tsx
 import BreadcrumbData from "@/components/Breadcrumb";
-import ApiTable from '@/components/Tabla/apiTable';
-import Options from "../Bank/components/Options";
+import ApiTable from '@/components/Generics/Tabla/apiTable';
+import Options from "../Expenses/components/Options";
 import SearchFilter from '../Bank/components/SearchFilter';
 import { useEffect, useState } from 'react';
 
-import { banksTable } from "@/components/Tabla/tData";
-import { getBanks } from "@/shared/Api/Bank/BankApi";
+import { expensesTable } from "@/components/Generics/Tabla/tData";
+import { getExpenses } from "@/shared/Api/Expenses/ExpensesApi";
 
 const View = () => {
   const routes = [
     // { title: 'Home', path: '/' },
     { title: 'Dashboard', path: '/' },
     { title: 'Atributos', path: '/atributos' },
-    { title: 'Banks', path: '/atributos/Banks' }
+    { title: 'Expenses', path: '/atributos/Expenses' }
   ];
 
 
@@ -46,14 +46,14 @@ const View = () => {
           onSearch={handleSearch}
           onFilterChange={handleFilterChange}
           onSortToggle={handleSortToggle}
-          columns={banksTable}
+          columns={expensesTable}
         />
         <Options />
       </div>
       <div className="mt-10">
         <ApiTable
-          getApiData={getBanks}
-          columns={banksTable}
+          getApiData={getExpenses}
+          columns={expensesTable}
           searchTerm={searchTerm}
           filterColumn={filterColumn}
           sortDirection={sortDirection}

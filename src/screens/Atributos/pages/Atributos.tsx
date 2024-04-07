@@ -49,6 +49,12 @@ const Atributos = () => {
           >
             Expenses
           </Link>
+          <Link
+            to="/atributos/Payment"
+            className="text-orange-500 hover:underline block p-6 bg-orange-100 rounded-md shadow-md"
+          >
+            Payment
+          </Link>
         </div>
       </div>
     </div>

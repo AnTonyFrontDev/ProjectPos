@@ -1,6 +1,6 @@
 
 // import React from 'react'
-import ButtonModal from '@/components/Modal/ButtonModal';
+import ButtonModal from '@/components/Generics/Modal/ButtonModal';
 import ViewForm from '@/components/FormularioV4/viewForm';
 import { APP_ICONS } from '@/shared/constants/icons-constants';
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Tooltip } from 'antd';
-import { AppIcon } from '../ui/AppIcon';
+import { AppIcon } from '../../ui/AppIcon';
 import { APP_ICONS } from '@/shared/constants/icons-constants';
 
 

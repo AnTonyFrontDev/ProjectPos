@@ -1,11 +1,11 @@
 // SizeView.tsx
 import { useEffect, useState } from 'react';
 import BreadcrumbData from "@/components/Breadcrumb";
-import ApiTable from '@/components/Tabla/apiTable';
+import ApiTable from '@/components/Generics/Tabla/apiTable';
 import Options from "../Size/components/Options";
 import SearchFilter from '../Size/components/SearchFilter';
 import { getSizes } from "@/shared/Api/Size/SizeApi";
-import { sizeTable } from '@/components/Tabla/tData';
+import { sizeTable } from '@/components/Generics/Tabla/tData';
 
 const SizeView = () => {
   const routes = [

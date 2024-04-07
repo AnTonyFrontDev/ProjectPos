@@ -1,14 +1,15 @@
 // tData.ts
 // import React from 'react';
 import { ISizeGet } from '@/shared/interfaces/size/ISizeGet';
-import { BankColumns } from '../../shared/interfaces/Bank/IBankGet';
-import { IColorGet } from '../../shared/interfaces/Color/IColorGet';
-import { ExpensesColumns } from '../../shared/interfaces/Expenses/IExpensesGet';
-import { TypeProdColumns } from '../../shared/interfaces/Product/TypeProd/ITypeProdGet';
-import { CategorySizeColumns } from '../../shared/interfaces/size/CategorySize/ICategorySizeGet';
-import { ProductColumns } from '../../shared/interfaces/Product/IProductGet';
-import { ICustomersColumns, IClientGet } from '../../shared/interfaces/Client/IClientGet';
-import { PaymentTypeColumns } from '../../shared/interfaces/payment/paymentType/IPayment';
+import { BankColumns } from '../../../shared/interfaces/Bank/IBankGet';
+import { IColorGet } from '../../../shared/interfaces/Color/IColorGet';
+import { ExpensesColumns } from '../../../shared/interfaces/Expenses/IExpensesGet';
+import { TypeProdColumns } from '../../../shared/interfaces/Product/TypeProd/ITypeProdGet';
+import { CategorySizeColumns } from '../../../shared/interfaces/size/CategorySize/ICategorySizeGet';
+import { ProductColumns } from '../../../shared/interfaces/Product/IProductGet';
+import { ICustomersColumns, IClientGet } from '../../../shared/interfaces/Client/IClientGet';
+import { PaymentTypeColumns } from '../../../shared/interfaces/payment/paymentType/IPaymentTypeColums';
+import { PaymentColumns } from '@/shared/interfaces/payment/IPaymentColumns';
 
 interface Size {
   idInventory: number;
@@ -103,4 +104,13 @@ export const typeProdTable: (TypeProdColumns | any)[] = [
 export const paymentTypeTable: (PaymentTypeColumns | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
   { title: 'Tipo', dataIndex: 'type', key: 'type' },
+];
+
+export const paymentTable: (PaymentColumns | any)[] = [
+  { title: 'ID', dataIndex: 'id', key: 'id' },
+  { title: 'Fecha', dataIndex: 'date', key: 'date' },
+  { title: 'Orden', dataIndex: 'fkOrder', key: 'fkOrder' },
+  { title: 'Tipo de Pago', dataIndex: 'fkTypePayment', key: 'fkTypePayment' },
+  { title: 'Cuenta Bancaria', dataIndex: 'fkBankAccount', key: 'fkBankAccount' },
+  { title: 'Cantidad', dataIndex: 'amount', key: 'amount' }
 ];

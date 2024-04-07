@@ -1,11 +1,11 @@
 // Customers.tsx
 import BreadcrumbData from "@/components/Breadcrumb"
-import ApiTable from '@/components/Tabla/apiTable'
+import ApiTable from '@/components/Generics/Tabla/apiTable'
 import Options from "../components/Options";
 import SearchFilter from '../components/SearchFilter';
 import { useEffect, useState } from 'react'
 
-import { customersTable } from "@/components/Tabla/tData";
+import { customersTable } from "@/components/Generics/Tabla/tData";
 import { getClients } from "@/shared/Api/Customers/CustomersApi";
 import { useNavigate} from 'react-router-dom';
 

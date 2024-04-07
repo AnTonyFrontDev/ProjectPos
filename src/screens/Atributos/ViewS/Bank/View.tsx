@@ -1,11 +1,11 @@
 // Banks.tsx
 import BreadcrumbData from "@/components/Breadcrumb";
-import ApiTable from '@/components/Tabla/apiTable';
+import ApiTable from '@/components/Generics/Tabla/apiTable';
 import Options from "../Bank/components/Options";
 import SearchFilter from '../Bank/components/SearchFilter';
 import { useEffect, useState } from 'react';
 
-import { banksTable } from "@/components/Tabla/tData";
+import { banksTable } from "@/components/Generics/Tabla/tData";
 import { getBanks } from "@/shared/Api/Bank/BankApi";
 
 const View = () => {

@@ -8,7 +8,7 @@ export interface IPaymentTypePost {
   export class PaymentTypePostDto implements IPaymentTypePost {
     id: number = 0;
     user: number = 0;
-    date: string = '';
+    date: string = new Date().toISOString();
     type: string = '';
   }
   

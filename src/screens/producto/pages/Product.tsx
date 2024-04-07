@@ -1,10 +1,10 @@
 // Producto.tsx
 import BreadcrumbData from "@/components/Breadcrumb"
-import ApiTable from '@/components/Tabla/apiTable'
+import ApiTable from '@/components/Generics/Tabla/apiTable'
 import Options from "../components/Options";
 import SearchFilter from '../components/SearchFilter';
 import { useEffect, useState } from 'react'
-import { productTable } from "@/components/Tabla/tData";
+import { productTable } from "@/components/Generics/Tabla/tData";
 
 import { getProducts } from "@/shared/Api/ProductsApi";
 import { useNavigate } from 'react-router-dom';

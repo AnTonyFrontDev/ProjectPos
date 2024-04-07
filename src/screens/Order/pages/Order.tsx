@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import Select from 'react-select';
 import { IOrderPost, IOrderProduct } from '@/shared/interfaces/order/IOrderPost';
-import ButtonModal from '@/components/Modal/ButtonModal';
+import ButtonModal from '@/components/Generics/Modal/ButtonModal';
 import ViewForm from '@/components/FormularioV4/viewForm';
 import { SaveOrder } from '@/shared/Api/Order/OrderApi';
-import useColorOptions from '@/screens/AddInventory/hooks/useColorOptions';
+// import useColorOptions from '@/screens/AddInventory/hooks/useColorOptions';
 import useClientOptions from '@/screens/AddInventory/hooks/useClientOptions';
 import usePreOrderOptions from '@/screens/AddInventory/hooks/usePreOrderOptions';
 
@@ -26,9 +26,9 @@ const AddOrder = () => {
     products: [],
   });
   const [tableData, setTableData] = useState<IOrderProduct[]>([]);
-  const { PreOrderOptions } = usePreOrderOptions();
+  const { preOrderOptions } = usePreOrderOptions();
   const { clientOptions } = useClientOptions();
-  const { colorOptions } = useColorOptions();
+  // const { colorOptions } = useColorOptions();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -128,22 +128,20 @@ const AddOrder = () => {
         </div>
         <div className='flex flex-col'>
           <label>Pedido:</label>
-          <Select
+          {/* <Select
             className={tableSelectsClasses}
-            options={clientOptions.map(client => ({
-              value: client.id,
-              label: client.f_name + " " + client.l_name + " " + client.f_surname + " " + client.l_surname
+            options={preOrderOptions.map(preOrders => ({
+              value: preOrders.id,
+              label: '',
             }))}
             value={{
-              value: clientOptions.find(client => client.id === formData.fkClient)?.id || 0,
-              label: `${clientOptions.find(client => client.id === formData.fkClient)?.f_name || ""} 
-               ${clientOptions.find(client => client.id === formData.fkClient)?.l_name || ""}
-               ${clientOptions.find(client => client.id === formData.fkClient)?.f_surname || ""}
-               ${clientOptions.find(client => client.id === formData.fkClient)?.l_surname || ""}`
+              value: preOrderOptions.find(preOrders => preOrders.id === formData.fkPreOrder)?.id || 0,
+              label: `${preOrderOptions.find(preOrders => preOrders.id === formData.fkPreOrder)?.items || ""} 
+               `
             }}
             onChange={(selectedOption) => handleChangeClient(selectedOption?.value || 0)}
             isSearchable
-          />
+          /> */}
         </div>
         <div className='flex flex-col'>
           <label>Descripcion:</label>
@@ -172,9 +170,6 @@ const AddOrder = () => {
           {tableData.map((row, index) => (
             <tr key={index}>
               <td className="w-14 px-6 py-4">{index + 1}</td>
-              <td>
-
-              </td>
               <td className='w-14'>
                 <input
                   type="number"

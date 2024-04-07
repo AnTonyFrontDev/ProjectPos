@@ -1,8 +1,10 @@
 // import React from 'react'
-
+import { View } from "../ViewS/Payment";
 const Payment = () => {
   return (
-    <div>Payment</div>
+    <div>Payment
+      <View/>
+    </div>
   )
 }
 

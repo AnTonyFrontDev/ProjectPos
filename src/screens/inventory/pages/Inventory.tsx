@@ -1,12 +1,12 @@
 // Inventory.tsx
 import BreadcrumbData from "@/components/Breadcrumb"
 // import ApiTable from '../components/ApiTable';
-import ApiTable from '@/components/Tabla/apiTable'
-import Options from "../components/Options";
+import ApiTable from '@/components/Generics/Tabla/apiTable'
+// import Options from "../components/Options";
 import SearchFilter from '../components/SearchFilter';
 import { useEffect, useState } from 'react'
 import { getInventory } from "@/shared/Api/InventoryApi";
-import { tableColumns } from "@/components/Tabla/tData";
+import { tableColumns } from "@/components/Generics/Tabla/tData";
 // import DetalleProducto from "../components/DetalleInventario";
 import { useNavigate } from "react-router-dom";
 
@@ -63,7 +63,7 @@ const Inventory = () => {
           onSortToggle={handleSortToggle}
           columns={tableColumns}
         />
-        <Options />
+        {/* <Options /> */}
       </div>
       <div className="mt-10">
         <ApiTable

@@ -5,7 +5,7 @@ import useSizeOptions from '../hooks/useSizeOptions';
 import useColorOptions from '../hooks/useColorOptions';
 import { AddBuy } from '@/shared/Api/BuyInventory/BuyApi';
 import { IBuyPost, IInventoryDetailDto } from '@/shared/interfaces/BuyInventory/IBuyInvPost';
-import ButtonModal from '@/components/Modal/ButtonModal';
+import ButtonModal from '@/components/Generics/Modal/ButtonModal';
 import ViewForm from '@/components/FormularioV4/viewForm';
 
 

@@ -1,7 +1,7 @@
 // import React from 'react';
 import { useBankForm } from "../hooks/useBankForm";
 
-const BankForm = () => {
+const ExpensesForm = () => {
     const { formData, handleInputChange, handleSubmit } = useBankForm();
 
     return (
@@ -26,4 +26,4 @@ const BankForm = () => {
     );
 };
 
-export default BankForm;
+export default ExpensesForm;

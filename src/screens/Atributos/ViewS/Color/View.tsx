@@ -1,11 +1,11 @@
 // Colors.tsx
 import BreadcrumbData from "@/components/Breadcrumb";
-import ApiTable from '@/components/Tabla/apiTable';
+import ApiTable from '@/components/Generics/Tabla/apiTable';
 import Options from "../Color/components/Options";
 import SearchFilter from '../Color/components/SearchFilter';
 import { useEffect, useState } from 'react';
 
-import { colorTable } from "@/components/Tabla/tData";
+import { colorTable } from "@/components/Generics/Tabla/tData";
 import { getColors } from "@/shared/Api/Color/ColorApi";
 
 const ColorView = () => {
