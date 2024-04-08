@@ -1,5 +1,5 @@
 // Banks.tsx
-import BreadcrumbData from "@/components/Breadcrumb";
+import BreadcrumbData from "@/components/ui/Breadcrumb";
 import ApiTable from '@/components/Generics/Tabla/apiTable';
 import Options from "../Bank/components/Options";
 import SearchFilter from '../Bank/components/SearchFilter';

@@ -1,8 +1,8 @@
 import { lazy, Suspense } from 'react';
 import { Outlet } from "react-router-dom";
 
-const Sidebar = lazy(() => import('@/components/Sidebar'));
-const Header = lazy(() => import('@/components/Header'));
+const Sidebar = lazy(() => import('@/components/ui/Sidebar'));
+const Header = lazy(() => import('@/components/ui/Header'));
 
 import { AppIcon } from "@/components/ui/AppIcon"
 import { useState } from "react"

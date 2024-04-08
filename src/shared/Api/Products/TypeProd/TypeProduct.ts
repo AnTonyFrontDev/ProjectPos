@@ -1,14 +1,29 @@
 import { ITypeProdPost } from "@/shared/interfaces/Product/TypeProd/ITypeProdPost";
 import axios from "axios";
-import { url } from "../Common/url";
+import { URL } from "../../../Common/url";
 import { ITypeProdUpdate } from "@/shared/interfaces/Product/TypeProd/ITypeProdUpdate";
 import { ITypeProdRemove } from "@/shared/interfaces/Product/TypeProd/ITypeProdRemove";
+
+// export const getTypes = async (page: number, itemsPerPage: number) => {
+export const getTypes = async () => {
+try {
+    const response = await axios.get(
+      // `${URL}/TypeProd/GetTypes?Page=${page}&ItemsPerPage=${itemsPerPage}`
+      `${URL}/TypeProd/GetTypes?Page=1&ItemsPerPage=11`
+    );
+
+    return response.data.data;
+  } catch (error) {
+    console.error("Error retrieving types:", error);
+    throw error;
+  }
+};
 
 export const SaveTypeProd = async (formData: ITypeProdPost) => {
     try {
       const formattedData = formData;
       const response = await axios.post(
-        `${url}/TypeProd/AddType`,
+        `${URL}/TypeProd/AddType`,
         formattedData,
         {
           headers: {
@@ -29,7 +44,7 @@ export const UpdateTypeProd = async (formData: ITypeProdUpdate) => {
     try {
       const formattedData = formData;
       const response = await axios.post(
-        `${url}/TypeProd/UpdateType`,
+        `${URL}/TypeProd/UpdateType`,
         formattedData,
         {
           headers: {
@@ -49,7 +64,7 @@ export const UpdateTypeProd = async (formData: ITypeProdUpdate) => {
     try {
       const formattedData = formData;
       const response = await axios.post(
-        `${url}/TypeProd/RemoveType`,
+        `${URL}/TypeProd/RemoveType`,
         formattedData,
         {
           headers: {

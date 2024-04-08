@@ -1,6 +1,6 @@
 import { IPaymentPost } from "@/shared/interfaces/payment/IPaymentPost";
 import axios from "axios";
-import { URL } from "../Common/url";
+import { URL } from "../../Common/url";
 import { IPaymentUpdate } from "@/shared/interfaces/payment/IPaymentUpdate";
 import { IPaymentRemove } from "@/shared/interfaces/payment/IPaymentRemove";
 

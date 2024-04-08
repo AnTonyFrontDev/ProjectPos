@@ -1,5 +1,5 @@
 import axios from "axios";
-import { URL } from "../Common/url";
+import { URL } from "../../Common/url";
 import { IExpensesPost } from "@/shared/interfaces/Expenses/IExpensesPost";
 import { IExpensesUpdate } from "@/shared/interfaces/Expenses/IExpensesUpdate";
 import { IExpensesRemove } from "@/shared/interfaces/Expenses/IExpensesRemove";

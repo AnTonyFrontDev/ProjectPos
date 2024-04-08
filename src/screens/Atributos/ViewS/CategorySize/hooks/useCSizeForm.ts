@@ -13,10 +13,9 @@ export const useCategorySizeForm = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Acciones adicionales antes de enviar los datos a la base de datos
     console.log('CategorySize Data:', formData);
     GenericRequest(formData, SaveCategorySize, "CategorySize data submitted successfully");
   };
 
-  return { formData, handleInputChange, handleSubmit };
+  return { formData, setFormData, handleInputChange, handleSubmit };
 };

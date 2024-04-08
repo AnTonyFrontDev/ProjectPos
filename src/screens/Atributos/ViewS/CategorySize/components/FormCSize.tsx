@@ -1,8 +1,29 @@
-// import React from 'react';
+import { useEffect } from 'react';
+
 import { useCategorySizeForm } from "../hooks/useCSizeForm";
 
-const CategorySizeForm = () => {
-    const { formData, handleInputChange, handleSubmit } = useCategorySizeForm();
+interface CategorySizeFormProps {
+    formData: any; 
+    isUpdate: boolean;
+    onSubmit: (formData: any) => void; 
+}
+
+const CategorySizeForm: React.FC<CategorySizeFormProps> = ({ formData: initialFormData, isUpdate }) => {
+    const { formData, setFormData, handleInputChange, handleSubmit } = useCategorySizeForm();
+
+    useEffect(() => {
+        if (isUpdate && initialFormData) {
+            handleSetInitialFormData(initialFormData);
+        }
+    }, [isUpdate, initialFormData]);
+
+    const handleSetInitialFormData = (initialData: any) => {
+        const { category } = initialData;
+        setFormData({
+            ...formData,
+            category: category || '' 
+        });
+    };
 
     return (
         <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8">
@@ -20,7 +41,7 @@ const CategorySizeForm = () => {
 
             {/* Botón de envío */}
             <button type="submit" className="bg-blue-500 text-white p-2 rounded-md">
-                Submit
+                {isUpdate ? "Update" : "Submit"}
             </button>
         </form>
     );

@@ -1,12 +1,12 @@
 // CategorySize.tsx
 import { useEffect, useState } from 'react';
-import BreadcrumbData from '@/components/Breadcrumb';
+import BreadcrumbData from '@/components/ui/Breadcrumb';
 import ApiTable from '@/components/Generics/Tabla/apiTable';
-import Options from '../CategorySize/components/Options';
 import SearchFilter from '../CategorySize/components/SearchFilter';
 
 import { categorySizeTable } from '@/components/Generics/Tabla/tData';
-import { RemoveCategorySize, UpdateCategorySize, getCategorySizeById, getCategorySizes } from '@/shared/Api/CategorySize/CategorySizeApi';
+import { RemoveCategorySize, UpdateCategorySize, getCategorySizes } from '@/shared/Api/CategorySize/CategorySizeApi';
+import G_Options from '@/components/Generics/gOptions';
 
 const View = () => {
   const routes = [
@@ -46,12 +46,10 @@ const View = () => {
           onSortToggle={handleSortToggle}
           columns={categorySizeTable}
         />
-        <Options />
+        <G_Options buttonText="Nueva Categoria" usarForm="CSize" />
       </div>
       <div className="mt-10">
         <ApiTable
-          idApiData={getCategorySizeById}
-          useForm="CSize"
           getApiData={getCategorySizes}
           putApiData={UpdateCategorySize}
           delApiData={RemoveCategorySize}

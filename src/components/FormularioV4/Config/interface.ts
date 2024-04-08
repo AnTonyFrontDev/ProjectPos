@@ -1,6 +1,8 @@
 
 //interface.ts
 
+import React from "react";
+
 //#region Formulario Post
 export interface IFormProps<T> {
     formDataFields: {
@@ -16,11 +18,15 @@ export interface IFormProps<T> {
 };
 
 export interface IViewFormProps {
-    usarForm: string;
+    usarForm: string; 
+    formData: any; 
+    isUpdate: boolean;
+    onSubmit: (formData : any) => void;
 };
 
 export interface IFormComponents {
-    [key: string]: React.ReactNode;
+    // [key: string]: React.ReactNode;
+    [key: string]: React.FC<any>;
 };
 
 export interface IOption {

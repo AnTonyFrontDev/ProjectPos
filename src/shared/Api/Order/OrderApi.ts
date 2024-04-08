@@ -1,6 +1,6 @@
 import { IOrderPost } from "@/shared/interfaces/order/IOrderPost";
 import axios from "axios";
-import { URL } from "../Common/url";
+import { URL } from "../../Common/url";
 import { IOrderUpdateStatus } from "@/shared/interfaces/order/IOrderUpdateStatus";
 import { IPreOrderKeys } from "@/shared/interfaces/Preorder/IPreOrderKeys";
 import { IInventoryToAddOrder } from "@/shared/interfaces/Inventory/IInventoryToAddOrder";

@@ -1,10 +1,9 @@
-
 // import React from 'react'
-import ButtonModal from '@/components/Generics/Modal/ButtonModal';
 import ViewForm from '@/components/FormularioV4/viewForm';
 import { APP_ICONS } from '@/shared/constants/icons-constants';
+import ButtonModal from './Modal/ButtonModal';
 
-const Options = () => {
+const G_Options = ({ buttonText, usarForm }: { buttonText: string, usarForm: string }) => {
 
   return (
     <div className="flex">
@@ -12,10 +11,10 @@ const Options = () => {
         <li>
           <div className="flex">
             <ButtonModal
-              buttonText="Nuevo Tipo Pago"
+              buttonText={buttonText}
               modalTitle=""
               size={15}
-              modalContent={<ViewForm usarForm="TypePay" />}
+              modalContent={<ViewForm usarForm={usarForm} />}
               iconType={"dashboard" as keyof typeof APP_ICONS}
               cssColor='green'
             />
@@ -26,4 +25,4 @@ const Options = () => {
   )
 }
 
-export default Options
+export default G_Options

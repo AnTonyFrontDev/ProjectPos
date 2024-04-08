@@ -2,7 +2,7 @@
 
 import { Avatar} from "antd"
 import { UserOutlined } from '@ant-design/icons';
-import { AppIcon } from "./ui/AppIcon";
+import { AppIcon } from "./AppIcon";
 // import { Fragment } from "react"
 
 const header = () => {

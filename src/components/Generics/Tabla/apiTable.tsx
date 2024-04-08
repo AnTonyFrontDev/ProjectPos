@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 
 interface GenericTableProps {
   getApiData: () => Promise<any[]>;
-  idApiData?: (id: number) => Promise<any[]>;
   putApiData?: (data: any) => Promise<any[]>;
   delApiData?: (id: any) => Promise<any[]>;
   columns: any[];

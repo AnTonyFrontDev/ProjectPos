@@ -14,6 +14,7 @@ const Options = () => {
             <ButtonModal
               buttonText="New Size Category"
               modalTitle=""
+              size={15}
               modalContent={<ViewForm usarForm="CSize" />}
               iconType={"dashboard" as keyof typeof APP_ICONS}
               cssColor='green'

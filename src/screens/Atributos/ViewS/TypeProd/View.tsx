@@ -1,19 +1,18 @@
 // Banks.tsx
-import BreadcrumbData from "@/components/Breadcrumb";
+import BreadcrumbData from "@/components/ui/Breadcrumb";
 import ApiTable from '@/components/Generics/Tabla/apiTable';
-import Options from "../Bank/components/Options";
+import G_Options from "@/components/Generics/gOptions";
 import SearchFilter from '../Bank/components/SearchFilter';
 import { useEffect, useState } from 'react';
 
-import { banksTable } from "@/components/Generics/Tabla/tData";
-import { getBanks } from "@/shared/Api/Bank/BankApi";
+import { typeProdTable } from "@/components/Generics/Tabla/tData";
+import { getTypes } from "@/shared/Api/Products/TypeProd/TypeProduct";
 
 const View = () => {
   const routes = [
-    // { title: 'Home', path: '/' },
     { title: 'Dashboard', path: '/' },
     { title: 'Atributos', path: '/atributos' },
-    { title: 'Banks', path: '/atributos/Banks' }
+    { title: 'Tipo Producto', path: '/atributos/TypeProd' }
   ];
 
 
@@ -37,7 +36,7 @@ const View = () => {
   const handleSortToggle = () => {
     setSortDirection((prevSortDirection) => (prevSortDirection === 'asc' ? 'desc' : 'asc') as 'asc' | 'desc');
   };
-
+  
   return (
     <div>
       <BreadcrumbData routes={routes} />
@@ -46,14 +45,15 @@ const View = () => {
           onSearch={handleSearch}
           onFilterChange={handleFilterChange}
           onSortToggle={handleSortToggle}
-          columns={banksTable}
+          columns={typeProdTable}
         />
-        <Options />
+        <G_Options buttonText="Nuevo Tipo" usarForm="Types" />
+        {/* <Options /> */}
       </div>
       <div className="mt-10">
         <ApiTable
-          getApiData={getBanks}
-          columns={banksTable}
+          getApiData={getTypes}
+          columns={typeProdTable}
           searchTerm={searchTerm}
           filterColumn={filterColumn}
           sortDirection={sortDirection}
