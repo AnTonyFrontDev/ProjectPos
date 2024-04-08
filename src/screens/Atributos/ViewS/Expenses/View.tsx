@@ -5,7 +5,7 @@ import SearchFilter from '../Bank/components/SearchFilter';
 import { useEffect, useState } from 'react';
 
 import { expensesTable } from "@/components/Generics/Tabla/tData";
-import { getExpenses } from "@/shared/Api/Expenses/ExpensesApi";
+import { getExpenses, RemoveExpenses } from "@/shared/Api/Expenses/ExpensesApi";
 import G_Options from "@/components/Generics/gOptions";
 
 const View = () => {
@@ -52,6 +52,8 @@ const View = () => {
       <div className="mt-10">
         <ApiTable
           getApiData={getExpenses}
+          delApiData={RemoveExpenses}
+          usarForm='Expenses'
           columns={expensesTable}
           searchTerm={searchTerm}
           filterColumn={filterColumn}

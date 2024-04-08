@@ -25,7 +25,6 @@ const ExpensesForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate
         <form onSubmit={onSubmitHandler} className="max-w-md mx-auto mt-8">
             {/* Campos del formulario de CategorySize */}
             <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">ID</label>
                 <input
                     type="hidden"
                     name="id"
