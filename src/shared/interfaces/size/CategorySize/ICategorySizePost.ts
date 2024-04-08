@@ -3,7 +3,7 @@ export interface ICategorySizePost {
     category: string
   }
   
-  export class CategorySizePostDto implements ICategorySizePost {
+  export class CategorySizeDto implements ICategorySizePost {
     id: number;
     category: string;
   

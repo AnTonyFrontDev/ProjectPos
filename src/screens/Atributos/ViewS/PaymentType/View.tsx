@@ -4,7 +4,7 @@ import BreadcrumbData from "@/components/ui/Breadcrumb";
 import ApiTable from '@/components/Generics/Tabla/apiTable';
 import SearchFilter from '../PaymentType/components/SearchFilter';
 import { paymentTypeTable } from "@/components/Generics/Tabla/tData";
-import { getPaymentTypes } from '@/shared/Api/Payment/PaymentType/PaymentTypeApi';
+import { getPaymentTypes, RemovePaymentType } from '@/shared/Api/Payment/PaymentType/PaymentTypeApi';
 import G_Options from '@/components/Generics/gOptions';
 // import { getPaymentTypes } from "@/shared/Api/PaymentType/PaymentTypeApi";
 
@@ -50,6 +50,8 @@ const View = () => {
       <div className="mt-10">
         <ApiTable
           getApiData={getPaymentTypes}
+          delApiData={RemovePaymentType}
+          usarForm='TypePay'
           columns={paymentTypeTable}
           searchTerm={searchTerm}
           filterColumn={filterColumn}

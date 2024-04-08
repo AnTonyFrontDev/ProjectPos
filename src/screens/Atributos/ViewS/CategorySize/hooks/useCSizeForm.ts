@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { CategorySizePostDto, ICategorySizePost } from '@/shared/interfaces/size/CategorySize/ICategorySizePost';
+import { CategorySizeDto, ICategorySizePost } from '@/shared/interfaces/size/CategorySize/ICategorySizePost';
 import { SaveCategorySize, UpdateCategorySize } from '@/shared/Api/CategorySize/CategorySizeApi';
 import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';
 import { ICategorySizeUpdate } from '@/shared/interfaces/size/CategorySize/ICategorySizeUpdate';
+import { CategorySizeUpdateDto } from '@/shared/interfaces/size/CategorySize/ICategorySizeUpdate';
 
 export const useCategorySizeForm = () => {
-  const [formData, setFormData] = useState<ICategorySizePost>(new CategorySizePostDto());
+  const [formData, setFormData] = useState<ICategorySizePost>(new CategorySizeDto());
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -20,14 +21,9 @@ export const useCategorySizeForm = () => {
   
   const handleUpdate = (e: React.FormEvent) => {
     e.preventDefault();
-    const updateData: ICategorySizeUpdate = {
-      id: formData.id,
-      user: 0,
-      date: new Date().toISOString(),
-      category: formData.category
-    }
-    console.log('CategorySize Data:', updateData);
-    GenericRequest(updateData, UpdateCategorySize, "CategorySize data updated successfully");
+    const updateData: ICategorySizeUpdate = new CategorySizeUpdateDto(formData);
+    console.log('Expenses Data:', updateData);
+    GenericRequest(updateData, UpdateCategorySize, "Expenses data updated successfully");
   };
 
   return { formData, setFormData, handleInputChange, handleSubmit, handleUpdate };

@@ -1,13 +1,12 @@
 import { useEffect } from 'react';
 
 import { useCategorySizeForm } from "../hooks/useCSizeForm";
+import { FormProps } from '@/components/Generics/Interface/IForms';
+import { CategorySizeDto, ICategorySizePost } from '@/shared/interfaces/size/CategorySize/ICategorySizePost';
 
-interface CategorySizeFormProps {
-    formData: any;
-    isUpdate: boolean;
-}
 
-const CategorySizeForm: React.FC<CategorySizeFormProps> = ({ formData: initialFormData, isUpdate }) => {
+
+const CategorySizeForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }) => {
     const { formData, setFormData, handleInputChange, handleSubmit, handleUpdate } = useCategorySizeForm();
 
     useEffect(() => {
@@ -16,13 +15,10 @@ const CategorySizeForm: React.FC<CategorySizeFormProps> = ({ formData: initialFo
         }
     }, [isUpdate, initialFormData]);
 
-    const handleSetInitialFormData = (initialData: any) => {
-        const { id, category } = initialData;
-        setFormData({
-            ...formData,
-            id: id || 0,
-            category: category || ''
-        });
+    const handleSetInitialFormData = (initialData: ICategorySizePost) => {
+        const initialFormData = new CategorySizeDto;
+        Object.assign(initialFormData, initialData)
+        setFormData(initialFormData)
     };
 
     const onSubmitHandler = isUpdate ? handleUpdate : handleSubmit;
@@ -31,14 +27,11 @@ const CategorySizeForm: React.FC<CategorySizeFormProps> = ({ formData: initialFo
         <form onSubmit={onSubmitHandler} className="max-w-md mx-auto mt-8">
             {/* Campos del formulario de CategorySize */}
             <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">ID</label>
                 <input
-                    type="text"
+                    type="hidden"
                     name="id"
                     value={formData.id}
                     onChange={handleInputChange}
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-                    readOnly={!isUpdate} // El campo de ID debe ser de solo lectura en modo de actualización
                 />
             </div>
             <div className="mb-4">
