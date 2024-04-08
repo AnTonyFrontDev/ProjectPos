@@ -1,4 +1,4 @@
-export interface PaymentColumns {
+export interface IPaymentColumns {
     id: number;
     date: string;
     fkOrder: number;

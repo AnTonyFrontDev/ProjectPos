@@ -1,4 +1,4 @@
-export interface TypeProdColumns {
+export interface ITypeProdColumns {
     id: number;
     type: string;
   }

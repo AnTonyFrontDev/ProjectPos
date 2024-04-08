@@ -1,4 +1,4 @@
-export interface ExpensesColumns {
+export interface IExpensesColumns {
     id: number;
     user: number;
     date: string;

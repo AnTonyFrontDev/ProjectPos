@@ -6,7 +6,7 @@ export interface IProductGet {
     type: string
   }
   
-  export interface ProductColumns {
+  export interface IProductColumns {
     title: string;
     dataIndex: string;
     key: string;

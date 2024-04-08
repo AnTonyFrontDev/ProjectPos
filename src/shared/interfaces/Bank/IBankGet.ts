@@ -1,6 +1,5 @@
-export interface BankColumns {
+export interface IBankColumns {
     id: number;
     name: string;
-    // Agrega más propiedades según sea necesario
   }
   

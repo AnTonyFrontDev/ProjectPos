@@ -1,4 +1,4 @@
-export interface PaymentTypeColumns {
+export interface IPaymentTypeColumns {
     id: number;
     type: string;
   }

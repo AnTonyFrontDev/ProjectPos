@@ -1,16 +1,16 @@
 // tData.ts
 // import React from 'react';
 import { ISizeGet } from '@/shared/interfaces/size/ISizeGet';
-import { BankColumns } from '../../../shared/interfaces/Bank/IBankGet';
-import { IColorGet } from '../../../shared/interfaces/Color/IColorGet';
-import { ExpensesColumns } from '../../../shared/interfaces/Expenses/IExpensesGet';
-import { TypeProdColumns } from '../../../shared/interfaces/Product/TypeProd/ITypeProdGet';
-import { CategorySizeColumns } from '../../../shared/interfaces/size/CategorySize/ICategorySizeGet';
-import { ProductColumns } from '../../../shared/interfaces/Product/IProductGet';
-import { ICustomersColumns, IClientGet } from '../../../shared/interfaces/Client/IClientGet';
-import { PaymentTypeColumns } from '../../../shared/interfaces/payment/paymentType/IPaymentTypeColums';
-import { PaymentColumns } from '@/shared/interfaces/payment/IPaymentColumns';
-import { IAvailableSizesColumn, ISizeQA } from '../../../shared/interfaces/Inventory/I_InventoryTable';
+import { IBankColumns } from '@/shared/interfaces/Bank/IBankGet';
+import { IColorGet } from '@/shared/interfaces/Color/IColorGet';
+import { IExpensesColumns } from '@/shared/interfaces/Expenses/IExpensesGet';
+import { ITypeProdColumns } from '@/shared/interfaces/Product/TypeProd/ITypeProdGet';
+import { ICategorySizeColumns } from '@/shared/interfaces/size/CategorySize/ICategorySizeGet';
+import { IProductColumns } from '@/shared/interfaces/Product/IProductGet';
+import { ICustomersColumns, IClientGet } from '@/shared/interfaces/Client/IClientGet';
+import { IPaymentTypeColumns } from '@/shared/interfaces/payment/paymentType/IPaymentTypeColums';
+import { IPaymentColumns } from '@/shared/interfaces/payment/IPaymentColumns';
+import { IAvailableSizesColumn, ISizeQA } from '@/shared/interfaces/Inventory/I_InventoryTable';
 
 export const inventoryTable: (IAvailableSizesColumn | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
@@ -46,7 +46,7 @@ export const customersTable: (ICustomersColumns | any)[] = [
   { title: 'DNI', dataIndex: 'dni', key: 'dni' },
 ];
 
-export const productTable: (ProductColumns | any)[] = [
+export const productTable: (IProductColumns | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
   { title: 'Nombre del Producto', dataIndex: 'name_prod', key: 'name_prod' },
   { title: 'Descripción', dataIndex: 'description', key: 'description' },
@@ -55,12 +55,12 @@ export const productTable: (ProductColumns | any)[] = [
 ];
 
 
-export const banksTable: (BankColumns | any)[] = [
+export const banksTable: (IBankColumns | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
   { title: 'Nombre del Banco', dataIndex: 'bankName', key: 'bankName' },
 ];
 
-export const categorySizeTable: (CategorySizeColumns | any)[] = [
+export const categorySizeTable: (ICategorySizeColumns | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
   { title: 'Categoría', dataIndex: 'category', key: 'category' },
 ];
@@ -71,7 +71,7 @@ export const colorTable: (IColorGet | any)[] = [
   { title: 'Código', dataIndex: 'code', key: 'code' },
 ];
 
-export const expensesTable: (ExpensesColumns | any)[] = [
+export const expensesTable: (IExpensesColumns | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
   { title: 'Nombre', dataIndex: 'name', key: 'name' },
   { title: 'Descripción', dataIndex: 'description', key: 'description' },
@@ -84,17 +84,17 @@ export const sizeTable: (ISizeGet | any)[] = [
   { title: 'Tamaño', dataIndex: 'size', key: 'size' },
   { title: 'Categoría', dataIndex: 'category', key: 'category' },
 ];
-export const typeProdTable: (TypeProdColumns | any)[] = [
+export const typeProdTable: (ITypeProdColumns | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
   { title: 'Tipo', dataIndex: 'type', key: 'type' },
 ];
 
-export const paymentTypeTable: (PaymentTypeColumns | any)[] = [
+export const paymentTypeTable: (IPaymentTypeColumns | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
   { title: 'Tipo', dataIndex: 'type', key: 'type' },
 ];
 
-export const paymentTable: (PaymentColumns | any)[] = [
+export const paymentTable: (IPaymentColumns | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
   { title: 'Fecha', dataIndex: 'date', key: 'date' },
   { title: 'Orden', dataIndex: 'fkOrder', key: 'fkOrder' },
