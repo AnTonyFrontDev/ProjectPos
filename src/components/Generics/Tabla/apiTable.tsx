@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { Table } from 'antd';
 import PropTypes from 'prop-types';
+import ButtonModal from '../Modal/ButtonModal';
+import ViewForm from '@/components/FormularioV4/viewForm';
 
 interface GenericTableProps {
   getApiData: () => Promise<any[]>;
@@ -13,20 +15,20 @@ interface GenericTableProps {
   sortDirection?: 'asc' | 'desc';
   handleTableRowClick?: any;
   showActions?: boolean;
+  usarForm?: any;
 }
 
 const GenericTable: React.FC<GenericTableProps> = ({
   getApiData, 
-  putApiData, 
   delApiData, 
-  columns, 
+  columns,
+  usarForm, 
   searchTerm, 
   filterColumn, 
   sortDirection, 
   handleTableRowClick, 
   showActions }) => {
   const [data, setData] = useState<any[]>([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -68,20 +70,6 @@ const GenericTable: React.FC<GenericTableProps> = ({
   }, [getApiData, searchTerm, filterColumn, sortDirection]);
 
 
-
-  const handleEdit = async (record: any) => {
-    console.log('Edit:', record);
-    if (putApiData) {
-      try {
-        await putApiData(record.id);
-        setIsModalOpen(true);
-      } catch (error) {
-        console.error('Error al editar el registro', error);
-      }
-    }
-  };
-
-
   const handleDelete = async (record: any) => {
     console.log('Delete:', record);
     if (delApiData) {
@@ -100,12 +88,20 @@ const GenericTable: React.FC<GenericTableProps> = ({
         key: 'actions',
         render: (record: any) => (
           <span>
-            <button
+            {/* <button
               className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-2 rounded'
-              onClick={() => handleEdit(record)}
+              // onClick={() => handleEdit(record)}
             >
               Edit
-            </button>
+            </button> */}
+            <ButtonModal
+              buttonText="Editar"
+              modalTitle=""
+              size={15}
+              modalContent={<ViewForm usarForm={usarForm} formData={record} isUpdate={true}/>}
+              // iconType={"dashboard" as keyof typeof APP_ICONS}
+              cssColor='blue'
+            />
             <button
               className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'
               onClick={() => handleDelete(record)}
@@ -117,9 +113,6 @@ const GenericTable: React.FC<GenericTableProps> = ({
       },
     ]
     : [];
-
-  // ... (código posterior)
-
 
   return (
     <Table

@@ -14,29 +14,13 @@ const FormSize = lazy(() => import('@/screens/Atributos/ViewS/Size/components/Fo
 const FormPaymentType = lazy(() => import('@/screens/Atributos/ViewS/PaymentType/components/FormPaymentType'));
 const FormExpenses = lazy(() => import('@/screens/Atributos/ViewS/Expenses/components/FormExpenses'));
 
-
-// const formComponents: IFormComponents = {
-//   Product: 
-//   <Suspense fallback={<div>Loading...</div>}><ProductForm /></Suspense>,
-//   Types: <Suspense fallback={<div>Loading...</div>}><TypesForm /></Suspense>,
-//   Inventory: <Suspense fallback={<div>Loading...</div>}><InventoryForm /></Suspense>,
-//   Client: <Suspense fallback={<div>Loading...</div>}><FormClient /></Suspense>,
-//   Bank: <Suspense fallback={<div>Loading...</div>}><FormBank /></Suspense>,
-//   CSize: <Suspense fallback={<div>Loading...</div>}><FormCSize/></Suspense>,
-//   Color: <Suspense fallback={<div>Loading...</div>}><FormColor /></Suspense>,
-//   Size: <Suspense fallback={<div>Loading...</div>}><FormSize /></Suspense>,
-//   TypePay: <Suspense fallback={<div>Loading...</div>}><FormPaymentType /></Suspense>,
-//   Expenses: <Suspense fallback={<div>Loading...</div>}><FormExpenses /></Suspense>,
-//   // Agrega más formularios según sea necesario
-// };
-
 const formComponents: IFormComponents = {
   Product: ProductForm,
   Types: TypesForm,
   Inventory: InventoryForm,
   Client: FormClient,
   Bank: FormBank,
-  CSize: FormCSize, // Solo importa el componente FormCSize aquí
+  CSize: FormCSize,
   Color: FormColor,
   Size: FormSize,
   TypePay: FormPaymentType,
@@ -44,7 +28,7 @@ const formComponents: IFormComponents = {
   // Agrega más formularios según sea necesario
 };
 
-const ViewForm: React.FC<IViewFormProps> = ({ usarForm, formData, isUpdate, onSubmit }) => {
+const ViewForm: React.FC<IViewFormProps> = ({ usarForm, formData, isUpdate }) => {
   const SelectedForm = formComponents[usarForm];
 
   return (
@@ -53,9 +37,8 @@ const ViewForm: React.FC<IViewFormProps> = ({ usarForm, formData, isUpdate, onSu
         <div>
           <Suspense fallback={<div>Loading...</div>}>
             {/* Renderiza el formulario seleccionado con los props necesarios */}
-            <SelectedForm formData={formData} isUpdate={isUpdate} onSubmit={onSubmit} />
+            <SelectedForm formData={formData} isUpdate={isUpdate} />
           </Suspense>
-          {/* {selectedForm} */}
         </div>
       ) : (
         <div>Formulario no encontrado</div>

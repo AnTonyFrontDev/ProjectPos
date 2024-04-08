@@ -47,8 +47,7 @@ const View = () => {
           onSortToggle={handleSortToggle}
           columns={typeProdTable}
         />
-        <G_Options buttonText="Nuevo Tipo" usarForm="Types" />
-        {/* <Options /> */}
+        <G_Options buttonText="Nuevo Tipo Producto" usarForm="Types" />
       </div>
       <div className="mt-10">
         <ApiTable

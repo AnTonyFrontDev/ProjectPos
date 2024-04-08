@@ -14,7 +14,7 @@ const G_Options = ({ buttonText, usarForm }: { buttonText: string, usarForm: str
               buttonText={buttonText}
               modalTitle=""
               size={15}
-              modalContent={<ViewForm usarForm={usarForm} />}
+              modalContent={<ViewForm usarForm={usarForm} formData={null} isUpdate={false}/>}
               iconType={"dashboard" as keyof typeof APP_ICONS}
               cssColor='green'
             />

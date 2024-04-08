@@ -9,7 +9,7 @@ interface ButtonModalProps {
   modalTitle: string;
   modalContent: React.ReactNode;
   size: number;
-  iconType: keyof typeof APP_ICONS; // Add the iconType prop
+  iconType?: keyof typeof APP_ICONS; // Add the iconType prop
   cssColor: string;
   tooltipTitle?: string;
 }

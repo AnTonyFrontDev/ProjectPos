@@ -21,7 +21,6 @@ export interface IViewFormProps {
     usarForm: string; 
     formData: any; 
     isUpdate: boolean;
-    onSubmit: (formData : any) => void;
 };
 
 export interface IFormComponents {

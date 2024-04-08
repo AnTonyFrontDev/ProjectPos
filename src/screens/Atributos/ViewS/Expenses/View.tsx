@@ -1,16 +1,15 @@
 // Banks.tsx
 import BreadcrumbData from "@/components/ui/Breadcrumb";
 import ApiTable from '@/components/Generics/Tabla/apiTable';
-import Options from "../Expenses/components/Options";
 import SearchFilter from '../Bank/components/SearchFilter';
 import { useEffect, useState } from 'react';
 
 import { expensesTable } from "@/components/Generics/Tabla/tData";
 import { getExpenses } from "@/shared/Api/Expenses/ExpensesApi";
+import G_Options from "@/components/Generics/gOptions";
 
 const View = () => {
   const routes = [
-    // { title: 'Home', path: '/' },
     { title: 'Dashboard', path: '/' },
     { title: 'Atributos', path: '/atributos' },
     { title: 'Expenses', path: '/atributos/Expenses' }
@@ -48,7 +47,7 @@ const View = () => {
           onSortToggle={handleSortToggle}
           columns={expensesTable}
         />
-        <Options />
+        <G_Options buttonText="Nuevo Gasto" usarForm="Expenses" />
       </div>
       <div className="mt-10">
         <ApiTable

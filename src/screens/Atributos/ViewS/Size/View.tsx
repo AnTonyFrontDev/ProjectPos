@@ -2,10 +2,10 @@
 import { useEffect, useState } from 'react';
 import BreadcrumbData from "@/components/ui/Breadcrumb";
 import ApiTable from '@/components/Generics/Tabla/apiTable';
-import Options from "../Size/components/Options";
 import SearchFilter from '../Size/components/SearchFilter';
 import { getSizes } from "@/shared/Api/Size/SizeApi";
 import { sizeTable } from '@/components/Generics/Tabla/tData';
+import G_Options from '@/components/Generics/gOptions';
 
 const SizeView = () => {
   const routes = [
@@ -45,7 +45,7 @@ const SizeView = () => {
           onSortToggle={handleSortToggle}
           columns={sizeTable}
         />
-        <Options />
+        <G_Options buttonText="Nuevo Size" usarForm="Size" />
       </div>
       <div className="mt-10">
         <ApiTable

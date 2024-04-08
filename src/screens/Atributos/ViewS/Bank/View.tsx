@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 
 import { banksTable } from "@/components/Generics/Tabla/tData";
 import { getBanks } from "@/shared/Api/Bank/BankApi";
+import G_Options from "@/components/Generics/gOptions";
 
 const View = () => {
   const routes = [
@@ -48,7 +49,7 @@ const View = () => {
           onSortToggle={handleSortToggle}
           columns={banksTable}
         />
-        <Options />
+        <G_Options buttonText="Nuevo Banco" usarForm="Bank" />
       </div>
       <div className="mt-10">
         <ApiTable

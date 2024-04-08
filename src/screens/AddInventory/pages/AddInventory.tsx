@@ -108,7 +108,7 @@ const AddInventory = () => {
             <h1 className="text-2xl font-bold mb-4">Agregar Compra</h1>
             <div className='flex gap-4'>
                 <div className='flex flex-col'>
-                    <label className='mb-1'>Company:</label>
+                    <label className='mb-1'>Compañia:</label>
                     <input type="text" name="company" value={formData.company} onChange={handleChange}
                         className={formInputsClasses} />
                 </div>
@@ -174,7 +174,7 @@ const AddInventory = () => {
                                         modalTitle=""
                                         tooltipTitle="Agregar Producto"
                                         size={16}
-                                        modalContent={<ViewForm usarForm="Product" />}
+                                        modalContent={<ViewForm usarForm="Product" formData={null} isUpdate={false}/>}
                                         iconType="plus"
                                         cssColor='blue'
                                     />
@@ -225,7 +225,7 @@ const AddInventory = () => {
                                         modalTitle=""
                                         tooltipTitle="Agregar Size"
                                         size={16}
-                                        modalContent={<ViewForm usarForm="Size" />}
+                                        modalContent={<ViewForm usarForm="Size" formData={null} isUpdate={false}/>}
                                         iconType="plus"
                                         cssColor='blue'
                                     />
@@ -240,7 +240,8 @@ const AddInventory = () => {
                                     }))}
                                     value={{
                                         value: colorOptions.find(color => color.id === row.coloR_PRIMARY)?.id || 0,
-                                        label: `${colorOptions.find(color => color.id === row.coloR_PRIMARY)?.colorname || ""} - ${colorOptions.find(color => color.id === row.coloR_PRIMARY)?.code || ""}`
+                                        label: `${colorOptions.find(color => color.id === row.coloR_PRIMARY)?.colorname || ""} 
+                                        - ${colorOptions.find(color => color.id === row.coloR_PRIMARY)?.code || ""}`
                                     }}
                                     onChange={(selectedOption) => handleSelectChange(selectedOption?.value || 0, index, 'coloR_PRIMARY')}
                                     isSearchable

@@ -5,14 +5,14 @@ import ApiTable from '@/components/Generics/Tabla/apiTable';
 import SearchFilter from '../CategorySize/components/SearchFilter';
 
 import { categorySizeTable } from '@/components/Generics/Tabla/tData';
-import { RemoveCategorySize, UpdateCategorySize, getCategorySizes } from '@/shared/Api/CategorySize/CategorySizeApi';
+import { RemoveCategorySize, getCategorySizes } from '@/shared/Api/CategorySize/CategorySizeApi';
 import G_Options from '@/components/Generics/gOptions';
 
 const View = () => {
   const routes = [
     { title: 'Dashboard', path: '/' },
     { title: 'Atributos', path: '/atributos' },
-    { title: 'CategorySize', path: '/atributos/CategorySize' }
+    { title: 'Categoria de Size', path: '/atributos/CategorySize' }
   ];
 
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -20,7 +20,6 @@ const View = () => {
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
 
   useEffect(() => {
-    // Puedes realizar alguna acción específica cuando cambia la lista de CategorySize
   }, [searchTerm, filterColumn, sortDirection]);
 
   const handleSearch = (value: string) => {
@@ -31,7 +30,6 @@ const View = () => {
     setFilterColumn(value);
   };
 
-  // Function to toggle sorting direction
   const handleSortToggle = () => {
     setSortDirection((prevSortDirection) => (prevSortDirection === 'asc' ? 'desc' : 'asc') as 'asc' | 'desc');
   };
@@ -51,8 +49,8 @@ const View = () => {
       <div className="mt-10">
         <ApiTable
           getApiData={getCategorySizes}
-          putApiData={UpdateCategorySize}
           delApiData={RemoveCategorySize}
+          usarForm='CSize'
           columns={categorySizeTable}
           searchTerm={searchTerm}
           filterColumn={filterColumn}

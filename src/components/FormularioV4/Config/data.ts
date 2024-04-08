@@ -9,7 +9,6 @@ export const f_DataFieldsProduct = (types: IOption[]) => [
 ];
 
 export const f_DataFieldsType = () => [
-  { label: 'User', type: 'text', name: 'user', required: true },
   { label: 'Type', type: 'text', name: 'typeProd', required: true },
 ];
 // export interface IOption { id: number; value: string }

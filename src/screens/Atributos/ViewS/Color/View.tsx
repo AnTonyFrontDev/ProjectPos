@@ -1,12 +1,12 @@
 // Colors.tsx
 import BreadcrumbData from "@/components/ui/Breadcrumb";
 import ApiTable from '@/components/Generics/Tabla/apiTable';
-import Options from "../Color/components/Options";
 import SearchFilter from '../Color/components/SearchFilter';
 import { useEffect, useState } from 'react';
 
 import { colorTable } from "@/components/Generics/Tabla/tData";
 import { getColors } from "@/shared/Api/Color/ColorApi";
+import G_Options from "@/components/Generics/gOptions";
 
 const ColorView = () => {
   const routes = [
@@ -43,14 +43,14 @@ const ColorView = () => {
           onSearch={handleSearch}
           onFilterChange={handleFilterChange}
           onSortToggle={handleSortToggle}
-          columns={colorTable} // Asegúrate de tener la tabla correcta para los colores
+          columns={colorTable} 
         />
-        <Options />
+        <G_Options buttonText="Nuevo Color" usarForm="Color" />
       </div>
       <div className="mt-10">
         <ApiTable
           getApiData={getColors}
-          columns={colorTable} // Asegúrate de tener la tabla correcta para los colores
+          columns={colorTable} 
           searchTerm={searchTerm}
           filterColumn={filterColumn}
           sortDirection={sortDirection}

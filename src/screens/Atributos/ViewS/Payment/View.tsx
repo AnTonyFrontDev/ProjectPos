@@ -1,16 +1,15 @@
 // Banks.tsx
 import BreadcrumbData from "@/components/ui/Breadcrumb";
 import ApiTable from '@/components/Generics/Tabla/apiTable';
-import Options from "../Payment/components/Options";
 import SearchFilter from '../Bank/components/SearchFilter';
 import { useEffect, useState } from 'react';
 
 import { paymentTable } from "@/components/Generics/Tabla/tData";
 import { getPayments } from "@/shared/Api/Payment/PaymentApi";
+import G_Options from "@/components/Generics/gOptions";
 
 const View = () => {
   const routes = [
-    // { title: 'Home', path: '/' },
     { title: 'Dashboard', path: '/' },
     { title: 'Atributos', path: '/atributos' },
     { title: 'Pagos', path: '/atributos/Payment' }
@@ -48,7 +47,7 @@ const View = () => {
           onSortToggle={handleSortToggle}
           columns={paymentTable}
         />
-        <Options />
+        <G_Options buttonText="Nuevo Pago" usarForm="Payment" />
       </div>
       <div className="mt-10">
         <ApiTable

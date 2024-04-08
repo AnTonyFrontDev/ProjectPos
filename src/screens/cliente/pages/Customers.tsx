@@ -1,13 +1,13 @@
 // Customers.tsx
 import BreadcrumbData from "@/components/ui/Breadcrumb"
 import ApiTable from '@/components/Generics/Tabla/apiTable'
-import Options from "../components/Options";
 import SearchFilter from '../components/SearchFilter';
 import { useEffect, useState } from 'react'
 
 import { customersTable } from "@/components/Generics/Tabla/tData";
 import { getClients } from "@/shared/Api/Customers/CustomersApi";
 import { useNavigate} from 'react-router-dom';
+import G_Options from "@/components/Generics/gOptions";
 
 
 const Customers = () => {
@@ -62,7 +62,7 @@ const Customers = () => {
           onSortToggle={handleSortToggle}
           columns={customersTable}
         />
-        <Options />
+        <G_Options buttonText="Nuevo Cliente" usarForm="Client" />
       </div>
       <div className="mt-10">
         <ApiTable

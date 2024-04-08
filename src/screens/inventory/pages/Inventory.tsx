@@ -6,7 +6,7 @@ import ApiTable from '@/components/Generics/Tabla/apiTable'
 import SearchFilter from '../components/SearchFilter';
 import { useEffect, useState } from 'react'
 import { getInventory } from "@/shared/Api/InventoryApi";
-import { tableColumns } from "@/components/Generics/Tabla/tData";
+import { inventoryTable } from "@/components/Generics/Tabla/tData";
 // import DetalleProducto from "../components/DetalleInventario";
 import { useNavigate } from "react-router-dom";
 
@@ -61,14 +61,13 @@ const Inventory = () => {
           onSearch={handleSearch}
           onFilterChange={handleFilterChange}
           onSortToggle={handleSortToggle}
-          columns={tableColumns}
+          columns={inventoryTable}
         />
-        {/* <Options /> */}
       </div>
       <div className="mt-10">
         <ApiTable
           getApiData={getInventory}
-          columns={tableColumns}
+          columns={inventoryTable}
           searchTerm={searchTerm}
           filterColumn={filterColumn}
           sortDirection={sortDirection}

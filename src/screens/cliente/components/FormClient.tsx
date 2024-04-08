@@ -9,17 +9,17 @@ const ClientForm = () => {
         <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8">
             {/* Campos del formulario cliente */}
             <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">First Name</label>
+                <label className="block text-sm font-medium text-gray-600">Nombre:</label>
                 <input
                     type="text"
                     name="f_name"
-                    value={formData.f_name}
+                    value={`${formData.f_name} ${formData.l_name}`}
                     onChange={handleInputChange}
                     className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                 />
             </div>
 
-            <div className="mb-4">
+            {/* <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-600">Last Name</label>
                 <input
                     type="text"
@@ -28,10 +28,10 @@ const ClientForm = () => {
                     onChange={handleInputChange}
                     className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                 />
-            </div>
+            </div> */}
 
             <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">First Surname</label>
+                <label className="block text-sm font-medium text-gray-600">Primer Apellido</label>
                 <input
                     type="text"
                     name="f_surname"
@@ -42,7 +42,7 @@ const ClientForm = () => {
             </div>
 
             <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">Last Surname</label>
+                <label className="block text-sm font-medium text-gray-600">Segundo Apellido</label>
                 <input
                     type="text"
                     name="l_surname"
@@ -77,7 +77,7 @@ const ClientForm = () => {
             {/* Sección de teléfonos */}
             {formData.phonesClient.map((phone, index) => (
                 <div className="mb-4" key={index}>
-                    <label className="text-sm font-medium text-gray-600">Phone Type</label>
+                    <label className="text-sm font-medium text-gray-600">Tipo Telefono</label>
                     <input
                         type="text"
                         name={`type-${index}`}
@@ -86,7 +86,7 @@ const ClientForm = () => {
                         className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                     />
 
-                    <label className="block text-sm font-medium text-gray-600">Phone Number</label>
+                    <label className="block text-sm font-medium text-gray-600">Numero Telefono</label>
                     <input
                         type="text"
                         name={`number-${index}`}

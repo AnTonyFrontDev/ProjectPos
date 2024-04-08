@@ -1,13 +1,13 @@
 // Producto.tsx
 import BreadcrumbData from "@/components/ui/Breadcrumb"
 import ApiTable from '@/components/Generics/Tabla/apiTable'
-import Options from "../components/Options";
 import SearchFilter from '../components/SearchFilter';
 import { useEffect, useState } from 'react'
 import { productTable } from "@/components/Generics/Tabla/tData";
 
 import { getProducts } from "@/shared/Api/ProductsApi";
 import { useNavigate } from 'react-router-dom';
+import G_Options from "@/components/Generics/gOptions";
 
 const Product = () => {
   const routes = [
@@ -61,7 +61,7 @@ const Product = () => {
           onSortToggle={handleSortToggle}
           columns={productTable}
         />
-        <Options />
+        <G_Options buttonText="Nuevo Producto" usarForm="Product" />
       </div>
       <div className="mt-10">
         <ApiTable

@@ -10,31 +10,19 @@ import { ProductColumns } from '../../../shared/interfaces/Product/IProductGet';
 import { ICustomersColumns, IClientGet } from '../../../shared/interfaces/Client/IClientGet';
 import { PaymentTypeColumns } from '../../../shared/interfaces/payment/paymentType/IPaymentTypeColums';
 import { PaymentColumns } from '@/shared/interfaces/payment/IPaymentColumns';
+import { IAvailableSizesColumn, ISizeQA } from '../../../shared/interfaces/Inventory/I_InventoryTable';
 
-interface Size {
-  idInventory: number;
-  size: string;
-  quantity: number;
-}
-
-interface AvailableSizesColumn {
-  title: string;
-  dataIndex: string;
-  key: string;
-  render: (availableSizes: Size[]) => React.ReactNode;
-}
-
-export const tableColumns: (AvailableSizesColumn | any)[] = [
+export const inventoryTable: (IAvailableSizesColumn | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
   { title: 'Nombre del Producto', dataIndex: 'product_name', key: 'product_name' },
   {
     title: 'Tallas Disponibles',
     dataIndex: 'availableSizes',
     key: 'availableSizes',
-    render: (availableSizes: Size[]) => {
+    render: (availableSizes: ISizeQA[]) => {
       return (
         <ul className="flex space-x-4">
-        {availableSizes.map((size: Size) => (
+        {availableSizes.map((size: ISizeQA) => (
           <li key={size.idInventory}>{`${size.size}: ${size.quantity}`}</li>
         ))}
       </ul>

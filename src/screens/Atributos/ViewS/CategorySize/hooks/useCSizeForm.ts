@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { CategorySizePostDto, ICategorySizePost } from '@/shared/interfaces/size/CategorySize/ICategorySizePost';
-import { SaveCategorySize } from '@/shared/Api/CategorySize/CategorySizeApi';
+import { SaveCategorySize, UpdateCategorySize } from '@/shared/Api/CategorySize/CategorySizeApi';
 import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';
+import { ICategorySizeUpdate } from '@/shared/interfaces/size/CategorySize/ICategorySizeUpdate';
 
 export const useCategorySizeForm = () => {
   const [formData, setFormData] = useState<ICategorySizePost>(new CategorySizePostDto());
@@ -16,6 +17,18 @@ export const useCategorySizeForm = () => {
     console.log('CategorySize Data:', formData);
     GenericRequest(formData, SaveCategorySize, "CategorySize data submitted successfully");
   };
+  
+  const handleUpdate = (e: React.FormEvent) => {
+    e.preventDefault();
+    const updateData: ICategorySizeUpdate = {
+      id: formData.id,
+      user: 0,
+      date: new Date().toISOString(),
+      category: formData.category
+    }
+    console.log('CategorySize Data:', updateData);
+    GenericRequest(updateData, UpdateCategorySize, "CategorySize data updated successfully");
+  };
 
-  return { formData, setFormData, handleInputChange, handleSubmit };
+  return { formData, setFormData, handleInputChange, handleSubmit, handleUpdate };
 };

@@ -1,4 +1,3 @@
-import { Example1, Example2 } from '../components/example';
 import { Progress } from 'antd';
 
 
@@ -6,16 +5,6 @@ const Dashboard = () => {
 
   return (
     <div className="grid grid-cols-4 gap-8">
-      {/* Div 1 */}
-      <div className="col-span-2 bg-gray-50 shadow-lg p-4 rounded-md">
-        <Example1 />
-      </div>
-
-      {/* Div 2 */}
-      <div className="col-span-2 bg-gray-50 shadow-lg p-4 rounded-md flex justify-center">
-        <Example2 />
-      </div>
-
       <div className="col-span-4 bg-gray-50 shadow-lg p-4 rounded-md">
         <div className="bg-gray-100 ">
           <div className="flex justify-between bg-white p-4 shadow-md">

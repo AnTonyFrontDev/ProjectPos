@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react';
 import BreadcrumbData from "@/components/ui/Breadcrumb";
 import ApiTable from '@/components/Generics/Tabla/apiTable';
-import Options from "../PaymentType/components/Options";
 import SearchFilter from '../PaymentType/components/SearchFilter';
 import { paymentTypeTable } from "@/components/Generics/Tabla/tData";
 import { getPaymentTypes } from '@/shared/Api/Payment/PaymentType/PaymentTypeApi';

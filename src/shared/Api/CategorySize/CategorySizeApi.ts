@@ -46,7 +46,7 @@ export const SaveCategorySize = async (formData: ICategorySizePost) => {
 export const UpdateCategorySize = async (formData: ICategorySizeUpdate) => {
     try {
       const formattedData = formData;
-      const response = await axios.post(
+      const response = await axios.put(
         "https://localhost:7065/api/CategorySize/UpdateCategorySize",
         formattedData,
         {
