@@ -8,13 +8,14 @@ interface ButtonModalProps {
   buttonText: string;
   modalTitle: string;
   modalContent: React.ReactNode;
+  className?: string;
   size: number;
   iconType?: keyof typeof APP_ICONS; // Add the iconType prop
-  cssColor: string;
+  cssColor?: string;
   tooltipTitle?: string;
 }
 
-const ButtonModal: React.FC<ButtonModalProps> = ({ buttonText, modalTitle, modalContent, iconType, cssColor, size, tooltipTitle }) => {
+const ButtonModal: React.FC<ButtonModalProps> = ({ buttonText, className, modalTitle, modalContent, iconType, cssColor, size, tooltipTitle }) => {
   const [visible, setVisible] = useState(false);
 
   const showModal = () => {
@@ -31,11 +32,13 @@ const ButtonModal: React.FC<ButtonModalProps> = ({ buttonText, modalTitle, modal
     focus:border-${cssColor}-700 focus:ring focus:ring-${cssColor}-200 shadow-md
   `;
 
+  const buttonClasses = className ? className : buttonStyle;
+
   return (
     <>
     
       <Tooltip title={tooltipTitle}>
-        <button className={buttonStyle} onClick={showModal}>
+        <button className={buttonClasses} onClick={showModal}>
           {iconType && <AppIcon type={iconType} className="cursor-pointer" width={size} />}
           {buttonText && buttonText}
         </button>

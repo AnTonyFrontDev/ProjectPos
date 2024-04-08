@@ -2,11 +2,10 @@ import React from 'react';
 import { useInventoryForm } from '../hooks/useInventoryForm';
 import FilterProducts from './SelectFilter/FilterProductsI';
 import FilterSize from './SelectFilter/FilterSizeI'
-import FilterColor from './SelectFilter/FilterColorI'
-// import { InventoryColorDto } from '../../../shared/interfaces/Inventory/I_InventoryColor';
+import FilterColor from './SelectFilter/FilterColorI'   
 const InventoryForm: React.FC = () => {
     //custom hooks useInventoryForm
-    const { formData, setFormData, addExistence, handleSubmit, handleAddInventory, handleProductSelect, handleSizeSelect, handleColorSelect } = useInventoryForm();
+    const { formData, setFormData, addExistence, handleSubmit, handleProductSelect, handleSizeSelect, handleColorSelect } = useInventoryForm();
 
 
     return (

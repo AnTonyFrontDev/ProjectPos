@@ -88,19 +88,12 @@ const GenericTable: React.FC<GenericTableProps> = ({
         key: 'actions',
         render: (record: any) => (
           <span>
-            {/* <button
-              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-2 rounded'
-              // onClick={() => handleEdit(record)}
-            >
-              Edit
-            </button> */}
             <ButtonModal
               buttonText="Editar"
               modalTitle=""
+              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-2 rounded'
               size={15}
               modalContent={<ViewForm usarForm={usarForm} formData={record} isUpdate={true}/>}
-              // iconType={"dashboard" as keyof typeof APP_ICONS}
-              cssColor='blue'
             />
             <button
               className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'
