@@ -6,7 +6,7 @@ import { IInventoryColor } from '../interfaces/Inventory/I_InventoryColor';
 
 export const getInventory = async () => {
     try {
-        const response = await axios.get('https://localhost:7065/api/Inventory/GetInventory?Page=1&ItemsPerPage=10');
+        const response = await axios.get('https://localhost:7065/api/Inventory/GetInventory?Page=1&ItemsPerPage=20');
         console.log(response.data.data)
         return response.data.data;
     } catch (error) {

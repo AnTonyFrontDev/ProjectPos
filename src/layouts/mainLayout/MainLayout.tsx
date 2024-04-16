@@ -28,7 +28,7 @@ const MainLayout = () => {
             <button onClick={toggleSidebar} className="absolute top-0 left-0 mt-4 ml-4 hidden">
               <AppIcon type="dashboard" className="cursor-pointer" width={54} />
             </button>
-            <Suspense fallback={<div>Loading Sidebar...</div>}>
+            <Suspense fallback={<div>.</div>}>
               <Sidebar sidebarVisible={sidebarVisible} />
             </Suspense>
           </div>

@@ -1,17 +1,15 @@
 // Banks.tsx
 import BreadcrumbData from "@/components/ui/Breadcrumb";
 import ApiTable from '@/components/Generics/Tabla/apiTable';
-import Options from "../Bank/components/Options";
 import SearchFilter from '../Bank/components/SearchFilter';
 import { useEffect, useState } from 'react';
 
 import { banksTable } from "@/components/Generics/Tabla/tData";
-import { getBanks } from "@/shared/Api/Bank/BankApi";
+import { getBanks, RemoveBank } from "@/shared/Api/Bank/BankApi";
 import G_Options from "@/components/Generics/gOptions";
 
 const View = () => {
   const routes = [
-    // { title: 'Home', path: '/' },
     { title: 'Dashboard', path: '/' },
     { title: 'Atributos', path: '/atributos' },
     { title: 'Banks', path: '/atributos/Banks' }
@@ -54,6 +52,8 @@ const View = () => {
       <div className="mt-10">
         <ApiTable
           getApiData={getBanks}
+          delApiData={RemoveBank}
+          usarForm='Bank'
           columns={banksTable}
           searchTerm={searchTerm}
           filterColumn={filterColumn}

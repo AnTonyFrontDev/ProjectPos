@@ -27,15 +27,23 @@ const formComponents: IFormComponents = {
   Expenses: FormExpenses,
 };
 
-const ViewForm: React.FC<IViewFormProps> = ({ usarForm, formData, isUpdate }) => {
+const ViewForm: React.FC<IViewFormProps> = ({ usarForm, formData, isUpdate, updateData }) => {
   const SelectedForm = formComponents[usarForm];
+
+  const handleReloadTable = async () =>{
+    await updateData();
+  }
+
+  const handleCancel = () =>{
+    
+  }
 
   return (
     <div>
       {SelectedForm ? (
         <div>
           <Suspense fallback={<div>Loading...</div>}>
-            <SelectedForm formData={formData} isUpdate={isUpdate} />
+            <SelectedForm formData={formData} isUpdate={isUpdate} handleReloadTable={handleReloadTable} onSubmitSuccess={handleCancel}/>
           </Suspense>
         </div>
       ) : (

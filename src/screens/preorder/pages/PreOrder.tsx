@@ -181,7 +181,7 @@ const PreOrders = () => {
                     modalTitle=""
                     tooltipTitle="Agregar Producto"
                     size={16}
-                    modalContent={<ViewForm usarForm="Product" />}
+                    modalContent={<ViewForm usarForm="Product" formData={null} isUpdate={false}/>}
                     iconType="plus"
                     cssColor='blue'
                   />
@@ -210,7 +210,7 @@ const PreOrders = () => {
                     modalTitle=""
                     tooltipTitle="Agregar Size"
                     size={16}
-                    modalContent={<ViewForm usarForm="Size" />}
+                    modalContent={<ViewForm usarForm="Size" formData={null} isUpdate={false}/>}
                     iconType="plus"
                     cssColor='blue'
                   />

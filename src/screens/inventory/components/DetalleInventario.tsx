@@ -91,8 +91,8 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
                                   key={`${size.idInventory}-${color.fkInventory}-${index}`}
                                   className='bg-gray-300 flex items-center rounded-full p-2 mr-2'
                                 >
-                                  <AppIcon type="colors" style={{ color: `#${primary.code}` }} className="cursor-pointer mr-1" width={18} />
-                                  <AppIcon type="colors" style={{ color: `#${color.colorSecondary[index].code}` }} className="cursor-pointer mr-1" width={18} />
+                                  <AppIcon type="colors" style={{ color: `${primary.code}` }} className="cursor-pointer mr-1" width={18} />
+                                  <AppIcon type="colors" style={{ color: `${color.colorSecondary[index].code}` }} className="cursor-pointer mr-1" width={18} />
                                 </div>
                               ))}
                             </div>

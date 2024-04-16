@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { BankPostDto, IBankPost } from '@/shared/interfaces/Bank/IBankPost';
+import { BankDto, IBankPost } from '@/shared/interfaces/Bank/IBankPost';
 import { SaveBank } from '@/shared/Api/Bank/BankApi';
 import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';
 
 export const useBankForm = () => {
-  const [formData, setFormData] = useState<IBankPost>(new BankPostDto());
+  const [formData, setFormData] = useState<IBankPost>(new BankDto());
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

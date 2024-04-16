@@ -5,13 +5,13 @@ import { FormProps } from '@/components/Generics/Interface/IForms';
 import { CategorySizeDto, ICategorySizePost } from '@/shared/interfaces/size/CategorySize/ICategorySizePost';
 
 
-
-const CategorySizeForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }) => {
+const CategorySizeForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate, handleReloadTable, onSubmitSuccess }) => {
     const { formData, setFormData, handleInputChange, handleSubmit, handleUpdate } = useCategorySizeForm();
 
     useEffect(() => {
         if (isUpdate && initialFormData) {
             handleSetInitialFormData(initialFormData);
+            console.log(initialFormData);
         }
     }, [isUpdate, initialFormData]);
 
@@ -21,7 +21,18 @@ const CategorySizeForm: React.FC<FormProps> = ({ formData: initialFormData, isUp
         setFormData(initialFormData)
     };
 
-    const onSubmitHandler = isUpdate ? handleUpdate : handleSubmit;
+    // const onSubmitHandler = isUpdate ? handleUpdate : handleSubmit;
+
+    const onSubmitHandler = async (event: React.FormEvent) => {
+        event.preventDefault();
+        if (isUpdate) {
+            await handleUpdate(event);
+        } else {
+            await handleSubmit(event);
+        }
+        // Llama a handleReloadTable después de enviar el formulario
+        handleReloadTable();
+    };
 
     return (
         <form onSubmit={onSubmitHandler} className="max-w-md mx-auto mt-8">

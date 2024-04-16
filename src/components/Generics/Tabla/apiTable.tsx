@@ -8,7 +8,7 @@ import ViewForm from '@/components/FormularioV4/viewForm';
 interface GenericTableProps {
   getApiData: () => Promise<any[]>;
   putApiData?: (data: any) => Promise<any[]>;
-  delApiData?: (id: any) => Promise<any[]>;
+  delApiData?: (data: any) => Promise<any[]>;
   columns: any[];
   searchTerm: string;
   filterColumn?: string;
@@ -28,9 +28,12 @@ const GenericTable: React.FC<GenericTableProps> = ({
   sortDirection, 
   handleTableRowClick, 
   showActions }) => {
-  const [data, setData] = useState<any[]>([]);
-
-  useEffect(() => {
+    const [data, setData] = useState<any[]>([]);
+    
+    useEffect(() => {
+      fetchData();
+    }, [getApiData, searchTerm, filterColumn, sortDirection]);
+    
     const fetchData = async () => {
       try {
         const apiData = await getApiData();
@@ -66,8 +69,9 @@ const GenericTable: React.FC<GenericTableProps> = ({
       }
     };
 
-    fetchData();
-  }, [getApiData, searchTerm, filterColumn, sortDirection]);
+    const updateDataSource = async () => {
+      await fetchData();
+    };
 
 
   const handleDelete = async (record: any) => {
@@ -75,6 +79,7 @@ const GenericTable: React.FC<GenericTableProps> = ({
     if (delApiData) {
       try {
         await delApiData(record);
+        updateDataSource();
       } catch (error) {
         console.error('Error al eliminar el registro', error);
       }
@@ -93,7 +98,7 @@ const GenericTable: React.FC<GenericTableProps> = ({
               modalTitle=""
               className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-2 rounded'
               size={15}
-              modalContent={<ViewForm usarForm={usarForm} formData={record} isUpdate={true}/>}
+              modalContent={<ViewForm usarForm={usarForm} formData={record} isUpdate={true} updateData={updateDataSource}/>}
             />
             <button
               className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'

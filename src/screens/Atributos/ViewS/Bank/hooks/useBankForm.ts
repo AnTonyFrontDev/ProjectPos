@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { BankPostDto, IBankPost } from '@/shared/interfaces/Bank/IBankPost';
-import { SaveBank } from '@/shared/Api/Bank/BankApi';
 import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';
+import { BankDto, IBankPost } from '@/shared/interfaces/Bank/IBankPost';
+import { SaveBank, UpdateBank } from '@/shared/Api/Bank/BankApi';
+import { BankUpdateDto, IBankUpdate } from '@/shared/interfaces/Bank/IBankUpdate';
 
 export const useBankForm = () => {
-  const [formData, setFormData] = useState<IBankPost>(new BankPostDto());
+  const [formData, setFormData] = useState<IBankPost>(new BankDto());
+  const [isConfirmationVisible, setConfirmationVisible] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -13,10 +15,22 @@ export const useBankForm = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Additional actions before sending the bank data to the database
     console.log('Bank Data:', formData);
     GenericRequest(formData, SaveBank, "Bank data submitted successfully");
   };
 
-  return { formData, handleInputChange, handleSubmit };
+  const handleUpdate = (e: React.FormEvent) => {
+    e.preventDefault();
+    const updateData: IBankUpdate = new BankUpdateDto(formData);
+    console.log('Bank Data:', updateData);
+    GenericRequest(updateData, UpdateBank, "Bank data updated successfully");
+    setConfirmationVisible(true);
+   
+  };
+
+  const handleConfirmationClose = () => {
+    setConfirmationVisible(false);
+  };
+
+return { formData, setFormData, handleConfirmationClose, isConfirmationVisible, handleInputChange, handleSubmit, handleUpdate };
 };

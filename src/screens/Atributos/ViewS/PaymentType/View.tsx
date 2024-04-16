@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react';
 import BreadcrumbData from "@/components/ui/Breadcrumb";
 import ApiTable from '@/components/Generics/Tabla/apiTable';
 import SearchFilter from '../PaymentType/components/SearchFilter';
+
 import { paymentTypeTable } from "@/components/Generics/Tabla/tData";
 import { getPaymentTypes, RemovePaymentType } from '@/shared/Api/Payment/PaymentType/PaymentTypeApi';
 import G_Options from '@/components/Generics/gOptions';
-// import { getPaymentTypes } from "@/shared/Api/PaymentType/PaymentTypeApi";
 
 const View = () => {
   const routes = [

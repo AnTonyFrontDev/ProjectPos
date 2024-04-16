@@ -54,10 +54,9 @@ export const productTable: (IProductColumns | any)[] = [
   { title: 'Tipo', dataIndex: 'type', key: 'type' },
 ];
 
-
 export const banksTable: (IBankColumns | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
-  { title: 'Nombre del Banco', dataIndex: 'bankName', key: 'bankName' },
+  { title: 'Nombre del Banco', dataIndex: 'name', key: 'name' },
 ];
 
 export const categorySizeTable: (ICategorySizeColumns | any)[] = [

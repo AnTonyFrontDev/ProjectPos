@@ -1,3 +1,5 @@
+import { DATE } from "@/shared/Common/CurrentDate";
+
 export interface IBankPost {
   id: number;
   user: number;
@@ -5,7 +7,7 @@ export interface IBankPost {
   name: string;
 }
 
-export class BankPostDto implements IBankPost {
+export class BankDto implements IBankPost {
   id: number;
   user: number;
   date: string;
@@ -14,7 +16,7 @@ export class BankPostDto implements IBankPost {
   constructor() {
     this.id = 0;
     this.user = 0;
-    this.date = new Date().toISOString();
+    this.date = DATE;
     this.name = "";
   }
 }
