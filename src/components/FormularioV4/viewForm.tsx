@@ -31,7 +31,9 @@ const ViewForm: React.FC<IViewFormProps> = ({ usarForm, formData, isUpdate, upda
   const SelectedForm = formComponents[usarForm];
 
   const handleReloadTable = async () =>{
-    await updateData();
+    if (updateData){
+      await updateData();
+    }
   }
 
   const handleCancel = () =>{

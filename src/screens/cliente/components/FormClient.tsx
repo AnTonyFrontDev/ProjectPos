@@ -13,13 +13,13 @@ const ClientForm = () => {
                 <input
                     type="text"
                     name="f_name"
-                    value={`${formData.f_name} ${formData.l_name}`}
+                    value={formData.f_name} 
                     onChange={handleInputChange}
                     className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                 />
             </div>
 
-            {/* <div className="mb-4">
+            <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-600">Last Name</label>
                 <input
                     type="text"
@@ -28,7 +28,7 @@ const ClientForm = () => {
                     onChange={handleInputChange}
                     className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                 />
-            </div> */}
+            </div> 
 
             <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-600">Primer Apellido</label>
