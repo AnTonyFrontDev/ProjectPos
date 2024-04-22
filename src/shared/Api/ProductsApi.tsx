@@ -24,7 +24,7 @@ export const getInventoryById = async (productId: number) => {
 
         if (responseData && responseData.length > 0) {
             const inventoryData = responseData[0];
-            const productData = inventoryData.product[0];
+            const productData = inventoryData.product;
             const inventorySizes = inventoryData.inventory.sizes;
             const inventoryColors = inventoryData.inventory.colors;
 

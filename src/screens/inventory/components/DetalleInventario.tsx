@@ -34,9 +34,9 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
   const { name, description, salePrice, type, totalQuantity, availableSizes } = detalleProducto;
   const tableData : any = [];
 
-  availableSizes.forEach(size => {
-    size.availableColors.forEach(color => {
-      color.colorPrimary.forEach(primaryColor => {
+  availableSizes.forEach((size: any) => {
+    size.availableColors.forEach((color: any) => {
+      color.colorPrimary.forEach((primaryColor: any) => {
         tableData.push({
           size: size.size,
           colorName: primaryColor.colorname, // Agregamos el nombre del color
@@ -54,7 +54,7 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
   });
 
   // Ordenar tableData por colorName
-  tableData.sort((a, b) => a.colorName.localeCompare(b.colorName));
+  tableData.sort((a:any, b:any) => a.colorName.localeCompare(b.colorName));
 
   const columns = [
     {
