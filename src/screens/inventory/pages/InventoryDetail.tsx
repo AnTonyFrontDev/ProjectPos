@@ -7,7 +7,7 @@ const InventoryDetail = () => {
     console.log(productId);
     return (
       <div>
-        <h1>Detalle Inventario</h1>
+        {/* <h1>Detalle Inventario</h1> */}
         <Detail Id={productId} />
       </div>
     );

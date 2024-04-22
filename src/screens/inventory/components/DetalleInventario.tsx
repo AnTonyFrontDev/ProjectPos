@@ -32,9 +32,9 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
 
 
   const { name, description, salePrice, type, totalQuantity, availableSizes } = detalleProducto;
-  const tableData : any = [];
+  const tableData: any = [];
 
-   // Objeto para realizar un seguimiento de la cantidad total de cada talla
+  // Objeto para realizar un seguimiento de la cantidad total de cada talla
 
   const sizeQuantityMap: { [key: string]: any } = {}; // Objeto para realizar un seguimiento de la cantidad total de cada talla
 
@@ -49,7 +49,7 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
       });
     });
   });
-  
+
   // Ahora agregamos las tallas al objeto tableData basándonos en la información recopilada en sizeQuantityMap
   for (const key in sizeQuantityMap) {
     if (sizeQuantityMap.hasOwnProperty(key)) {
@@ -62,7 +62,7 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
         })
         .map((size: any) => `${size.size}: ${size.quantity}`)
         .join(' ');
-  
+
       tableData.push({
         size: sizes,
         colorName: colorName,
@@ -80,7 +80,7 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
 
 
   // Ordenar tableData por colorName
-  tableData.sort((a:any, b:any) => a.colorName.localeCompare(b.colorName));
+  tableData.sort((a: any, b: any) => a.colorName.localeCompare(b.colorName));
 
   const columns = [
     {
@@ -119,23 +119,25 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
           ))}
         </Descriptions.Item>
 
-        <Descriptions.Item label="Tallas y Colores Disponibles" span={3}>
-          {availableSizes && availableSizes.map((size: any) => (
-            <div key={size.idInventory} className='flex mx-3'>
-              <strong>{`${size.size}: ‎ `}</strong>
-              {size.availableColors &&
-                size.availableColors.map((color: any) => (
-                  <div key={`${size.idInventory}-${color.fkInventory}`}>
-                    {color.colorPrimary.map((primary: any, index: number) => (
-                      <div key={`${size.idInventory}-${color.fkInventory}-${index}`}>
-                        {`${primary.colorname} - ${color.colorSecondary[index].colorname}: ${color.quantity[index]}`}
-                      </div>
-                    ))}
+        <Descriptions.Item label="Colores Disponibles" span={3}>
+          <div className='flex mx-3'>
+            {availableSizes && (
+              // Crear un conjunto para almacenar los códigos de color únicos
+              <>
+                {Array.from(new Set<string>(availableSizes.flatMap((size: any) =>
+                  size.availableColors?.flatMap((color: any) =>
+                    color.colorPrimary?.map((primary: any) => primary.code)
+                  )
+                ))).map((code: string, index: number) => (
+                  <div key={index} className="flex items-center">
+                    <AppIcon type="colors" style={{ color: code }} className="cursor-pointer" width={28} />
                   </div>
                 ))}
-            </div>
-          ))}
+              </>
+            )}
+          </div>
         </Descriptions.Item>
+
       </Descriptions>
 
       <Table dataSource={tableData} columns={columns} />
