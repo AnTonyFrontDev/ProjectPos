@@ -53,6 +53,7 @@ export const getInventoryById = async (productId: number) => {
                 return {
                     idInventory: size.idInventory,
                     size: size.size,
+                    idCategory: size.idCategory,
                     quantity: size.quantity,
                     availableColors: availableColors,
                 };

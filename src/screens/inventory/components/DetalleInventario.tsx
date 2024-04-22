@@ -34,24 +34,50 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
   const { name, description, salePrice, type, totalQuantity, availableSizes } = detalleProducto;
   const tableData : any = [];
 
+   // Objeto para realizar un seguimiento de la cantidad total de cada talla
+
+  const sizeQuantityMap: { [key: string]: any } = {}; // Objeto para realizar un seguimiento de la cantidad total de cada talla
+
   availableSizes.forEach((size: any) => {
     size.availableColors.forEach((color: any) => {
       color.colorPrimary.forEach((primaryColor: any) => {
-        tableData.push({
-          size: size.size,
-          colorName: primaryColor.colorname, // Agregamos el nombre del color
-          quantity: size.quantity, // Agregamos la cantidad disponible
-          idCategory: size.idCategory, // Agregamos el ID de la categoría
-          icon: (
-            <div className="flex items-center">
-              <AppIcon type="colors" style={{ color: primaryColor.code }} className="cursor-pointer" width={28} />
-              <span className="ml-2">{primaryColor.colorname}</span> {/* Mostramos el nombre del color */}
-            </div>
-          ),
-        });
+        const key = `${primaryColor.colorname}-${size.idCategory}`; // Clave única para identificar la combinación de color y categoría
+        if (!sizeQuantityMap[key]) {
+          sizeQuantityMap[key] = { quantity: 0, code: primaryColor.code }; // Inicializamos la cantidad total de la talla en 0 si es la primera vez que encontramos esta combinación
+        }
+        sizeQuantityMap[key].quantity += size.quantity; // Sumamos la cantidad de la talla a la cantidad total
       });
     });
   });
+  
+  // Ahora agregamos las tallas al objeto tableData basándonos en la información recopilada en sizeQuantityMap
+  for (const key in sizeQuantityMap) {
+    if (sizeQuantityMap.hasOwnProperty(key)) {
+      const [colorName, categoryId] = key.split('-');
+      const { quantity, code } = sizeQuantityMap[key];
+      const sizes = availableSizes
+        .filter((size: any) => {
+          const color = size.availableColors.find((color: any) => color.colorPrimary.some((primary: any) => primary.colorname === colorName));
+          return color && size.idCategory.toString() === categoryId;
+        })
+        .map((size: any) => `${size.size}: ${size.quantity}`)
+        .join(' ');
+  
+      tableData.push({
+        size: sizes,
+        colorName: colorName,
+        quantity: quantity,
+        idCategory: categoryId,
+        icon: (
+          <div className="flex items-center">
+            <AppIcon type="colors" style={{ color: code }} className="cursor-pointer" width={28} />
+            <span className="ml-2">{colorName}</span>
+          </div>
+        ),
+      });
+    }
+  }
+
 
   // Ordenar tableData por colorName
   tableData.sort((a:any, b:any) => a.colorName.localeCompare(b.colorName));
@@ -112,7 +138,7 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
         </Descriptions.Item>
       </Descriptions>
 
-      <Table dataSource={tableData} columns={columns} />;
+      <Table dataSource={tableData} columns={columns} />
 
       <div className="flex mt-4">
         {/* Botón para editar */}
@@ -120,9 +146,9 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
           Editar
         </button>
         {/* Botón para eliminar */}
-        <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+        {/* <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
           Eliminar
-        </button>
+        </button> */}
       </div>
     </div>
 
