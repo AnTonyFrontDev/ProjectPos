@@ -1,6 +1,6 @@
 //DetalleInventario.tsx
 import React, { useEffect, useState } from 'react';
-import { Descriptions } from 'antd';
+import { Descriptions, Table } from 'antd';
 import { getInventoryById } from '@/shared/Api/ProductsApi';
 import { DetalleProps as DetalleProductoProps } from '@/shared/interfaces/I_inventario';
 import { AppIcon } from '../../../components/ui/AppIcon';
@@ -32,7 +32,52 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
 
 
   const { name, description, salePrice, type, totalQuantity, availableSizes } = detalleProducto;
-  const uniqueColorCombinations = new Set();
+  const tableData : any = [];
+
+  availableSizes.forEach(size => {
+    size.availableColors.forEach(color => {
+      color.colorPrimary.forEach(primaryColor => {
+        tableData.push({
+          size: size.size,
+          colorName: primaryColor.colorname, // Agregamos el nombre del color
+          quantity: size.quantity, // Agregamos la cantidad disponible
+          idCategory: size.idCategory, // Agregamos el ID de la categoría
+          icon: (
+            <div className="flex items-center">
+              <AppIcon type="colors" style={{ color: primaryColor.code }} className="cursor-pointer" width={28} />
+              <span className="ml-2">{primaryColor.colorname}</span> {/* Mostramos el nombre del color */}
+            </div>
+          ),
+        });
+      });
+    });
+  });
+
+  // Ordenar tableData por colorName
+  tableData.sort((a, b) => a.colorName.localeCompare(b.colorName));
+
+  const columns = [
+    {
+      title: 'Color Primario',
+      dataIndex: 'icon',
+      key: 'icon',
+    },
+    {
+      title: 'Tamaño',
+      dataIndex: 'size',
+      key: 'size',
+    },
+    {
+      title: 'Cantidad Disponible',
+      dataIndex: 'quantity',
+      key: 'quantity',
+    },
+    {
+      title: 'Categoría Size',
+      dataIndex: 'idCategory',
+      key: 'idCategory',
+    },
+  ];
 
   return (
     <div className="my-8">
@@ -65,50 +110,9 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
             </div>
           ))}
         </Descriptions.Item>
-        <Descriptions.Item label="Colores Disponibles" span={3}>
-          {availableSizes && (
-            <div>
-              {availableSizes.map((size: any) => (
-                <div key={size.idInventory}>
-                  {size.availableColors &&
-                    size.availableColors.map((color: any) => {
-                      const isCombinationUnique = color.colorPrimary.every((primary: any, index: number) => {
-                        const combinationKey = `${primary.colorname}-${color.colorSecondary[index].colorname}`;
-                        return !uniqueColorCombinations.has(combinationKey);
-                      });
-
-                      if (isCombinationUnique) {
-                        color.colorPrimary.forEach((primary: any, index: number) => {
-                          const combinationKey = `${primary.colorname}-${color.colorSecondary[index].colorname}`;
-                          uniqueColorCombinations.add(combinationKey);
-                        });
-
-                        return (
-                          <div key={`${size.idInventory}-${color.fkInventory}`}>
-                            <div className='flex mb-2'>
-                              {color.colorPrimary.map((primary: any, index: number) => (
-                                <div
-                                  key={`${size.idInventory}-${color.fkInventory}-${index}`}
-                                  className='bg-gray-300 flex items-center rounded-full p-2 mr-2'
-                                >
-                                  <AppIcon type="colors" style={{ color: `${primary.code}` }} className="cursor-pointer mr-1" width={18} />
-                                  <AppIcon type="colors" style={{ color: `${color.colorSecondary[index].code}` }} className="cursor-pointer mr-1" width={18} />
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        );
-                      }
-
-                      return null;
-                    })}
-                </div>
-              ))}
-            </div>
-          )}
-        </Descriptions.Item>
       </Descriptions>
 
+      <Table dataSource={tableData} columns={columns} />;
 
       <div className="flex mt-4">
         {/* Botón para editar */}
