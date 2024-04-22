@@ -11,8 +11,8 @@ import ViewForm from '@/components/FormularioV4/viewForm';
 import useClientOptions from '@/screens/AddInventory/hooks/useClientOptions';
 
 const tableHeadClasses = "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider";
-const tableSelectsClasses = "block w-full py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm";
-// const formInputsClasses = "px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500";
+const tableSelectsClasses = "block w-full py-2 pr-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm";
+const formInputsClasses = "px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
 
 const PreOrders = () => {
   const [formData, setFormData] = useState<IPreOrder>({
@@ -113,32 +113,48 @@ const PreOrders = () => {
   return (
     <div className="container mx-auto">
       <h1 className="text-2xl font-bold mb-4">Agregar Pedido</h1>
-      <div className='flex gap-4 items-center'>
-        <div className='flex flex-col '>
+      <div className='gap-4 inline-flex w-full'>
+        <div className='flex flex-col w-1/4'>
           <label>Cliente:</label>
-        </div>
-        <div className='flex flex-col w-1/3'> 
           <Select
-            className={tableSelectsClasses}
+            className={tableSelectsClasses + 'none'}
             options={clientOptions.map(client => ({
               value: client.id,
-              label: client.f_name +" "+client.l_name + " " + client.f_surname +" "+client.l_surname
+              label: `${client.f_name} ${client.l_name} ${client.f_surname} ${client.l_surname}`
             }))}
             value={{
               value: clientOptions.find(client => client.id === formData.fkClient)?.id || 0,
               label: `${clientOptions.find(client => client.id === formData.fkClient)?.f_name || ""} 
-               ${clientOptions.find(client => client.id === formData.fkClient)?.l_name || ""}
-               ${clientOptions.find(client => client.id === formData.fkClient)?.f_surname || ""}
-               ${clientOptions.find(client => client.id === formData.fkClient)?.l_surname || ""}`
+          ${clientOptions.find(client => client.id === formData.fkClient)?.l_name || ""}
+          ${clientOptions.find(client => client.id === formData.fkClient)?.f_surname || ""}
+          ${clientOptions.find(client => client.id === formData.fkClient)?.l_surname || ""}`
             }}
             onChange={(selectedOption) => handleChangeClient(selectedOption?.value || 0)}
             isSearchable
           />
         </div>
-        <div className='flex'>
+        <div className='flex flex-col w-1/4'>
+          <label className='mb-1'>RNC (Opcional):</label>
+          <input
+            type="text"
+            value={formData.rnc || ""}
+            onChange={(e) => setFormData({ ...formData, rnc: e.target.value })}
+            className={formInputsClasses}
+          />
+        </div>
+        <div className='flex flex-col w-1/4'>
+          <label className='mb-1'>Fecha de Entrega:</label>
+          <input
+            type="date"
+            value={formData.outDate || ""}
+            onChange={(e) => setFormData({ ...formData, outDate: e.target.value })}
+            className={formInputsClasses}
+          />
+        </div>
+        <div className='flex flex-col items-center justify-center'>
           <button
             onClick={handleSave}
-            className="bg-green-500 hover:bg-green-700 text-white font-bold mx-2 py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-green-500 hover:bg-green-700 text-white font-bold mt-5 py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
             Guardar
           </button>
@@ -181,7 +197,7 @@ const PreOrders = () => {
                     modalTitle=""
                     tooltipTitle="Agregar Producto"
                     size={16}
-                    modalContent={<ViewForm usarForm="Product" formData={null} isUpdate={false}/>}
+                    modalContent={<ViewForm usarForm="Product" formData={null} isUpdate={false} />}
                     iconType="plus"
                     cssColor='blue'
                   />
@@ -210,7 +226,7 @@ const PreOrders = () => {
                     modalTitle=""
                     tooltipTitle="Agregar Size"
                     size={16}
-                    modalContent={<ViewForm usarForm="Size" formData={null} isUpdate={false}/>}
+                    modalContent={<ViewForm usarForm="Size" formData={null} isUpdate={false} />}
                     iconType="plus"
                     cssColor='blue'
                   />

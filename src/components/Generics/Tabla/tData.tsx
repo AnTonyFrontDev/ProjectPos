@@ -11,6 +11,7 @@ import { ICustomersColumns, IClientGet } from '@/shared/interfaces/Client/IClien
 import { IPaymentTypeColumns } from '@/shared/interfaces/payment/paymentType/IPaymentTypeColums';
 import { IPaymentColumns } from '@/shared/interfaces/payment/IPaymentColumns';
 import { IAvailableSizesColumn, ISizeQA } from '@/shared/interfaces/Inventory/I_InventoryTable';
+import { IOrderColumns } from '@/shared/interfaces/order/IOrderColumns';
 
 export const inventoryTable: (IAvailableSizesColumn | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
@@ -100,4 +101,16 @@ export const paymentTable: (IPaymentColumns | any)[] = [
   { title: 'Tipo de Pago', dataIndex: 'fkTypePayment', key: 'fkTypePayment' },
   { title: 'Cuenta Bancaria', dataIndex: 'fkBankAccount', key: 'fkBankAccount' },
   { title: 'Cantidad', dataIndex: 'amount', key: 'amount' }
+];
+
+export const orderTable: (IOrderColumns | any)[] = [
+  { title: 'ID', dataIndex: 'id', key: 'id' },
+  { 
+    title: 'Cliente', 
+    dataIndex: 'client', 
+    key: 'client', 
+    render: (client: any) => `${client.f_name} ${client.f_surname} ${client.l_surname}` 
+  },
+  { title: 'Descripción', dataIndex: 'descriptioN_JOB', key: 'descriptioN_JOB' },
+  { title: 'Estado', dataIndex: 'statuS_ORDER', key: 'statuS_ORDER' },
 ];
