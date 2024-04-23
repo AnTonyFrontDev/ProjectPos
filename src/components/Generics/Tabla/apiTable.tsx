@@ -6,7 +6,7 @@ import ButtonModal from '../Modal/ButtonModal';
 import ViewForm from '@/components/FormularioV4/viewForm';
 
 interface GenericTableProps {
-  getApiData: () => Promise<any[]>;
+  getApiData?: () => Promise<any[]>;
   putApiData?: (data: any) => Promise<any[]>;
   delApiData?: (data: any) => Promise<any[]>;
   columns: any[];
@@ -16,6 +16,7 @@ interface GenericTableProps {
   handleTableRowClick?: any;
   showActions?: boolean;
   usarForm?: any;
+  dataSource?: any[];
 }
 
 const GenericTable: React.FC<GenericTableProps> = ({
@@ -26,17 +27,20 @@ const GenericTable: React.FC<GenericTableProps> = ({
   searchTerm, 
   filterColumn, 
   sortDirection, 
-  handleTableRowClick, 
+  handleTableRowClick,
+  dataSource, 
   showActions }) => {
-    const [data, setData] = useState<any[]>([]);
+    const [data, setData] = useState<any[]>(dataSource || []);
     
     useEffect(() => {
-      fetchData();
+      if (!dataSource) {
+        fetchData();
+      }
     }, [getApiData, searchTerm, filterColumn, sortDirection]);
     
     const fetchData = async () => {
       try {
-        const apiData = await getApiData();
+        const apiData = await getApiData!();
         
         let filteredData = apiData.filter(item =>
           Object.values(item).some(value =>

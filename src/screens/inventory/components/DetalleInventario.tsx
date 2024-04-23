@@ -4,6 +4,7 @@ import { Descriptions, Table } from 'antd';
 import { getInventoryById } from '@/shared/Api/ProductsApi';
 import { DetalleProps as DetalleProductoProps } from '@/shared/interfaces/I_inventario';
 import { AppIcon } from '../../../components/ui/AppIcon';
+import Tabla from './Tabla';
 
 
 const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
@@ -141,6 +142,7 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
       </Descriptions>
 
       <Table dataSource={tableData} columns={columns} />
+      <Tabla/>
 
       <div className="flex mt-4">
         {/* Botón para editar */}
