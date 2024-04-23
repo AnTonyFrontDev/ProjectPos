@@ -1,9 +1,10 @@
-import { useState} from 'react'; 
+import { useEffect, useState} from 'react'; 
 import { getOrders } from '@/shared/Api/Order/OrderApi';
 import SearchFilter from '../components/SearchFilter';
 import BreadcrumbData from "@/components/ui/Breadcrumb";
 import { orderTable } from "@/components/Generics/Tabla/tData";
 import ApiTable from '@/components/Generics/Tabla/apiTable';
+import { useNavigate } from 'react-router-dom';
 
 function ListOrders() {
     const routes = [
@@ -12,10 +13,19 @@ function ListOrders() {
         { title: 'Ordenes', path: '/Order' }
     ];
 
+    const navigate = useNavigate();
+
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [filterColumn, setFilterColumn] = useState<string>('');
     const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
-
+    const [selectedOrderId, setSelectedOrderId] = useState<number | null>(null);
+    
+    useEffect(() => {
+        if (selectedOrderId !== null) {
+          // Realizar alguna acción con selectedProductId
+          console.log(`El producto seleccionado tiene el ID: ${selectedOrderId}`);
+        }
+      }, [selectedOrderId]);
 
     const handleSearch = (value: string) => {
         setSearchTerm(value);
@@ -28,6 +38,13 @@ function ListOrders() {
     const handleSortToggle = () => {
         setSortDirection((prevSortDirection) => (prevSortDirection === 'asc' ? 'desc' : 'asc') as 'asc' | 'desc');
     };
+
+    const handleTableRowClick = (record: any) => {
+        // Al hacer clic en una fila, establece el ID del producto seleccionado y muestra el detalle
+        setSelectedOrderId(record.id);
+        console.log(record.id);
+        navigate(`/Order/OrderDetail/${record.id}`);
+      };
 
     return (
         <>
@@ -46,7 +63,8 @@ function ListOrders() {
                 searchTerm={searchTerm}
                 filterColumn={filterColumn}
                 sortDirection={sortDirection}
-                showActions={false} // Opcional: mostrar acciones como editar/eliminar
+                showActions={false}
+                handleTableRowClick={handleTableRowClick}
             />
         </>
     );

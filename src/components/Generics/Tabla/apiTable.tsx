@@ -36,17 +36,25 @@ const GenericTable: React.FC<GenericTableProps> = ({
       if (!dataSource) {
         fetchData();
       }
-    }, [getApiData, searchTerm, filterColumn, sortDirection]);
+    }, [getApiData, searchTerm, filterColumn, sortDirection, dataSource]);
     
     const fetchData = async () => {
       try {
         const apiData = await getApiData!();
         
-        let filteredData = apiData.filter(item =>
-          Object.values(item).some(value =>
-            typeof value === 'string' && value.toLowerCase().includes(searchTerm.toLowerCase())
-          )
-        );
+        let filteredData = apiData
+        
+        console.log(apiData)
+
+        if(searchTerm){
+          filteredData = apiData.filter(item =>
+            Object.values(item).some(value =>
+              typeof value === 'string' && value.toLowerCase().includes(searchTerm.toLowerCase())
+            )
+          );
+        };
+
+        console.log(filteredData)
 
         if (filterColumn) {
           filteredData = filteredData.filter(item => item[filterColumn] !== undefined && item[filterColumn] !== null);

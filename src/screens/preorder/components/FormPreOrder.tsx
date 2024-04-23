@@ -2,7 +2,7 @@ import { useState } from "react";
 // import { IProductsDtoAdd } from "@/shared/interfaces/screens/preorder/ProductToAdd";
 import {IProductsDtoAdd} from '@/shared/interfaces/Preorder/ProductToAdd'
 import Order from "./Order";
-import SelectClients from "./SelectClients";
+import SelectClients from "./Filter/SelectClients";
 import { IPreOrder } from "@/shared/interfaces/Preorder/IPreOrder";
 import axios from "axios";
 

@@ -12,6 +12,7 @@ import { IPaymentTypeColumns } from '@/shared/interfaces/payment/paymentType/IPa
 import { IPaymentColumns } from '@/shared/interfaces/payment/IPaymentColumns';
 import { IAvailableSizesColumn, ISizeQA } from '@/shared/interfaces/Inventory/I_InventoryTable';
 import { IOrderColumns } from '@/shared/interfaces/order/IOrderColumns';
+import { IPreOrderColumns } from '@/shared/interfaces/Preorder/IPreOrderColumns';
 
 export const inventoryTable: (IAvailableSizesColumn | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
@@ -113,4 +114,14 @@ export const orderTable: (IOrderColumns | any)[] = [
   },
   { title: 'Descripción', dataIndex: 'descriptioN_JOB', key: 'descriptioN_JOB' },
   { title: 'Estado', dataIndex: 'statuS_ORDER', key: 'statuS_ORDER' },
+];
+
+export const preOrderTable: (IPreOrderColumns | any)[] = [
+  { title: 'ID', dataIndex: 'id', key: 'id' },
+  { 
+    title: 'Cliente', 
+    dataIndex: 'client', 
+    key: 'client', 
+    render: (client: any) => `${client.f_name} ${client.f_surname} ${client.l_surname}` 
+  },
 ];

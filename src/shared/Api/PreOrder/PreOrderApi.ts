@@ -1,12 +1,14 @@
+import { URL } from "@/shared/Common/url";
 import { IPreOrder } from "@/shared/interfaces/Preorder/IPreOrder";
 import axios from "axios";
 
 // Función para obtener todas las PreOrder
 export const getPreOrders = async () => {
   try {
-    const response = await axios.get('https://localhost:7065/api/preorder/PreOrder/GetPreOrders?Page=1&ItemsPerPage=11');
-    console.log(response.data);
-    return response.data;
+    const response = await axios.get(
+      `${URL}/preorder/PreOrder/GetPreOrders?Page=1&ItemsPerPage=11`);
+    console.log("Response2:", response.data.data);
+    return response.data.data;
   } catch (error) {
     console.error('Error fetching PreOrders:', error);
     throw error;
