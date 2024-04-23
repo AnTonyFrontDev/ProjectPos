@@ -7,7 +7,7 @@ const ProductDetail = () => {
     console.log(preorderId);
     return (
       <div>
-        <h1>Detalle Cliente</h1>
+        <h1>Detalle Pedido</h1>
         <Detail Id={preorderId} />
       </div>
     );
