@@ -14,7 +14,7 @@ const ListPreOrder = () => {
     const routes = [
         { title: 'Home', path: '/' },
         { title: 'Dashboard', path: '/' },
-        { title: 'Ordenes', path: '/Order' }
+        { title: 'Pedidos', path: '/PreOrder' }
     ];
 
     const navigate = useNavigate();

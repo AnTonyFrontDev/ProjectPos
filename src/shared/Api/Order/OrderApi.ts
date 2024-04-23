@@ -18,6 +18,17 @@ export const getOrders = async () => {
   }
 };
 
+export const getOrderById = async (orderId : number) => {
+  try {
+    const response = await axios.get(`${URL}/Order/GetOrder?id=${orderId}`);
+    console.log('Response:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error obteniendo la orden:", error);
+    throw error;
+  }
+};
+
 export const CheckOrder = async (formData: ICheckOrder[]) => {
   console.log(formData)
   try {

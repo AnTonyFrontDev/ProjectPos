@@ -1,0 +1,17 @@
+
+import { useParams } from 'react-router-dom'
+import Detail from '../components/OrderDetail';
+
+const ProductDetail = () => {
+    const { orderId } = useParams<{ orderId : any}>();
+    console.log(orderId);
+    return (
+      <div>
+        <h1>Detalle Cliente</h1>
+        <Detail Id={orderId} />
+      </div>
+    );
+  };
+  
+
+export default ProductDetail

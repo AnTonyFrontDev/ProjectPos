@@ -51,7 +51,6 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
                             <Descriptions.Item label="Precio">{item.price}</Descriptions.Item>
                             <Descriptions.Item label="Tamaño">{item.size}</Descriptions.Item>
                             <Descriptions.Item label="Color Primario">{item.colorPrimary}</Descriptions.Item>
-                            <Descriptions.Item label="Color Secundario">{item.colorSecondary}</Descriptions.Item>
                             <Descriptions.Item label="Cantidad">{item.quantity}</Descriptions.Item>
                         </Descriptions>
                     </Panel>
