@@ -3,7 +3,7 @@ import { RouteObject } from "react-router-dom";
 // import AddOrder from "../orders/pages/AddOrder";
 import PreOrders from "./pages/PreOrder";
 import ListPreOrder from "./pages/ListPreOrder";
-import PreOrderDetail from "./pages/PreOrderDetail";
+import PreOrderDetail from "./pages/ViewDetail";
 
 
 const router: RouteObject[] = [
