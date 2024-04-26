@@ -56,6 +56,7 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
     if (sizeQuantityMap.hasOwnProperty(key)) {
       const [colorName, categoryId] = key.split('-');
       const { quantity, code } = sizeQuantityMap[key];
+      const category = availableSizes.find((size: any) => size.idCategory.toString() === categoryId)?.nameCategory || ''; 
       const sizes = availableSizes
         .filter((size: any) => {
           const color = size.availableColors.find((color: any) => color.colorPrimary.some((primary: any) => primary.colorname === colorName));
@@ -68,7 +69,7 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
         size: sizes,
         colorName: colorName,
         quantity: quantity,
-        idCategory: categoryId,
+        category: category,
         icon: (
           <div className="flex items-center">
             <AppIcon type="colors" style={{ color: code }} className="cursor-pointer" width={28} />
@@ -101,8 +102,8 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
     },
     {
       title: 'Categoría Size',
-      dataIndex: 'idCategory',
-      key: 'idCategory',
+      dataIndex: 'category',
+      key: 'category',
     },
   ];
 
