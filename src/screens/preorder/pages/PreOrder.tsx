@@ -17,6 +17,7 @@ const formInputsClasses = "px-3 py-2 border border-gray-300 rounded-md focus:out
 const PreOrders = () => {
   const [formData, setFormData] = useState<IPreOrder>({
     fkClient: 0,
+    dateDelivery: "",
     user: 1,
     productsDtoAdds: [],
   });
@@ -41,7 +42,7 @@ const PreOrders = () => {
       fkSize: 0,
       quantity: 0,
       fkColorPrimary: 0,
-      fkColorSecondary: 0,
+      fkColorSecondary: 1,
       user: 1
     };
     setTableData([...tableData, newRow]);
@@ -62,13 +63,14 @@ const PreOrders = () => {
       // Limpiar el formulario después de guardar
       setFormData({
         fkClient: 0,
+        dateDelivery: '',
         user: 0,
         productsDtoAdds: [{
           fkProduct: 0,
           fkSize: 0,
           quantity: 0,
           fkColorPrimary: 0,
-          fkColorSecondary: 0,
+          fkColorSecondary: 1,
           user: 1
         }]
       });
@@ -134,20 +136,11 @@ const PreOrders = () => {
           />
         </div>
         <div className='flex flex-col w-1/4'>
-          <label className='mb-1'>RNC (Opcional):</label>
-          <input
-            type="text"
-            value={formData.rnc || ""}
-            onChange={(e) => setFormData({ ...formData, rnc: e.target.value })}
-            className={formInputsClasses}
-          />
-        </div>
-        <div className='flex flex-col w-1/4'>
           <label className='mb-1'>Fecha de Entrega:</label>
           <input
             type="date"
-            value={formData.outDate || ""}
-            onChange={(e) => setFormData({ ...formData, outDate: e.target.value })}
+            value={formData.dateDelivery || ""}
+            onChange={(e) => setFormData({ ...formData, dateDelivery: e.target.value })}
             className={formInputsClasses}
           />
         </div>
@@ -169,7 +162,7 @@ const PreOrders = () => {
             <th className={tableHeadClasses}>Size</th>
             <th className={tableHeadClasses}>Cantidad</th>
             <th className={tableHeadClasses}>Color 1</th>
-            <th className={tableHeadClasses}>Color 2</th>
+            {/* <th className={tableHeadClasses}>Color 2</th> */}
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
@@ -258,7 +251,7 @@ const PreOrders = () => {
                 />
 
               </td>
-              <td>
+              {/* <td>
                 <Select
                   className={tableSelectsClasses}
                   options={colorOptions.map(color => ({
@@ -273,7 +266,7 @@ const PreOrders = () => {
                   onChange={(selectedOption) => handleSelectChange(selectedOption?.value || 0, index, 'fkColorSecondary')}
                   isSearchable
                 />
-              </td>
+              </td> */}
             </tr>
           ))}
           <tr>

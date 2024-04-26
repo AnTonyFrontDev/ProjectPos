@@ -1,10 +1,11 @@
 import { useState } from "react";
 // import { IProductsDtoAdd } from "@/shared/interfaces/screens/preorder/ProductToAdd";
 import {IProductsDtoAdd} from '@/shared/interfaces/Preorder/ProductToAdd'
-import Order from "./Order";
+// import Order from "./Order";
 import SelectClients from "./Filter/SelectClients";
 import { IPreOrder } from "@/shared/interfaces/Preorder/IPreOrder";
 import axios from "axios";
+import { DATE } from "@/shared/Common/CurrentDate";
 
 //quitar de aqui
 const url = "https://localhost:7065/api/preorder/PreOrder/AddPreOrder";
@@ -19,6 +20,7 @@ const FormPreOrder = () => {
       const preOrder : IPreOrder = {
         fkClient : clientId,
         user : 1,
+        dateDelivery: DATE,
         productsDtoAdds : productToAddList
       }   
       axios.post<IPreOrder>(url, preOrder)
@@ -41,7 +43,7 @@ const FormPreOrder = () => {
             </div>
             <SelectClients onClientSelect={clientHandler} />
             {/* Pasa el estado y la función de actualización al componente Order */}
-            <Order productToAddList={productToAddList} setProductToAddList={setProductToAddList} />
+            {/* <Order productToAddList={productToAddList} setProductToAddList={setProductToAddList} /> */}
             <button type="button" onClick={sendForm}>
           test
         </button>
