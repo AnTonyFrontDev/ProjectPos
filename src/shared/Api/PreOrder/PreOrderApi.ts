@@ -6,7 +6,7 @@ import axios from "axios";
 export const getPreOrders = async () => {
   try {
     const response = await axios.get(
-      `${URL}/preorder/PreOrder/GetPreOrders?Page=1&ItemsPerPage=11`);
+      `${URL}/preorder/PreOrder/GetPreOrders?Page=1&ItemsPerPage=30`);
     console.log("Response2:", response.data.data);
     return response.data.data;
   } catch (error) {

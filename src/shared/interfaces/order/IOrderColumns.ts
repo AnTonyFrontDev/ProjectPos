@@ -5,6 +5,7 @@ export interface IOrderColumns {
         f_surname: string;
         l_surname: string;
     };
+    senD_TO: string;
     descriptioN_JOB: string;
     statuS_ORDER: string;
 }

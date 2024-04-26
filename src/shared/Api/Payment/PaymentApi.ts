@@ -9,7 +9,7 @@ export const getPayments = async () => {
   try {
     const response = await axios.get(
       // `${URL}/Payment/GetPayments?Page=${page}&ItemsPerPage=${itemsPerPage}`
-      `${URL}/Payment/GetPayments?Page=1&ItemsPerPage=11`
+      `${URL}/Payment/GetPayments?Page=1&ItemsPerPage=30`
     );
 
     return response.data.data;

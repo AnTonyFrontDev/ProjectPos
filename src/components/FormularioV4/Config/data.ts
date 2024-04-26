@@ -17,7 +17,7 @@ export const f_DataFieldsInventory = (sizes: IOption[], colors: IOption[], produ
   { label: 'Product', type: 'select', name: 'fk_product', required: true, options: products },
   { label: 'Size', type: 'select', name: 'fk_size', required: true, options: sizes },
   { label: 'Colors', type: 'select', name: 'fk_color_primary', required: true, options: colors},
-  { label: 'Colors (Secondary)', type: 'select', name: 'fk_color_secondary', required: true, options: colors },
+  { label: 'Colors (Secondary)', type: 'select', name: 'fk_color_secondary', required: false, options: colors },
   { label: 'Quantity', type: 'number', name: 'quantity', required: true},
 ];
 

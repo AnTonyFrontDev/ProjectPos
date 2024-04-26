@@ -47,7 +47,7 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
             <h3>Productos</h3>
             <Collapse accordion>
                 {items.map((item : any) => (
-                    <Panel header={`${item.id} - ${item.productName}`} key={item.id}>
+                    <Panel header={`${item.id} - ${item.productName} - ${item.size} - ${item.colorPrimary} `} key={item.id}>
                         <Descriptions title="Información del Producto">
                             <Descriptions.Item label="Precio">{item.price}</Descriptions.Item>
                             <Descriptions.Item label="Tamaño">{item.size}</Descriptions.Item>

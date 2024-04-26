@@ -43,7 +43,7 @@ const AddInventory = () => {
             price: 0,
             fK_SIZE: 0,
             coloR_PRIMARY: 0,
-            coloR_SECONDARY: 0,
+            coloR_SECONDARY: 1,
         };
         setTableData([...tableData, newRow]);
     };
@@ -146,7 +146,7 @@ const AddInventory = () => {
                         <th className={tableHeadClasses}>Precio</th>
                         <th className={tableHeadClasses}>Size</th>
                         <th className={tableHeadClasses}>Color 1</th>
-                        <th className={tableHeadClasses}>Color 2</th>
+                        {/* <th className={tableHeadClasses}>Color 2</th> */}
                     </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
@@ -248,7 +248,7 @@ const AddInventory = () => {
                                 />
 
                             </td>
-                            <td>
+                            {/* <td>
                                 <Select
                                     className={tableSelectsClasses}
                                     options={colorOptions.map(color => ({
@@ -264,7 +264,7 @@ const AddInventory = () => {
                                     isSearchable
                                 />
 
-                            </td>
+                            </td> */}
 
                         </tr>
                     ))}

@@ -4,7 +4,7 @@ import axios from "axios";
 
 export const getSizes = async () => {
   try {
-      const response = await axios.get('https://localhost:7065/api/Size/GetSizes?Page=1&ItemsPerPage=11');
+      const response = await axios.get('https://localhost:7065/api/Size/GetSizes?Page=1&ItemsPerPage=30');
       console.log(response.data.data);
       return response.data.data;
   } catch (error) {

@@ -9,7 +9,7 @@ export const getTypes = async () => {
 try {
     const response = await axios.get(
       // `${URL}/TypeProd/GetTypes?Page=${page}&ItemsPerPage=${itemsPerPage}`
-      `${URL}/TypeProd/GetTypes?Page=1&ItemsPerPage=11`
+      `${URL}/TypeProd/GetTypes?Page=1&ItemsPerPage=30`
     );
 
     return response.data.data;

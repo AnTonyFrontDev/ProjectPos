@@ -22,7 +22,7 @@ export class InventoryColorDto implements IInventoryColor{
         this.user = 1;
         this.date = new Date().toISOString();
         this.fk_color_primary = 0;
-        this.fk_color_secondary = 0;
+        this.fk_color_secondary = 1;
         this.quantity = 0;
         this.fk_inventory = 0;
     }

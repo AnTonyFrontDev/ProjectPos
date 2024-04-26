@@ -38,7 +38,7 @@ export class BuyPostDto implements IBuyPost {
             price: 0,
             fK_SIZE: 0,
             coloR_PRIMARY: 0,
-            coloR_SECONDARY: 0
+            coloR_SECONDARY: 1
         }];
     }
 }

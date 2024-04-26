@@ -7,7 +7,7 @@ import { IProduct } from '../interfaces/Product/IProduct';
 
 export const getProducts = async () => {
     try {
-        const response = await axios.get('https://localhost:7065/api/Product/GetProducts?Page=1&ItemsPerPage=10');
+        const response = await axios.get('https://localhost:7065/api/Product/GetProducts?Page=1&ItemsPerPage=30');
         return response.data.data;
     } catch (error) {
         console.error('Error fetching products:', error);
@@ -55,7 +55,8 @@ export const getInventoryById = async (productId: number) => {
                     size: size.size,
                     idCategory: size.idCategory,
                     nameCategory: size.nameCategory,
-                    quantity: size.quantity,
+                    quantity: availableColors.reduce((acc: number, color: any) => acc + color.quantity, 0),
+                    quantitysize: size.quantity,
                     availableColors: availableColors,
                 };
             });

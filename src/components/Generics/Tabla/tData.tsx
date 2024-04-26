@@ -33,7 +33,6 @@ export const inventoryTable: (IAvailableSizesColumn | any)[] = [
   },
   { title: 'Cantidad', dataIndex: 'quantity', key: 'quantity' },
   { title: 'Precio', dataIndex: 'price', key: 'price' },
-  { title: 'Última Reposición', dataIndex: 'last_replenishment', key: 'last_replenishment' },
 ];
 
 const combineFirstAndLastName = (record: IClientGet): string => `${record.f_name} ${record.l_name}`;
@@ -113,6 +112,7 @@ export const orderTable: (IOrderColumns | any)[] = [
     render: (client: any) => `${client.f_name} ${client.f_surname} ${client.l_surname}` 
   },
   { title: 'Descripción', dataIndex: 'descriptioN_JOB', key: 'descriptioN_JOB' },
+  { title: 'Trabajo', dataIndex: 'senD_TO', key: 'senD_TO' },
   { title: 'Estado', dataIndex: 'statuS_ORDER', key: 'statuS_ORDER' },
 ];
 
@@ -123,5 +123,17 @@ export const preOrderTable: (IPreOrderColumns | any)[] = [
     dataIndex: 'client', 
     key: 'client', 
     render: (client: any) => `${client.f_name} ${client.f_surname} ${client.l_surname}` 
+  },
+  { 
+    title: 'Fecha Pedido', 
+    dataIndex: 'dateCreated', 
+    key: 'dateCreated',
+    render: (dateCreated: string) => new Date(dateCreated).toLocaleDateString() 
+  },
+  { 
+    title: 'Fecha Entrega', 
+    dataIndex: 'dateDelivery', 
+    key: 'dateDelivery',
+    render: (dateDelivery: string) => new Date(dateDelivery).toLocaleDateString() 
   },
 ];

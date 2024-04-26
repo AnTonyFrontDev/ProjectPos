@@ -22,7 +22,7 @@ export interface IExistence {
       this.user = 0;
       this.date = "00/00/0000";
       this.fk_color_primary = 0;
-      this.fk_color_secondary = 0;
+      this.fk_color_secondary = 1;
       this.quantity = 0;
       this.fk_inventory = 0;
     }

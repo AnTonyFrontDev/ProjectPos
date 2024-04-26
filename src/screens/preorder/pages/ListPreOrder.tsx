@@ -7,7 +7,7 @@ import SearchFilter from '@/screens/Order/components/SearchFilter';
 import BreadcrumbData from "@/components/ui/Breadcrumb";
 import ApiTable from '@/components/Generics/Tabla/apiTable';
 import { preOrderTable } from '@/components/Generics/Tabla/tData';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 // import { getOrders } from '@/shared/Api/Order/OrderApi';
 
 const ListPreOrder = () => {
@@ -27,10 +27,10 @@ const ListPreOrder = () => {
 
     useEffect(() => {
         if (selectedPreOrderId !== null) {
-          // Realizar alguna acción con selectedProductId
-          console.log(`El producto seleccionado tiene el ID: ${selectedPreOrderId}`);
+            // Realizar alguna acción con selectedProductId
+            console.log(`El producto seleccionado tiene el ID: ${selectedPreOrderId}`);
         }
-      }, [selectedPreOrderId]);
+    }, [selectedPreOrderId]);
 
     const handleSearch = (value: string) => {
         setSearchTerm(value);
@@ -49,8 +49,8 @@ const ListPreOrder = () => {
         setSelectedPreOrderId(record.id);
         console.log(record.id);
         navigate(`/preOrder/PreOrderDetail/${record.id}`);
-      };
-    
+    };
+
 
     //#region 
 
@@ -87,6 +87,15 @@ const ListPreOrder = () => {
                     onSortToggle={handleSortToggle}
                     columns={preOrderTable}
                 />
+                <Link
+                    to="/preOrder/new"
+                    className="inline-block bg-green-500 
+                    hover:bg-green-600 focus:outline-none 
+                    focus:ring focus:ring-green-200 text-white 
+                    font-bold py-2 px-4 rounded-md shadow-md transition-    colors duration-300"
+                >
+                    Nuevo Pedido
+                </Link>
             </div>
             <ApiTable
                 getApiData={getPreOrders}

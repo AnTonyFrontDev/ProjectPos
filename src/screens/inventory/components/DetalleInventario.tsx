@@ -4,11 +4,15 @@ import { Descriptions, Table } from 'antd';
 import { getInventoryById } from '@/shared/Api/ProductsApi';
 import { DetalleProps as DetalleProductoProps } from '@/shared/interfaces/I_inventario';
 import { AppIcon } from '../../../components/ui/AppIcon';
-import Tabla from './Tabla';
+// import ApiTable from '@/components/Generics/Tabla/apiTable';
+// import SearchFilter from '@/screens/Order/components/SearchFilter';
 
 
 const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
   const [detalleProducto, setDetalleProducto] = useState<any>(null);
+  // const [searchTerm, setSearchTerm] = useState<string>('');
+  // const [filterColumn, setFilterColumn] = useState<string>('');
+  // const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,7 +50,7 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
         if (!sizeQuantityMap[key]) {
           sizeQuantityMap[key] = { quantity: 0, code: primaryColor.code }; // Inicializamos la cantidad total de la talla en 0 si es la primera vez que encontramos esta combinación
         }
-        sizeQuantityMap[key].quantity += size.quantity; // Sumamos la cantidad de la talla a la cantidad total
+        sizeQuantityMap[key].quantity += parseInt(size.quantity, 10); 
       });
     });
   });
@@ -55,20 +59,35 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
   for (const key in sizeQuantityMap) {
     if (sizeQuantityMap.hasOwnProperty(key)) {
       const [colorName, categoryId] = key.split('-');
-      const { quantity, code } = sizeQuantityMap[key];
-      const category = availableSizes.find((size: any) => size.idCategory.toString() === categoryId)?.nameCategory || ''; 
-      const sizes = availableSizes
+      const { code } = sizeQuantityMap[key];
+      const category = availableSizes.find((size: any) => size.idCategory.toString() === categoryId)?.nameCategory || '';
+  
+      // Filtrar y mapear las tallas disponibles para la combinación de color y categoría
+      const sizesInfo = availableSizes
         .filter((size: any) => {
           const color = size.availableColors.find((color: any) => color.colorPrimary.some((primary: any) => primary.colorname === colorName));
           return color && size.idCategory.toString() === categoryId;
         })
-        .map((size: any) => `${size.size}: ${size.quantity}`)
-        .join(' ');
-
+        .map((size: any) => {
+          // Encontrar la cantidad correcta para el color especificado
+          const colorInfo = size.availableColors.find((color:any) => color.colorPrimary.some((primary:any) => primary.colorname === colorName));
+          const index = colorInfo.colorPrimary.findIndex((primary:any) => primary.colorname === colorName);
+          const sizeQuantity = parseInt(colorInfo.quantity[index], 10); // Obtener la cantidad según el índice del color
+          return `${size.size}: ${sizeQuantity}`;
+        });
+  
+      // Calcular la cantidad total de existencias para la combinación de color y categoría
+      const totalQuantity = sizesInfo.reduce((acc : any, sizeInfo : any ) => {
+        const [, sizeQuantityStr] = sizeInfo.split(':');
+        const sizeQuantity = parseInt(sizeQuantityStr, 10);
+        return acc + sizeQuantity;
+      }, 0);
+  
+      // Agregar los datos a tableData
       tableData.push({
-        size: sizes,
+        size: sizesInfo.join(' '), // Concatenar tallas disponibles en un string
         colorName: colorName,
-        quantity: quantity,
+        quantity: totalQuantity, // Usar la cantidad total calculada
         category: category,
         icon: (
           <div className="flex items-center">
@@ -79,6 +98,8 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
       });
     }
   }
+  
+  
 
 
   // Ordenar tableData por colorName
@@ -107,6 +128,20 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
     },
   ];
 
+
+
+  // const handleSearch = (value: string) => {
+  //   setSearchTerm(value);
+  // };
+
+  // const handleFilterChange = (value: string) => {
+  //   setFilterColumn(value);
+  // };
+
+  // const handleSortToggle = () => {
+  //   setSortDirection((prevSortDirection) => (prevSortDirection === 'asc' ? 'desc' : 'asc') as 'asc' | 'desc');
+  // };
+
   return (
     <div className="my-8">
       <h1 className="text-3xl font-bold mb-4">{name}</h1>
@@ -117,7 +152,7 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
         <Descriptions.Item label="Cantidad Total en Inventario">{totalQuantity}</Descriptions.Item>
         <Descriptions.Item label="Tallas Disponibles" span={2}>
           {availableSizes && availableSizes.map((size: any) => (
-            <div key={size.idInventory}>{`${size.size}: ${size.quantity} ‎`}</div>
+            <div key={size.idInventory}>{`${size.size}: ${parseInt(size.quantitysize, 10)} ‎`}</div>
           ))}
         </Descriptions.Item>
 
@@ -143,7 +178,26 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
       </Descriptions>
 
       <Table dataSource={tableData} columns={columns} />
-      <Tabla />
+      {/* <div className="col-span-2 bg-gray-50 shadow-lg my-14 p-4 rounded-md flex justify-between">
+        <SearchFilter
+          onSearch={handleSearch}
+          onFilterChange={handleFilterChange}
+          onSortToggle={handleSortToggle}
+          columns={columns}
+        />
+      </div>
+      <div className="mt-10">
+        <ApiTable
+          // dataSource={tableData}
+          columns={columns}
+          searchTerm={searchTerm}
+          filterColumn={filterColumn}
+          sortDirection={sortDirection}
+
+        />
+      </div> */}
+     
+      {/* <Tabla /> */}
 
       <div className="flex mt-4">
         {/* Botón para editar */}

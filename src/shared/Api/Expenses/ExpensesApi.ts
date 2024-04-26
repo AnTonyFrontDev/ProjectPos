@@ -9,7 +9,7 @@ export const getExpenses = async () => {
   try { 
     const response = await axios.get(
       // `${URL}/Expenses/GetExpenses?Page=${page}&ItemsPerPage=${itemsPerPage}`
-      `${URL}/Expenses/GetExpenses?Page=1&ItemsPerPage=11`
+      `${URL}/Expenses/GetExpenses?Page=1&ItemsPerPage=30`
     );
 
     return response.data.data;

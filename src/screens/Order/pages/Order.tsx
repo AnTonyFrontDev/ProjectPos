@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Select from 'react-select';
 import { Table, Button } from 'antd';
 import { IOrderProduct, IOrderPost } from '@/shared/interfaces/order/IOrderPost';
+import { FormInputsClasses } from '@/shared/Common/cssComponent';
 
 const Order: React.FC<{ orderData: any[], client: any, preId: number }> = ({ orderData, client, preId }) => {
   const [products, setProducts] = useState<IOrderProduct[]>([]);
@@ -86,7 +87,7 @@ const Order: React.FC<{ orderData: any[], client: any, preId: number }> = ({ ord
     }
   };
 
-  console.log('productos',products)
+  console.log('OrderData', orderData)
 
   return (
     <div className="container mx-auto">
@@ -96,9 +97,10 @@ const Order: React.FC<{ orderData: any[], client: any, preId: number }> = ({ ord
           <label>Cliente:</label>
           <input
             type="text"
-            value={client[0].f_name || ""}
+            value={`${client[0].f_name} ${client[0].l_name} ${client[0].f_surname} ${client[0].l_surname}`.trim() || ""}
             readOnly
-            className="form-input"
+            disabled
+            className={FormInputsClasses}
           />
         </div>
         <div className='flex flex-col w-1/2'>
@@ -107,7 +109,7 @@ const Order: React.FC<{ orderData: any[], client: any, preId: number }> = ({ ord
             type="text"
             value={description}
             onChange={handleDescriptionChange}
-            className="form-input"
+            className={FormInputsClasses}
           />
         </div>
         <div className='flex flex-col w-1/2'>
@@ -116,13 +118,13 @@ const Order: React.FC<{ orderData: any[], client: any, preId: number }> = ({ ord
             type="text"
             value={sendTo}
             onChange={handleSendToChange}
-            className="form-input"
+            className={FormInputsClasses}
           />
         </div>
       </div>
 
-      
-      <Table dataSource={products} rowKey={(_record , index) => index!.toString()}>
+
+      <Table dataSource={products} rowKey={(_record, index) => index!.toString()}>
         <Table.Column
           title="#"
           dataIndex="index"
@@ -153,7 +155,7 @@ const Order: React.FC<{ orderData: any[], client: any, preId: number }> = ({ ord
             </Button>
           )}
         />
-      </Table> 
+      </Table>
 
       <div className="mt-4">
         <label className="block">Seleccionar Producto:</label>
@@ -161,7 +163,7 @@ const Order: React.FC<{ orderData: any[], client: any, preId: number }> = ({ ord
           className="w-full"
           options={orderData.map(item => ({
             value: item.inventoryColorId,
-            label: item.product.name_prod
+            label: `${item.product.name_prod} - ${item.size.size} - ${item.colorPrimary.colorname} - ${item.quantity}`
           }))}
           value={selectedProduct}
           onChange={handleProductChange}

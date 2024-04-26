@@ -9,7 +9,7 @@ import { ICheckOrder } from '@/shared/interfaces/order/IOrderPost';
 export const getOrders = async () => {
   try {
     const response = await axios.get(
-      `${URL}/Order/GetOrders?Page=1&ItemsPerPage=11`);
+      `${URL}/Order/GetOrders?Page=1&ItemsPerPage=30`);
     console.log('Response:', response.data.data);
     return response.data.data;
   } catch (error) {
