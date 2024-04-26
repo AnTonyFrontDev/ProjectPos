@@ -20,70 +20,70 @@ interface GenericTableProps {
 }
 
 const GenericTable: React.FC<GenericTableProps> = ({
-  getApiData, 
-  delApiData, 
+  getApiData,
+  delApiData,
   columns,
-  usarForm, 
-  searchTerm, 
-  filterColumn, 
-  sortDirection, 
+  usarForm,
+  searchTerm,
+  filterColumn,
+  sortDirection,
   handleTableRowClick,
-  dataSource, 
+  dataSource,
   showActions }) => {
-    const [data, setData] = useState<any[]>(dataSource || []);
-    
-    useEffect(() => {
-      if (!dataSource) {
-        fetchData();
+  const [data, setData] = useState<any[]>(dataSource || []);
+
+  useEffect(() => {
+    if (!dataSource) {
+      fetchData();
+    }
+  }, [getApiData, searchTerm, filterColumn, sortDirection, dataSource]);
+
+  const fetchData = async () => {
+    try {
+      const apiData = await getApiData!();
+
+      let filteredData = apiData
+
+      console.log(apiData)
+
+      if (searchTerm) {
+        filteredData = apiData.filter(item =>
+          Object.values(item).some(value =>
+            typeof value === 'string' && value.toLowerCase().includes(searchTerm.toLowerCase())
+          )
+        );
+      };
+
+      console.log(filteredData)
+
+      if (filterColumn) {
+        filteredData = filteredData.filter(item => item[filterColumn] !== undefined && item[filterColumn] !== null);
       }
-    }, [getApiData, searchTerm, filterColumn, sortDirection, dataSource]);
-    
-    const fetchData = async () => {
-      try {
-        const apiData = await getApiData!();
-        
-        let filteredData = apiData
-        
-        console.log(apiData)
 
-        if(searchTerm){
-          filteredData = apiData.filter(item =>
-            Object.values(item).some(value =>
-              typeof value === 'string' && value.toLowerCase().includes(searchTerm.toLowerCase())
-            )
-          );
-        };
+      if (filterColumn) {
+        filteredData = filteredData.sort((a, b) => {
+          const aValue = a[filterColumn];
+          const bValue = b[filterColumn];
 
-        console.log(filteredData)
+          if (typeof aValue === 'string' && typeof bValue === 'string') {
 
-        if (filterColumn) {
-          filteredData = filteredData.filter(item => item[filterColumn] !== undefined && item[filterColumn] !== null);
-        }
+            return sortDirection === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+          } else {
 
-        if (filterColumn) {
-          filteredData = filteredData.sort((a, b) => {
-            const aValue = a[filterColumn];
-            const bValue = b[filterColumn];
-
-            if (typeof aValue === 'string' && typeof bValue === 'string') {
-
-              return sortDirection === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
-            } else {
-
-              return sortDirection === 'asc' ? aValue - bValue : bValue - aValue;
-            }
-          });
-        }
-
-        setData(filteredData);
-      } catch (error) {
-        console.error('Error al obtener datos de la API', error);
+            return sortDirection === 'asc' ? aValue - bValue : bValue - aValue;
+          }
+        });
       }
-    };
 
-    const updateDataSource = async () => {
-      await fetchData();
-    };
+      setData(filteredData);
+    } catch (error) {
+      console.error('Error al obtener datos de la API', error);
+    }
+  };
+
+  const updateDataSource = async () => {
+    await fetchData();
+  };
 
 
   const handleDelete = async (record: any) => {
@@ -110,7 +110,7 @@ const GenericTable: React.FC<GenericTableProps> = ({
               modalTitle=""
               className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-2 rounded'
               size={15}
-              modalContent={<ViewForm usarForm={usarForm} formData={record} isUpdate={true} updateData={updateDataSource}/>}
+              modalContent={<ViewForm usarForm={usarForm} formData={record} isUpdate={true} updateData={updateDataSource} />}
             />
             <button
               className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'

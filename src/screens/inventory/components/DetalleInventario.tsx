@@ -142,7 +142,7 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
       </Descriptions>
 
       <Table dataSource={tableData} columns={columns} />
-      <Tabla/>
+      <Tabla />
 
       <div className="flex mt-4">
         {/* Botón para editar */}

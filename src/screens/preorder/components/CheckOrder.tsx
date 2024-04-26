@@ -32,11 +32,11 @@ const CheckOrder: React.FC<{ id: number }> = ({ id }) => {
         fkColorPrimary: item.colorPrimaryId,
         fkColorSecondary: item.colorSecondaryId
       }));
-      console.log('FormData:', formData);
+      // console.log('FormData:', formData);
 
       // Realizar CheckOrder
       const orderResponse = await apiCheckOrder(formData); // Realizar la llamada y capturar el resultado
-      console.log('Order Response:', orderResponse);
+      // console.log('Order Response:', orderResponse);
 
       setOrderResult(orderResponse);
       // await apiCheckOrder(formData);
@@ -44,13 +44,13 @@ const CheckOrder: React.FC<{ id: number }> = ({ id }) => {
       console.error('Error:', error);
     }
   };
-  const fullClientName = preOrderData ? `${preOrderData.client[0].f_name} ${preOrderData.client[0].f_surname}` : '';
+  const fullClientName = preOrderData ? preOrderData.client : '';
   console.log('Datos Cargados', preOrderData, fullClientName);
 
   return (
     <div>
       <Button onClick={() => handleClick(id)}>Realizar CheckOrder</Button>
-      {orderResult ? <Order orderData={orderResult} client={fullClientName} /> : null}
+      {orderResult ? <Order orderData={orderResult} client={fullClientName} preId={id} /> : null}
     </div>
   );
 };

@@ -14,7 +14,7 @@ const router: RouteObject[] = [
   },
   {
     path: "/Order/new",
-    element: <Order orderData={[]} client=""/>,
+    element: <Order orderData={[]} client={[]} preId={0}/>,
   }
 ];
 

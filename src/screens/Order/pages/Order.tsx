@@ -2,8 +2,8 @@ import { SaveOrder } from '@/shared/Api/Order/OrderApi';
 import React, { useState } from 'react';
 import Select from 'react-select';
 
-const Order: React.FC<{ orderData: any[], client: any }> = ({ orderData, client }) => {
-  const [products, setProducts] = useState<{ product: any; quantity: number }[]>([]);
+const Order: React.FC<{ orderData: any[], client: any, preId: number }> = ({ orderData, client, preId }) => {
+  const [products, setProducts] = useState<{ product: any; quantity: number; fkInventoryColor: number; }[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [selectedQuantity, setSelectedQuantity] = useState<number>(0);
   const [description, setDescription] = useState<string>('');
@@ -28,6 +28,7 @@ const Order: React.FC<{ orderData: any[], client: any }> = ({ orderData, client 
         ...products,
         {
           product: selectedProduct,
+          fkInventoryColor: selectedProduct.value || 0,
           quantity: selectedQuantity,
         },
       ]);
@@ -53,18 +54,19 @@ const Order: React.FC<{ orderData: any[], client: any }> = ({ orderData, client 
         id: 0,
         user: 0,
         date: new Date().toISOString(),
-        fkClient: orderData[0]?.client?.id || 0,
-        fkUser: 0,
+        fkClient: client[0].id || 0,
+        fkUser: 1,
         checked: true,
-        fkPreOrder: 0,
+        fkPreOrder: preId,
         descriptionJob: description,
         products: products.map((product) => ({
           fkOrder: 0,
-          fkInventoryColor: product.product.inventoryColorId,
+          fkInventoryColor: product.product.value,
           quantity: product.quantity,
         })),
       };
-  
+      console.log(formData)
+      console.log(products)
       await SaveOrder(formData);
       setSelectedProduct(null);
       setSelectedQuantity(0);
@@ -85,7 +87,7 @@ const Order: React.FC<{ orderData: any[], client: any }> = ({ orderData, client 
           <label>Cliente:</label>
           <input
             type="text"
-            value={client || ""}
+            value={client[0].f_name || ""}
             readOnly
             className="form-input"
           />

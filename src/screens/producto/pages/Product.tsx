@@ -4,7 +4,6 @@ import ApiTable from '@/components/Generics/Tabla/apiTable'
 import SearchFilter from '../components/SearchFilter';
 import { useEffect, useState } from 'react'
 import { productTable } from "@/components/Generics/Tabla/tData";
-
 import { getProducts } from "@/shared/Api/ProductsApi";
 import { useNavigate } from 'react-router-dom';
 import G_Options from "@/components/Generics/gOptions";
@@ -71,6 +70,7 @@ const Product = () => {
           filterColumn={filterColumn}
           sortDirection={sortDirection}
           handleTableRowClick={handleTableRowClick}
+
         />
       </div>
     </div>
