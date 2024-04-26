@@ -1,12 +1,15 @@
 import { SaveOrder } from '@/shared/Api/Order/OrderApi';
 import React, { useState } from 'react';
 import Select from 'react-select';
+import { Table, Button } from 'antd';
+import { IOrderProduct, IOrderPost } from '@/shared/interfaces/order/IOrderPost';
 
 const Order: React.FC<{ orderData: any[], client: any, preId: number }> = ({ orderData, client, preId }) => {
-  const [products, setProducts] = useState<{ product: any; quantity: number; fkInventoryColor: number; }[]>([]);
+  const [products, setProducts] = useState<IOrderProduct[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [selectedQuantity, setSelectedQuantity] = useState<number>(0);
   const [description, setDescription] = useState<string>('');
+  const [sendTo, setSendTo] = useState<string>('');
 
   const handleProductChange = (selectedOption: any) => {
     setSelectedProduct(selectedOption);
@@ -22,16 +25,19 @@ const Order: React.FC<{ orderData: any[], client: any, preId: number }> = ({ ord
     setDescription(event.target.value);
   };
 
+  const handleSendToChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSendTo(event.target.value);
+  };
+
   const handleAddProduct = () => {
     if (selectedProduct && selectedQuantity > 0) {
-      setProducts([
-        ...products,
-        {
-          product: selectedProduct,
-          fkInventoryColor: selectedProduct.value || 0,
-          quantity: selectedQuantity,
-        },
-      ]);
+      const newProduct: IOrderProduct = {
+        fkOrder: 0,
+        fkInventoryColor: selectedProduct.value || 0,
+        name_prod: selectedProduct.label || "a",
+        quantity: selectedQuantity,
+      };
+      setProducts([...products, newProduct]);
       setSelectedProduct(null);
       setSelectedQuantity(0);
     }
@@ -49,35 +55,38 @@ const Order: React.FC<{ orderData: any[], client: any, preId: number }> = ({ ord
         alert('Por favor completa todos los campos.');
         return;
       }
-  
-      const formData = {
+
+      const formData: IOrderPost = {
         id: 0,
-        user: 0,
+        user: 1,
         date: new Date().toISOString(),
         fkClient: client[0].id || 0,
         fkUser: 1,
         checked: true,
         fkPreOrder: preId,
         descriptionJob: description,
-        products: products.map((product) => ({
-          fkOrder: 0,
-          fkInventoryColor: product.product.value,
-          quantity: product.quantity,
-        })),
+        sendTo: sendTo,
+        products: products,
       };
-      console.log(formData)
-      console.log(products)
+
+      console.log('FormData:', formData);
       await SaveOrder(formData);
+
+      // Reiniciar los estados después de guardar la orden
       setSelectedProduct(null);
       setSelectedQuantity(0);
       setDescription('');
+      setSendTo('');
       setProducts([]);
+
       alert('Orden guardada exitosamente');
     } catch (error) {
       console.error('Error al guardar la orden:', error);
       alert('Error al guardar la orden. Por favor, inténtalo de nuevo.');
     }
   };
+
+  console.log('productos',products)
 
   return (
     <div className="container mx-auto">
@@ -101,30 +110,50 @@ const Order: React.FC<{ orderData: any[], client: any, preId: number }> = ({ ord
             className="form-input"
           />
         </div>
+        <div className='flex flex-col w-1/2'>
+          <label>Enviar a:</label>
+          <input
+            type="text"
+            value={sendTo}
+            onChange={handleSendToChange}
+            className="form-input"
+          />
+        </div>
       </div>
-  
-      <table className="min-w-full divide-y divide-gray-200 mt-3">
-        <thead className="bg-gray-50">
-          <tr>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Producto</th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cantidad</th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
-          </tr>
-        </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
-          {products.map((product, index) => (
-            <tr key={index}>
-              <td className="px-6 py-4 whitespace-nowrap">{index + 1}</td>
-              <td className="px-6 py-4 whitespace-nowrap">{product.product.name_prod}</td>
-              <td className="px-6 py-4 whitespace-nowrap">{product.quantity}</td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <button onClick={() => handleRemoveProduct(index)} className="text-red-500 hover:text-red-700">Eliminar</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+
+      
+      <Table dataSource={products} rowKey={(_record , index) => index!.toString()}>
+        <Table.Column
+          title="#"
+          dataIndex="index"
+          key="index"
+          render={(_text, _record, index) => index + 1}
+        />
+        <Table.Column
+          title="Producto"
+          dataIndex="product"
+          key="product"
+          render={(_text, record: IOrderProduct) => record.name_prod}
+        />
+        <Table.Column
+          title="Cantidad"
+          dataIndex="quantity"
+          key="quantity"
+        />
+        <Table.Column
+          title="Acciones"
+          key="actions"
+          render={(_text, _record, index) => (
+            <Button
+              type="link"
+              danger
+              onClick={() => handleRemoveProduct(index)}
+            >
+              Eliminar
+            </Button>
+          )}
+        />
+      </Table> 
 
       <div className="mt-4">
         <label className="block">Seleccionar Producto:</label>

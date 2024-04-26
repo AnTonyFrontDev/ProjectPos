@@ -7,12 +7,14 @@ export interface IOrderPost {
   checked: boolean
   fkPreOrder: number
   descriptionJob: string
+  sendTo: string
   products: IOrderProduct[]
 }
 
 export interface IOrderProduct {
   fkOrder: number
   fkInventoryColor: number
+  name_prod?: string
   quantity: number
 }
 
