@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { DetalleProps as DetallePreOrdersProps } from '@/shared/interfaces/I_inventario';
 import { getPreOrderById } from '@/shared/Api/PreOrder/PreOrderApi';
 import { Descriptions, Collapse } from 'antd';
+import OrderForm from './CheckOrder';
 
 const { Panel } = Collapse;
 
@@ -56,6 +57,7 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
                     </Panel>
                 ))}
             </Collapse>
+            <OrderForm id={preorderId} ></OrderForm>
         </div>
     );
 }

@@ -7,7 +7,7 @@ const ProductDetail = () => {
     console.log(orderId);
     return (
       <div>
-        <h1>Detalle Cliente</h1>
+        <h1>Detalle de Orden</h1>
         <Detail Id={orderId} />
       </div>
     );
