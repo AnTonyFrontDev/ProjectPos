@@ -7,9 +7,12 @@ import { SizePostDto, ISizePost } from '@/shared/interfaces/size/ISizePost';
 export const useSizeForm = () => {
   const [formData, setFormData] = useState<ISizePost>(new SizePostDto());
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {

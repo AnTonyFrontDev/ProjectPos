@@ -5,7 +5,7 @@ const Size = () => {
   return (
     <div>
     <div>
-        Size
+        <h1>Size</h1>
     </div>
     <View/>
 </div>
