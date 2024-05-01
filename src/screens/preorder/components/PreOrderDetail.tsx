@@ -3,17 +3,21 @@ import { Descriptions, Table } from 'antd';
 import { DetalleProps as DetallePreOrdersProps } from '@/shared/interfaces/I_inventario';
 import { getPreOrderById } from '@/shared/Api/PreOrder/PreOrderApi';
 import OrderForm from './CheckOrder';
-
+import SearchFilter from '@/shared/SearchFilter';
 
 
 const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => {
     const [detallePreOrder, setDetallePreOrder] = useState<any>(null);
+    const [filteredItems, setFilteredItems] = useState<any[]>(['']);
+    const [filterColumn, setFilterColumn] = useState<string>('');
+    const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const preOrderData = await getPreOrderById(preorderId);
                 setDetallePreOrder(preOrderData.data[0]); // Obtén los datos de la preorden
+                setFilteredItems(preOrderData.data[0]?.items || []); // Establecer todos los productos como predeterminado
             } catch (error) {
                 console.error('Error al obtener detalle de la preorden:', error);
             }
@@ -22,13 +26,47 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
         fetchData();
     }, [preorderId]);
 
+    const handleSearch = (searchText: string) => {
+        if (!detallePreOrder) return;
+        const filtered = detallePreOrder.items.filter((item: any) =>
+            Object.values(item)
+                .join('') // Concatenar todos los valores del objeto en una cadena
+                .toLowerCase()
+                .includes(searchText.toLowerCase())
+        );
+        setFilteredItems(filtered);
+    };
+
+    const handleFilterChange = (value: string) => {
+        setFilterColumn(value);
+        if (detallePreOrder) {
+            const filtered = detallePreOrder.items.filter((item: any) =>
+                String(item[filterColumn]).toLowerCase().includes(value.toLowerCase())
+            );
+            setFilteredItems(filtered);
+            handleSearch('')
+        }
+    };
+
+    const handleSortToggle = () => {
+        // Copiar los elementos filtrados para no modificar el estado original directamente
+        const sortedItems = [...filteredItems].sort((a, b) => {
+            if (sortDirection === 'asc') {
+                return a[filterColumn] - b[filterColumn];
+            } else {
+                return b[filterColumn] - a[filterColumn];
+            }
+        });
+        setFilteredItems(sortedItems);
+        setSortDirection((prevSortDirection) => (prevSortDirection === 'asc' ? 'desc' : 'asc'));
+    };
+
     if (!detallePreOrder) {
         return <div>Cargando...</div>;
     }
 
-    const { client, items } = detallePreOrder;
+    const { client } = detallePreOrder;
 
-    // Definir columnas para la tabla de productos
     const columns = [
         { title: 'ID', dataIndex: 'id', key: 'id' },
         { title: 'Nombre', dataIndex: 'productName', key: 'productName' },
@@ -54,11 +92,19 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
             <OrderForm id={preorderId} />
 
             <h3>Productos</h3>
+            <div className="col-span-2 bg-gray-50 shadow-lg my-14 p-4 rounded-md flex justify-between">
+                <SearchFilter
+                    onSearch={handleSearch}
+                    onFilterChange={handleFilterChange}
+                    onSortToggle={handleSortToggle}
+                    columns={columns.map((column) => ({ dataIndex: column.dataIndex as string, title: column.title }))}
+                />
+            </div>
             <Table
                 columns={columns}
-                dataSource={items} 
+                dataSource={filteredItems}
             />
-        </div>
+        </div >
     );
 };
 

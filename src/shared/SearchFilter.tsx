@@ -4,7 +4,7 @@ import { Input, Select } from 'antd';
 const { Search } = Input;
 const { Option } = Select;
 
-interface SearchFilterProps<T> {
+export interface SearchFilterProps<T> {
   onSearch: (value: string) => void;
   onFilterChange: (value: any) => void;
   onSortToggle: () => void;
