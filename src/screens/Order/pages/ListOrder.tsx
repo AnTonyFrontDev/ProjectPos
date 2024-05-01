@@ -1,6 +1,6 @@
 import { useEffect, useState} from 'react'; 
 import { getOrders } from '@/shared/Api/Order/OrderApi';
-import SearchFilter from '../components/SearchFilter';
+import SearchFilter from '@/shared/SearchFilter';
 import BreadcrumbData from "@/components/ui/Breadcrumb";
 import { orderTable } from "@/components/Generics/Tabla/tData";
 import ApiTable from '@/components/Generics/Tabla/apiTable';

@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useState } from 'react';
-import SearchFilter from '../components/SearchFilter';
+import SearchFilter from '@/shared/SearchFilter';
 import ApiTable from '@/components/Generics/Tabla/apiTable';
 import { getInventoryByIdBeta } from '@/shared/Api/Inventory/InventoryApi';
 import { AppIcon } from '@/components/ui/AppIcon';

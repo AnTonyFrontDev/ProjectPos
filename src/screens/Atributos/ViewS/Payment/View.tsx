@@ -1,7 +1,7 @@
 // Banks.tsx
 import BreadcrumbData from "@/components/ui/Breadcrumb";
 import ApiTable from '@/components/Generics/Tabla/apiTable';
-import SearchFilter from '../Bank/components/SearchFilter';
+import SearchFilter from '../../../../shared/SearchFilter';
 import { useEffect, useState } from 'react';
 
 import { paymentTable } from "@/components/Generics/Tabla/tData";

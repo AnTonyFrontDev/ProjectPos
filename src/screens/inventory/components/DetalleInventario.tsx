@@ -5,7 +5,7 @@ import { getInventoryById } from '@/shared/Api/ProductsApi';
 import { DetalleProps as DetalleProductoProps } from '@/shared/interfaces/I_inventario';
 import { AppIcon } from '../../../components/ui/AppIcon';
 // import ApiTable from '@/components/Generics/Tabla/apiTable';
-// import SearchFilter from '@/screens/Order/components/SearchFilter';
+// import SearchFilter from '@/shared/SearchFilter';
 
 
 const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {

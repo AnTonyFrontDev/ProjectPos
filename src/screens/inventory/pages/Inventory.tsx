@@ -3,7 +3,7 @@ import BreadcrumbData from "@/components/ui/Breadcrumb"
 // import ApiTable from '../components/ApiTable';
 import ApiTable from '@/components/Generics/Tabla/apiTable'
 // import Options from "../components/Options";
-import SearchFilter from '../components/SearchFilter';
+import SearchFilter from '@/shared/SearchFilter';
 import { useEffect, useState } from 'react'
 import { getInventory } from "@/shared/Api/InventoryApi";
 import { inventoryTable } from "@/components/Generics/Tabla/tData";

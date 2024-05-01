@@ -2,7 +2,7 @@
 import BreadcrumbData from "@/components/ui/Breadcrumb";
 import ApiTable from '@/components/Generics/Tabla/apiTable';
 import G_Options from "@/components/Generics/gOptions";
-import SearchFilter from '../Bank/components/SearchFilter';
+import SearchFilter from '@/shared/SearchFilter';
 import { useEffect, useState } from 'react';
 
 import { typeProdTable } from "@/components/Generics/Tabla/tData";

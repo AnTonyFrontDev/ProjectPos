@@ -3,7 +3,7 @@ import { getPreOrders } from '@/shared/Api/PreOrder/PreOrderApi';
 // import useOrderProcessing from '../hooks/useOrderHook';
 // import mapPreOrderToCheckOrder from '../hooks/useMapPreOrder';
 // import { Link } from 'react-router-dom';
-import SearchFilter from '@/screens/Order/components/SearchFilter';
+import SearchFilter from '@/shared/SearchFilter';
 import BreadcrumbData from "@/components/ui/Breadcrumb";
 import ApiTable from '@/components/Generics/Tabla/apiTable';
 import { preOrderTable } from '@/components/Generics/Tabla/tData';

@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import BreadcrumbData from '@/components/ui/Breadcrumb';
 import ApiTable from '@/components/Generics/Tabla/apiTable';
-import SearchFilter from '../CategorySize/components/SearchFilter';
+import SearchFilter from '@/shared/SearchFilter';
 
 import { categorySizeTable } from '@/components/Generics/Tabla/tData';
 import { RemoveCategorySize, getCategorySizes } from '@/shared/Api/CategorySize/CategorySizeApi';

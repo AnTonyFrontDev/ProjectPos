@@ -1,7 +1,7 @@
 // Producto.tsx
 import BreadcrumbData from "@/components/ui/Breadcrumb"
 import ApiTable from '@/components/Generics/Tabla/apiTable'
-import SearchFilter from '../components/SearchFilter';
+import SearchFilter from '@/shared/SearchFilter';
 import { useEffect, useState } from 'react'
 import { productTable } from "@/components/Generics/Tabla/tData";
 import { getProducts } from "@/shared/Api/ProductsApi";
