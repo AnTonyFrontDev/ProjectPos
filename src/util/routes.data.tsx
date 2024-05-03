@@ -32,7 +32,7 @@ export const SideData = [
         name: 'Ordenes',
     },
     {
-        path: '/',
+        path: '/billing',
         icon: "billing",
         name: 'Facturacion',
     },

@@ -40,7 +40,16 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
         <Descriptions.Item label="Tipo">{type}</Descriptions.Item>
       </Descriptions>
 
-
+      <div className="flex mt-4">
+        {/* Botón para editar */}
+        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-4 rounded">
+          Editar
+        </button>
+        {/* Botón para eliminar */}
+        <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+          Eliminar
+        </button>
+      </div>
     </div>
   );
 };
