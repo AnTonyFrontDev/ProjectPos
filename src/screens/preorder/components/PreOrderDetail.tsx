@@ -6,6 +6,7 @@ import OrderForm from './CheckOrder';
 import SearchFilter from '@/shared/SearchFilter';
 
 
+
 const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => {
     const [detallePreOrder, setDetallePreOrder] = useState<any>(null);
     const [filteredItems, setFilteredItems] = useState<any[]>(['']);
@@ -66,6 +67,7 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
     }
 
     const { client } = detallePreOrder;
+    console.log(detallePreOrder)
 
     const columns = [
         { title: 'ID', dataIndex: 'id', key: 'id' },
@@ -75,6 +77,7 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
         { title: 'Precio', dataIndex: 'price', key: 'price' },
         { title: 'Cantidad', dataIndex: 'quantity', key: 'quantity' },
     ];
+
 
     return (
         <div>
@@ -91,8 +94,8 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
             </Descriptions>
             <OrderForm id={preorderId} />
 
-            <h3>Productos</h3>
-            <div className="col-span-2 bg-gray-50 shadow-lg my-14 p-4 rounded-md flex justify-between">
+            {/* <h3>Productos</h3> */}
+            <div className="col-span-2 bg-gray-50 shadow-lg my-6 p-4 rounded-md flex justify-between">
                 <SearchFilter
                     onSearch={handleSearch}
                     onFilterChange={handleFilterChange}
@@ -104,6 +107,7 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
                 columns={columns}
                 dataSource={filteredItems}
             />
+
         </div >
     );
 };
