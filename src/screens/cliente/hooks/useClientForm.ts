@@ -8,7 +8,7 @@ export const useClientForm = () => {
   const [formData, setFormData] = useState<IClientPost>(new ClientPostDto());
 
   const addPhone = () => {
-    setFormData((prevClientPost) => ({
+    setFormData((prevClientPost) => ({ 
       ...prevClientPost,
       phonesClient: [...prevClientPost.phonesClient, { ...new ClientPhoneDto() }],
     }));
