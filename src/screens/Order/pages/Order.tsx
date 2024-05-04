@@ -124,18 +124,18 @@ const Order: React.FC<{ orderData: any[], client: any, preId: number }> = ({ ord
       </div>
 
 
-      <Table dataSource={products} rowKey={(_record, index) => index!.toString()}>
+      <Table dataSource={products} rowKey={(_record : any, index : any) => index!.toString()}>
         <Table.Column
           title="#"
           dataIndex="index"
           key="index"
-          render={(_text, _record, index) => index + 1}
+          render={(_text : any , _record : any , index : any ) => index + 1}
         />
         <Table.Column
           title="Producto"
           dataIndex="product"
           key="product"
-          render={(_text, record: IOrderProduct) => record.name_prod}
+          render={(_text : any, record: IOrderProduct) => record.name_prod}
         />
         <Table.Column
           title="Cantidad"
@@ -145,7 +145,7 @@ const Order: React.FC<{ orderData: any[], client: any, preId: number }> = ({ ord
         <Table.Column
           title="Acciones"
           key="actions"
-          render={(_text, _record, index) => (
+          render={(_text : any, _record : any, index: any ) => (
             <Button
               type="link"
               danger

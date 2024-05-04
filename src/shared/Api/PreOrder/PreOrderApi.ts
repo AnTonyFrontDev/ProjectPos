@@ -1,9 +1,10 @@
 import { URL } from "@/shared/Common/url";
 import { IPreOrder } from "@/shared/interfaces/Preorder/IPreOrder";
+import { IPreOrderGet } from "@/shared/interfaces/Preorder/IPreOrderGet";
 import axios from "axios";
 
 // Función para obtener todas las PreOrder
-export const getPreOrders = async () => {
+export const getPreOrders = async () : Promise<IPreOrderGet[]> => {
   try {
     const response = await axios.get(
       `${URL}/preorder/PreOrder/GetPreOrders?Page=1&ItemsPerPage=30`);

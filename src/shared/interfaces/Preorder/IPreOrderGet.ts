@@ -1,22 +1,24 @@
-export interface IPreOrderGet {
+interface IPreOrderSize {
     id: number;
-    fK_CLIENT: number;
-    order:[];
-    client: IClient;
-    preOrderProducts: IPreOrderProduct[];
-}
-
-export interface IClient {
+    size: string;
+  }
+  
+  interface IPreOrderColor {
     id: number;
-    f_name: string;
-    l_name: string;
-    f_surname: string;
-    l_surname: string;
-    dni: string;
-    rnc: string;
-}
-
-export interface IPreOrderProduct {
+    colorname: string;
+    codE_COLOR: string;
+  }
+  
+  interface IPreOrderProducts {
+    id: number;
+    namE_PRODUCT: string;
+    descriptioN_PRODUCT: string;
+    salE_PRICE: number;
+    lasT_REPLENISHMENT: string;
+    type: any; // Tipo de producto, ajusta según corresponda
+  }
+  
+  interface IPreOrderProduct {
     id: number;
     fK_PREORDER: number;
     fK_PRODUCT: number;
@@ -24,26 +26,18 @@ export interface IPreOrderProduct {
     quantity: number;
     coloR_PRIMARY: number;
     coloR_SECONDARY: number;
-    size: {
-        id: number;
-        size: string;
-    };
-    product: {
-        id: number;
-        namE_PRODUCT: string;
-        descriptioN_PRODUCT: string;
-        salE_PRICE: number;
-        lasT_REPLENISHMENT: string;
-        type: any; // Puedes definir un tipo específico si es necesario
-    };
-    colorPrimary: {
-        id: number;
-        colorname: string;
-        codE_COLOR: string;
-    };
-    colorSecondary: {
-        id: number;
-        colorname: string;
-        codE_COLOR: string;
-    };
-}
+    size: IPreOrderSize;
+    product: IPreOrderProducts;
+    colorPrimary: IPreOrderColor;
+    colorSecondary: IPreOrderColor;
+  }
+  
+  export interface IPreOrderGet {
+    id: number;
+    fK_CLIENT: number;
+    dateDelivery: string;
+    dateCreated: string;
+    isEditable: any; // Tipo de edición, ajusta según corresponda
+    preOrderProducts: IPreOrderProduct[];
+  }
+  
