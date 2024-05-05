@@ -18,12 +18,20 @@ export const useExpensesForm = () => {
     GenericRequest(formData, SaveExpenses, "Expenses data submitted successfully");
   };
   
+const handleSelect = (e : React.ChangeEvent<HTMLSelectElement>) =>{
+    e.preventDefault();
+    const {name,value} = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value } ));
+    console.log(formData)
+  }
+
+  //no funciona temporal --
   const handleUpdate = (e: React.FormEvent) => {
     e.preventDefault();
-    const updateData: IExpensesUpdate = new ExpensesUpdateDto(formData);
+    const updateData: IExpensesUpdate = new ExpensesUpdateDto(formData as IExpensesUpdate);
     console.log('Expenses Data:', updateData);
     GenericRequest(updateData, UpdateExpenses, "Expenses data updated successfully");
   };
 
-  return { formData, setFormData, handleInputChange, handleSubmit, handleUpdate };
+  return { formData, setFormData, handleInputChange, handleSubmit, handleUpdate,handleSelect };
 };

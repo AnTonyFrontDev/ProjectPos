@@ -1,32 +1,27 @@
-import { DATE } from "@/shared/Common/CurrentDate"
 
 export interface IExpensesUpdate {
-    id: number
-    user: number
-    date: string
-    name: string
-    description: string
-    amount: number
-    voucher: string
-  }
+  id: number
+  name: string
+  description: string
+  amount: number
+  voucher: string
+  documentNumber: string
+  idPaymentType: number
+}
 
-  export class ExpensesUpdateDto implements IExpensesUpdate {
-    id: number
-    user: number
-    date: string
-    name: string
-    description: string
-    amount: number
-    voucher: string
-  
-    constructor(formData: IExpensesUpdate) {
-      this.id = formData.id;
-      this.user = 0;
-      this.date = DATE;
-      this.name = formData.name;
-      this.description = formData.description;
-      this.amount = formData.amount;
-      this.voucher = formData.voucher;
-    }
+export class ExpensesUpdateDto implements IExpensesUpdate {
+  id: number
+  name: string
+  description: string
+  amount: number
+  voucher: string
+  documentNumber: string
+  idPaymentType: number
+
+  constructor(formData: IExpensesUpdate) {
+    this.name = formData.name;
+    this.description = formData.description;
+    this.amount = formData.amount;
+    this.voucher = formData.voucher;
   }
-  
+}

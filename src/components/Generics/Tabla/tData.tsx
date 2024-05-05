@@ -13,6 +13,7 @@ import { IPaymentColumns } from '@/shared/interfaces/payment/IPaymentColumns';
 import { IAvailableSizesColumn, ISizeQA } from '@/shared/interfaces/Inventory/I_InventoryTable';
 import { IOrderColumns } from '@/shared/interfaces/order/IOrderColumns';
 import { IPreOrderColumns } from '@/shared/interfaces/Preorder/IPreOrderColumns';
+import Title from 'antd/es/skeleton/Title';
 
 export const inventoryTable: (IAvailableSizesColumn | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
@@ -47,6 +48,17 @@ export const customersTable: (ICustomersColumns | any)[] = [
   { title: 'DNI', dataIndex: 'dni', key: 'dni' },
 ];
 
+export const ExpensesTable : (IExpensesColumns | any)[] = [
+  {Title:'ID',dataIndex:'id',key:'id'},
+  {title:'Nombre',dataIndex:'name',key:'name'},
+  {title:'Descripción',dataIndex:'description',key:'description'},
+  {title:'Monto',dataIndex:'amount',key:'amount'},
+  {title:'Voucher',dataIndex:'voucher',key:'voucher'},
+  {title:'Tipo de pago',dataIndex:'paymentType',key:'paymentType'},
+  {title:'Número de documento',dataIndex:'documentNumber',key:'documentNumber'},
+  {title:'idPaymentType',dataIndex:'idPaymentType',key:'idPaymentType'},
+];
+
 export const productTable: (IProductColumns | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
   { title: 'Nombre del Producto', dataIndex: 'name_prod', key: 'name_prod' },
@@ -72,11 +84,14 @@ export const colorTable: (IColorGet | any)[] = [
 ];
 
 export const expensesTable: (IExpensesColumns | any)[] = [
-  { title: 'ID', dataIndex: 'id', key: 'id' },
-  { title: 'Nombre', dataIndex: 'name', key: 'name' },
-  { title: 'Descripción', dataIndex: 'description', key: 'description' },
-  { title: 'Cantidad', dataIndex: 'amount', key: 'amount' },
-  { title: 'Comprobante', dataIndex: 'voucher', key: 'voucher' },
+  {Title:'ID',dataIndex:'id',key:'id'},
+  {title:'Nombre',dataIndex:'name',key:'name'},
+  {title:'Descripción',dataIndex:'description',key:'description'},
+  {title:'Monto',dataIndex:'amount',key:'amount'},
+  {title:'Voucher',dataIndex:'voucher',key:'voucher'},
+  {title:'Tipo de pago',dataIndex:'paymentType',key:'paymentType'},
+  {title:'Número de documento',dataIndex:'documentNumber',key:'documentNumber'},
+  {title:'idPaymentType',dataIndex:'idPaymentType',key:'idPaymentType'},
 ];
 
 export const sizeTable: (ISizeGet | any)[] = [
