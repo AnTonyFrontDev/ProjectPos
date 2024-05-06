@@ -13,7 +13,7 @@ import { IPaymentColumns } from '@/shared/interfaces/payment/IPaymentColumns';
 import { IAvailableSizesColumn, ISizeQA } from '@/shared/interfaces/Inventory/I_InventoryTable';
 import { IOrderColumns } from '@/shared/interfaces/order/IOrderColumns';
 import { IPreOrderColumns } from '@/shared/interfaces/Preorder/IPreOrderColumns';
-import Title from 'antd/es/skeleton/Title';
+
 
 export const inventoryTable: (IAvailableSizesColumn | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
