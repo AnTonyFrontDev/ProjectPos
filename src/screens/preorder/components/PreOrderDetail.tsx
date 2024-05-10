@@ -4,6 +4,7 @@ import { DetalleProps as DetallePreOrdersProps } from '@/shared/interfaces/I_inv
 import { getPreOrderById } from '@/shared/Api/PreOrder/PreOrderApi';
 import OrderForm from './CheckOrder';
 import SearchFilter from '@/shared/SearchFilter';
+import PreOrderReport from '../../report/reportPreOrder/components/Report';
 
 
 
@@ -93,6 +94,8 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
                 </Descriptions.Item>
             </Descriptions>
             <OrderForm id={preorderId} />
+
+            <PreOrderReport id={preorderId}/>
 
             {/* <h3>Productos</h3> */}
             <div className="col-span-2 bg-gray-50 shadow-lg my-6 p-4 rounded-md flex justify-between">
