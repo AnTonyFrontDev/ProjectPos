@@ -1,5 +1,5 @@
 export interface IPaymentTypeRemove {
   id: number;
-  user: number;
-  date: string;
+  user?: number;
+  date?: string;
 }

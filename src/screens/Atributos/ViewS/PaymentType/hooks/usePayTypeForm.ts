@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { PaymentTypePostDto, IPaymentTypePost } from '@/shared/interfaces/payment/paymentType/IPaymentTypePost';
 import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';
-import { SavePaymentType } from '@/shared/Api/Payment/PaymentType/PaymentTypeApi';
+import { PaymentTypeUpdateDto, IPaymentTypeUpdate } from '@/shared/interfaces/payment/paymentType/IPaymentTypeUpdate';
+import { SavePaymentType, UpdatePaymentType } from '@/shared/Api/Payment/PaymentType/PaymentTypeApi';
+import { IPaymentTypePost, PaymentTypePostDto } from '@/shared/interfaces/payment/paymentType/IPaymentTypePost';
 
 export const usePaymentTypeForm = () => {
   const [formData, setFormData] = useState<IPaymentTypePost>(new PaymentTypePostDto());
@@ -13,10 +14,16 @@ export const usePaymentTypeForm = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Acciones adicionales antes de enviar los datos del tipo de pago a la base de datos
-    console.log('Payment Type Data:', formData);
-    GenericRequest(formData, SavePaymentType, "Payment Type data submitted successfully");
+    console.log('CategorySize Data:', formData);
+    GenericRequest(formData, SavePaymentType, "CategorySize data submitted successfully");
+  };
+  
+  const handleUpdate = (e: React.FormEvent) => {
+    e.preventDefault();
+    const updateData: IPaymentTypeUpdate = new PaymentTypeUpdateDto(formData);
+    console.log('CategorySize Data:', updateData);
+    GenericRequest(updateData, UpdatePaymentType, "CategorySize data updated successfully");
   };
 
-  return { formData, handleInputChange, handleSubmit };
+  return { formData, setFormData, handleInputChange, handleSubmit, handleUpdate };
 };

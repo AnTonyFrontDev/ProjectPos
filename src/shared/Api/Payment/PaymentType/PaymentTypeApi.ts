@@ -37,7 +37,7 @@ export const SavePaymentType = async (formData: IPaymentTypePost) => {
 export const UpdatePaymentType = async (formData: IPaymentTypeUpdate) => {
   try {
     const formattedData = formData;
-    const response = await axios.post(
+    const response = await axios.put(
       `${URL}/PaymentType/UpdatePaymentType`,
       formattedData,
       {
@@ -55,13 +55,13 @@ export const UpdatePaymentType = async (formData: IPaymentTypeUpdate) => {
 export const RemovePaymentType = async (formData: IPaymentTypeRemove) => {
   try {
     const formattedData = formData;
-    const response = await axios.post(
+    const response = await axios.delete(
       `${URL}/PaymentType/RemovePaymentType`,
-      formattedData,
       {
         headers: {
           "Content-Type": "application/json",
         },
+        data: formattedData,
       }
     )
     return response.data;
