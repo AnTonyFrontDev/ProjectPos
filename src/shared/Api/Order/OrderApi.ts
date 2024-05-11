@@ -100,7 +100,7 @@ export const SaveOrder = async (formData: IOrderPost) => {
 export const UpdateStatusOrder = async (formData: IOrderUpdateStatus) => {
   try {
     const formattedData = formData;
-    const response = await axios.post(
+    const response = await axios.put(
       `${URL}/Order/UpdateStatusOrder`,
       formattedData,
       {
@@ -113,6 +113,26 @@ export const UpdateStatusOrder = async (formData: IOrderUpdateStatus) => {
     return response.data;
   } catch (error) {
     console.error("Error updating status order:", error);
+    throw error;
+  }
+};
+
+export const cancelOrder = async (formData: any) => {
+  const OrderId = formData.id;
+  try {
+    const response = await axios.delete(
+      `${URL}/Order/CancelOrder?id=${OrderId}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Error updating cancel order:", error);
+    console.log(OrderId)
     throw error;
   }
 };

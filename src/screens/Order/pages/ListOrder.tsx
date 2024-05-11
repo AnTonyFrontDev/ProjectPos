@@ -1,5 +1,5 @@
 import { useEffect, useState} from 'react'; 
-import { getOrders } from '@/shared/Api/Order/OrderApi';
+import { cancelOrder, getOrders } from '@/shared/Api/Order/OrderApi';
 import SearchFilter from '@/shared/SearchFilter';
 import BreadcrumbData from "@/components/ui/Breadcrumb";
 import { orderTable } from "@/components/Generics/Tabla/tData";
@@ -59,11 +59,13 @@ function ListOrders() {
             </div>
             <ApiTable
                 getApiData={getOrders}
+                delApiData={cancelOrder}
                 columns={orderTable}
                 searchTerm={searchTerm}
                 filterColumn={filterColumn}
                 sortDirection={sortDirection}
-                showActions={false}
+                showActions={true}
+                editable={false}
                 handleTableRowClick={handleTableRowClick}
             />
         </>
