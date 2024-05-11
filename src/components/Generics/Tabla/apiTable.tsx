@@ -38,7 +38,7 @@ const GenericTable: React.FC<GenericTableProps> = ({
     if (!dataSource) {
       fetchData();
     }
-  }, [getApiData, searchTerm, filterColumn, sortDirection, dataSource]);
+  }, [getApiData, searchTerm, filterColumn, sortDirection, dataSource, ]);
 
   const fetchData = async () => {
     try {

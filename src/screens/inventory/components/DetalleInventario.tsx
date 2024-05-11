@@ -150,11 +150,11 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
         <Descriptions.Item label="Precio de Venta">${salePrice}</Descriptions.Item>
         <Descriptions.Item label="Tipo">{type}</Descriptions.Item>
         <Descriptions.Item label="Cantidad Total en Inventario">{totalQuantity}</Descriptions.Item>
-        <Descriptions.Item label="Tallas Disponibles" span={2}>
+        {/* <Descriptions.Item label="Tallas Disponibles" span={2}>
           {availableSizes && availableSizes.map((size: any) => (
             <div key={size.idInventory}>{`${size.size}: ${parseInt(size.quantitysize, 10)} ‎`}</div>
           ))}
-        </Descriptions.Item>
+        </Descriptions.Item> */}
 
         <Descriptions.Item label="Colores Disponibles" span={3}>
           <div className='flex mx-3'>

@@ -36,10 +36,7 @@ const ViewForm: React.FC<IViewFormProps> = ({ usarForm, formData, isUpdate, upda
   }
 
   const handleCancel = () =>{
-    
   }
-
-  
 
   return (
     <div>

@@ -5,8 +5,7 @@ import { FormProps } from '@/components/Generics/Interface/IForms';
 import { CategorySizeDto, ICategorySizePost } from '@/shared/interfaces/size/CategorySize/ICategorySizePost';
 
 
-const CategorySizeForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate, 
-    //handleReloadTable, onSubmitSuccess 
+const CategorySizeForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate,
 }) => {
     const { formData, setFormData, handleInputChange, handleSubmit, handleUpdate } = useCategorySizeForm();
 
@@ -23,7 +22,6 @@ const CategorySizeForm: React.FC<FormProps> = ({ formData: initialFormData, isUp
         setFormData(initialFormData)
     };
 
-    // const onSubmitHandler = isUpdate ? handleUpdate : handleSubmit;
 
     const onSubmitHandler = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -32,8 +30,6 @@ const CategorySizeForm: React.FC<FormProps> = ({ formData: initialFormData, isUp
         } else {
             await handleSubmit(event);
         }
-        // Llama a handleReloadTable después de enviar el formulario
-        // handleReloadTable();
     };
 
     return (
