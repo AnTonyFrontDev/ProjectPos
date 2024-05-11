@@ -56,7 +56,8 @@ const View = () => {
           searchTerm={searchTerm}
           filterColumn={filterColumn}
           sortDirection={sortDirection}
-          showActions={true} 
+          showActions={true}
+          editable={false}
         />
       </div>
     </div>

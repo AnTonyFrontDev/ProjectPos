@@ -2,7 +2,7 @@ import axios from "axios";
 import { URL } from "../../../Common/url";
 import { IPaymentTypePost} from '@/shared/interfaces/payment/paymentType/IPaymentTypePost';
 import { IPaymentTypeRemove } from '@/shared/interfaces/payment/paymentType/IPaymentTypeRemove';
-import { IPaymentTypeUpdate } from '../../../interfaces/payment/paymentType/IPaymentTypeUpdate';
+import { IPaymentTypeUpdate } from '@/shared/interfaces/payment/paymentType/IPaymentTypeUpdate';
 
 export const getPaymentTypes = async () => {
   try {

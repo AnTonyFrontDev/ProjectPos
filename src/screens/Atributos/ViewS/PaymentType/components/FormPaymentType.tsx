@@ -48,7 +48,7 @@ const PaymentTypeForm: React.FC<FormProps> = ({ formData: initialFormData, isUpd
                 />
             </div>
             <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">Category</label>
+                <label className="block text-sm font-medium text-gray-600">Tipo de Pago</label>
                 <input
                     type="text"
                     name="type"
