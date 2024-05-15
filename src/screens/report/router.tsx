@@ -1,12 +1,12 @@
-// import { RouteObject } from "react-router-dom";
-// // import ListOrders from "./pages/ListOrder";
+import { RouteObject } from "react-router-dom";
+import InventoryReport from "./pages/InventoryReport";
 
 
-// const router: RouteObject[] = [
-//   {
-//     path: "/Reports",
-//     // element: <ListOrders/>,
-//   }
-// ];
+const router: RouteObject[] = [
+    {
+        path: "/Reports",
+        element: <InventoryReport/>,
+    }
+];
 
-// export default router;
+export default router;

@@ -25,7 +25,7 @@ const PreOrders = () => {
   const [tableData, setTableData] = useState<IProductsDtoAdd[]>([]);
   const { productOptions } = useProductOptions();
   const { sizeOptions } = useSizeOptions();
-  const { colorOptions } = useColorOptions();
+  const { colorOptions } = useColorOptions(0);
   const { clientOptions } = useClientOptions();
 
   // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
