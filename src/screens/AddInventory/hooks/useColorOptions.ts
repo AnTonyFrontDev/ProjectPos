@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { getColors } from '@/shared/Api/Color/ColorApi';
-import { IColorGet } from '../../../shared/interfaces/Color/IColorGet';
+import { getColorByProdId } from '@/shared/Api/Color/ColorApi';
+import { IColorGet } from '@/shared/interfaces/Color/IColorGet';
 
 
-const useColorOptions = () => {
+const useColorOptions = (prodId : number) => {
+    // prodId = 1
     const [colorOptions, setColorOptions] = useState<IColorGet[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<Error | null>(null);
@@ -12,7 +13,7 @@ const useColorOptions = () => {
         const fetchColors = async () => {
             setIsLoading(true);
             try {
-                const colors: IColorGet[] = await getColors();
+                const colors: IColorGet[] = await getColorByProdId(prodId);
                 setColorOptions(colors);
             } catch (error) {
                 setError(error instanceof Error ? error : new Error('An error occurred'));
@@ -20,9 +21,10 @@ const useColorOptions = () => {
                 setIsLoading(false);
             }
         };
-
-        fetchColors();
-    }, []);
+        if(prodId){
+            fetchColors();
+        }
+    }, [prodId]);
 
     return { colorOptions, isLoading, error };
 };

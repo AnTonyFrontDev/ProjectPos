@@ -12,6 +12,7 @@ const FormCSize = lazy(() => import('@/screens/Atributos/ViewS/CategorySize/comp
 const FormColor = lazy(() => import('@/screens/Atributos/ViewS/Color/components/FormColor'));
 const FormSize = lazy(() => import('@/screens/Atributos/ViewS/Size/components/FormSize'));
 const FormPaymentType = lazy(() => import('@/screens/Atributos/ViewS/PaymentType/components/FormPaymentType'));
+const FormPayment = lazy(() => import('@/screens/Atributos/ViewS/Payment/components/FormPayment'));
 const FormExpenses = lazy(() => import('@/screens/Atributos/ViewS/Expenses/components/FormExpenses'));
 
 const formComponents: IFormComponents = {
@@ -23,6 +24,7 @@ const formComponents: IFormComponents = {
   Color: FormColor,
   Size: FormSize,
   TypePay: FormPaymentType,
+  Payment: FormPayment,
   Expenses: FormExpenses,
 };
 

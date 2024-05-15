@@ -26,6 +26,16 @@ export const getColorById = async (colorId : number)  => {
   }
 };
 
+export const getColorByProdId = async (prodId : number)  => {
+  try {
+    const response = await axios.get(`https://localhost:7065/api/Color/GetColorsAsociatedById?id=${prodId}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching color with ID ${prodId}:`, error);
+    throw error;
+  }
+};
+
 
 
 export const SaveColor = async (formData: IColorPost) => {

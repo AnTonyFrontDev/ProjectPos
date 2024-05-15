@@ -25,8 +25,11 @@ const AddInventory = () => {
     const [tableData, setTableData] = useState<IInventoryDetailDto[]>([]);
     const { productOptions } = useProductOptions();
     const { sizeOptions } = useSizeOptions();
-    const { colorOptions } = useColorOptions();
-
+    const [disabledRows, setDisabledRows] = useState<boolean[]>(Array(tableData.length).fill(true));
+    
+    const [selectedProductId, setSelectedProductId] = useState(0);
+    
+    const { colorOptions } = useColorOptions(selectedProductId);
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData({
@@ -46,6 +49,7 @@ const AddInventory = () => {
             coloR_SECONDARY: 1,
         };
         setTableData([...tableData, newRow]);
+        setDisabledRows([...disabledRows, true]);
     };
 
     const handleSave = async () => {
@@ -70,6 +74,7 @@ const AddInventory = () => {
                 inventoryDetailDtoAdd: [],
             });
             setTableData([]);
+            setDisabledRows([]);
             alert('Compra guardada exitosamente');
         } catch (error) {
             console.error('Error al guardar la compra:', error);
@@ -93,6 +98,13 @@ const AddInventory = () => {
         updatedTableData[rowIndex][fieldName] = value;
         setTableData(updatedTableData);
 
+        if(fieldName == 'fK_PRODUCT'){
+            setSelectedProductId(value || 0);
+        }
+
+        const updatedDisabledRows = [...disabledRows];
+        updatedDisabledRows[rowIndex] = false;
+        setDisabledRows(updatedDisabledRows);
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, rowIndex: number, fieldName: keyof IInventoryDetailDto) => {
@@ -174,7 +186,7 @@ const AddInventory = () => {
                                         modalTitle=""
                                         tooltipTitle="Agregar Producto"
                                         size={16}
-                                        modalContent={<ViewForm usarForm="Product" formData={null} isUpdate={false}/>}
+                                        modalContent={<ViewForm usarForm="Product" formData={null} isUpdate={false} />}
                                         iconType="plus"
                                         cssColor='blue'
                                     />
@@ -189,6 +201,7 @@ const AddInventory = () => {
                                     onChange={(e) => handleInputChange(e, index, 'quantity')}
                                     className="w-full px-2 py-1 rounded-md border border-gray-300 focus:outline-none focus:border-indigo-500"
                                     min="0"
+                                    disabled={disabledRows[index]}
                                 />
                             </td>
                             <td className='w-14'>
@@ -198,6 +211,7 @@ const AddInventory = () => {
                                     onChange={(e) => handleInputChange(e, index, 'price')}
                                     className="w-full px-2 py-1 rounded-md border border-gray-300 focus:outline-none focus:border-indigo-500"
                                     min="0"
+                                    disabled={disabledRows[index]}
                                 />
                             </td>
 
@@ -206,6 +220,7 @@ const AddInventory = () => {
 
                                     <Select
                                         className={tableSelectsClasses}
+                                        isDisabled={disabledRows[index]}
                                         options={sizeOptions.map(size => ({
                                             value: size.id,
                                             label: size.size + " - " + size.category
@@ -217,6 +232,7 @@ const AddInventory = () => {
                                         }}
                                         onChange={(selectedOption) => handleSelectChange(selectedOption?.value || 0, index, 'fK_SIZE')}
                                         isSearchable
+                                        
 
                                     />
 
@@ -225,7 +241,7 @@ const AddInventory = () => {
                                         modalTitle=""
                                         tooltipTitle="Agregar Size"
                                         size={16}
-                                        modalContent={<ViewForm usarForm="Size" formData={null} isUpdate={false}/>}
+                                        modalContent={<ViewForm usarForm="Size" formData={null} isUpdate={false} />}
                                         iconType="plus"
                                         cssColor='blue'
                                     />
@@ -234,38 +250,21 @@ const AddInventory = () => {
                             <td>
                                 <Select
                                     className={tableSelectsClasses}
+                                    isDisabled={disabledRows[index]}
                                     options={colorOptions.map(color => ({
                                         value: color.id,
-                                        label: `${color.colorname} - ${color.code}`
+                                        label: `${color.colorname} - ${color.codE_COLOR}`
                                     }))}
                                     value={{
                                         value: colorOptions.find(color => color.id === row.coloR_PRIMARY)?.id || 0,
                                         label: `${colorOptions.find(color => color.id === row.coloR_PRIMARY)?.colorname || ""} 
-                                        - ${colorOptions.find(color => color.id === row.coloR_PRIMARY)?.code || ""}`
+                                        - ${colorOptions.find(color => color.id === row.coloR_PRIMARY)?.codE_COLOR || ""}`
                                     }}
                                     onChange={(selectedOption) => handleSelectChange(selectedOption?.value || 0, index, 'coloR_PRIMARY')}
                                     isSearchable
                                 />
 
                             </td>
-                            {/* <td>
-                                <Select
-                                    className={tableSelectsClasses}
-                                    options={colorOptions.map(color => ({
-                                        value: color.id,
-                                        label: `${color.colorname} - ${color.code}`
-                                    }))}
-                                    value={{
-                                        value: colorOptions.find(color => color.id === row.coloR_SECONDARY)?.id || 0,
-                                        label: `${colorOptions.find(color => color.id === row.coloR_SECONDARY)?.colorname || ""} - 
-                                        ${colorOptions.find(color => color.id === row.coloR_SECONDARY)?.code || ""}`
-                                    }}
-                                    onChange={(selectedOption) => handleSelectChange(selectedOption?.value || 0, index, 'coloR_SECONDARY')}
-                                    isSearchable
-                                />
-
-                            </td> */}
-
                         </tr>
                     ))}
                     <tr>
