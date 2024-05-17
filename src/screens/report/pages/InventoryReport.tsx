@@ -6,19 +6,21 @@ import { getInventoryDiffReport } from '@/shared/Api/Report/ReportsApi';
 const InventoryReport = () => {
   // State to store the data fetched from the API
   const [data, setData] = useState([]);
+  const [rawData, setRawData] = useState(null);
 
   // Fetch the data from the API
   useEffect(() => {
     const fetchData = async () => {
       try {
         const result = await getInventoryDiffReport();
+        setRawData(result);
         // Transform the data to fit the table structure
         const transformedData = result.map((item : any) => ({
           key: item.id,
           quantity: item.quantity,
           size: item.size.size,
           name_product: item.product.namE_PRODUCT,
-          color_primary: item.colorPrimary.colorname,
+          color: item.colorPrimary.colorname,
         }));
         setData(transformedData);
       } catch (error) {
@@ -32,9 +34,14 @@ const InventoryReport = () => {
   // Define the columns for the table
   const columns = [
     {
-      title: 'Cantidad Faltante',
-      dataIndex: 'quantity',
-      key: 'quantity',
+      title: 'Nombre del Producto',
+      dataIndex: 'name_product',
+      key: 'name_product',
+    },
+    {
+      title: 'Color',
+      dataIndex: 'color',
+      key: 'color',
     },
     {
       title: 'Tamaño',
@@ -42,20 +49,19 @@ const InventoryReport = () => {
       key: 'size',
     },
     {
-      title: 'Nombre del Producto',
-      dataIndex: 'name_product',
-      key: 'name_product',
-    },
-    {
-      title: 'Color Primario',
-      dataIndex: 'color_primary',
-      key: 'color_primary',
+      title: 'Cantidad Faltante',
+      dataIndex: 'quantity',
+      key: 'quantity',
     },
   ];
 
   return (
     <div>
       <Table columns={columns} dataSource={data} />
+      <div style={{ marginTop: '20px' }}>
+        <h2>Data Completa</h2>
+        <pre>{JSON.stringify(rawData, null, 2)}</pre>
+      </div>
     </div>
   );
 };

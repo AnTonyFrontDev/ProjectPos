@@ -3,6 +3,7 @@ import { RouteObject } from 'react-router-dom';
 
 const Atributos = lazy(() => import('./pages/Atributos'));
 const Bank = lazy(() => import('./pages/Bank'));
+const BankAccount = lazy(() => import('./pages/BankAccount'));
 const Color = lazy(() => import('./pages/Color'));
 const Size = lazy(() => import('./pages/Size'));
 const Payment = lazy(() => import('./pages/Payment'));
@@ -25,6 +26,14 @@ const router: RouteObject[] = [
     element: (
       <Suspense fallback={<div>Loading...</div>}>
         <Bank />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/atributos/BankAccount',
+    element: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <BankAccount />
       </Suspense>
     ),
   },
