@@ -43,6 +43,7 @@ const PreOrders = () => {
       quantity: 0,
       fkColorPrimary: 0,
       fkColorSecondary: 1,
+      customPrice: 0,
       user: 1
     };
     setTableData([...tableData, newRow]);
@@ -71,6 +72,7 @@ const PreOrders = () => {
           quantity: 0,
           fkColorPrimary: 0,
           fkColorSecondary: 1,
+          customPrice: 0,
           user: 1
         }]
       });
@@ -159,9 +161,11 @@ const PreOrders = () => {
           <tr>
             <th className={tableHeadClasses}>#</th>
             <th className={tableHeadClasses}>Producto</th>
+            <th className={tableHeadClasses}>Color </th>
             <th className={tableHeadClasses}>Size</th>
             <th className={tableHeadClasses}>Cantidad</th>
-            <th className={tableHeadClasses}>Color 1</th>
+            <th className={tableHeadClasses}>Precio</th>
+            <th className={tableHeadClasses}>Precio Total</th>
             {/* <th className={tableHeadClasses}>Color 2</th> */}
           </tr>
         </thead>
@@ -196,6 +200,23 @@ const PreOrders = () => {
                   />
                 </div>
               </td>
+                    <td>
+                      <Select
+                        className={tableSelectsClasses}
+                        options={colorOptions.map(color => ({
+                          value: color.id,
+                          label: `${color.colorname} - ${color.code}`
+                        }))}
+                        value={{
+                          value: colorOptions.find(color => color.id === row.fkColorPrimary)?.id || 0,
+                          label: `${colorOptions.find(color => color.id === row.fkColorPrimary)?.colorname || ""}
+                           - ${colorOptions.find(color => color.id === row.fkColorPrimary)?.code || ""}`
+                        }}
+                        onChange={(selectedOption) => handleSelectChange(selectedOption?.value || 0, index, 'fkColorPrimary')}
+                        isSearchable
+                      />
+      
+                    </td>
               <td>
                 <div className="flex items-center">
                   <Select
@@ -234,39 +255,23 @@ const PreOrders = () => {
                   min="0"
                 />
               </td>
-              <td>
-                <Select
-                  className={tableSelectsClasses}
-                  options={colorOptions.map(color => ({
-                    value: color.id,
-                    label: `${color.colorname} - ${color.code}`
-                  }))}
-                  value={{
-                    value: colorOptions.find(color => color.id === row.fkColorPrimary)?.id || 0,
-                    label: `${colorOptions.find(color => color.id === row.fkColorPrimary)?.colorname || ""}
-                     - ${colorOptions.find(color => color.id === row.fkColorPrimary)?.code || ""}`
-                  }}
-                  onChange={(selectedOption) => handleSelectChange(selectedOption?.value || 0, index, 'fkColorPrimary')}
-                  isSearchable
+              <td className='w-14'>
+                <input
+                  type="number"
+                  value={row.customPrice}
+                  onChange={(e) => handleInputChange(e, index, 'customPrice')}
+                  className="w-full px-2 py-1 rounded-md border border-gray-300 focus:outline-none focus:border-indigo-500"
+                  min="0"
                 />
-
               </td>
-              {/* <td>
-                <Select
-                  className={tableSelectsClasses}
-                  options={colorOptions.map(color => ({
-                    value: color.id,
-                    label: `${color.colorname} - ${color.code}`
-                  }))}
-                  value={{
-                    value: colorOptions.find(color => color.id === row.fkColorSecondary)?.id || 0,
-                    label: `${colorOptions.find(color => color.id === row.fkColorSecondary)?.colorname || ""} - 
-                                        ${colorOptions.find(color => color.id === row.fkColorSecondary)?.code || ""}`
-                  }}
-                  onChange={(selectedOption) => handleSelectChange(selectedOption?.value || 0, index, 'fkColorSecondary')}
-                  isSearchable
+              <td className='w-14'>
+                <input
+                  type="text"
+                  value=''
+                  placeholder='Calcular'
+                  className="w-full px-2 py-1 rounded-md border border-gray-300 focus:outline-none focus:border-indigo-500"
                 />
-              </td> */}
+              </td>
             </tr>
           ))}
           <tr>

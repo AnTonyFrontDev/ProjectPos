@@ -8,7 +8,7 @@ import { AppIcon } from '../../../components/ui/AppIcon';
 // import SearchFilter from '@/shared/SearchFilter';
 
 
-const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
+const DetalleInventario: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
   const [detalleProducto, setDetalleProducto] = useState<any>(null);
   // const [searchTerm, setSearchTerm] = useState<string>('');
   // const [filterColumn, setFilterColumn] = useState<string>('');
@@ -50,7 +50,7 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
         if (!sizeQuantityMap[key]) {
           sizeQuantityMap[key] = { quantity: 0, code: primaryColor.code }; // Inicializamos la cantidad total de la talla en 0 si es la primera vez que encontramos esta combinación
         }
-        sizeQuantityMap[key].quantity += parseInt(size.quantity, 10); 
+        sizeQuantityMap[key].quantity += parseInt(size.quantity, 10);
       });
     });
   });
@@ -61,7 +61,7 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
       const [colorName, categoryId] = key.split('-');
       const { code } = sizeQuantityMap[key];
       const category = availableSizes.find((size: any) => size.idCategory.toString() === categoryId)?.nameCategory || '';
-  
+
       // Filtrar y mapear las tallas disponibles para la combinación de color y categoría
       const sizesInfo = availableSizes
         .filter((size: any) => {
@@ -70,19 +70,19 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
         })
         .map((size: any) => {
           // Encontrar la cantidad correcta para el color especificado
-          const colorInfo = size.availableColors.find((color:any) => color.colorPrimary.some((primary:any) => primary.colorname === colorName));
-          const index = colorInfo.colorPrimary.findIndex((primary:any) => primary.colorname === colorName);
+          const colorInfo = size.availableColors.find((color: any) => color.colorPrimary.some((primary: any) => primary.colorname === colorName));
+          const index = colorInfo.colorPrimary.findIndex((primary: any) => primary.colorname === colorName);
           const sizeQuantity = parseInt(colorInfo.quantity[index], 10); // Obtener la cantidad según el índice del color
           return `${size.size}: ${sizeQuantity}`;
         });
-  
+
       // Calcular la cantidad total de existencias para la combinación de color y categoría
-      const totalQuantity = sizesInfo.reduce((acc : any, sizeInfo : any ) => {
+      const totalQuantity = sizesInfo.reduce((acc: any, sizeInfo: any) => {
         const [, sizeQuantityStr] = sizeInfo.split(':');
         const sizeQuantity = parseInt(sizeQuantityStr, 10);
         return acc + sizeQuantity;
       }, 0);
-  
+
       // Agregar los datos a tableData
       tableData.push({
         size: sizesInfo.join(' '), // Concatenar tallas disponibles en un string
@@ -98,9 +98,6 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
       });
     }
   }
-  
-  
-
 
   // Ordenar tableData por colorName
   tableData.sort((a: any, b: any) => a.colorName.localeCompare(b.colorName));
@@ -196,7 +193,7 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
 
         />
       </div> */}
-     
+
       {/* <Tabla /> */}
 
       <div className="flex mt-4">
@@ -214,4 +211,4 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
   );
 };
 
-export default DetalleProducto;
+export default DetalleInventario;

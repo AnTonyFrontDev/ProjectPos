@@ -5,6 +5,7 @@ import { getPreOrderById } from '@/shared/Api/PreOrder/PreOrderApi';
 import OrderForm from './CheckOrder';
 import SearchFilter from '@/shared/SearchFilter';
 import PreOrderReport from '../../report/reportPreOrder/components/Report';
+import { Link } from 'react-router-dom';
 
 
 
@@ -73,8 +74,8 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
     const columns = [
         { title: 'ID', dataIndex: 'id', key: 'id' },
         { title: 'Nombre', dataIndex: 'productName', key: 'productName' },
-        { title: 'Tamaño', dataIndex: 'size', key: 'size' },
         { title: 'Color Primario', dataIndex: 'colorPrimary', key: 'colorPrimary' },
+        { title: 'Tamaño', dataIndex: 'size', key: 'size' },
         { title: 'Precio', dataIndex: 'price', key: 'price' },
         { title: 'Cantidad', dataIndex: 'quantity', key: 'quantity' },
     ];
@@ -93,9 +94,20 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
                     ))}
                 </Descriptions.Item>
             </Descriptions>
+            <div className='flex'>
+
             <OrderForm id={preorderId} />
 
-            <PreOrderReport id={preorderId}/>
+            <div className="mb-4 ml-4 ">
+            <Link to={`/billing/NewDetail/${preorderId}`}>
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Generar Factura
+                </button>
+            </Link>
+        </div>
+            </div>
+
+            <PreOrderReport id={preorderId} />
 
             {/* <h3>Productos</h3> */}
             <div className="col-span-2 bg-gray-50 shadow-lg my-6 p-4 rounded-md flex justify-between">

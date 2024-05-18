@@ -4,15 +4,17 @@ export interface IProductsDtoAdd {
     quantity: number
     fkColorPrimary: number
     fkColorSecondary: number
+    customPrice: number,
     user: number
   }
   
-export class ProductsDtoAdd implements IProductsDtoAdd{
+  export class ProductsDtoAdd implements IProductsDtoAdd{
     fkProduct: number
     fkSize: number
     quantity: number
     fkColorPrimary: number
     fkColorSecondary: number
+    customPrice: number
     user: number
 
     constructor() {
@@ -21,6 +23,7 @@ export class ProductsDtoAdd implements IProductsDtoAdd{
        this.quantity = 0;
        this.fkColorPrimary = 0;
        this.fkColorSecondary = 0;
+       this.customPrice = 0;
        this.user = 0 
     }
 

@@ -51,30 +51,30 @@ export const CheckOrder = async (formData: ICheckOrder[]) => {
   }
 };
 
-const testCheckOrderApi = async () => {
-  try {
-    const formData = [
-      {
-        "fkSize": 4,
-        "fkProduct": 1,
-        "fkColorPrimary": 9,
-        "fkColorSecondary": 2
-      }
-    ];
+// const testCheckOrderApi = async () => {
+//   try {
+//     const formData = [
+//       {
+//         "fkSize": 4,
+//         "fkProduct": 1,
+//         "fkColorPrimary": 9,
+//         "fkColorSecondary": 2
+//       }
+//     ];
 
-    const response = await axios.post('https://localhost:7065/api/Order/GetInvColorAvailableToAddOrder', formData, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
+//     const response = await axios.post('https://localhost:7065/api/Order/GetInvColorAvailableToAddOrder', formData, {
+//       headers: {
+//         'Content-Type': 'application/json'
+//       }
+//     });
 
-    console.log('Response:', response.data);
-  } catch (error) {
-    console.error('Error:', error);
-  }
-};
+//     console.log('Response:', response.data);
+//   } catch (error) {
+//     console.error('Error:', error);
+//   }
+// };
 
-testCheckOrderApi();
+// testCheckOrderApi();
 
 
 export const SaveOrder = async (formData: IOrderPost) => {

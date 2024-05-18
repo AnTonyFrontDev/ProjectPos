@@ -92,7 +92,7 @@ const Order: React.FC<{ orderData: any[], client: any, preId: number }> = ({ ord
   return (
     <div className="container mx-auto">
       <h1 className="text-2xl font-bold mb-4">Agregar Orden</h1>
-      <div className='gap-4 inline-flex w-full'>
+      <div className='gap-4 inline-flex w-full mb-5'>
         <div className='flex flex-col w-1/2'>
           <label>Cliente:</label>
           <input
@@ -124,18 +124,18 @@ const Order: React.FC<{ orderData: any[], client: any, preId: number }> = ({ ord
       </div>
 
 
-      <Table dataSource={products} rowKey={(_record : any, index : any) => index!.toString()}>
+      <Table dataSource={products} rowKey={(_record: any, index: any) => index!.toString()}>
         <Table.Column
           title="#"
           dataIndex="index"
           key="index"
-          render={(_text : any , _record : any , index : any ) => index + 1}
+          render={(_text: any, _record: any, index: any) => index + 1}
         />
         <Table.Column
           title="Producto"
           dataIndex="product"
           key="product"
-          render={(_text : any, record: IOrderProduct) => record.name_prod}
+          render={(_text: any, record: IOrderProduct) => record.name_prod}
         />
         <Table.Column
           title="Cantidad"
@@ -145,7 +145,7 @@ const Order: React.FC<{ orderData: any[], client: any, preId: number }> = ({ ord
         <Table.Column
           title="Acciones"
           key="actions"
-          render={(_text : any, _record : any, index: any ) => (
+          render={(_text: any, _record: any, index: any) => (
             <Button
               type="link"
               danger
@@ -158,35 +158,36 @@ const Order: React.FC<{ orderData: any[], client: any, preId: number }> = ({ ord
       </Table>
 
       <div className="mt-4">
-        <label className="block">Seleccionar Producto:</label>
-        <Select
-          className="w-full"
-          options={orderData.map(item => ({
-            value: item.inventoryColorId,
-            label: `${item.product.name_prod} - ${item.size.size} - ${item.colorPrimary.colorname} - ${item.quantity}`
-          }))}
-          value={selectedProduct}
-          onChange={handleProductChange}
-          isSearchable
-        />
+        <label className="block mb-2">Seleccionar Producto:</label>
+        <div className="flex space-x-4">
+          <Select
+            className="w-1/2"
+            options={orderData.map(item => ({
+              value: item.inventoryColorId,
+              label: `${item.product.name_prod} - ${item.size.size} - ${item.colorPrimary.colorname} - ${item.quantity}`
+            }))}
+            value={selectedProduct}
+            onChange={handleProductChange}
+            isSearchable
+          />
+          <input
+            type="number"
+            value={selectedQuantity}
+            onChange={handleQuantityChange}
+            className={FormInputsClasses}
+          />
+        </div>
       </div>
 
       <div className="mt-4">
-        <label className="block">Cantidad:</label>
-        <input
-          type="number"
-          value={selectedQuantity}
-          onChange={handleQuantityChange}
-          className="w-full form-input"
-        />
-      </div>
-
-      <div className="mt-4">
-        <button onClick={handleAddProduct} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Agregar Producto</button>
-      </div>
-
-      <div className="mt-4">
-        <button onClick={handleSubmit} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Guardar Orden</button>
+        <div className="flex space-x-4">
+          <button onClick={handleAddProduct} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            Agregar Producto
+          </button>
+          <button onClick={handleSubmit} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            Guardar Orden
+          </button>
+        </div>
       </div>
     </div>
   );

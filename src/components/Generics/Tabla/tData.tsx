@@ -1,4 +1,7 @@
 // tData.ts
+
+import { format } from 'date-fns';
+// #region Constants
 // import React from 'react';
 import { ISizeGet } from '@/shared/interfaces/size/ISizeGet';
 import { IBankColumns } from '@/shared/interfaces/Bank/IBankGet';
@@ -13,7 +16,8 @@ import { IPaymentColumns } from '@/shared/interfaces/payment/IPaymentColumns';
 import { IAvailableSizesColumn, ISizeQA } from '@/shared/interfaces/Inventory/I_InventoryTable';
 import { IOrderColumns } from '@/shared/interfaces/order/IOrderColumns';
 import { IPreOrderColumns } from '@/shared/interfaces/Preorder/IPreOrderColumns';
-
+import { ISale } from '@/shared/interfaces/Sale/ISale';
+// #endregion
 
 export const inventoryTable: (IAvailableSizesColumn | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
@@ -25,10 +29,10 @@ export const inventoryTable: (IAvailableSizesColumn | any)[] = [
     render: (availableSizes: ISizeQA[]) => {
       return (
         <ul className="flex space-x-4">
-        {availableSizes.map((size: ISizeQA) => (
-          <li key={size.idInventory}>{`${size.size}: ${size.quantity}`}</li>
-        ))}
-      </ul>
+          {availableSizes.map((size: ISizeQA) => (
+            <li key={size.idInventory}>{`${size.size}: ${size.quantity}`}</li>
+          ))}
+        </ul>
       );
     },
   },
@@ -48,15 +52,15 @@ export const customersTable: (ICustomersColumns | any)[] = [
   { title: 'DNI', dataIndex: 'dni', key: 'dni' },
 ];
 
-export const ExpensesTable : (IExpensesColumns | any)[] = [
-  {Title:'ID',dataIndex:'id',key:'id'},
-  {title:'Nombre',dataIndex:'name',key:'name'},
-  {title:'Descripción',dataIndex:'description',key:'description'},
-  {title:'Monto',dataIndex:'amount',key:'amount'},
-  {title:'Voucher',dataIndex:'voucher',key:'voucher'},
-  {title:'Tipo de pago',dataIndex:'paymentType',key:'paymentType'},
-  {title:'Número de documento',dataIndex:'documentNumber',key:'documentNumber'},
-  {title:'idPaymentType',dataIndex:'idPaymentType',key:'idPaymentType'},
+export const ExpensesTable: (IExpensesColumns | any)[] = [
+  { Title: 'ID', dataIndex: 'id', key: 'id' },
+  { title: 'Nombre', dataIndex: 'name', key: 'name' },
+  { title: 'Descripción', dataIndex: 'description', key: 'description' },
+  { title: 'Monto', dataIndex: 'amount', key: 'amount' },
+  { title: 'Voucher', dataIndex: 'voucher', key: 'voucher' },
+  { title: 'Tipo de pago', dataIndex: 'paymentType', key: 'paymentType' },
+  { title: 'Número de documento', dataIndex: 'documentNumber', key: 'documentNumber' },
+  { title: 'idPaymentType', dataIndex: 'idPaymentType', key: 'idPaymentType' },
 ];
 
 export const productTable: (IProductColumns | any)[] = [
@@ -72,6 +76,26 @@ export const banksTable: (IBankColumns | any)[] = [
   { title: 'Nombre del Banco', dataIndex: 'name', key: 'name' },
 ];
 
+export const saleTableTable: (ISale | any)[] = [
+  { title: 'ID', dataIndex: 'id', key: 'id' },
+  { title: 'Cliente', dataIndex: 'clientName', key: 'clientName' },
+  { title: 'Monto', dataIndex: 'amount', key: 'amount' },
+  { title: 'Código ISC', dataIndex: 'codIsc', key: 'codIsc' },
+  {
+    title: 'B14',
+    dataIndex: 'b14',
+    key: 'b14',
+    render: (text: any) => text ? text : 'No'
+  },
+  { title: 'ITBIS', dataIndex: 'itbis', key: 'itbis' },
+  {
+    title: 'Fecha y Hora',
+    dataIndex: 'fecha',
+    key: 'fecha',
+    render: (text: any) => format(new Date(text), 'dd-MM-yyyy | hh:mm a')
+  },
+];
+
 export const categorySizeTable: (ICategorySizeColumns | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
   { title: 'Categoría', dataIndex: 'category', key: 'category' },
@@ -84,14 +108,14 @@ export const colorTable: (IColorGet | any)[] = [
 ];
 
 export const expensesTable: (IExpensesColumns | any)[] = [
-  {Title:'ID',dataIndex:'id',key:'id'},
-  {title:'Nombre',dataIndex:'name',key:'name'},
-  {title:'Descripción',dataIndex:'description',key:'description'},
-  {title:'Monto',dataIndex:'amount',key:'amount'},
-  {title:'Voucher',dataIndex:'voucher',key:'voucher'},
-  {title:'Tipo de pago',dataIndex:'paymentType',key:'paymentType'},
-  {title:'Número de documento',dataIndex:'documentNumber',key:'documentNumber'},
-  {title:'idPaymentType',dataIndex:'idPaymentType',key:'idPaymentType'},
+  { Title: 'ID', dataIndex: 'id', key: 'id' },
+  { title: 'Nombre', dataIndex: 'name', key: 'name' },
+  { title: 'Descripción', dataIndex: 'description', key: 'description' },
+  { title: 'Monto', dataIndex: 'amount', key: 'amount' },
+  { title: 'Voucher', dataIndex: 'voucher', key: 'voucher' },
+  { title: 'Tipo de pago', dataIndex: 'paymentType', key: 'paymentType' },
+  { title: 'Número de documento', dataIndex: 'documentNumber', key: 'documentNumber' },
+  // { title: 'idPaymentType', dataIndex: 'idPaymentType', key: 'idPaymentType' },
 ];
 
 export const sizeTable: (ISizeGet | any)[] = [
@@ -120,11 +144,11 @@ export const paymentTable: (IPaymentColumns | any)[] = [
 
 export const orderTable: (IOrderColumns | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
-  { 
-    title: 'Cliente', 
-    dataIndex: 'client', 
-    key: 'client', 
-    render: (client: any) => `${client.f_name} ${client.f_surname} ${client.l_surname}` 
+  {
+    title: 'Cliente',
+    dataIndex: 'client',
+    key: 'client',
+    render: (client: any) => `${client.f_name} ${client.f_surname} ${client.l_surname}`
   },
   { title: 'Descripción', dataIndex: 'descriptioN_JOB', key: 'descriptioN_JOB' },
   { title: 'Trabajo', dataIndex: 'senD_TO', key: 'senD_TO' },
@@ -133,22 +157,22 @@ export const orderTable: (IOrderColumns | any)[] = [
 
 export const preOrderTable: (IPreOrderColumns | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
-  { 
-    title: 'Cliente', 
-    dataIndex: 'client', 
-    key: 'client', 
-    render: (client: any) => `${client.f_name} ${client.f_surname} ${client.l_surname}` 
+  {
+    title: 'Cliente',
+    dataIndex: 'client',
+    key: 'client',
+    render: (client: any) => `${client.f_name} ${client.f_surname} ${client.l_surname}`
   },
-  { 
-    title: 'Fecha Pedido', 
-    dataIndex: 'dateCreated', 
+  {
+    title: 'Fecha Pedido',
+    dataIndex: 'dateCreated',
     key: 'dateCreated',
-    render: (dateCreated: string) => new Date(dateCreated).toLocaleDateString() 
+    render: (dateCreated: string) => new Date(dateCreated).toLocaleDateString()
   },
-  { 
-    title: 'Fecha Entrega', 
-    dataIndex: 'dateDelivery', 
+  {
+    title: 'Fecha Entrega',
+    dataIndex: 'dateDelivery',
     key: 'dateDelivery',
-    render: (dateDelivery: string) => new Date(dateDelivery).toLocaleDateString() 
+    render: (dateDelivery: string) => new Date(dateDelivery).toLocaleDateString()
   },
 ];

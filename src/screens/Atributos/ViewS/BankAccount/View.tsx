@@ -1,4 +1,4 @@
-// Banks.tsx
+// BankAccount.tsx
 import BreadcrumbData from "@/components/ui/Breadcrumb";
 import ApiTable from '@/components/Generics/Tabla/apiTable';
 import SearchFilter from '@/shared/SearchFilter';
