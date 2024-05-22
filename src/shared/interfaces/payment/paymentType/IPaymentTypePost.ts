@@ -1,3 +1,5 @@
+import { DATE } from "@/shared/Common/CurrentDate";
+
 export interface IPaymentTypePost {
     id: number
     user: number
@@ -8,7 +10,7 @@ export interface IPaymentTypePost {
   export class PaymentTypePostDto implements IPaymentTypePost {
     id: number = 0;
     user: number = 0;
-    date: string = new Date().toISOString();
+    date: string = DATE;
     type: string = '';
   }
   

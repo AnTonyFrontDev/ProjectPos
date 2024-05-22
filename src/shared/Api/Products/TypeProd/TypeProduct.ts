@@ -43,7 +43,7 @@ export const SaveTypeProd = async (formData: ITypeProdPost) => {
 export const UpdateTypeProd = async (formData: ITypeProdUpdate) => {
     try {
       const formattedData = formData;
-      const response = await axios.post(
+      const response = await axios.put(
         `${URL}/TypeProd/UpdateType`,
         formattedData,
         {

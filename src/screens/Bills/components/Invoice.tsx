@@ -31,11 +31,6 @@ const Invoice: React.FC<InvoiceProps> = ({ order }) => {
       dataIndex: 'quantity',
       key: 'quantity',
     },
-    // {
-    //   title: 'Secondary Color',
-    //   dataIndex: 'secondaryColor',
-    //   key: 'secondaryColor',
-    // },
     {
       title: 'Price',
       dataIndex: 'salePrice',
@@ -57,7 +52,6 @@ const Invoice: React.FC<InvoiceProps> = ({ order }) => {
     primaryColor: product.colorPrimary.colorname,
     size: product.size.size,
     quantity: product.quantity,
-    // secondaryColor: product.colorSecondary.colorname,
     salePrice: product.product.salE_PRICE,
     total: product.quantity * product.product.salE_PRICE,
   }));

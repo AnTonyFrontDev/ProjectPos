@@ -51,30 +51,30 @@ export const CheckOrder = async (formData: ICheckOrder[]) => {
   }
 };
 
-const testCheckOrderApi = async () => {
-  try {
-    const formData = [
-      {
-        "fkSize": 4,
-        "fkProduct": 1,
-        "fkColorPrimary": 9,
-        "fkColorSecondary": 2
-      }
-    ];
+// const testCheckOrderApi = async () => {
+//   try {
+//     const formData = [
+//       {
+//         "fkSize": 4,
+//         "fkProduct": 1,
+//         "fkColorPrimary": 9,
+//         "fkColorSecondary": 2
+//       }
+//     ];
 
-    const response = await axios.post('https://localhost:7065/api/Order/GetInvColorAvailableToAddOrder', formData, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
+//     const response = await axios.post('https://localhost:7065/api/Order/GetInvColorAvailableToAddOrder', formData, {
+//       headers: {
+//         'Content-Type': 'application/json'
+//       }
+//     });
 
-    console.log('Response:', response.data);
-  } catch (error) {
-    console.error('Error:', error);
-  }
-};
+//     console.log('Response:', response.data);
+//   } catch (error) {
+//     console.error('Error:', error);
+//   }
+// };
 
-testCheckOrderApi();
+// testCheckOrderApi();
 
 
 export const SaveOrder = async (formData: IOrderPost) => {
@@ -100,7 +100,7 @@ export const SaveOrder = async (formData: IOrderPost) => {
 export const UpdateStatusOrder = async (formData: IOrderUpdateStatus) => {
   try {
     const formattedData = formData;
-    const response = await axios.post(
+    const response = await axios.put(
       `${URL}/Order/UpdateStatusOrder`,
       formattedData,
       {
@@ -113,6 +113,26 @@ export const UpdateStatusOrder = async (formData: IOrderUpdateStatus) => {
     return response.data;
   } catch (error) {
     console.error("Error updating status order:", error);
+    throw error;
+  }
+};
+
+export const cancelOrder = async (formData: any) => {
+  const OrderId = formData.id;
+  try {
+    const response = await axios.delete(
+      `${URL}/Order/CancelOrder?id=${OrderId}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Error updating cancel order:", error);
+    console.log(OrderId)
     throw error;
   }
 };

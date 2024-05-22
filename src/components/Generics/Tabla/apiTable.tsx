@@ -17,6 +17,7 @@ interface GenericTableProps {
   showActions?: boolean;
   usarForm?: any;
   dataSource?: any[];
+  editable?: boolean ; 
 }
 
 const GenericTable: React.FC<GenericTableProps> = ({
@@ -29,6 +30,7 @@ const GenericTable: React.FC<GenericTableProps> = ({
   sortDirection,
   handleTableRowClick,
   dataSource,
+  editable = true,
   showActions }) => {
   const [data, setData] = useState<any[]>(dataSource || []);
 
@@ -36,7 +38,7 @@ const GenericTable: React.FC<GenericTableProps> = ({
     if (!dataSource) {
       fetchData();
     }
-  }, [getApiData, searchTerm, filterColumn, sortDirection, dataSource]);
+  }, [getApiData, searchTerm, filterColumn, sortDirection, dataSource, ]);
 
   const fetchData = async () => {
     try {
@@ -98,8 +100,8 @@ const GenericTable: React.FC<GenericTableProps> = ({
     }
   };
 
-  const actionsColumn = showActions
-    ? [
+  const actionsColumn = showActions && editable
+  ? [
       {
         title: 'Actions',
         key: 'actions',
@@ -108,12 +110,14 @@ const GenericTable: React.FC<GenericTableProps> = ({
             <ButtonModal
               buttonText="Editar"
               modalTitle=""
-              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-2 rounded'
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-2 rounded"
               size={15}
-              modalContent={<ViewForm usarForm={usarForm} formData={record} isUpdate={true} updateData={updateDataSource} />}
+              modalContent={
+                <ViewForm usarForm={usarForm} formData={record} isUpdate={true} updateData={updateDataSource} />
+              }
             />
             <button
-              className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'
+              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
               onClick={() => handleDelete(record)}
             >
               Delete
@@ -122,7 +126,24 @@ const GenericTable: React.FC<GenericTableProps> = ({
         ),
       },
     ]
-    : [];
+  : showActions && !editable // Mostrar solo el botón de eliminar si showActions es true y no es editable
+  ? [
+      {
+        title: 'Actions',
+        key: 'actions',
+        render: (record: any) => (
+          <span>
+            <button
+              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+              onClick={() => handleDelete(record)}
+            >
+              Delete
+            </button>
+          </span>
+        ),
+      },
+    ]
+  : [];
 
   return (
     <Table

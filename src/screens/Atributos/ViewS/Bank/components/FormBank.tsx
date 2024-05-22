@@ -4,11 +4,9 @@ import { useEffect } from "react";
 import { useBankForm } from "../hooks/useBankForm";
 import { FormProps } from '@/components/Generics/Interface/IForms';
 import { BankDto, IBankPost } from '@/shared/interfaces/Bank/IBankPost';
-import ConfirmationModal from '@/components/Generics/Modal/ConfirmModal';
-
 
 const BankForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }) => {
-    const { formData, setFormData, isConfirmationVisible, handleConfirmationClose, handleInputChange, handleSubmit, handleUpdate } = useBankForm();
+    const { formData, setFormData, handleInputChange, handleSubmit, handleUpdate } = useBankForm();
 
     useEffect(() => {
         if (isUpdate && initialFormData) {
@@ -23,22 +21,28 @@ const BankForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }) 
         setFormData(initialFormData)
     };
 
-    const onSubmitHandler = isUpdate ? handleUpdate : handleSubmit;
-    console.log(formData)
+    const onSubmitHandler = async (event: React.FormEvent) => {
+        event.preventDefault();
+        if (isUpdate) {
+            await handleUpdate(event);
+        } else {
+            await handleSubmit(event);
+        }
+    };
     return (
         <>
             <form onSubmit={onSubmitHandler} className="max-w-md mx-auto mt-8">
                 {/* Campos del formulario del banco */}
                 <div className="mb-4">
                     <input
-                        type="text"
+                        type="hidden"
                         name="id"
                         value={formData.id}
                         onChange={handleInputChange}
                     />
                 </div>
                 <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-600">Name</label>
+                    <label className="block text-sm font-medium text-gray-600">Nombre de Banco</label>
                     <input
                         type="text"
                         name="name"
@@ -54,14 +58,6 @@ const BankForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }) 
                     {isUpdate ? "Update" : "Submit"}
                 </button>
             </form>
-            <ConfirmationModal
-                visible={isConfirmationVisible}
-                message="Bank data updated successfully"
-                okLink="/atributos/Bank"
-                onConfirm={handleConfirmationClose}
-                onCancel={handleConfirmationClose}
-            />
-
         </>
     );
 };

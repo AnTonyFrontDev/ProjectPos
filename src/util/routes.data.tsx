@@ -47,7 +47,7 @@ export const SideData = [
         name: 'Atributos',
     },
     {
-        path: '/',
+        path: '/Reports',
         icon: "reports",
         name: 'Reportes',
     },

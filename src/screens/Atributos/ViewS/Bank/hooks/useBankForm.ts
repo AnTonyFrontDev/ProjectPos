@@ -6,7 +6,6 @@ import { BankUpdateDto, IBankUpdate } from '@/shared/interfaces/Bank/IBankUpdate
 
 export const useBankForm = () => {
   const [formData, setFormData] = useState<IBankPost>(new BankDto());
-  const [isConfirmationVisible, setConfirmationVisible] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -23,14 +22,9 @@ export const useBankForm = () => {
     e.preventDefault();
     const updateData: IBankUpdate = new BankUpdateDto(formData);
     console.log('Bank Data:', updateData);
-    GenericRequest(updateData, UpdateBank, "Bank data updated successfully");
-    setConfirmationVisible(true);
-   
+    GenericRequest(updateData, UpdateBank, "Bank data updated successfully");;
   };
 
-  const handleConfirmationClose = () => {
-    setConfirmationVisible(false);
-  };
 
-return { formData, setFormData, handleConfirmationClose, isConfirmationVisible, handleInputChange, handleSubmit, handleUpdate };
+return { formData, setFormData, handleInputChange, handleSubmit, handleUpdate };
 };

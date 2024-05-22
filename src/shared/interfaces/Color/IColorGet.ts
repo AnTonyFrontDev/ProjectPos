@@ -1,6 +1,7 @@
 export interface IColorGet {
     id: number
     colorname: string
-    code: string
+    codE_COLOR?: string
+    code?: string
   }
   

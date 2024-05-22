@@ -6,6 +6,7 @@ export interface IExpensesPost {
   voucher: string
   documentNumber: string
   idPaymentType: number
+  fkBankAccount?: number
   }
   
   export class ExpensesDto implements IExpensesPost {
@@ -15,11 +16,14 @@ export interface IExpensesPost {
     voucher: string
     documentNumber: string
     idPaymentType: number
+    fkBankAccount?: number
   
     constructor() {
       this.name = '';
       this.description = '';
       this.amount = 0;
       this.voucher = '';
+      this.idPaymentType= 0;
+      this.fkBankAccount=0;
     }
   }

@@ -33,6 +33,10 @@ export interface IOption {
     id: number;
     value: string;
 };
+export interface IOptionSelect {
+    value: number;
+    label: string;
+};
 
 //#endregion
 

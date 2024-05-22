@@ -1,12 +1,12 @@
 // Banks.tsx
+import { useEffect, useState } from 'react';
 import BreadcrumbData from "@/components/ui/Breadcrumb";
 import ApiTable from '@/components/Generics/Tabla/apiTable';
-import G_Options from "@/components/Generics/gOptions";
 import SearchFilter from '@/shared/SearchFilter';
-import { useEffect, useState } from 'react';
 
 import { typeProdTable } from "@/components/Generics/Tabla/tData";
-import { getTypes } from "@/shared/Api/Products/TypeProd/TypeProduct";
+import { getTypes, RemoveTypeProd } from "@/shared/Api/Products/TypeProd/TypeProduct";
+import G_Options from "@/components/Generics/gOptions";
 
 const View = () => {
   const routes = [
@@ -52,6 +52,8 @@ const View = () => {
       <div className="mt-10">
         <ApiTable
           getApiData={getTypes}
+          delApiData={RemoveTypeProd}
+          usarForm={'Types'}
           columns={typeProdTable}
           searchTerm={searchTerm}
           filterColumn={filterColumn}

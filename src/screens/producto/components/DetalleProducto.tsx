@@ -3,6 +3,8 @@ import { Descriptions } from 'antd';
 // import { getProductById } from '@/shared/Api/Products/ProductsApi';
 import { DetalleProps as DetalleProductoProps } from '../../../shared/interfaces/I_inventario';
 import { getProductById } from '@/shared/Api/Products/ProductApi';
+import { AppIcon } from '../../../components/ui/AppIcon';
+import ProductColorAdd from './ProductColorAdd';
 
 const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
   const [detalleProducto, setDetalleProducto] = useState<any>(null);
@@ -28,7 +30,7 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
     return <div>Cargando...</div>;
   }
 
-  const { name_prod, description, sale_price, type } = detalleProducto;
+  const { name_prod, description, sale_price, type, colorsAsociated } = detalleProducto;
 
   return (
     <div className="my-8">
@@ -38,7 +40,25 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
         <Descriptions.Item label="Precio de Venta">{sale_price}</Descriptions.Item>
         {/* Puedes mostrar detalles adicionales según tus necesidades */}
         <Descriptions.Item label="Tipo">{type}</Descriptions.Item>
+
+        {colorsAsociated && (
+          <Descriptions.Item label="Colores Disponibles" span={3}>
+            <div className='flex mx-3'>
+              {colorsAsociated.map((color: any) => (
+                <div key={color.id} className="flex items-center">
+                  <AppIcon
+                    type="colors"
+                    style={{ color: `#${color.codE_COLOR}`, cursor: 'pointer' }}
+                    width={28}
+                    onClick={() => console.log(`Color clicked: ${color.colorname}`)}
+                  />
+                </div>
+              ))}
+            </div>
+          </Descriptions.Item>
+        )}
       </Descriptions>
+      <ProductColorAdd productId={productId}/>
 
       <div className="flex mt-4">
         {/* Botón para editar */}

@@ -49,7 +49,7 @@ const CheckOrder: React.FC<{ id: number }> = ({ id }) => {
 
   return (
     <div>
-      <Button onClick={() => handleClick(id)}>Realizar CheckOrder</Button>
+      <Button onClick={() => handleClick(id)}>Realizar Orden</Button>
       {orderResult ? <Order orderData={orderResult} client={fullClientName} preId={id} /> : null}
     </div>
   );

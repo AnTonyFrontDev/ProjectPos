@@ -19,7 +19,8 @@ export const getPreOrders = async () : Promise<IPreOrderGet[]> => {
 // Función para obtener una PreOrder por su ID
 export const getPreOrderById = async (preorderId : number ) => {
   try {
-    const response = await axios.get(`https://localhost:7065/api/preorder/PreOrder/GetPreOrder?id=${preorderId}`);
+    const response = await axios.get(
+      `${URL}/preorder/PreOrder/GetPreOrder?id=${preorderId}`);
     return response.data;
   } catch (error) {
     console.error(`Error fetching PreOrder with ID ${preorderId}:`, error);

@@ -1,71 +1,78 @@
-import { useState, useEffect, ChangeEvent } from 'react';
-import { getPreOrders } from '@/shared/Api/PreOrder/PreOrderApi';
-import Invoice from '../components/Invoice';
-import { IPreOrderGet } from '@/shared/interfaces/Preorder/IPreOrderGet';
+// Sale.tsx
+import BreadcrumbData from "@/components/ui/Breadcrumb";
+import ApiTable from '@/components/Generics/Tabla/apiTable';
+import SearchFilter from '@/shared/SearchFilter';
+import { useEffect, useState } from 'react';
 
-const Billing = () => {
-  const [preOrders, setPreOrders] = useState<IPreOrderGet[]>([]);
-  const [selectedOrder, setSelectedOrder] = useState<IPreOrderGet | null>(null);
-//   const [searchTerm, setSearchTerm] = useState<string>('');
+import { saleTableTable } from "@/components/Generics/Tabla/tData";
+// import { getBanks, RmoveBank } from "@/shared/Api/Bank/BankApi";
+// import G_Options from "@/components/Generics/gOptions";
+import { getSales, RemoveSale } from "@/shared/Api/Sale/SaleApi";
+import { useNavigate } from "react-router-dom";
+
+const View = () => {
+  const routes = [
+    { title: 'Dashboard', path: '/' },
+    { title: 'Billing', path: '/billing' }
+  ];
+
+  const navigate = useNavigate();
+
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [filterColumn, setFilterColumn] = useState<string>('');
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
+  const [selectedSaleId, setSelectedSaleId] = useState<number | null>(null);
+
 
   useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const orders = await getPreOrders();
-        if (orders && orders.length > 0) {
-          setPreOrders(orders);
-          setSelectedOrder(orders[0]); // Seleccionar automáticamente el primer pedido
-        }
-      } catch (error) {
-        console.error('Error fetching orders:', error);
-      }
-    };
+    // Puedes realizar alguna acción específica cuando cambia la lista de bancos
+  }, [searchTerm, filterColumn, sortDirection]);
 
-    fetchOrders();
-  }, []);
+  const handleTableRowClick = (record: any) => {
+    // Al hacer clic en una fila, establece el ID del producto seleccionado y muestra el detalle
+    setSelectedSaleId(record.id);
+    console.log(record.id);
+    navigate(`/billing/billDetail/${record.id}`);
+  };
 
-//   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-//     const term = e.target.value;
-//     setSearchTerm(term);
-//   };
+  const handleSearch = (value: string) => {
+    setSearchTerm(value);
+  };
 
-  const handleSelectOrder = (e: ChangeEvent<HTMLSelectElement>) => {
-    const orderId = parseInt(e.target.value);
-    const selected = preOrders.find((order) => order.id === orderId);
-    setSelectedOrder(selected || null);
-    // setSearchTerm(''); // Limpiar el término de búsqueda después de seleccionar un pedido
+  const handleFilterChange = (value: string) => {
+    setFilterColumn(value);
+  };
+
+  // Function to toggle sorting direction
+  const handleSortToggle = () => {
+    setSortDirection((prevSortDirection) => (prevSortDirection === 'asc' ? 'desc' : 'asc') as 'asc' | 'desc');
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-4">Factura</h1>
-
-      {/* Búsqueda y selección de pedido */}
-      <div className="mb-4">
-        {/* <input
-          type="text"
-          className="w-full px-4 py-2 border rounded"
-          placeholder="Search by ID or Delivery Date"
-          value={searchTerm}
-          onChange={handleSearch}
-        /> */}
-        <select
-          className="w-full mt-2 px-4 py-2 border rounded"
-          value={selectedOrder ? selectedOrder.id.toString() : ''}
-          onChange={handleSelectOrder}
-        >
-          {preOrders.map((order) => (
-            <option key={order.id} value={order.id}>
-              Pedido #{order.id} - Fecha: {order.dateCreated}
-            </option>
-          ))}
-        </select>
+    <div>
+      <BreadcrumbData routes={routes} />
+      <div className="col-span-2 bg-gray-50 shadow-lg my-14 p-4 rounded-md flex justify-between">
+        <SearchFilter
+          onSearch={handleSearch}
+          onFilterChange={handleFilterChange}
+          onSortToggle={handleSortToggle}
+          columns={saleTableTable}
+        />
       </div>
-
-      {/* Mostrar la factura */}
-      {selectedOrder && <Invoice order={selectedOrder} />}
+      <div className="mt-10">
+        <ApiTable
+          getApiData={getSales}
+          delApiData={RemoveSale}
+          usarForm='Bank'
+          columns={saleTableTable}
+          searchTerm={searchTerm}
+          filterColumn={filterColumn}
+          sortDirection={sortDirection}
+          handleTableRowClick={handleTableRowClick}
+        />
+      </div>
     </div>
   );
 };
 
-export default Billing;
+export default View;
