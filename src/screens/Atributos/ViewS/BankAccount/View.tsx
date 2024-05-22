@@ -47,13 +47,13 @@ const View = () => {
           onSortToggle={handleSortToggle}
           columns={bankAccountTable}
         />
-        <G_Options buttonText="Nuevo Banco" usarForm="Bank" />
+        <G_Options buttonText="Nueva Cuenta" usarForm="BankAccount" />
       </div>
       <div className="mt-10">
         <ApiTable
           getApiData={getBankAccounts}
           delApiData={RemoveBankAccount}
-          usarForm='Bank'
+          usarForm='BankAccount'
           columns={bankAccountTable}
           searchTerm={searchTerm}
           filterColumn={filterColumn}

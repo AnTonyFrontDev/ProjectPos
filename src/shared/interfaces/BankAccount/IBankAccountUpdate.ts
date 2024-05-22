@@ -9,7 +9,7 @@ export interface IBankAccountUpdate {
     balance: number;
 }
 
-export class BankUpdateDto implements IBankAccountUpdate {
+export class BankAccountUpdateDto implements IBankAccountUpdate {
     id: number;
     user: number;
     date: string;

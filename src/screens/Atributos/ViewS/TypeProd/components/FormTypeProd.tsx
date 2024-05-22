@@ -49,8 +49,8 @@ const TypeProdForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate
                 <label className="block text-sm font-medium text-gray-600">Tipo Producto</label>
                 <input
                     type="text"
-                    name="type"
-                    value={isUpdate ? formData.type : formData.typeProd}
+                    name={!isUpdate ? "typeProd" : "type"}
+                    value={!isUpdate ? formData.typeProd : formData.type}
                     onChange={handleInputChange}
                     className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                 />

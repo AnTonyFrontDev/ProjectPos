@@ -8,6 +8,7 @@ const ProductForm = lazy(() => import('./Views/ProductForm'));
 const TypesForm = lazy(() => import('@/screens/Atributos/ViewS/TypeProd/components/FormTypeProd'));
 const FormClient = lazy(() => import('@/screens/cliente/components/FormClient'));
 const FormBank = lazy(() => import('@/screens/Atributos/ViewS/Bank/components/FormBank'));
+const FormBankAccount = lazy(() => import('@/screens/Atributos/ViewS/BankAccount/components/FormBankAccount'));
 const FormCSize = lazy(() => import('@/screens/Atributos/ViewS/CategorySize/components/FormCSize'));
 const FormColor = lazy(() => import('@/screens/Atributos/ViewS/Color/components/FormColor'));
 const FormSize = lazy(() => import('@/screens/Atributos/ViewS/Size/components/FormSize'));
@@ -20,6 +21,7 @@ const formComponents: IFormComponents = {
   Types: TypesForm,
   Client: FormClient,
   Bank: FormBank,
+  BankAccount: FormBankAccount,
   CSize: FormCSize,
   Color: FormColor,
   Size: FormSize,

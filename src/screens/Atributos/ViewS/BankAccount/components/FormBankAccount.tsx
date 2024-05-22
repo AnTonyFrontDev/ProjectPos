@@ -3,20 +3,31 @@ import { useEffect } from "react";
 
 import { useBankAccountForm } from "../hooks/useBankAccountForm";
 import { FormProps } from '@/components/Generics/Interface/IForms';
-import { BankDto, IBankPost } from '@/shared/interfaces/Bank/IBankPost';
+import { BankAccountDto, IBankAccountPost } from "@/shared/interfaces/BankAccount/IBankAccountPost";
+import Select from 'react-select';
+import { TableSelectsClasses } from '@/shared/Common/cssComponent';
 
-const BankAccountForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }) => {
-    const { formData, setFormData, handleInputChange, handleSubmit, handleUpdate } = useBankAccountForm();
+const BankAccountForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate
+}) => {
+    const { formData,
+        bankOptions,
+        setFormData,
+        handleInputChange,
+        handleSubmit,
+        handleUpdate,
+        loadBankOptions
+    } = useBankAccountForm();
 
     useEffect(() => {
         if (isUpdate && initialFormData) {
             handleSetInitialFormData(initialFormData);
             console.log(initialFormData);
         }
+        loadBankOptions();
     }, [isUpdate, initialFormData]);
 
-    const handleSetInitialFormData = (initialData: IBankPost) => {
-        const initialFormData = new BankDto;
+    const handleSetInitialFormData = (initialData: IBankAccountPost) => {
+        const initialFormData = new BankAccountDto;
         Object.assign(initialFormData, initialData)
         setFormData(initialFormData)
     };
@@ -42,15 +53,34 @@ const BankAccountForm: React.FC<FormProps> = ({ formData: initialFormData, isUpd
                     />
                 </div>
                 <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-600">Nombre de Banco</label>
+                    <label className="block text-sm font-medium text-gray-600">Numero de cuenta</label>
                     <input
                         type="text"
-                        name="name"
-                        value={formData.name}
+                        name="bankAccount"
+                        value={formData.bankAccount}
                         onChange={handleInputChange}
                         className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                     />
                 </div>
+                <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-600">Banco</label>
+                    <Select
+                        className={TableSelectsClasses}
+                        options={bankOptions}
+                        value={bankOptions.find((option) => option.value === formData.fkBank)}
+                        onChange={(selectedOption) => setFormData({ ...formData, fkBank: selectedOption?.value || 0 })}
+                    />
+                </div>
+                <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-600">Balance</label>
+                <input
+                    type="number"
+                    name="balance"
+                    value={formData.balance}
+                    onChange={handleInputChange}
+                    className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                />
+            </div>
 
                 {/* Botón de envío */}
 
