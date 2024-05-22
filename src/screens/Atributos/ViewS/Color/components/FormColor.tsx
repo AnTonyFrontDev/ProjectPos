@@ -2,17 +2,15 @@
 import React, { useState } from 'react';
 import { useColorForm } from '../hooks/useColorForm';
 import { ColorPicker } from 'antd';
-import { Color } from 'antd/es/color-picker';
 
 
 const ColorForm: React.FC = () => {
-  const { formData, handleInputChange, handleSubmit } = useColorForm();
+  const { formData, handleInputChange, handleSubmit, setFormData } = useColorForm();
+  const [colorCode, setColorCode] = useState<string>('#1677ff');
 
-  const [selectedColor, setSelectedColor] = useState<any>('#1677ff'); // Color state for ColorPicker
-  const [colorCode, setColorCode] = React.useState<string>('#1677ff');
-  const handleColorChange = (color: {value: Color; hex: string}) => {
-    setSelectedColor(color.hex.toString());
-
+  const handleColorChange = (newColor: string) => {
+    setColorCode(newColor);
+    setFormData(prevFormData => ({ ...prevFormData, code: newColor }));
   };
 
   return (
@@ -32,12 +30,9 @@ const ColorForm: React.FC = () => {
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-600">Color Code</label>
         <ColorPicker
-          value={selectedColor} // Pass selectedColor state
-          onChange={(c) => {
-            setColorCode(c.toHexString());
-          }}
+          value={colorCode} // Pass selectedColor state
+          onChange={(c) => handleColorChange(c.toHexString())}
         />
-        {/* <ColorPicker defaultValue="#1677ff" /> */}
         <input
           type="text"
           name="code"
