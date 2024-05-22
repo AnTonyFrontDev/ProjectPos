@@ -4,8 +4,7 @@ import ApiTable from '@/components/Generics/Tabla/apiTable';
 import SearchFilter from '@/shared/SearchFilter';
 import { useEffect, useState } from 'react';
 
-import { bankAccountTable, banksTable } from "@/components/Generics/Tabla/tData";
-import { getBanks, RemoveBank } from "@/shared/Api/Bank/BankApi";
+import { bankAccountTable } from "@/components/Generics/Tabla/tData";
 import G_Options from "@/components/Generics/gOptions";
 import { getBankAccounts, RemoveBankAccount } from "@/shared/Api/BankAccount/BankAccountApi";
 

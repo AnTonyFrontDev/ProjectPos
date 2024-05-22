@@ -4,7 +4,7 @@ import { useTypeProdForm } from "../hooks/useTypeProdForm";
 import { FormProps } from '@/components/Generics/Interface/IForms';
 import { TypeProdDto, ITypeProdPost } from '@/shared/interfaces/Product/TypeProd/ITypeProdPost';
 
-const TypeProdForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate, 
+const TypeProdForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate,
     //handleReloadTable, onSubmitSuccess 
 }) => {
     const { formData, setFormData, handleInputChange, handleSubmit, handleUpdate } = useTypeProdForm();
@@ -50,10 +50,11 @@ const TypeProdForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate
                 <input
                     type="text"
                     name="type"
-                    value={formData.type}
+                    value={isUpdate ? formData.type : formData.typeProd}
                     onChange={handleInputChange}
                     className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                 />
+
             </div>
 
             {/* Botón de envío */}
