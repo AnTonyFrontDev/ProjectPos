@@ -4,9 +4,10 @@ import ApiTable from '@/components/Generics/Tabla/apiTable';
 import SearchFilter from '@/shared/SearchFilter';
 import { useEffect, useState } from 'react';
 
-import { banksTable } from "@/components/Generics/Tabla/tData";
+import { bankAccountTable, banksTable } from "@/components/Generics/Tabla/tData";
 import { getBanks, RemoveBank } from "@/shared/Api/Bank/BankApi";
 import G_Options from "@/components/Generics/gOptions";
+import { getBankAccounts, RemoveBankAccount } from "@/shared/Api/BankAccount/BankAccountApi";
 
 const View = () => {
   const routes = [
@@ -45,16 +46,16 @@ const View = () => {
           onSearch={handleSearch}
           onFilterChange={handleFilterChange}
           onSortToggle={handleSortToggle}
-          columns={banksTable}
+          columns={bankAccountTable}
         />
         <G_Options buttonText="Nuevo Banco" usarForm="Bank" />
       </div>
       <div className="mt-10">
         <ApiTable
-          getApiData={getBanks}
-          delApiData={RemoveBank}
+          getApiData={getBankAccounts}
+          delApiData={RemoveBankAccount}
           usarForm='Bank'
-          columns={banksTable}
+          columns={bankAccountTable}
           searchTerm={searchTerm}
           filterColumn={filterColumn}
           sortDirection={sortDirection}

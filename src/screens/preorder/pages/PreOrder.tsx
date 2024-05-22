@@ -25,8 +25,20 @@ const PreOrders = () => {
   const [tableData, setTableData] = useState<IProductsDtoAdd[]>([]);
   const { productOptions } = useProductOptions();
   const { sizeOptions } = useSizeOptions();
-  const { colorOptions } = useColorOptions(0);
+  // const { colorOptions } = useColorOptions(0);
   const { clientOptions } = useClientOptions();
+
+  const [disabledRows, setDisabledRows] = useState<boolean[]>(Array(tableData.length).fill(true));
+  const [selectedProductId, setSelectedProductId] = useState(0);
+
+  const { colorOptions } = useColorOptions(selectedProductId);
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+    };
 
   // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   //   const { name, value } = e.target;
@@ -47,6 +59,7 @@ const PreOrders = () => {
       user: 1
     };
     setTableData([...tableData, newRow]);
+    setDisabledRows([...disabledRows, true]);
   };
 
   const handleSave = async () => {
@@ -77,6 +90,7 @@ const PreOrders = () => {
         }]
       });
       setTableData([]);
+      setDisabledRows([]);
       alert('Pedido guardado exitosamente');
     } catch (error) {
       console.error('Error al guardar el pedido:', error);
@@ -98,6 +112,14 @@ const PreOrders = () => {
     const updatedTableData = [...tableData];
     updatedTableData[rowIndex][fieldName] = value;
     setTableData(updatedTableData);
+
+    if(fieldName == 'fkProduct'){
+      setSelectedProductId(value || 0);
+  }
+
+  const updatedDisabledRows = [...disabledRows];
+  updatedDisabledRows[rowIndex] = false;
+  setDisabledRows(updatedDisabledRows);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, rowIndex: number, fieldName: keyof IProductsDtoAdd) => {

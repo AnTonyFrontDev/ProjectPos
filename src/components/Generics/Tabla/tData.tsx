@@ -76,6 +76,13 @@ export const banksTable: (IBankColumns | any)[] = [
   { title: 'Nombre del Banco', dataIndex: 'name', key: 'name' },
 ];
 
+export const bankAccountTable: (IBankColumns | any)[] = [
+  { title: 'ID', dataIndex: 'id', key: 'id' },
+  { title: 'Nombre', dataIndex: 'account', key: 'account' },
+  { title: 'Banco', dataIndex: 'bankType', key: 'bankType' },
+  { title: 'Monto', dataIndex: 'balance', key: 'balance' },
+];
+
 export const saleTableTable: (ISale | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
   { title: 'Cliente', dataIndex: 'clientName', key: 'clientName' },

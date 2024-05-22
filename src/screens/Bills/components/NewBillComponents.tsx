@@ -63,6 +63,7 @@ const NewBill = ({ Id: preorderId }: NewBillProps) => {
         <div className="container mx-auto p-4">
             <h1 className="text-2xl mb-4">Agregar Factura</h1>
             <div className="mb-4">
+                <label>CodigoIsc: </label>
                 <input
                     name="codIsc"
                     value={formData.codIsc}
@@ -71,15 +72,17 @@ const NewBill = ({ Id: preorderId }: NewBillProps) => {
                 />
             </div>
             <div className="mb-4">
+                <label>Itbis: </label>
                 <input
                     type="number"
                     name="itbis"
                     value={formData.itbis}
                     onChange={handleChange}
                     placeholder="ITBIS"
-                />
+                    />
             </div>
             <div className="mb-4">
+                    <label>b14: </label>
                 <input
                     name="b14"
                     value={formData.b14}
