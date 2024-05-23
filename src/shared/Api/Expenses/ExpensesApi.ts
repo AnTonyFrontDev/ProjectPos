@@ -18,6 +18,38 @@ export const getExpenses = async () => {
     throw error;
   }
 };
+export const GetAccountsPayable = async ()=>{
+    try {
+        const response = await axios.get(
+            // `${URL}/Expenses/GetExpenses?Page=${page}&ItemsPerPage=${itemsPerPage}`
+            `${URL}/ReportsBalance/GetAccountsPayable`
+        );
+
+        return response.data.data;
+    } catch (error) {
+        console.error("Error retrieving expenses:", error);
+        throw error;
+    }
+}
+
+export const CompleteExpense = async(id : number) => {
+    try{
+         await axios.patch(`${URL}/Expenses/ConfirmExpenses?id=${id}`)
+            .then((data)=>{
+                console.log(data.status);
+                if(data.status==204)
+                {
+                    //en caso de que retorne un 204 debe retornar un mensaje
+                    return 'Completado con exito';
+                }
+                return "Error al intentar completar dicha operacion"
+            });
+    }catch(error){
+        console.log("Error " + error);
+        return "Error " + error
+    }
+
+}
 
 export const SaveExpenses = async (formData: IExpensesPost) => {
     try {
