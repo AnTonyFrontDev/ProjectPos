@@ -1,3 +1,5 @@
+import { URL } from "@/shared/Common/url";
+import { ISizeRemove } from "@/shared/interfaces/size/ISizeDelete";
 import { ISizePost } from "@/shared/interfaces/size/ISizePost";
 import { ISizeUpdate } from "@/shared/interfaces/size/ISizeUpdate";
 import axios from "axios";
@@ -37,7 +39,7 @@ export const UpdateSize = async (formData: ISizeUpdate) => {
     try {
       const formattedData = formData;
       const response = await axios.post(
-        "https://localhost:7065/api/Size/UpdateSize",
+        `${URL}/api/Size/UpdateSize`,
         formattedData,
         {
           headers: {
@@ -49,6 +51,26 @@ export const UpdateSize = async (formData: ISizeUpdate) => {
       return response.data;
     } catch (error) {
       console.error("Error saving size:", error);
+      throw error;
+    }
+  };
+
+  export const RemoveSize = async (formData: ISizeRemove) => {
+    try {
+      const formattedData = formData.id;
+      const response = await axios.delete(
+        `${URL}/Size/RemoveSize`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          data: formattedData,
+        }
+      );
+  
+      return response.data;
+    } catch (error) {
+      console.error("Error updating payment:", error);
       throw error;
     }
   };

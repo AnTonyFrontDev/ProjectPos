@@ -17,6 +17,8 @@ const linkConfigs = [
   { to: "/atributos/TypeProd", text: "Tipo Producto", color: "text-pink-500", bgColor: "bg-pink-100" },
   { to: "/atributos/Expenses", text: "Expenses", color: "text-orange-500", bgColor: "bg-orange-100" },
   { to: "/atributos/Payment", text: "Payment", color: "text-amber-500", bgColor: "bg-amber-100" },
+  { to: "/atributos/CuentasPagar", text: "CuentasPagar", color: "text-blue-500", bgColor: "bg-blue-100" },
+  { to: "/atributos/CuentasPorCobrar", text: "CuentasPorCobrar", color: "text-red-500", bgColor: "bg-red-100" },
 ];
 
 const Atributos = () => {
@@ -24,7 +26,7 @@ const Atributos = () => {
     <div className={containerStyles}>
       <div className={boxStyles}>
         <h1 className={titleStyles}>Menú de Atributos</h1>
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-4 gap-6">
           {linkConfigs.map(({ to, text, color, bgColor }) => (
             <Link to={to} className={`${linkStyles} ${color} ${bgColor}`} key={to}>
               <AppIcon type="billing" className="cursor-pointer mb-2" width={78} />

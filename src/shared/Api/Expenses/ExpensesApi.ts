@@ -18,6 +18,7 @@ export const getExpenses = async () => {
     throw error;
   }
 };
+
 export const GetAccountsPayable = async ()=>{
     try {
         const response = await axios.get(
@@ -30,7 +31,7 @@ export const GetAccountsPayable = async ()=>{
         console.error("Error retrieving expenses:", error);
         throw error;
     }
-}
+};
 
 export const CompleteExpense = async(id : number) => {
     try{

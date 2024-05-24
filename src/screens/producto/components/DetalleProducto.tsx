@@ -5,6 +5,7 @@ import { DetalleProps as DetalleProductoProps } from '../../../shared/interfaces
 import { getProductById } from '@/shared/Api/Products/ProductApi';
 import { AppIcon } from '../../../components/ui/AppIcon';
 import ProductColorAdd from './ProductColorAdd';
+import ProductSizeAdd from './ProductSizeAdd';
 
 const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
   const [detalleProducto, setDetalleProducto] = useState<any>(null);
@@ -30,7 +31,7 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
     return <div>Cargando...</div>;
   }
 
-  const { name_prod, description, sale_price, type, colorsAsociated } = detalleProducto;
+  const { name_prod, description, sale_price, type, colorsAsociated, sizesAsociated } = detalleProducto;
 
   return (
     <div className="my-8">
@@ -42,7 +43,7 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
         <Descriptions.Item label="Tipo">{type}</Descriptions.Item>
 
         {colorsAsociated && (
-          <Descriptions.Item label="Colores Disponibles" span={3}>
+          <Descriptions.Item label="Colores Disponibles">
             <div className='flex mx-3'>
               {colorsAsociated.map((color: any) => (
                 <div key={color.id} className="flex items-center">
@@ -50,8 +51,19 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
                     type="colors"
                     style={{ color: `#${color.codE_COLOR}`, cursor: 'pointer' }}
                     width={28}
-                    onClick={() => console.log(`Color clicked: ${color.colorname}`)}
+                    // onClick={() => console.log(`Color clicked: ${color.colorname}`)}
                   />
+                </div>
+              ))}
+            </div>
+          </Descriptions.Item>
+        )}
+        {sizesAsociated && (
+          <Descriptions.Item label="Tallas Disponibles">
+            <div className='flex mx-3'>
+              {sizesAsociated.map((size: any) => (
+                <div key={size.id} className="flex items-center">
+                  <span>{size.size} ,</span>
                 </div>
               ))}
             </div>
@@ -59,6 +71,8 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
         )}
       </Descriptions>
       <ProductColorAdd productId={productId}/>
+     
+      <ProductSizeAdd productId={productId}/>
 
       <div className="flex mt-4">
         {/* Botón para editar */}

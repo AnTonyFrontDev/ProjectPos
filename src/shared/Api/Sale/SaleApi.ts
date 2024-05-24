@@ -34,7 +34,7 @@ export const getSaleById = async (saleId : number ) => {
 export const addSale = async (formData : ISalePost) => {
   try {
     const response = await axios.post(
-        `${URL}/api/Sale`, formData, {
+        `${URL}/Sale`, formData, {
       headers: {
         'Content-Type': 'application/json',
       },

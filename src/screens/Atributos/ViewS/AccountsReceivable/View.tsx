@@ -1,21 +1,20 @@
 // Banks.tsx
 import BreadcrumbData from "@/components/ui/Breadcrumb";
 import ApiTable from '@/components/Generics/Tabla/apiTable';
-import SearchFilter from '../../../../shared/SearchFilter';
+import SearchFilter from '@/shared/SearchFilter';
 import { useEffect, useState } from 'react';
 
 import { expensesTable } from "@/components/Generics/Tabla/tData";
-import {CompleteExpense, GetAccountsPayable, 
-  // RemoveExpenses
-} from "@/shared/Api/Expenses/ExpensesApi";
-import {ExpensesUpdateDto} from "@/shared/interfaces/Expenses/IExpensesUpdate.ts";
+import { GetAccountsReceivable } from "@/shared/Api/PreOrder/PreOrderApi";
+// import {CompleteExpense, GetAccountsPayable, RemoveExpenses } from "@/shared/Api/Expenses/ExpensesApi";
+// import {ExpensesUpdateDto} from "@/shared/interfaces/Expenses/IExpensesUpdate.ts";
 //import G_Options from "@/components/Generics/gOptions";
 
 const View = () => {
   const routes = [
     { title: 'Dashboard', path: '/' },
     { title: 'Atributos', path: '/atributos' },
-    { title: 'Expenses', path: '/atributos/CuentasPagar' }
+    { title: 'CuentasPorCobrar', path: '/atributos/CuentasPorCobrar' }
   ];
 
 
@@ -24,12 +23,12 @@ const View = () => {
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
   //funcion para pagar
   //extraer logica de aqui
-  const payAccount = async (obj: ExpensesUpdateDto)=>{
-    await CompleteExpense(obj.id);
-    //refrescar la pagina cuando termine la ejecucion
-    window.location.reload();
+//   const payAccount = async (obj: ExpensesUpdateDto)=>{
+//     await CompleteExpense(obj.id);
+//     //refrescar la pagina cuando termine la ejecucion
+//     window.location.reload();
 
-  }
+//   }
   useEffect(() => {
     // Puedes realizar alguna acción específica cuando cambia la lista de bancos
   }, [searchTerm, filterColumn, sortDirection]);
@@ -62,14 +61,12 @@ const View = () => {
       </div>
       <div className="mt-10">
         <ApiTable
-          getApiData={GetAccountsPayable}
-          // delApiData={RemoveExpenses}
-          usarForm='Expenses'
+          getApiData={GetAccountsReceivable}
           columns={expensesTable}
           searchTerm={searchTerm}
           filterColumn={filterColumn}
           sortDirection={sortDirection}
-          customButton= {['Pagar',payAccount]}
+        //   customButton= {['Pagar',payAccount]}
         />
       </div>
     </div>

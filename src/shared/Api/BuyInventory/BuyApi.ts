@@ -1,12 +1,14 @@
 import axios from 'axios';
 import { IBuyPost } from '@/shared/interfaces/BuyInventory/IBuyInvPost';
 import { IBuyUpdate } from '@/shared/interfaces/BuyInventory/IBuyInvUpdate';
+import { URL } from '@/shared/Common/url';
 
 
 
 export const AddBuy = async (formData: IBuyPost) => {
     try {
-        const response = await axios.post('https://localhost:7065/AddBuy', formData, {
+        const response = await axios.post(
+            `${URL}/AddBuy`, formData, {
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -21,7 +23,8 @@ export const AddBuy = async (formData: IBuyPost) => {
 
 export const UpdateOnlyBuyInfo = async (formData: IBuyUpdate) => {
     try {
-        const response = await axios.post('https://localhost:7065/UpdateOnlyBuyInfo', formData, {
+        const response = await axios.put(
+            `${URL}/UpdateOnlyBuyInfo`, formData, {
             headers: {
                 'Content-Type': 'application/json',
             },

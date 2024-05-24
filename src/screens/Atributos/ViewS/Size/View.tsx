@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import BreadcrumbData from "@/components/ui/Breadcrumb";
 import ApiTable from '@/components/Generics/Tabla/apiTable';
 import SearchFilter from '@/shared/SearchFilter';
-import { getSizes } from "@/shared/Api/Size/SizeApi";
+import { getSizes, RemoveSize } from "@/shared/Api/Size/SizeApi";
 import { sizeTable } from '@/components/Generics/Tabla/tData';
 import G_Options from '@/components/Generics/gOptions';
 
@@ -50,6 +50,7 @@ const SizeView = () => {
       <div className="mt-10">
         <ApiTable
           getApiData={getSizes}
+          delApiData={RemoveSize}
           columns={sizeTable}
           searchTerm={searchTerm}
           filterColumn={filterColumn}

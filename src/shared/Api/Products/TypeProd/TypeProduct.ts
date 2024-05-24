@@ -3,6 +3,7 @@ import axios from "axios";
 import { URL } from "../../../Common/url";
 import { ITypeProdUpdate } from "@/shared/interfaces/Product/TypeProd/ITypeProdUpdate";
 import { ITypeProdRemove } from "@/shared/interfaces/Product/TypeProd/ITypeProdRemove";
+import { DATE } from "@/shared/Common/CurrentDate";
 
 // export const getTypes = async (page: number, itemsPerPage: number) => {
 export const getTypes = async () => {
@@ -60,22 +61,29 @@ export const UpdateTypeProd = async (formData: ITypeProdUpdate) => {
     }
   };
 
+
   export const RemoveTypeProd = async (formData: ITypeProdRemove) => {
     try {
-      const formattedData = formData;
-      const response = await axios.post(
+      const formattedData = {
+        id: formData.id,
+        user: 1,
+        date: DATE
+      };
+      console.log(formattedData)
+      
+      const response = await axios.delete(
         `${URL}/TypeProd/RemoveType`,
-        formattedData,
         {
           headers: {
             "Content-Type": "application/json",
           },
+          data: formattedData,
         }
       );
   
       return response.data;
     } catch (error) {
-      console.error("Error removing type payment:", error);
+      console.error("Error updating payment:", error);
       throw error;
     }
   };
