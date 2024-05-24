@@ -6,9 +6,10 @@ import { URL } from '@/shared/Common/url';
 
 
 export const AddBuy = async (formData: IBuyPost) => {
+    console.log("aver", formData)
     try {
         const response = await axios.post(
-            `${URL}/AddBuy`, formData, {
+            `${URL}/BuyInventory/AddBuy`, formData, {
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -24,7 +25,7 @@ export const AddBuy = async (formData: IBuyPost) => {
 export const UpdateOnlyBuyInfo = async (formData: IBuyUpdate) => {
     try {
         const response = await axios.put(
-            `${URL}/UpdateOnlyBuyInfo`, formData, {
+            `${URL}/BuyInventory/UpdateOnlyBuyInfo`, formData, {
             headers: {
                 'Content-Type': 'application/json',
             },

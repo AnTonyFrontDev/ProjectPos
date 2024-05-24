@@ -15,6 +15,17 @@ export const getSizes = async () => {
   }
 };
 
+export const getSizeByProdId = async (prodId : number)  => {
+  try {
+    const response = await axios.get(
+      `${URL}/Size/GetSizesAsociatedByProId?prodId=${prodId}`);
+    return response.data.data;
+  } catch (error) {
+    console.error(`Error fetching Size with ID ${prodId}:`, error);
+    throw error;
+  }
+};
+
 export const SaveSize = async (formData: ISizePost) => {
   try {
     const formattedData = formData;

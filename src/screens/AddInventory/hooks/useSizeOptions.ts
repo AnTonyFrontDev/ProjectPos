@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { getSizes } from '@/shared/Api/Size/SizeApi';
-import { ISizeGet } from '../../../shared/interfaces/size/ISizeGet';
+import { getSizeByProdId} from '@/shared/Api/Size/SizeApi';
+import { ISizeGet } from '@/shared/interfaces/size/ISizeGet';
 
-const useSizeOptions = () => {
+const useSizeOptions = (prodId : number) => {
     const [sizeOptions, setSizeOptions] = useState<ISizeGet[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<Error | null>(null);
@@ -11,7 +11,7 @@ const useSizeOptions = () => {
         const fetchSizes = async () => {
             setIsLoading(true);
             try {
-                const sizes: ISizeGet[] = await getSizes();
+                const sizes: ISizeGet[] = await getSizeByProdId(prodId);
                 setSizeOptions(sizes);
             } catch (error) {
                 setError(error instanceof Error ? error : new Error('An error occurred'));
@@ -21,7 +21,7 @@ const useSizeOptions = () => {
         };
 
         fetchSizes();
-    }, []);
+    }, [prodId]);
 
     return { sizeOptions, isLoading, error };
 };

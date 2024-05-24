@@ -1,62 +1,40 @@
 import Select from 'react-select';
 import React, { useState } from 'react';
 import { addPreOrder } from '@/shared/Api/PreOrder/PreOrderApi';
-import { IPreOrder } from '@/shared/interfaces/Preorder/IPreOrder';
-import { IProductsDtoAdd } from '@/shared/interfaces/Preorder/ProductToAdd';
+import { IPreOrder, PreOrderPostDto } from '@/shared/interfaces/Preorder/IPreOrder';
+import { IProductsDtoAdd, ProductsDtoAdd } from '@/shared/interfaces/Preorder/ProductToAdd';
 import useProductOptions from '@/screens/AddInventory/hooks/useProductOptions';
 import useSizeOptions from '@/screens/AddInventory/hooks/useSizeOptions';
 import useColorOptions from '@/screens/AddInventory/hooks/useColorOptions';
 import ButtonModal from '@/components/Generics/Modal/ButtonModal';
 import ViewForm from '@/components/FormularioV4/viewForm';
 import useClientOptions from '@/screens/AddInventory/hooks/useClientOptions';
+import { InputNumber } from 'antd';
+import { FormInputsClasses, TableHeadClasses, TableSelectsClasses } from '@/shared/Common/cssComponent';
 
-const tableHeadClasses = "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider";
-const tableSelectsClasses = "block w-full py-2 pr-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm";
-const formInputsClasses = "px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
 
 const PreOrders = () => {
-  const [formData, setFormData] = useState<IPreOrder>({
-    fkClient: 0,
-    dateDelivery: "",
-    user: 1,
-    productsDtoAdds: [],
-  });
+  // const [formData, setFormData] = useState<IPreOrder>({
+  //   fkClient: 0,
+  //   dateDelivery: "",
+  //   user: 1,
+  //   productsDtoAdds: [],
+  // });
+  const [formData, setFormData] = useState<IPreOrder>(new PreOrderPostDto());
 
   const [tableData, setTableData] = useState<IProductsDtoAdd[]>([]);
   const { productOptions } = useProductOptions();
-  const { sizeOptions } = useSizeOptions();
-  // const { colorOptions } = useColorOptions(0);
   const { clientOptions } = useClientOptions();
 
   const [disabledRows, setDisabledRows] = useState<boolean[]>(Array(tableData.length).fill(true));
   const [selectedProductId, setSelectedProductId] = useState(0);
 
+  const { sizeOptions } = useSizeOptions(selectedProductId)
   const { colorOptions } = useColorOptions(selectedProductId);
-    // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //     const { name, value } = e.target;
-    //     setFormData({
-    //         ...formData,
-    //         [name]: value,
-    //     });
-    // };
-
-  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { name, value } = e.target;
-  //   setFormData({
-  //     ...formData,
-  //     [name]: value,
-  //   });
-  // };
 
   const handleAddRow = () => {
     const newRow: IProductsDtoAdd = {
-      fkProduct: 0,
-      fkSize: 0,
-      quantity: 0,
-      fkColorPrimary: 0,
-      fkColorSecondary: 1,
-      customPrice: 0,
-      user: 1
+        ...new ProductsDtoAdd()
     };
     setTableData([...tableData, newRow]);
     setDisabledRows([...disabledRows, true]);
@@ -75,20 +53,7 @@ const PreOrders = () => {
       };
       await addPreOrder(formDataWithProducts);
       // Limpiar el formulario después de guardar
-      setFormData({
-        fkClient: 0,
-        dateDelivery: '',
-        user: 0,
-        productsDtoAdds: [{
-          fkProduct: 0,
-          fkSize: 0,
-          quantity: 0,
-          fkColorPrimary: 0,
-          fkColorSecondary: 1,
-          customPrice: 0,
-          user: 1
-        }]
-      });
+      setFormData(new PreOrderPostDto);
       setTableData([]);
       setDisabledRows([]);
       alert('Pedido guardado exitosamente');
@@ -113,19 +78,31 @@ const PreOrders = () => {
     updatedTableData[rowIndex][fieldName] = value;
     setTableData(updatedTableData);
 
-    if(fieldName == 'fkProduct'){
+    if (fieldName == 'fkProduct') {
       setSelectedProductId(value || 0);
-  }
+    }
 
-  const updatedDisabledRows = [...disabledRows];
-  updatedDisabledRows[rowIndex] = false;
-  setDisabledRows(updatedDisabledRows);
+    const updatedDisabledRows = [...disabledRows];
+    updatedDisabledRows[rowIndex] = false;
+    setDisabledRows(updatedDisabledRows);
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, rowIndex: number, fieldName: keyof IProductsDtoAdd) => {
-    const { value } = e.target;
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement> | { target: { value: number | null } },
+    rowIndex: number,
+    fieldName: keyof IProductsDtoAdd
+  ) => {
+    const value = e.target.value;
     const updatedTableData = [...tableData];
-    updatedTableData[rowIndex][fieldName] = parseInt(value, 10);
+
+    if (typeof value === 'number') {
+      updatedTableData[rowIndex][fieldName] = value;
+    } else if (typeof value === 'string') {
+      updatedTableData[rowIndex][fieldName] = parseFloat(value);
+    } else {
+      updatedTableData[rowIndex][fieldName] = 0; // Default value or handle null appropriately
+    }
+
     setTableData(updatedTableData);
   };
 
@@ -143,7 +120,7 @@ const PreOrders = () => {
         <div className='flex flex-col w-1/4'>
           <label>Cliente:</label>
           <Select
-            className={tableSelectsClasses + 'none'}
+            className={TableSelectsClasses + 'none'}
             options={clientOptions.map(client => ({
               value: client.id,
               label: `${client.f_name} ${client.l_name} ${client.f_surname} ${client.l_surname}`
@@ -165,7 +142,7 @@ const PreOrders = () => {
             type="date"
             value={formData.dateDelivery || ""}
             onChange={(e) => setFormData({ ...formData, dateDelivery: e.target.value })}
-            className={formInputsClasses}
+            className={FormInputsClasses}
           />
         </div>
         <div className='flex flex-col items-center justify-center'>
@@ -181,14 +158,13 @@ const PreOrders = () => {
       <table className="min-w-full divide-y divide-gray-200 mt-3">
         <thead className="bg-gray-50">
           <tr>
-            <th className={tableHeadClasses}>#</th>
-            <th className={tableHeadClasses}>Producto</th>
-            <th className={tableHeadClasses}>Color </th>
-            <th className={tableHeadClasses}>Size</th>
-            <th className={tableHeadClasses}>Cantidad</th>
-            <th className={tableHeadClasses}>Precio</th>
-            <th className={tableHeadClasses}>Precio Total</th>
-            {/* <th className={tableHeadClasses}>Color 2</th> */}
+            <th className={TableHeadClasses}>#</th>
+            <th className={TableHeadClasses}>Producto</th>
+            <th className={TableHeadClasses}>Color </th>
+            <th className={TableHeadClasses}>Size</th>
+            <th className={TableHeadClasses}>Cantidad</th>
+            <th className={TableHeadClasses}>Precio</th>
+            <th className={TableHeadClasses}>Precio Total</th>
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
@@ -198,7 +174,7 @@ const PreOrders = () => {
               <td>
                 <div className="flex items-center">
                   <Select
-                    className={tableSelectsClasses}
+                    className={TableSelectsClasses}
                     options={productOptions.map(product => ({
                       value: product.id,
                       label: product.name_prod
@@ -222,27 +198,29 @@ const PreOrders = () => {
                   />
                 </div>
               </td>
-                    <td>
-                      <Select
-                        className={tableSelectsClasses}
-                        options={colorOptions.map(color => ({
-                          value: color.id,
-                          label: `${color.colorname} - ${color.code}`
-                        }))}
-                        value={{
-                          value: colorOptions.find(color => color.id === row.fkColorPrimary)?.id || 0,
-                          label: `${colorOptions.find(color => color.id === row.fkColorPrimary)?.colorname || ""}
+              <td>
+                <Select
+                  className={TableSelectsClasses}
+                  isDisabled={disabledRows[index]}
+                  options={colorOptions.map(color => ({
+                    value: color.id,
+                    label: `${color.colorname} - ${color.code}`
+                  }))}
+                  value={{
+                    value: colorOptions.find(color => color.id === row.fkColorPrimary)?.id || 0,
+                    label: `${colorOptions.find(color => color.id === row.fkColorPrimary)?.colorname || ""}
                            - ${colorOptions.find(color => color.id === row.fkColorPrimary)?.code || ""}`
-                        }}
-                        onChange={(selectedOption) => handleSelectChange(selectedOption?.value || 0, index, 'fkColorPrimary')}
-                        isSearchable
-                      />
-      
-                    </td>
+                  }}
+                  onChange={(selectedOption) => handleSelectChange(selectedOption?.value || 0, index, 'fkColorPrimary')}
+                  isSearchable
+                />
+
+              </td>
               <td>
                 <div className="flex items-center">
                   <Select
-                    className={tableSelectsClasses}
+                    className={TableSelectsClasses}
+                    isDisabled={disabledRows[index]}
                     options={sizeOptions.map(size => ({
                       value: size.id,
                       label: size.size + " - " + size.category
@@ -269,29 +247,34 @@ const PreOrders = () => {
                 </div>
               </td>
               <td className='w-14'>
-                <input
-                  type="number"
+                <InputNumber
+                  min={0}
+                  step={0}
                   value={row.quantity}
-                  onChange={(e) => handleInputChange(e, index, 'quantity')}
-                  className="w-full px-2 py-1 rounded-md border border-gray-300 focus:outline-none focus:border-indigo-500"
-                  min="0"
+                  onChange={(value) => handleInputChange({ target: { value: value ?? 0 } }, index, 'quantity')}
+                  disabled={disabledRows[index]}
+                  className="text-md w-full py-0.5 rounded-md border border-gray-300 focus:outline-none focus:border-indigo-500"
+                />
+              </td>
+              <td className='w-14'>
+                <InputNumber
+                  min={0}
+                  step={0.01}
+                  value={row.customPrice}
+                  onChange={(value) => handleInputChange({ target: { value: value ?? 0 } }, index, 'customPrice')}
+                  disabled={disabledRows[index]}
+                  className="text-md w-full py-0.5 rounded-md border border-gray-300 focus:outline-none focus:border-indigo-500"
                 />
               </td>
               <td className='w-14'>
                 <input
                   type="number"
-                  value={row.customPrice}
-                  onChange={(e) => handleInputChange(e, index, 'customPrice')}
-                  className="w-full px-2 py-1 rounded-md border border-gray-300 focus:outline-none focus:border-indigo-500"
+                  step="0.001"
                   min="0"
-                />
-              </td>
-              <td className='w-14'>
-                <input
-                  type="text"
-                  value=''
-                  placeholder='Calcular'
-                  className="w-full px-2 py-1 rounded-md border border-gray-300 focus:outline-none focus:border-indigo-500"
+                  max="9999999.99"
+                  value={(row.quantity * row.customPrice).toFixed(2)}
+                  disabled
+                  className="w-full px-2 py-1 rounded-md border border-gray-300 bg-gray-100 focus:outline-none"
                 />
               </td>
             </tr>

@@ -4,32 +4,22 @@ import useProductOptions from '../hooks/useProductOptions';
 import useSizeOptions from '../hooks/useSizeOptions';
 import useColorOptions from '../hooks/useColorOptions';
 import { AddBuy } from '@/shared/Api/BuyInventory/BuyApi';
-import { IBuyPost, IInventoryDetailDto } from '@/shared/interfaces/BuyInventory/IBuyInvPost';
-import ButtonModal from '@/components/Generics/Modal/ButtonModal';
-import ViewForm from '@/components/FormularioV4/viewForm';
-
-
-const tableHeadClasses = "px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider";
-const tableSelectsClasses = "block w-full py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-const formInputsClasses = "px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+import { BuyPostDto, IBuyPost, IInventoryDetailDto } from '@/shared/interfaces/BuyInventory/IBuyInvPost';
+import { InputNumber } from 'antd';
+import { FormInputsClasses, TableHeadClasses, TableSelectsClasses } from '@/shared/Common/cssComponent';
 
 
 const AddInventory = () => {
-    const [formData, setFormData] = useState<IBuyPost>({
-        company: '',
-        rnc: '',
-        ncf: '',
-        totaL_SALE: 0,
-        inventoryDetailDtoAdd: [],
-    });
+    const [formData, setFormData] = useState<IBuyPost>(new BuyPostDto());
     const [tableData, setTableData] = useState<IInventoryDetailDto[]>([]);
     const { productOptions } = useProductOptions();
-    const { sizeOptions } = useSizeOptions();
+
     const [disabledRows, setDisabledRows] = useState<boolean[]>(Array(tableData.length).fill(true));
-    
     const [selectedProductId, setSelectedProductId] = useState(0);
-    
+
+    const {sizeOptions} = useSizeOptions(selectedProductId);
     const { colorOptions } = useColorOptions(selectedProductId);
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData({
@@ -40,13 +30,8 @@ const AddInventory = () => {
 
     const handleAddRow = () => {
         const newRow: IInventoryDetailDto = {
-            fK_BUY_INVENTORY: tableData.length,
-            fK_PRODUCT: 0,
-            quantity: 0,
-            price: 0,
-            fK_SIZE: 0,
-            coloR_PRIMARY: 0,
-            coloR_SECONDARY: 1,
+            ...new BuyPostDto().inventoryDetailDtoAdd[0],
+            fK_BUY_INVENTORY: tableData.length, 
         };
         setTableData([...tableData, newRow]);
         setDisabledRows([...disabledRows, true]);
@@ -66,13 +51,7 @@ const AddInventory = () => {
             console.log(formDataWithDetails);
             await AddBuy(formDataWithDetails);
             // Limpiar el formulario después de guardar
-            setFormData({
-                company: '',
-                rnc: '',
-                ncf: '',
-                totaL_SALE: 0,
-                inventoryDetailDtoAdd: [],
-            });
+            setFormData(new BuyPostDto);
             setTableData([]);
             setDisabledRows([]);
             alert('Compra guardada exitosamente');
@@ -98,7 +77,7 @@ const AddInventory = () => {
         updatedTableData[rowIndex][fieldName] = value;
         setTableData(updatedTableData);
 
-        if(fieldName == 'fK_PRODUCT'){
+        if (fieldName == 'fK_PRODUCT') {
             setSelectedProductId(value || 0);
         }
 
@@ -107,10 +86,22 @@ const AddInventory = () => {
         setDisabledRows(updatedDisabledRows);
     };
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, rowIndex: number, fieldName: keyof IInventoryDetailDto) => {
-        const { value } = e.target;
+    const handleInputChange = (
+        e: React.ChangeEvent<HTMLInputElement> | { target: { value: number | null } },
+        rowIndex: number,
+        fieldName: keyof IInventoryDetailDto
+    ) => {
+        const value = e.target.value;
         const updatedTableData = [...tableData];
-        updatedTableData[rowIndex][fieldName] = parseInt(value, 10);
+
+        if (typeof value === 'number') {
+            updatedTableData[rowIndex][fieldName] = value;
+        } else if (typeof value === 'string') {
+            updatedTableData[rowIndex][fieldName] = parseFloat(value);
+        } else {
+            updatedTableData[rowIndex][fieldName] = 0; // Default value or handle null appropriately
+        }
+
         setTableData(updatedTableData);
     };
 
@@ -122,22 +113,22 @@ const AddInventory = () => {
                 <div className='flex flex-col'>
                     <label className='mb-1'>Compañia:</label>
                     <input type="text" name="company" value={formData.company} onChange={handleChange}
-                        className={formInputsClasses} />
+                        className={FormInputsClasses} />
                 </div>
                 <div className='flex flex-col'>
                     <label>RNC:</label>
                     <input type="text" name="rnc" value={formData.rnc} onChange={handleChange}
-                        className={formInputsClasses} />
+                        className={FormInputsClasses} />
                 </div>
                 <div className='flex flex-col'>
                     <label>NCF:</label>
                     <input type="text" name="ncf" value={formData.ncf} onChange={handleChange}
-                        className={formInputsClasses} />
+                        className={FormInputsClasses} />
                 </div>
                 <div className='flex flex-col'>
                     <label>PagoTotal:</label>
                     <input type="number" name="totaL_SALE" min="0.00" value={formData.totaL_SALE} onChange={handleChange}
-                        className={formInputsClasses} />
+                        className={FormInputsClasses} />
                 </div>
                 <div className='flex'>
                     <button
@@ -152,13 +143,13 @@ const AddInventory = () => {
             <table className="min-w-full divide-y divide-gray-200 mt-3">
                 <thead className="bg-gray-50">
                     <tr>
-                        <th className={tableHeadClasses}>#</th>
-                        <th className={tableHeadClasses}>Producto</th>
-                        <th className={tableHeadClasses}>Unidad</th>
-                        <th className={tableHeadClasses}>Precio</th>
-                        <th className={tableHeadClasses}>Size</th>
-                        <th className={tableHeadClasses}>Color 1</th>
-                        {/* <th className={tableHeadClasses}>Color 2</th> */}
+                        <th className={TableHeadClasses}>#</th>
+                        <th className={TableHeadClasses}>Producto</th>
+                        <th className={TableHeadClasses}>Color</th>
+                        <th className={TableHeadClasses}>Size</th>
+                        <th className={TableHeadClasses}>Unidad</th>
+                        <th className={TableHeadClasses}>Precio</th>
+                        {/* <th className={TableHeadClasses}>Color 2</th> */}
                     </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
@@ -168,7 +159,7 @@ const AddInventory = () => {
                             <td>
                                 <div className="flex items-center">
                                     <Select
-                                        className={tableSelectsClasses}
+                                        className={TableSelectsClasses}
                                         options={productOptions.map(product => ({
                                             value: product.id,
                                             label: product.name_prod
@@ -180,46 +171,29 @@ const AddInventory = () => {
                                         onChange={(selectedOption) => handleSelectChange(selectedOption?.value || 0, index, 'fK_PRODUCT')}
                                         isSearchable
                                     />
-
-                                    <ButtonModal
-                                        buttonText=""
-                                        modalTitle=""
-                                        tooltipTitle="Agregar Producto"
-                                        size={16}
-                                        modalContent={<ViewForm usarForm="Product" formData={null} isUpdate={false} />}
-                                        iconType="plus"
-                                        cssColor='blue'
-                                    />
                                 </div>
-
-
                             </td>
-                            <td className='w-14'>
-                                <input
-                                    type="number"
-                                    value={row.quantity}
-                                    onChange={(e) => handleInputChange(e, index, 'quantity')}
-                                    className="w-full px-2 py-1 rounded-md border border-gray-300 focus:outline-none focus:border-indigo-500"
-                                    min="0"
-                                    disabled={disabledRows[index]}
+                            <td>
+                                <Select
+                                    className={TableSelectsClasses}
+                                    isDisabled={disabledRows[index]}
+                                    options={colorOptions.map(color => ({
+                                        value: color.id,
+                                        label: `${color.colorname} - ${color.codE_COLOR}`
+                                    }))}
+                                    value={{
+                                        value: colorOptions.find(color => color.id === row.coloR_PRIMARY)?.id || 0,
+                                        label: `${colorOptions.find(color => color.id === row.coloR_PRIMARY)?.colorname || ""} 
+                                                - ${colorOptions.find(color => color.id === row.coloR_PRIMARY)?.codE_COLOR || ""}`
+                                    }}
+                                    onChange={(selectedOption) => handleSelectChange(selectedOption?.value || 0, index, 'coloR_PRIMARY')}
+                                    isSearchable
                                 />
                             </td>
-                            <td className='w-14'>
-                                <input
-                                    type="number"
-                                    value={row.price}
-                                    onChange={(e) => handleInputChange(e, index, 'price')}
-                                    className="w-full px-2 py-1 rounded-md border border-gray-300 focus:outline-none focus:border-indigo-500"
-                                    min="0"
-                                    disabled={disabledRows[index]}
-                                />
-                            </td>
-
                             <td className='relative'>
                                 <div className='flex items-center'>
-
                                     <Select
-                                        className={tableSelectsClasses}
+                                        className={TableSelectsClasses}
                                         isDisabled={disabledRows[index]}
                                         options={sizeOptions.map(size => ({
                                             value: size.id,
@@ -232,39 +206,32 @@ const AddInventory = () => {
                                         }}
                                         onChange={(selectedOption) => handleSelectChange(selectedOption?.value || 0, index, 'fK_SIZE')}
                                         isSearchable
-                                        
-
-                                    />
-
-                                    <ButtonModal
-                                        buttonText=""
-                                        modalTitle=""
-                                        tooltipTitle="Agregar Size"
-                                        size={16}
-                                        modalContent={<ViewForm usarForm="Size" formData={null} isUpdate={false} />}
-                                        iconType="plus"
-                                        cssColor='blue'
                                     />
                                 </div>
                             </td>
-                            <td>
-                                <Select
-                                    className={tableSelectsClasses}
-                                    isDisabled={disabledRows[index]}
-                                    options={colorOptions.map(color => ({
-                                        value: color.id,
-                                        label: `${color.colorname} - ${color.codE_COLOR}`
-                                    }))}
-                                    value={{
-                                        value: colorOptions.find(color => color.id === row.coloR_PRIMARY)?.id || 0,
-                                        label: `${colorOptions.find(color => color.id === row.coloR_PRIMARY)?.colorname || ""} 
-                                        - ${colorOptions.find(color => color.id === row.coloR_PRIMARY)?.codE_COLOR || ""}`
-                                    }}
-                                    onChange={(selectedOption) => handleSelectChange(selectedOption?.value || 0, index, 'coloR_PRIMARY')}
-                                    isSearchable
+                            <td className='w-14'>
+                                <InputNumber
+                                    min={0}
+                                    step={0}
+                                    max={999}
+                                    value={row.quantity}
+                                    onChange={(value) => handleInputChange({ target: { value: value ?? 0 } }, index, 'quantity')}
+                                    disabled={disabledRows[index]}
+                                    className="text-lg w-full py-0.5 rounded-md border border-gray-300 focus:outline-none focus:border-indigo-500"
                                 />
-
                             </td>
+                            <td className='w-14'>
+                                <InputNumber
+                                    min={0}
+                                    step={0.01}
+                                    max={99999.99}
+                                    value={row.price}
+                                    onChange={(value) => handleInputChange({ target: { value: value ?? 0 } }, index, 'price')}
+                                    disabled={disabledRows[index]}
+                                    className="text-lg w-full py-0.5 rounded-md border border-gray-300 focus:outline-none focus:border-indigo-500"
+                                />
+                            </td>
+
                         </tr>
                     ))}
                     <tr>

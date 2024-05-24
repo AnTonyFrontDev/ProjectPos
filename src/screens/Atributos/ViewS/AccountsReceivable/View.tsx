@@ -4,7 +4,7 @@ import ApiTable from '@/components/Generics/Tabla/apiTable';
 import SearchFilter from '@/shared/SearchFilter';
 import { useEffect, useState } from 'react';
 
-import { expensesTable } from "@/components/Generics/Tabla/tData";
+import { ReceivableTable } from "@/components/Generics/Tabla/tData";
 import { GetAccountsReceivable } from "@/shared/Api/PreOrder/PreOrderApi";
 // import {CompleteExpense, GetAccountsPayable, RemoveExpenses } from "@/shared/Api/Expenses/ExpensesApi";
 // import {ExpensesUpdateDto} from "@/shared/interfaces/Expenses/IExpensesUpdate.ts";
@@ -55,14 +55,14 @@ const View = () => {
           onSearch={handleSearch}
           onFilterChange={handleFilterChange}
           onSortToggle={handleSortToggle}
-          columns={expensesTable}
+          columns={ReceivableTable}
         />
         {/*<G_Options buttonText="Nuevo Gasto" usarForm="Expenses" />*/}
       </div>
       <div className="mt-10">
         <ApiTable
           getApiData={GetAccountsReceivable}
-          columns={expensesTable}
+          columns={ReceivableTable}
           searchTerm={searchTerm}
           filterColumn={filterColumn}
           sortDirection={sortDirection}
