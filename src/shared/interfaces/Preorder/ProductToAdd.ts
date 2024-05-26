@@ -22,9 +22,9 @@ export interface IProductsDtoAdd {
        this.fkSize = 0;
        this.quantity = 0;
        this.fkColorPrimary = 0;
-       this.fkColorSecondary = 0;
-       this.customPrice = 0;
-       this.user = 0 
+       this.fkColorSecondary = 1;
+       this.customPrice = 0.00;
+       this.user = 1 
     }
 
 }

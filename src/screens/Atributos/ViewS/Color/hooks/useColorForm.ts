@@ -23,5 +23,5 @@ export const useColorForm = () => {
     GenericRequest(formData, SaveColor, "Color data submitted successfully");
   };
 
-  return { formData, handleInputChange, handleColorChange, handleSubmit };
+  return { formData, setFormData, handleInputChange, handleColorChange, handleSubmit };
 };

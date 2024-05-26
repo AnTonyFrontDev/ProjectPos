@@ -40,13 +40,13 @@ const ProductColorAdd: React.FC<IProductColorProps> = ({ productId }) => {
     }
 
     const formData = {
-      fkProduct: productId,
+      fkProduct: Number(productId),
       fkColor: selectedColor.value,
     };
+    console.log('Color agregado exitosamente.', formData);
 
     try {
       await SaveProductColor(formData);
-      console.log('Color agregado exitosamente.');
       setShowSuccessAlert(true);
       setSelectedColor(null);
       setTimeout(() => {

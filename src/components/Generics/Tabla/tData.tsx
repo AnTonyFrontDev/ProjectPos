@@ -125,6 +125,13 @@ export const expensesTable: (IExpensesColumns | any)[] = [
   // { title: 'idPaymentType', dataIndex: 'idPaymentType', key: 'idPaymentType' },
 ];
 
+export const ReceivableTable: (IExpensesColumns | any) = [
+  { title: 'ID', dataIndex: 'id', key: 'id' },
+  { title: 'Cliente', dataIndex: 'client', key: 'client' },
+  { title: 'Fecha de Entrega', dataIndex: 'dateDelivery', key: 'dateDelivery' },
+  { title: 'Fecha de Creación', dataIndex: 'dateCreated', key: 'dateCreated' },
+];
+
 export const sizeTable: (ISizeGet | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
   { title: 'Tamaño', dataIndex: 'size', key: 'size' },
@@ -141,11 +148,9 @@ export const paymentTypeTable: (IPaymentTypeColumns | any)[] = [
 ];
 
 export const paymentTable: (IPaymentColumns | any)[] = [
-  { title: 'ID', dataIndex: 'id', key: 'id' },
-  { title: 'Fecha', dataIndex: 'date', key: 'date' },
-  { title: 'Orden', dataIndex: 'fkOrder', key: 'fkOrder' },
-  { title: 'Tipo de Pago', dataIndex: 'fkTypePayment', key: 'fkTypePayment' },
-  { title: 'Cuenta Bancaria', dataIndex: 'fkBankAccount', key: 'fkBankAccount' },
+  { title: 'ID', dataIndex: 'idOrder', key: 'idOrder' },
+  { title: 'Cuenta', dataIndex: 'accountPayment', key: 'accountPayment' },
+  { title: 'Numero de Pago', dataIndex: 'paymentNumbers', key: 'paymentNumbers' },
   { title: 'Cantidad', dataIndex: 'amount', key: 'amount' }
 ];
 

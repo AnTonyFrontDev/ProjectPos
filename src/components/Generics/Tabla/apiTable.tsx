@@ -4,7 +4,7 @@ import { Table } from 'antd';
 import PropTypes from 'prop-types';
 import ButtonModal from '../Modal/ButtonModal';
 import ViewForm from '@/components/FormularioV4/viewForm';
-import {ExpensesUpdateDto} from "@/shared/interfaces/Expenses/IExpensesUpdate.ts";
+import { ExpensesUpdateDto } from "@/shared/interfaces/Expenses/IExpensesUpdate.ts";
 
 interface GenericTableProps {
   getApiData?: () => Promise<any[]>;
@@ -20,7 +20,7 @@ interface GenericTableProps {
   dataSource?: any[];
   //boton personalizable para poner en la tabla
   //useCustomButton: boolean;
-  customButton?: [text:string, onClick : (id: ExpensesUpdateDto) => Promise<void>];
+  customButton?: [text: string, onClick: (id: ExpensesUpdateDto) => Promise<void>];
 }
 
 const GenericTable: React.FC<GenericTableProps> = ({
@@ -35,7 +35,7 @@ const GenericTable: React.FC<GenericTableProps> = ({
   dataSource,
   //useCustomButton,
   customButton,
-  showActions,}) => {
+  showActions, }) => {
   const [data, setData] = useState<any[]>(dataSource || []);
 
   useEffect(() => {
@@ -128,23 +128,23 @@ const GenericTable: React.FC<GenericTableProps> = ({
       },
     ]
     //logica para agregar un boton personalizado
-    : (customButton != null? [
-        {
-          title: 'Actions',
-          key: 'actions',
-          render: (record: any) => (
-              <span>
+    : (customButton != null ? [
+      {
+        title: 'Actions',
+        key: 'actions',
+        render: (record: any) => (
+          <span>
 
             <button
-                className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
-                onClick={ () => customButton[1](record)}
+              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+              onClick={() => customButton[1](record)}
             >
               {customButton[0]}
             </button>
           </span>
-          ),
-        },
-      ] : []);
+        ),
+      },
+    ] : []);
 
   return (
     <Table
@@ -152,11 +152,9 @@ const GenericTable: React.FC<GenericTableProps> = ({
       columns={[...columns, ...actionsColumn].map(column => ({
         ...column,
         onCell: (record: any) => ({
-          onClick: () => handleTableRowClick(record),
+          onClick: handleTableRowClick ? () => handleTableRowClick(record) : undefined,
         }),
       }))}
-
-
     />
   );
 };
