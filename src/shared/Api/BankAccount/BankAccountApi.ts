@@ -1,8 +1,8 @@
 import axios from "axios";
-import { IBankAccountPost } from '@/shared/interfaces/BankAccount/IBankAccountPost';
-import { IBankAccountUpdate } from '@/shared/interfaces/BankAccount/IBankAccountUpdate';
-import { IBankAccountRemove } from '@/shared/interfaces/BankAccount/IBankAccountRemove';
-import { URL } from "@/shared/Common/url";
+import {IBankAccountPost} from '@/shared/interfaces/BankAccount/IBankAccountPost';
+import {IBankAccountUpdate} from '@/shared/interfaces/BankAccount/IBankAccountUpdate';
+import {IBankAccountRemove} from '@/shared/interfaces/BankAccount/IBankAccountRemove';
+import {URL} from "@/shared/Common/url";
 
 
 export const getBankAccounts = async () => {
@@ -14,6 +14,14 @@ export const getBankAccounts = async () => {
     } catch (error) {
         console.error('Error fetching banks:', error);
         throw error;
+    }
+};
+export const GetBankAccountsPaginated = async (page:number,itemsPerPage:number) => {
+    try {
+        return await axios.get(
+            `${URL}/BankAccount/GetBankAccounts?Page=${page}&ItemsPerPage=${itemsPerPage}`);
+    } catch (error) {
+        console.error('Error fetching banks:', error);
     }
 };
 

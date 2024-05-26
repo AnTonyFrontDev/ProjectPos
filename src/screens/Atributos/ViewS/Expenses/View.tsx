@@ -5,8 +5,11 @@ import SearchFilter from '../../../../shared/SearchFilter';
 import { useEffect, useState } from 'react';
 
 import { expensesTable } from "@/components/Generics/Tabla/tData";
-import { getExpenses, RemoveExpenses } from "@/shared/Api/Expenses/ExpensesApi";
+import {getExpenses, GetExpensesPaginated, RemoveExpenses} from "@/shared/Api/Expenses/ExpensesApi";
 import G_Options from "@/components/Generics/gOptions";
+import IPagination from "@/shared/interfaces/Pagination/IPagination.ts";
+import {GetBankAccountsPaginated} from "@/shared/Api/BankAccount/BankAccountApi.ts";
+import ButtonsPagination from "@/components/PaginationComponents/ButtonsPagination.tsx";
 
 const View = () => {
   const routes = [
@@ -15,6 +18,29 @@ const View = () => {
     { title: 'Expenses', path: '/atributos/Expenses' }
   ];
 
+    //estado para el numero de items que debe traer la peticion al API
+    const [itemsPerPage, setItemsPerPage] = useState(10);
+    //pagina
+    const [page, setPage] = useState(1);
+    //estado para la data de la API
+    const [apiData, setApiData] = useState()
+    //paginacion
+    const [dataPagination,setDataPagination] = useState<IPagination>();
+    const fetchData = async ()=>{
+      GetExpensesPaginated(page,itemsPerPage)
+          .then((data)=>{
+            setApiData(()=>data);
+            if(data.headers["x-pagination"] != undefined){
+              setDataPagination(()=> JSON.parse(data.headers["x-pagination"]) as IPagination);
+            }
+
+
+          })
+    }
+    //handle del click
+    const HandleClickPage = (action:boolean)=>{
+      action ? setPage((number) => number + 1) : setPage((number) => number - 1);
+    }
 
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [filterColumn, setFilterColumn] = useState<string>('');
@@ -22,7 +48,8 @@ const View = () => {
 
   useEffect(() => {
     // Puedes realizar alguna acción específica cuando cambia la lista de bancos
-  }, [searchTerm, filterColumn, sortDirection]);
+    fetchData();
+  }, [page,searchTerm, filterColumn, sortDirection]);
 
   const handleSearch = (value: string) => {
     setSearchTerm(value);
@@ -51,7 +78,7 @@ const View = () => {
       </div>
       <div className="mt-10">
         <ApiTable
-          getApiData={getExpenses}
+          getApiData={async()=> apiData.data.data}
           delApiData={RemoveExpenses}
           usarForm='Expenses'
           columns={expensesTable}
@@ -61,6 +88,7 @@ const View = () => {
           showActions={true} 
         />
       </div>
+      <ButtonsPagination dataPagination={dataPagination} HandleClickPage={HandleClickPage}/>
     </div>
   );
 };

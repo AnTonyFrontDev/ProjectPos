@@ -5,8 +5,13 @@ import SearchFilter from '@/shared/SearchFilter';
 import { useEffect, useState } from 'react';
 
 import { banksTable } from "@/components/Generics/Tabla/tData";
-import { getBanks, RemoveBank } from "@/shared/Api/Bank/BankApi";
+import {getBanks, GetBanksPaginated, RemoveBank} from "@/shared/Api/Bank/BankApi";
 import G_Options from "@/components/Generics/gOptions";
+import {IBankColumns} from "@/shared/interfaces/Bank/IBankGet.ts";
+import useDataPagination from "@/components/Hooks/useDataPagination.ts";
+import ButtonsPagination from "@/components/PaginationComponents/ButtonsPagination.tsx";
+import UseDataPagination from "@/components/Hooks/useDataPagination.ts";
+import IPagination from "@/shared/interfaces/Pagination/IPagination.ts";
 
 const View = () => {
   const routes = [
@@ -15,14 +20,36 @@ const View = () => {
     { title: 'Banks', path: '/atributos/Banks' }
   ];
 
-
+  //estado para el numero de items que debe traer la peticion al API
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  //pagina
+  const [page, setPage] = useState(1);
+  //estado para la data de la API
+  const [apiData, setApiData] = useState()
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [filterColumn, setFilterColumn] = useState<string>('');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
 
+  //paginacion
+  const [dataPagination,setDataPagination] = useState<IPagination>();
+  const fetchData = async ()=>{
+    GetBanksPaginated(page,itemsPerPage)
+        .then((data)=>{
+          setApiData(()=>data);
+          if(data.headers["x-pagination"] != undefined){
+              setDataPagination(()=> JSON.parse(data.headers["x-pagination"]) as IPagination);
+          }
+          console.log(dataPagination)
+        })
+  }
+  //handle del click
+  const HandleClickPage = (action:boolean)=>{
+    action ? setPage((number) => number + 1) : setPage((number) => number - 1);
+  }
   useEffect(() => {
     // Puedes realizar alguna acción específica cuando cambia la lista de bancos
-  }, [searchTerm, filterColumn, sortDirection]);
+    fetchData()
+  }, [page,searchTerm, filterColumn, sortDirection]);
 
   const handleSearch = (value: string) => {
     setSearchTerm(value);
@@ -51,7 +78,14 @@ const View = () => {
       </div>
       <div className="mt-10">
         <ApiTable
-          getApiData={getBanks}
+          getApiData={async() =>{
+
+            const transformedData: IBankColumns[] = apiData.data.data.map((bank: IBankColumns) => ({
+              ...bank,
+              name: bank.bankName
+            }));
+            return transformedData;
+          }}
           delApiData={RemoveBank}
           usarForm='Bank'
           columns={banksTable}
@@ -61,6 +95,7 @@ const View = () => {
           showActions={true} 
         />
       </div>
+      <ButtonsPagination dataPagination={dataPagination} HandleClickPage={HandleClickPage}/>
     </div>
   );
 };

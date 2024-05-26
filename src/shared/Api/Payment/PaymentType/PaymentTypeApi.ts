@@ -15,6 +15,15 @@ export const getPaymentTypes = async () => {
   }
 };
 
+export const GetPaymentTypesPaginated = async (page:number,itemsPerPage:number) => {
+  try {
+    return await axios.get(`${URL}/PaymentType/GetPaymentTypes?Page=${page}&ItemsPerPage=${itemsPerPage}`);
+
+  } catch (error) {
+    console.error('Error fetching payment types:', error);
+  }
+};
+
 export const SavePaymentType = async (formData: IPaymentTypePost) => {
   try {
     const formattedData = formData;

@@ -18,6 +18,18 @@ try {
     throw error;
   }
 };
+export const GetTypesPaginated = async (page:number,itemsPerPage:number) => {
+    try {
+        return await axios.get(
+            // `${URL}/TypeProd/GetTypes?Page=${page}&ItemsPerPage=${itemsPerPage}`
+            `${URL}/TypeProd/GetTypes?Page=${page}&ItemsPerPage=${itemsPerPage}`
+        );
+
+    } catch (error) {
+        console.error("Error retrieving types:", error);
+    }
+};
+
 
 export const SaveTypeProd = async (formData: ITypeProdPost) => {
     try {

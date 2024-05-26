@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getPreOrders } from '@/shared/Api/PreOrder/PreOrderApi';
+import {getPreOrders, GetPreOrdersPaginated} from '@/shared/Api/PreOrder/PreOrderApi';
 // import useOrderProcessing from '../hooks/useOrderHook';
 // import mapPreOrderToCheckOrder from '../hooks/useMapPreOrder';
 // import { Link } from 'react-router-dom';
@@ -8,6 +8,8 @@ import BreadcrumbData from "@/components/ui/Breadcrumb";
 import ApiTable from '@/components/Generics/Tabla/apiTable';
 import { preOrderTable } from '@/components/Generics/Tabla/tData';
 import { Link, useNavigate } from 'react-router-dom';
+import IPagination from "@/shared/interfaces/Pagination/IPagination.ts";
+import ButtonsPagination from "@/components/PaginationComponents/ButtonsPagination.tsx";
 // import { getOrders } from '@/shared/Api/Order/OrderApi';
 
 const ListPreOrder = () => {
@@ -19,7 +21,30 @@ const ListPreOrder = () => {
 
     const navigate = useNavigate();
     // const { loading, error, processOrder } = useOrderProcessing();
+    //estado para el numero de items que debe traer la peticion al API
+    const [itemsPerPage, setItemsPerPage] = useState(10);
 
+//pagina
+    const [page, setPage] = useState(1);
+//estado para la data de la API
+    const [apiData, setApiData] = useState()
+//----------
+
+//paginacion
+    const [dataPagination,setDataPagination] = useState<IPagination>();
+    const fetchData = async ()=>{
+        GetPreOrdersPaginated(page,itemsPerPage)
+            .then((data)=>{
+                setApiData(()=>data);
+                if(data.headers["x-pagination"] != undefined){
+                    setDataPagination(()=> JSON.parse(data.headers["x-pagination"]) as IPagination);
+                }
+            })
+    }
+//handle del click
+    const HandleClickPage = (action:boolean)=>{
+        action ? setPage((number) => number + 1) : setPage((number) => number - 1);
+    }
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [filterColumn, setFilterColumn] = useState<string>('');
     const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
@@ -28,9 +53,9 @@ const ListPreOrder = () => {
     useEffect(() => {
         if (selectedPreOrderId !== null) {
             // Realizar alguna acción con selectedProductId
-            console.log(`El producto seleccionado tiene el ID: ${selectedPreOrderId}`);
+            fetchData();
         }
-    }, [selectedPreOrderId]);
+    }, [page,selectedPreOrderId]);
 
     const handleSearch = (value: string) => {
         setSearchTerm(value);
@@ -98,7 +123,7 @@ const ListPreOrder = () => {
                 </Link>
             </div>
             <ApiTable
-                getApiData={getPreOrders}
+                getApiData={() => apiData.data.data}
                 columns={preOrderTable}
                 searchTerm={searchTerm}
                 filterColumn={filterColumn}
@@ -106,6 +131,7 @@ const ListPreOrder = () => {
                 showActions={false} // Opcional: mostrar acciones como editar/eliminar
                 handleTableRowClick={handleTableRowClick}
             />
+            <ButtonsPagination dataPagination={dataPagination} HandleClickPage={HandleClickPage}/>
         </>
     );
 }

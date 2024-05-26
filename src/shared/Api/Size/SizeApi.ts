@@ -12,6 +12,13 @@ export const getSizes = async () => {
       throw error;
   }
 };
+export const GetSizesPaginated = async (page:number,itemsPerPage:number) => {
+    try {
+        return await axios.get(`https://localhost:7065/api/Size/GetSizes?Page=${page}&ItemsPerPage=${itemsPerPage}`);
+    } catch (error) {
+        console.error('Error fetching sizes:', error);
+    }
+};
 
 export const SaveSize = async (formData: ISizePost) => {
   try {
@@ -26,7 +33,7 @@ export const SaveSize = async (formData: ISizePost) => {
       }
     );
 
-    return response.data;
+        return response.data;
   } catch (error) {
     console.error("Error saving size:", error);
     throw error;

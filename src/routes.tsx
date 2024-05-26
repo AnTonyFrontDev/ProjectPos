@@ -13,7 +13,7 @@ import AtributosRouter from './screens/Atributos/router'
 import Order2Router from "./screens/Order/router";
 import ReportRouter from "./screens/report/router";
 import BillingRouter from "./screens/Bills/router";
-
+import TestingRoutes from "./screens/TestPagination/Router";
 
 export const publicRoutes = [].flat();
 
@@ -68,4 +68,9 @@ export const privateRoutes: RouteObject[] = [
      element:<MainLayout/>,
      children: [ReportRouter].flat()
   },
+  {
+    path:"/Testing",
+    element:<MainLayout/>,
+    children: [TestingRoutes].flat()
+  }
 ].flat();

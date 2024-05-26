@@ -18,6 +18,17 @@ export const getSales = async () : Promise<ISale[]> => {
   }
 };
 
+// Función para obtener todas las PreOrder
+export const getSalesPaginated = async (page:number,items:number) : Promise<ISale[]> => {
+  try {
+    return await axios.get(
+        `${URL}/Sale/GetSales?Page=${page}&ItemsPerPage=${items}`);
+  } catch (error) {
+    console.error('Error fetching PreOrders:', error);
+  }
+};
+
+
 // Función para obtener una PreOrder por su ID
 export const getSaleById = async (saleId : number ) => {
   try {

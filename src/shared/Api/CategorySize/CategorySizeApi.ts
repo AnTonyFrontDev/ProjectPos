@@ -12,6 +12,14 @@ export const getCategorySizes = async () => {
     throw error;
   }
 };
+export const GetCategorySizesPaginated = async (page:number,itemsPerPage:number) => {
+  try {
+    return await axios.get(`https://localhost:7065/api/CategorySize/GetCategoriesSize?Page=${page}&ItemsPerPage=${itemsPerPage}`);
+  } catch (error) {
+    console.error('Error fetching category sizes:', error);
+  }
+};
+
 
 export const getCategorySizeById = async (categorySizeId : number) => {
   try {

@@ -50,7 +50,6 @@ const GenericTable: React.FC<GenericTableProps> = ({
 
       let filteredData = apiData
 
-      console.log(apiData)
 
       if (searchTerm) {
         filteredData = apiData.filter(item =>

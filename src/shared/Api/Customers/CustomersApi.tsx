@@ -13,6 +13,13 @@ export const getClients = async () => {
         throw error;
     }
 };
+export const  getClientsPaginated = async (page:number,items:number) => {
+    try {
+        return await axios.get(`https://localhost:7065/api/Client/GetClients?Page=${page}&ItemsPerPage=${items}`);
+    } catch (error) {
+        console.error('Error fetching products:', error);
+        }
+};
 
 export const getClientById = async (clientId: number) => {
     try {

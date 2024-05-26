@@ -5,8 +5,15 @@ import ApiTable from '@/components/Generics/Tabla/apiTable';
 import SearchFilter from '@/shared/SearchFilter';
 
 import { paymentTypeTable } from "@/components/Generics/Tabla/tData";
-import { getPaymentTypes, RemovePaymentType } from '@/shared/Api/Payment/PaymentType/PaymentTypeApi';
+import {
+  getPaymentTypes,
+  GetPaymentTypesPaginated,
+  RemovePaymentType
+} from '@/shared/Api/Payment/PaymentType/PaymentTypeApi';
 import G_Options from '@/components/Generics/gOptions';
+import IPagination from "@/shared/interfaces/Pagination/IPagination.ts";
+import {GetPaymentsPaginated} from "@/shared/Api/Payment/PaymentApi.ts";
+import ButtonsPagination from "@/components/PaginationComponents/ButtonsPagination.tsx";
 
 const View = () => {
   const routes = [
@@ -15,13 +22,39 @@ const View = () => {
     { title: 'Modo de pago', path: '/atributos/PaymentType' }
   ];
 
+
+  //estado para el numero de items que debe traer la peticion al API
+  const [itemsPerPage, setItemsPerPage] = useState(1);
+  //pagina
+  const [page, setPage] = useState(1);
+  //estado para la data de la API
+  const [apiData, setApiData] = useState()
+  //paginacion
+  const [dataPagination,setDataPagination] = useState<IPagination>();
+  const fetchData = async ()=>{
+    GetPaymentTypesPaginated(page,itemsPerPage)
+        .then((data)=>{
+          console.log(data)
+          setApiData(()=>data);
+          if(data.headers["x-pagination"] != undefined){
+            setDataPagination(()=> JSON.parse(data.headers["x-pagination"]) as IPagination);
+          }
+
+
+        })
+  }
+  //handle del click
+  const HandleClickPage = (action:boolean)=>{
+    action ? setPage((number) => number + 1) : setPage((number) => number - 1);
+  }
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [filterColumn, setFilterColumn] = useState<string>('');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
 
   useEffect(() => {
     // Puedes realizar alguna acción específica cuando cambia la lista de tipos de pago
-  }, [searchTerm, filterColumn, sortDirection]);
+    fetchData();
+  }, [page,searchTerm, filterColumn, sortDirection]);
 
   const handleSearch = (value: string) => {
     setSearchTerm(value);
@@ -49,7 +82,7 @@ const View = () => {
       </div>
       <div className="mt-10">
         <ApiTable
-          getApiData={getPaymentTypes}
+          getApiData={async()=>apiData.data.data}
           delApiData={RemovePaymentType}
           usarForm='TypePay'
           columns={paymentTypeTable}
@@ -60,6 +93,7 @@ const View = () => {
           editable={false}
         />
       </div>
+      <ButtonsPagination dataPagination={dataPagination} HandleClickPage={HandleClickPage}/>
     </div>
   );
 };

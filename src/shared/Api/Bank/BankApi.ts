@@ -2,6 +2,7 @@ import { IBankColumns } from "@/shared/interfaces/Bank/IBankGet";
 import { IBankPost } from "@/shared/interfaces/Bank/IBankPost";
 import { IBankRemove } from "@/shared/interfaces/Bank/IBankRemove";
 import { IBankUpdate } from "@/shared/interfaces/Bank/IBankUpdate";
+
 import axios from "axios";
 
 // export const getBanks = async () => {
@@ -32,6 +33,20 @@ export const getBanks = async () => {
   }
 };
 
+export const GetBanksPaginated = async (page:number,itemsPerPage:number) =>{
+  try {
+    const response = await axios.get(`https://localhost:7065/api/Bank/GetBanks?Page=${page}&ItemsPerPage=${itemsPerPage}`);
+
+    /*(const transformedData: IBankColumns[] = response.data.data.map((bank: IBankColumns) => ({
+      ...bank,
+      name: bank.bankName
+    }));*/
+
+    return response;
+  } catch (error) {
+    console.error('Error fetching banks: ', error);
+  }
+}
 
 export const SaveBank = async (formData: IBankPost) => {
   try {

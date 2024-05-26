@@ -1,6 +1,6 @@
-import { IColorPost } from "@/shared/interfaces/Color/IColorPost";
-import { IColorUpdate } from "@/shared/interfaces/Color/IColorUpdate";
-import { IColorRemove } from "@/shared/interfaces/Color/IColorRemove";
+import {IColorPost} from "@/shared/interfaces/Color/IColorPost";
+import {IColorUpdate} from "@/shared/interfaces/Color/IColorUpdate";
+import {IColorRemove} from "@/shared/interfaces/Color/IColorRemove";
 import axios from "axios";
 
 
@@ -15,6 +15,13 @@ export const getColors = async () => {
   }
 };
 
+export const GetColorsPaginated = async (page:number,itemsPerPage:number) => {
+    try {
+        return await axios.get(`https://localhost:7065/api/Color/GetColors?Page=${page}&ItemsPerPage=${itemsPerPage}`);
+    } catch (error) {
+        console.error('Error fetching colors:', error);
+    }
+};
 
 export const getColorById = async (colorId : number)  => {
   try {

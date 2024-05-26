@@ -5,9 +5,12 @@ import SearchFilter from '@/shared/SearchFilter';
 import { useEffect, useState } from 'react'
 
 import { customersTable } from "@/components/Generics/Tabla/tData";
-import { getClients } from "@/shared/Api/Customers/CustomersApi";
 import { useNavigate} from 'react-router-dom';
 import G_Options from "@/components/Generics/gOptions";
+import IPagination from "@/shared/interfaces/Pagination/IPagination.ts";
+import {getOrdersPaginated} from "@/shared/Api/Order/OrderApi.ts";
+import ButtonsPagination from "@/components/PaginationComponents/ButtonsPagination.tsx";
+import {getClientsPaginated} from "@/shared/Api/Customers/CustomersApi.tsx";
 
 
 const Customers = () => {
@@ -18,7 +21,30 @@ const Customers = () => {
   ];
 
   const navigate = useNavigate();
+  //estado para el numero de items que debe traer la peticion al API
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
+//pagina
+  const [page, setPage] = useState(1);
+//estado para la data de la API
+  const [apiData, setApiData] = useState()
+//----------
+
+//paginacion
+  const [dataPagination,setDataPagination] = useState<IPagination>();
+  const fetchData = async ()=>{
+    getClientsPaginated(page,itemsPerPage)
+        .then((data)=>{
+          setApiData(()=>data);
+          if(data.headers["x-pagination"] != undefined){
+            setDataPagination(()=> JSON.parse(data.headers["x-pagination"]) as IPagination);
+          }
+        })
+  }
+  //handle del click
+  const HandleClickPage = (action:boolean)=>{
+    action ? setPage((number) => number + 1) : setPage((number) => number - 1);
+  }
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [filterColumn, setFilterColumn] = useState<string>('');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
@@ -29,7 +55,8 @@ const Customers = () => {
       // Realizar alguna acción con selectedProductId
       console.log(`El producto seleccionado tiene el ID: ${selectedClientId}`);
     }
-  }, [selectedClientId]);
+    fetchData();
+  }, [page,selectedClientId]);
   
   const handleTableRowClick = (record: any) => {
     // Al hacer clic en una fila, establece el ID del producto seleccionado y muestra el detalle
@@ -66,7 +93,7 @@ const Customers = () => {
       </div>
       <div className="mt-10">
         <ApiTable
-          getApiData={getClients}
+          getApiData={()=> apiData.data.data}
           
           columns={customersTable}
           searchTerm={searchTerm}
@@ -76,6 +103,7 @@ const Customers = () => {
         />
 
       </div>
+      <ButtonsPagination dataPagination={dataPagination} HandleClickPage={HandleClickPage}/>
     </div>
   )
 }

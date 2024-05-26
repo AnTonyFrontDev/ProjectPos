@@ -17,6 +17,14 @@ export const getOrders = async () => {
     throw error;
   }
 };
+export const getOrdersPaginated = async (page:number,items:number) => {
+  try {
+    return await axios.get(
+        `${URL}/Order/GetOrders?Page=${page}&ItemsPerPage=${items}`);
+  } catch (error) {
+    console.error("Error checking order:", error);
+  }
+};
 
 export const getOrderById = async (orderId : number) => {
   try {

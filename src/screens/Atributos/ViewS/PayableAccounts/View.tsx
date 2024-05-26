@@ -5,9 +5,13 @@ import SearchFilter from '../../../../shared/SearchFilter';
 import { useEffect, useState } from 'react';
 
 import { expensesTable } from "@/components/Generics/Tabla/tData";
-import {CompleteExpense, GetAccountsPayable, RemoveExpenses} from "@/shared/Api/Expenses/ExpensesApi";
+import {
+  CompleteExpense,
+  GetAccountsPayable,
+  RemoveExpenses
+} from "@/shared/Api/Expenses/ExpensesApi";
 import {ExpensesUpdateDto} from "@/shared/interfaces/Expenses/IExpensesUpdate.ts";
-//import G_Options from "@/components/Generics/gOptions";
+
 
 const View = () => {
   const routes = [
@@ -15,7 +19,6 @@ const View = () => {
     { title: 'Atributos', path: '/atributos' },
     { title: 'Expenses', path: '/atributos/Expenses' }
   ];
-
 
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [filterColumn, setFilterColumn] = useState<string>('');

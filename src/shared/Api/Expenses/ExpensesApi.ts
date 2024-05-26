@@ -18,6 +18,18 @@ export const getExpenses = async () => {
     throw error;
   }
 };
+
+export const GetExpensesPaginated = async (page:number,itemsPerPage:number) => {
+    try {
+        return await axios.get(
+            // `${URL}/Expenses/GetExpenses?Page=${page}&ItemsPerPage=${itemsPerPage}`
+            `${URL}/Expenses/GetExpenses?Page=${page}&ItemsPerPage=${itemsPerPage}`
+        );
+
+    } catch (error) {
+        console.error("Error retrieving expenses:", error);
+    }
+};
 export const GetAccountsPayable = async ()=>{
     try {
         const response = await axios.get(
