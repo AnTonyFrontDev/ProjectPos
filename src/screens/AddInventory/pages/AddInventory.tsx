@@ -1,5 +1,5 @@
 import Select from 'react-select';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useProductOptions from '../hooks/useProductOptions';
 import useSizeOptions from '../hooks/useSizeOptions';
 import useColorOptions from '../hooks/useColorOptions';
@@ -19,6 +19,10 @@ const AddInventory = () => {
 
     const {sizeOptions} = useSizeOptions(selectedProductId);
     const { colorOptions } = useColorOptions(selectedProductId);
+
+    useEffect(() =>{
+
+    },[]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -68,7 +72,7 @@ const AddInventory = () => {
             ...formData,
             inventoryDetailDtoAdd: tableData,
         };
-        console.log(formDataWithDetails);
+        console.log("Prueba", formDataWithDetails);
     };
 
 
@@ -101,7 +105,7 @@ const AddInventory = () => {
         } else {
             updatedTableData[rowIndex][fieldName] = 0; // Default value or handle null appropriately
         }
-
+        console.log("Prueba",updatedTableData);
         setTableData(updatedTableData);
     };
 

@@ -5,14 +5,14 @@ import { PaymentUpdateDto, IPaymentUpdate } from '@/shared/interfaces/payment/IP
 import { SavePayment, UpdatePayment } from '@/shared/Api/Payment/PaymentApi';
 import { getPaymentTypes } from '@/shared/Api/Payment/PaymentType/PaymentTypeApi';
 import { IOptionSelect } from '@/components/FormularioV4/Config/interface';
-import { getBanks } from '@/shared/Api/Bank/BankApi';
+import { getBankAccounts } from '@/shared/Api/BankAccount/BankAccountApi';
 
 
 
 export const usePaymentForm = () => {
   const [formData, setFormData] = useState<IPaymentPost>(new PaymentDto());
   const [typePaymentOptions, setTypePaymentOptions] = useState<IOptionSelect[]>([]);
-  const [bankOptions, setBankOptions] = useState<IOptionSelect[]>([]);
+  const [bankAccountOptions, setBankAccountOptions] = useState<IOptionSelect[]>([]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -45,14 +45,14 @@ export const usePaymentForm = () => {
     }
   };
 
-  const loadBankOptions = async () => {
+  const loadBankAccountOptions = async () => {
     try {
-      const paymentTypes = await getBanks(); // Llama a la función para obtener los tipos de pago
-      const options: IOptionSelect[] = paymentTypes.map((type : any) => ({
-        value: type.id,
-        label: type.bankName, 
+      const paymentTypes = await getBankAccounts(); // Llama a la función para obtener los tipos de pago
+      const options: IOptionSelect[] = paymentTypes.map((data : any) => ({
+        value: data.id,
+        label: `${data.account} - ${data.bankType}` 
       }));
-      setBankOptions(options);
+      setBankAccountOptions(options);
     } catch (error) {
       console.error('Error al cargar los tipos de pago:', error);
     }
@@ -64,7 +64,7 @@ export const usePaymentForm = () => {
     handleSubmit, 
     handleUpdate, 
     typePaymentOptions,
-    bankOptions,
-    loadBankOptions, 
+    bankAccountOptions,
+    loadBankAccountOptions, 
     loadTypePaymentOptions };
 };

@@ -3,14 +3,15 @@ import { useExpensesForm } from '../hooks/useExpensesForm';
 import { FormProps } from '@/components/Generics/Interface/IForms';
 import { ExpensesDto, IExpensesPost } from '@/shared/interfaces/Expenses/IExpensesPost';
 import useTypePaymentOptions from '../hooks/useTypePaymentOptions';
-import useBankOptions from '../hooks/useBankOptions';
+// import useBankOptions from '../hooks/useBankOptions';
+import useBankAccountOptions from '../hooks/useBankAccountOptions';
 import { TableSelectsClasses } from '@/shared/Common/cssComponent';
 import Select from 'react-select';
 
 const ExpensesForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }) => {
     const { formData, setFormData, handleInputChange, handleSubmit, handleUpdate } = useExpensesForm();
     const { typePaymentOptions } = useTypePaymentOptions();
-    const { bankOptions } = useBankOptions();
+    const { bankAccountOptions } = useBankAccountOptions();
 
     useEffect(() => {
         if (isUpdate && initialFormData) {
@@ -110,16 +111,16 @@ const ExpensesForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate
 
             </div>
             <div className="mb-2">
-                <label className="block text-sm font-medium text-gray-600">Banco:</label>
+                <label className="block text-sm font-medium text-gray-600">Cuenta de Banco:</label>
                 <Select
                     className={TableSelectsClasses}
-                    options={bankOptions.map(tPay => ({
-                        value: tPay.id,
-                        label: tPay.bankName
+                    options={bankAccountOptions.map(bAccount => ({
+                        value: bAccount.id,
+                        label: `${bAccount.account} - ${bAccount.bankType}`
                     }))}
-                    value={bankOptions.map(tPay => ({
-                        value: tPay.id,
-                        label: tPay.bankName
+                    value={bankAccountOptions.map(bAccount => ({
+                        value: bAccount.id,
+                        label: `${bAccount.account} - ${bAccount.bankType}`
                     })).find(option => option.value === formData.fkBankAccount)}
                     onChange={(selectedOption) => handleSelectChange(selectedOption, 'fkBankAccount')}
                     isSearchable

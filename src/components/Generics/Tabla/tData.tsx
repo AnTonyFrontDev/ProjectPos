@@ -125,9 +125,10 @@ export const expensesTable: (IExpensesColumns | any)[] = [
   // { title: 'idPaymentType', dataIndex: 'idPaymentType', key: 'idPaymentType' },
 ];
 
+const combineCliente = (record: IClientGet): string => `${record.f_name} ${record.l_name} ${record.f_surname} ${record.l_surname}`;
 export const ReceivableTable: (IExpensesColumns | any) = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
-  { title: 'Cliente', dataIndex: 'client', key: 'client' },
+  { title: 'Cliente', dataIndex: 'client', key: 'client', render: combineCliente },
   { title: 'Fecha de Entrega', dataIndex: 'dateDelivery', key: 'dateDelivery' },
   { title: 'Fecha de Creación', dataIndex: 'dateCreated', key: 'dateCreated' },
 ];

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import {getPreOrders, GetPreOrdersPaginated} from '@/shared/Api/PreOrder/PreOrderApi';
+import { GetPreOrdersPaginated} from '@/shared/Api/PreOrder/PreOrderApi';
 // import useOrderProcessing from '../hooks/useOrderHook';
 // import mapPreOrderToCheckOrder from '../hooks/useMapPreOrder';
 // import { Link } from 'react-router-dom';
@@ -33,7 +33,7 @@ const ListPreOrder = () => {
 //paginacion
     const [dataPagination,setDataPagination] = useState<IPagination>();
     const fetchData = async ()=>{
-        GetPreOrdersPaginated(page,itemsPerPage)
+        GetPreOrdersPaginated(1,10)
             .then((data)=>{
                 setApiData(()=>data);
                 if(data.headers["x-pagination"] != undefined){
@@ -41,6 +41,7 @@ const ListPreOrder = () => {
                 }
             })
     }
+
 //handle del click
     const HandleClickPage = (action:boolean)=>{
         action ? setPage((number) => number + 1) : setPage((number) => number - 1);
@@ -51,10 +52,10 @@ const ListPreOrder = () => {
     const [selectedPreOrderId, setSelectedPreOrderId] = useState<number | null>(null);
 
     useEffect(() => {
-        if (selectedPreOrderId !== null) {
+        // if (selectedPreOrderId !== null) {
             // Realizar alguna acción con selectedProductId
             fetchData();
-        }
+        // }
     }, [page,selectedPreOrderId]);
 
     const handleSearch = (value: string) => {

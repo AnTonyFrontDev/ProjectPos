@@ -5,16 +5,12 @@ import ApiTable from '@/components/Generics/Tabla/apiTable'
 // import Options from "../components/Options";
 import SearchFilter from '@/shared/SearchFilter';
 import { useEffect, useState } from 'react'
-import {GetInventoryPaginated} from "@/shared/Api/InventoryApi";
+import { GetInventoryPaginated } from "@/shared/Api/InventoryApi";
 import { inventoryTable } from "@/components/Generics/Tabla/tData";
 // import DetalleProducto from "../components/DetalleInventario";
 import { useNavigate } from "react-router-dom";
 import IPagination from "@/shared/interfaces/Pagination/IPagination.ts";
 import ButtonsPagination from "@/components/PaginationComponents/ButtonsPagination.tsx";
-
-
-
-
 
 
 const Inventory = () => {
@@ -28,25 +24,28 @@ const Inventory = () => {
   //estado para el numero de items que debe traer la peticion al API
   const [itemsPerPage, setItemsPerPage] = useState(10);
 
-//pagina
+  //pagina
   const [page, setPage] = useState(1);
-//estado para la data de la API
-  const [apiData, setApiData] = useState()
-//----------
+  //estado para la data de la API
+  const [apiData, setApiData] = useState<any>()
+  //----------
 
-//paginacion
-  const [dataPagination,setDataPagination] = useState<IPagination>();
-  const fetchData = async ()=>{
-    GetInventoryPaginated(page,itemsPerPage)
-        .then((data)=>{
-          setApiData(()=>data);
-          if(data.headers["x-pagination"] != undefined){
-            setDataPagination(()=> JSON.parse(data.headers["x-pagination"]) as IPagination);
+  //paginacion
+  const [dataPagination, setDataPagination] = useState<IPagination | any >();
+  const fetchData = async () => {
+    GetInventoryPaginated(page, itemsPerPage)
+      .then((data) => {
+        if (data) {
+          setApiData(() => data);
+          if (data.headers["x-pagination"] != undefined) {
+            setDataPagination(() => JSON.parse(data.headers["x-pagination"]) as IPagination);
           }
-        })
+        }
+      })
   }
-//handle del click
-  const HandleClickPage = (action:boolean)=>{
+  //handle del click
+  const HandleClickPage = (action: boolean) => {
+    setItemsPerPage(10);
     action ? setPage((number) => number + 1) : setPage((number) => number - 1);
   }
   // const [searchTerm, setSearchTerm] = useState<string>('');
@@ -58,7 +57,7 @@ const Inventory = () => {
 
   useEffect(() => {
     fetchData();
-  }, [page,selectedProductId]);
+  }, [page, selectedProductId]);
 
   const handleTableRowClick = (record: any) => {
     // Al hacer clic en una fila, establece el ID del producto seleccionado y muestra el detalle
@@ -94,7 +93,7 @@ const Inventory = () => {
       </div>
       <div className="mt-10">
         <ApiTable
-          getApiData={()=> apiData.data.data}
+          getApiData={() => apiData.data.data}
           columns={inventoryTable}
           searchTerm={searchTerm}
           filterColumn={filterColumn}
@@ -105,7 +104,7 @@ const Inventory = () => {
         <DetalleProducto productId={selectedProductId} />
       )} */}
       </div>
-      <ButtonsPagination dataPagination={dataPagination} HandleClickPage={HandleClickPage}/>
+      <ButtonsPagination dataPagination={dataPagination} HandleClickPage={HandleClickPage} />
     </div>
   )
 }

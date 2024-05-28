@@ -11,8 +11,8 @@ const PaymentForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate,
 }) => {
     const { formData,
         typePaymentOptions,
-        bankOptions,
-        loadBankOptions,
+        bankAccountOptions,
+        loadBankAccountOptions,
         setFormData,
         handleInputChange,
         handleSubmit,
@@ -27,7 +27,7 @@ const PaymentForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate,
             handleSetInitialFormData(initialFormData);
             console.log(initialFormData);
         }
-        loadBankOptions();
+        loadBankAccountOptions();
         loadTypePaymentOptions();
     }, [isUpdate, initialFormData]);
 
@@ -59,7 +59,7 @@ const PaymentForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate,
                 />
             </div>
             <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">Cuenta de Pago</label>
+                <label className="block text-sm font-medium text-gray-600">Cuenta de Pago:</label>
                 <input
                     type="text"
                     name="category"
@@ -70,7 +70,7 @@ const PaymentForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate,
             </div>
 
             <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">Tipo de Pago</label>
+                <label className="block text-sm font-medium text-gray-600">Tipo de Pago:</label>
                 <Select
                     className={TableSelectsClasses}
                     options={typePaymentOptions}
@@ -79,16 +79,16 @@ const PaymentForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate,
                 />
             </div>
             <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">Banco</label>
+                <label className="block text-sm font-medium text-gray-600">Cuenta de Banco:</label>
                 <Select
                     className={TableSelectsClasses}
-                    options={bankOptions}
-                    value={bankOptions.find((option) => option.value === formData.fkBankAccount)}
+                    options={bankAccountOptions}
+                    value={bankAccountOptions.find((option) => option.value === formData.fkBankAccount)}
                     onChange={(selectedOption) => setFormData({ ...formData, fkBankAccount: selectedOption?.value || 0 })}
                 />
             </div>
             <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">Cantidad</label>
+                <label className="block text-sm font-medium text-gray-600">Cantidad:</label>
                 <input
                     type="number"
                     name="category"

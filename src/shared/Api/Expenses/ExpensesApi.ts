@@ -35,6 +35,7 @@ export const GetAccountsPayable = async ()=>{
         const response = await axios.get(
             // `${URL}/Expenses/GetExpenses?Page=${page}&ItemsPerPage=${itemsPerPage}`
             `${URL}/ReportsBalance/GetAccountsPayable`
+            
         );
 
         return response.data.data;
