@@ -47,7 +47,6 @@ const ButtonsPagination = ({ dataPagination, HandleClickPage }: {
             </div>
         );
     }
-    return null 
 }
 
 

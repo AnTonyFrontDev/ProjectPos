@@ -20,13 +20,12 @@ const Inventory = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [filterColumn, setFilterColumn] = useState<string>('');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
-  const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
+  // const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
 
 
   const handleTableRowClick = (record: any) => {
     // Al hacer clic en una fila, establece el ID del producto seleccionado y muestra el detalle
-    setSelectedProductId(record.id);
-    navigate(`/inventory/inventorDetail/${selectedProductId}`);
+    navigate(`/inventory/inventorDetail/${record.id}`);
   };
 
   const handleSearch = (value: string) => {
