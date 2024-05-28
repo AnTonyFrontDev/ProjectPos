@@ -149,6 +149,7 @@ const GenericTable: React.FC<GenericTableProps> = ({
   return (
     <Table
       dataSource={data}
+      pagination={false}
       columns={[...columns, ...actionsColumn].map(column => ({
         ...column,
         onCell: (record: any) => ({
