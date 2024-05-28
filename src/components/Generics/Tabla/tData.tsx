@@ -122,7 +122,6 @@ export const expensesTable: (IExpensesColumns | any)[] = [
   { title: 'Voucher', dataIndex: 'voucher', key: 'voucher' },
   { title: 'Tipo de pago', dataIndex: 'paymentType', key: 'paymentType' },
   { title: 'Número de documento', dataIndex: 'documentNumber', key: 'documentNumber' },
-  // { title: 'idPaymentType', dataIndex: 'idPaymentType', key: 'idPaymentType' },
 ];
 
 const combineCliente = (record: IClientGet): string => `${record.f_name} ${record.l_name} ${record.f_surname} ${record.l_surname}`;

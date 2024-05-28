@@ -1,14 +1,13 @@
-// Banks.tsx
+// Payment.tsx
 import BreadcrumbData from "@/components/ui/Breadcrumb";
 import ApiTable from '@/components/Generics/Tabla/apiTable';
 import SearchFilter from '../../../../shared/SearchFilter';
 import { useEffect, useState } from 'react';
 
 import { paymentTable } from "@/components/Generics/Tabla/tData";
-import {getPayments, GetPaymentsPaginated, RemovePayment} from "@/shared/Api/Payment/PaymentApi";
+import {GetPaymentsPaginated, RemovePayment} from "@/shared/Api/Payment/PaymentApi";
 import G_Options from "@/components/Generics/gOptions";
 import IPagination from "@/shared/interfaces/Pagination/IPagination.ts";
-import {GetExpensesPaginated} from "@/shared/Api/Expenses/ExpensesApi.ts";
 import ButtonsPagination from "@/components/PaginationComponents/ButtonsPagination.tsx";
 
 const View = () => {
@@ -17,8 +16,6 @@ const View = () => {
     { title: 'Atributos', path: '/atributos' },
     { title: 'Pagos', path: '/atributos/Payment' }
   ];
-
-
 
   //estado para el numero de items que debe traer la peticion al API
   const [itemsPerPage, setItemsPerPage] = useState(10);
