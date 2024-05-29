@@ -1,16 +1,11 @@
-import { useEffect, useState } from 'react';
-import { GetPreOrdersPaginated} from '@/shared/Api/PreOrder/PreOrderApi';
-// import useOrderProcessing from '../hooks/useOrderHook';
-// import mapPreOrderToCheckOrder from '../hooks/useMapPreOrder';
-// import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { GetPreOrdersPaginated } from '@/shared/Api/PreOrder/PreOrderApi';
 import SearchFilter from '@/shared/SearchFilter';
 import BreadcrumbData from "@/components/ui/Breadcrumb";
 import ApiTable from '@/components/Generics/Tabla/apiTable';
 import { preOrderTable } from '@/components/Generics/Tabla/tData';
 import { Link, useNavigate } from 'react-router-dom';
-import IPagination from "@/shared/interfaces/Pagination/IPagination.ts";
-import ButtonsPagination from "@/components/PaginationComponents/ButtonsPagination.tsx";
-// import { getOrders } from '@/shared/Api/Order/OrderApi';
+import GenericPagination from '@/components/PaginationComponents/GenericPagination';
 
 const ListPreOrder = () => {
     const routes = [
@@ -20,43 +15,10 @@ const ListPreOrder = () => {
     ];
 
     const navigate = useNavigate();
-    // const { loading, error, processOrder } = useOrderProcessing();
-    //estado para el numero de items que debe traer la peticion al API
-    const [itemsPerPage, setItemsPerPage] = useState(10);
 
-//pagina
-    const [page, setPage] = useState(1);
-//estado para la data de la API
-    const [apiData, setApiData] = useState()
-//----------
-
-//paginacion
-    const [dataPagination,setDataPagination] = useState<IPagination>();
-    const fetchData = async ()=>{
-        GetPreOrdersPaginated(1,10)
-            .then((data)=>{
-                setApiData(()=>data);
-                if(data.headers["x-pagination"] != undefined){
-                    setDataPagination(()=> JSON.parse(data.headers["x-pagination"]) as IPagination);
-                }
-            })
-    }
-
-//handle del click
-    const HandleClickPage = (action:boolean)=>{
-        action ? setPage((number) => number + 1) : setPage((number) => number - 1);
-    }
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [filterColumn, setFilterColumn] = useState<string>('');
     const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
-    const [selectedPreOrderId, setSelectedPreOrderId] = useState<number | null>(null);
-
-    useEffect(() => {
-        // if (selectedPreOrderId !== null) {
-            // Realizar alguna acción con selectedProductId
-            fetchData();
-        // }
-    }, [page,selectedPreOrderId]);
 
     const handleSearch = (value: string) => {
         setSearchTerm(value);
@@ -72,8 +34,6 @@ const ListPreOrder = () => {
 
     const handleTableRowClick = (record: any) => {
         // Al hacer clic en una fila, establece el ID del producto seleccionado y muestra el detalle
-        setSelectedPreOrderId(record.id);
-        console.log(record.id);
         navigate(`/preOrder/PreOrderDetail/${record.id}`);
     };
 
@@ -118,21 +78,27 @@ const ListPreOrder = () => {
                     className="inline-block bg-green-500 
                     hover:bg-green-600 focus:outline-none 
                     focus:ring focus:ring-green-200 text-white 
-                    font-bold py-2 px-4 rounded-md shadow-md transition-    colors duration-300"
+                    font-bold py-2 px-4 rounded-md shadow-md transition-colors duration-300"
                 >
                     Nuevo Pedido
                 </Link>
             </div>
-            <ApiTable
-                getApiData={() => apiData.data.data}
-                columns={preOrderTable}
-                searchTerm={searchTerm}
-                filterColumn={filterColumn}
-                sortDirection={sortDirection}
-                showActions={false} // Opcional: mostrar acciones como editar/eliminar
-                handleTableRowClick={handleTableRowClick}
-            />
-            <ButtonsPagination dataPagination={dataPagination} HandleClickPage={HandleClickPage}/>
+            <GenericPagination getApiData={GetPreOrdersPaginated}>
+                {(apiData) => (
+
+                    <ApiTable
+                        getApiData={() => apiData.data.data}
+                        columns={preOrderTable}
+                        searchTerm={searchTerm}
+                        filterColumn={filterColumn}
+                        sortDirection={sortDirection}
+                        showActions={false} // Opcional: mostrar acciones como editar/eliminar
+                        handleTableRowClick={handleTableRowClick}
+                    />
+                )}
+
+            </GenericPagination>
+
         </>
     );
 }

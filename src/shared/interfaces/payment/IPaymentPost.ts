@@ -1,3 +1,5 @@
+import { DATE } from "@/shared/Common/CurrentDate";
+
 export interface IPaymentPost {
   id: number;
   user: number;
@@ -22,7 +24,7 @@ export class PaymentDto implements IPaymentPost {
   constructor() {
     this.id = 0;
     this.user = 1;
-    this.date = '';
+    this.date = DATE;
     this.fkOrder = 0;
     this.fkTypePayment = 0;
     this.accountPayment = '';

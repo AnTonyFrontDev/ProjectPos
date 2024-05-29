@@ -1,8 +1,10 @@
 // ProductsApi.tsx
 import axios from 'axios';
 import { FormDataType } from '@/components/FormularioV4/Config/interface';
-import { IProduct } from '../interfaces/Product/IProduct';
+// import { IProduct } from '../interfaces/Product/IProduct';
+
 // import { DetalleProductoProps } from '../interfaces/I_inventario';
+// import { IProductPost } from '../interfaces/Product/IProductPost';
 
 
 export const getProducts = async () => {
@@ -98,28 +100,28 @@ export const getInventoryById = async (productId: number) => {
 
 
 
-export const saveProduct = async (formData: IProduct) => {
-    try {
-        const formattedData = {
-            user: formData.user,
-            name_prod: formData.name_prod,
-            description: formData.description,
-            sale_price: formData.sale_price,
-            fk_type: formData.fk_type,
-        };
+// export const saveProduct = async (formData: IProductPost) => {
+//     try {
+//         const formattedData = {
+//             user: formData.user,
+//             name_prod: formData.name_prod,
+//             description: formData.description,
+//             sale_price: formData.sale_price,
+//             fk_type: formData.fk_type,
+//         };
 
-        const response = await axios.post('https://localhost:7065/api/Product/SaveProduct', formattedData, {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
+//         const response = await axios.post('https://localhost:7065/api/Product/SaveProduct', formattedData, {
+//             headers: {
+//                 'Content-Type': 'application/json',
+//             },
+//         });
 
-        return response.data;
-    } catch (error) {
-        console.error('Error saving product:', error);
-        throw error;
-    }
-};
+//         return response.data;
+//     } catch (error) {
+//         console.error('Error saving product:', error);
+//         throw error;
+//     }
+// };
 
 export const getTypes = async () => {
     try {

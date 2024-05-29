@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { getProducts } from '@/shared/Api/ProductsApi';
-import { IProduct } from '../../../shared/interfaces/Product/IProduct';
+import { IProductPost } from '@/shared/interfaces/Product/IProductPost';
+
 
 
 const useProductOptions = () => {
-    const [productOptions, setProductOptions] = useState<IProduct[]>([]);
+    const [productOptions, setProductOptions] = useState<IProductPost[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<Error | null>(null);
 
@@ -12,7 +13,7 @@ const useProductOptions = () => {
         const fetchProducts = async () => {
             setIsLoading(true);
             try {
-                const products: IProduct[] = await getProducts();
+                const products: IProductPost[] = await getProducts();
                 setProductOptions(products);
             } catch (error) {
                 setError(error instanceof Error ? error : new Error('An error occurred'));

@@ -6,6 +6,8 @@ import { getProductById } from '@/shared/Api/Products/ProductApi';
 import { AppIcon } from '../../../components/ui/AppIcon';
 import ProductColorAdd from './ProductColorAdd';
 import ProductSizeAdd from './ProductSizeAdd';
+import ButtonModal from '@/components/Generics/Modal/ButtonModal';
+import ViewForm from '@/components/FormularioV4/viewForm';
 
 const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
   const [detalleProducto, setDetalleProducto] = useState<any>(null);
@@ -49,7 +51,7 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
                 <div key={color.id} className="flex items-center">
                   <AppIcon
                     type="colors"
-                    style={{ color: `#${color.codE_COLOR}`, cursor: 'pointer' }}
+                    style={{ color: `${color.codE_COLOR}`, cursor: 'pointer' }}
                     width={28}
                     // onClick={() => console.log(`Color clicked: ${color.colorname}`)}
                   />
@@ -79,6 +81,13 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-4 rounded">
           Editar
         </button>
+        <ButtonModal
+              buttonText="Editar"
+              modalTitle=""
+              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-2 rounded'
+              size={15}
+              modalContent={<ViewForm usarForm="Product" formData={detalleProducto} isUpdate={true} updateData={detalleProducto} />}
+            />
         {/* Botón para eliminar */}
         <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
           Eliminar

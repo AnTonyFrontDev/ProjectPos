@@ -1,14 +1,12 @@
 // Payment.tsx
 import BreadcrumbData from "@/components/ui/Breadcrumb";
 import ApiTable from '@/components/Generics/Tabla/apiTable';
-import SearchFilter from '../../../../shared/SearchFilter';
-import { useEffect, useState } from 'react';
-
+import SearchFilter from '@/shared/SearchFilter';
+import { useState } from 'react';
 import { paymentTable } from "@/components/Generics/Tabla/tData";
-import {GetPaymentsPaginated, RemovePayment} from "@/shared/Api/Payment/PaymentApi";
+import { GetPaymentsPaginated, RemovePayment } from "@/shared/Api/Payment/PaymentApi";
 import G_Options from "@/components/Generics/gOptions";
-import IPagination from "@/shared/interfaces/Pagination/IPagination.ts";
-import ButtonsPagination from "@/components/PaginationComponents/ButtonsPagination.tsx";
+import GenericPagination from "@/components/PaginationComponents/GenericPagination";
 
 const View = () => {
   const routes = [
@@ -17,37 +15,10 @@ const View = () => {
     { title: 'Pagos', path: '/atributos/Payment' }
   ];
 
-  //estado para el numero de items que debe traer la peticion al API
-  const [itemsPerPage, setItemsPerPage] = useState(10);
-  //pagina
-  const [page, setPage] = useState(1);
-  //estado para la data de la API
-  const [apiData, setApiData] = useState()
-  //paginacion
-  const [dataPagination,setDataPagination] = useState<IPagination>();
-  const fetchData = async ()=>{
-    GetPaymentsPaginated(page,itemsPerPage)
-        .then((data)=>{
-          setApiData(()=>data);
-          if(data.headers["x-pagination"] != undefined){
-            setDataPagination(()=> JSON.parse(data.headers["x-pagination"]) as IPagination);
-          }
-
-
-        })
-  }
-  //handle del click
-  const HandleClickPage = (action:boolean)=>{
-    action ? setPage((number) => number + 1) : setPage((number) => number - 1);
-  }
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [filterColumn, setFilterColumn] = useState<string>('');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
 
-  useEffect(() => {
-    // Puedes realizar alguna acción específica cuando cambia la lista de bancos
-    fetchData();
-  }, [searchTerm, filterColumn, sortDirection]);
 
   const handleSearch = (value: string) => {
     setSearchTerm(value);
@@ -75,18 +46,21 @@ const View = () => {
         <G_Options buttonText="Nuevo Pago" usarForm="Payment" />
       </div>
       <div className="mt-10">
-        <ApiTable
-          getApiData={async()=>apiData.data.data}
-          delApiData={RemovePayment}
-          usarForm='Payment'
-          columns={paymentTable}
-          searchTerm={searchTerm}
-          filterColumn={filterColumn}
-          sortDirection={sortDirection}
-          showActions={true} 
-        />
+        <GenericPagination getApiData={GetPaymentsPaginated}>
+          {(apiData) => (
+            <ApiTable
+              getApiData={async () => apiData.data.data}
+              delApiData={RemovePayment}
+              usarForm='Payment'
+              columns={paymentTable}
+              searchTerm={searchTerm}
+              filterColumn={filterColumn}
+              sortDirection={sortDirection}
+              showActions={true}
+            />
+          )}
+        </GenericPagination>
       </div>
-      <ButtonsPagination dataPagination={dataPagination} HandleClickPage={HandleClickPage}/>
     </div>
   );
 };

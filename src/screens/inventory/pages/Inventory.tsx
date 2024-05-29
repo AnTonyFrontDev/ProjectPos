@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { GetInventoryPaginated } from "@/shared/Api/InventoryApi";
 import { inventoryTable } from "@/components/Generics/Tabla/tData";
 import { useNavigate } from "react-router-dom";
-import GenericPagination from "../hooks/GenericPagination";
+import GenericPagination from "../../../components/PaginationComponents/GenericPagination";
 
 
 const Inventory = () => {
