@@ -9,16 +9,16 @@ const linkStyles = "hover:underline rounded-md block shadow-md p-4 flex flex-col
 
 const linkConfigs = [
   { to: "/atributos/PaymentType", text: "Tipo de Pago", color: "text-green-500", bgColor: "bg-green-100" },
-  { to: "/atributos/Color", text: "Color", color: "text-red-500", bgColor: "bg-red-100" },
-  { to: "/atributos/Bank", text: "Banco", color: "text-yellow-500", bgColor: "bg-yellow-100" },
-  { to: "/atributos/BankAccount", text: "BancoAccount", color: "text-cyan-500", bgColor: "bg-cyan-100" },
-  { to: "/atributos/Size", text: "Size", color: "text-indigo-500", bgColor: "bg-indigo-100" },
-  { to: "/atributos/CategorySize", text: "Categorias de Size", color: "text-purple-500", bgColor: "bg-purple-100" },
   { to: "/atributos/TypeProd", text: "Tipo Producto", color: "text-pink-500", bgColor: "bg-pink-100" },
-  { to: "/atributos/Expenses", text: "Expenses", color: "text-orange-500", bgColor: "bg-orange-100" },
-  { to: "/atributos/Payment", text: "Payment", color: "text-amber-500", bgColor: "bg-amber-100" },
-  { to: "/atributos/CuentasPagar", text: "CuentasPagar", color: "text-blue-500", bgColor: "bg-blue-100" },
-  { to: "/atributos/CuentasPorCobrar", text: "CuentasPorCobrar", color: "text-red-500", bgColor: "bg-red-100" },
+  { to: "/atributos/CategorySize", text: "Categorias de Size", color: "text-purple-500", bgColor: "bg-purple-100" },
+  { to: "/atributos/Color", text: "Colores", color: "text-red-500", bgColor: "bg-red-100" },
+  { to: "/atributos/Size", text: "Tallas", color: "text-indigo-500", bgColor: "bg-indigo-100" },
+  { to: "/atributos/Bank", text: "Bancos", color: "text-yellow-500", bgColor: "bg-yellow-100" },
+  { to: "/atributos/BankAccount", text: "Cuentas de Banco", color: "text-cyan-500", bgColor: "bg-cyan-100" },
+  { to: "/atributos/Expenses", text: "Gastos", color: "text-orange-500", bgColor: "bg-orange-100" },
+  { to: "/atributos/Payment", text: "Pagos", color: "text-amber-500", bgColor: "bg-amber-100" },
+  { to: "/atributos/CuentasPagar", text: "Cuentas por Pagar", color: "text-blue-500", bgColor: "bg-blue-100" },
+  { to: "/atributos/CuentasPorCobrar", text: "Cuentas por Cobrar", color: "text-red-500", bgColor: "bg-red-100" },
 ];
 
 const Atributos = () => {

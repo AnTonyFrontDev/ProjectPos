@@ -5,7 +5,7 @@ import SearchFilter from '@/shared/SearchFilter';
 import { useState } from 'react';
 
 import { colorTable } from "@/components/Generics/Tabla/tData";
-import { GetColorsPaginated } from "@/shared/Api/Color/ColorApi";
+import { GetColorsPaginated, RemoveColor } from "@/shared/Api/Color/ColorApi";
 import G_Options from "@/components/Generics/gOptions";
 import GenericPagination from "@/components/PaginationComponents/GenericPagination";
 
@@ -45,19 +45,19 @@ const ColorView = () => {
         />
         <G_Options buttonText="Nuevo Color" usarForm="Color" />
       </div>
-      <div className="mt-10">
+      <div id="tabla" className="mt-10">
         <GenericPagination getApiData={GetColorsPaginated}>
           {(apiData) => (
 
             <ApiTable
-              getApiData={() => {
-                return apiData.data.data
-              }}
+              getApiData={() => apiData.data.data}
+              delApiData={RemoveColor}
               columns={colorTable}
               searchTerm={searchTerm}
               filterColumn={filterColumn}
               sortDirection={sortDirection}
               showActions={true}
+              notEditable={true}
             />
           )}
 

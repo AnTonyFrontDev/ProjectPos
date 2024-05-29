@@ -1,6 +1,6 @@
 // apiTable.tsx
 import React, { useEffect, useState } from 'react';
-import { Table } from 'antd';
+import { Modal, Table } from 'antd';
 import PropTypes from 'prop-types';
 import ButtonModal from '../Modal/ButtonModal';
 import ViewForm from '@/components/FormularioV4/viewForm';
@@ -18,6 +18,7 @@ interface GenericTableProps {
   showActions?: boolean;
   usarForm?: any;
   dataSource?: any[];
+  notEditable?: boolean;
   //boton personalizable para poner en la tabla
   //useCustomButton: boolean;
   customButton?: [text: string, onClick: (id: ExpensesUpdateDto) => Promise<void>];
@@ -33,6 +34,7 @@ const GenericTable: React.FC<GenericTableProps> = ({
   sortDirection,
   handleTableRowClick,
   dataSource,
+  notEditable,
   //useCustomButton,
   customButton,
   showActions, }) => {
@@ -42,14 +44,13 @@ const GenericTable: React.FC<GenericTableProps> = ({
     if (!dataSource) {
       fetchData();
     }
-  }, [getApiData, searchTerm, filterColumn, sortDirection, dataSource]);
+  }, [getApiData, delApiData , searchTerm, filterColumn, sortDirection, dataSource]);
 
   const fetchData = async () => {
     try {
       const apiData = await getApiData!();
 
       let filteredData = apiData
-
 
       if (searchTerm) {
         filteredData = apiData.filter(item =>
@@ -87,20 +88,32 @@ const GenericTable: React.FC<GenericTableProps> = ({
   };
 
   const updateDataSource = async () => {
+    console.log("entro")
     await fetchData();
   };
 
-
   const handleDelete = async (record: any) => {
-    console.log('Delete:', record);
-    if (delApiData) {
-      try {
-        await delApiData(record);
-        updateDataSource();
-      } catch (error) {
-        console.error('Error al eliminar el registro', error);
-      }
-    }
+    Modal.confirm({
+      title: 'Confirm',
+      content: 'Are you sure you want to delete this record?',
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk: async () => {
+        console.log('Delete:', record);
+        if (delApiData) {
+          try {
+            await delApiData(record);
+            const updatedData = data.filter(item => item.id !== record.id);
+            setData(updatedData);
+            // updateDataSource();
+            await fetchData();
+          } catch (error) {
+            console.error('Error al eliminar el registro', error);
+          }
+        }
+      },
+    });
   };
 
   const actionsColumn = showActions
@@ -110,13 +123,15 @@ const GenericTable: React.FC<GenericTableProps> = ({
         key: 'actions',
         render: (record: any) => (
           <span>
-            <ButtonModal
-              buttonText="Editar"
-              modalTitle=""
-              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-2 rounded'
-              size={15}
-              modalContent={<ViewForm usarForm={usarForm} formData={record} isUpdate={true} updateData={updateDataSource} />}
-            />
+            {!notEditable && (
+              <ButtonModal
+                buttonText="Editar"
+                modalTitle=""
+                className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-2 rounded'
+                size={15}
+                modalContent={<ViewForm usarForm={usarForm} formData={record} isUpdate={true} updateData={updateDataSource} />}
+              />
+            )}
             <button
               className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'
               onClick={() => handleDelete(record)}
