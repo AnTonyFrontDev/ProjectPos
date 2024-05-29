@@ -15,6 +15,7 @@ const FormSize = lazy(() => import('@/screens/Atributos/ViewS/Size/components/Fo
 const FormPaymentType = lazy(() => import('@/screens/Atributos/ViewS/PaymentType/components/FormPaymentType'));
 const FormPayment = lazy(() => import('@/screens/Atributos/ViewS/Payment/components/FormPayment'));
 const FormExpenses = lazy(() => import('@/screens/Atributos/ViewS/Expenses/components/FormExpenses'));
+const FormPaymentExpenses = lazy(() => import('@/screens/Atributos/ViewS/PaymentExpenses/components/PaymentExpensesForm.tsx'));
 
 const formComponents: IFormComponents = {
   Product: ProductForm,
@@ -28,6 +29,7 @@ const formComponents: IFormComponents = {
   TypePay: FormPaymentType,
   Payment: FormPayment,
   Expenses: FormExpenses,
+  PaymentExpenses:FormPaymentExpenses
 };
 
 const ViewForm: React.FC<IViewFormProps> = ({ usarForm, formData, isUpdate }) => {

@@ -4,7 +4,5 @@ export interface IExpensesColumns {
   description: string
   amount: number
   voucher: string
-  paymentType: any
   documentNumber: string
-  idPaymentType: number
 }

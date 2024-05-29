@@ -17,6 +17,7 @@ import { IAvailableSizesColumn, ISizeQA } from '@/shared/interfaces/Inventory/I_
 import { IOrderColumns } from '@/shared/interfaces/order/IOrderColumns';
 import { IPreOrderColumns } from '@/shared/interfaces/Preorder/IPreOrderColumns';
 import { ISale } from '@/shared/interfaces/Sale/ISale';
+import {IPaymenExpenses} from "@/shared/interfaces/PaymentExpenses/IPaymentExpense.ts";
 // #endregion
 
 export const inventoryTable: (IAvailableSizesColumn | any)[] = [
@@ -120,7 +121,6 @@ export const expensesTable: (IExpensesColumns | any)[] = [
   { title: 'Descripción', dataIndex: 'description', key: 'description' },
   { title: 'Monto', dataIndex: 'amount', key: 'amount' },
   { title: 'Voucher', dataIndex: 'voucher', key: 'voucher' },
-  { title: 'Tipo de pago', dataIndex: 'paymentType', key: 'paymentType' },
   { title: 'Número de documento', dataIndex: 'documentNumber', key: 'documentNumber' },
 ];
 
@@ -131,6 +131,17 @@ export const ReceivableTable: (IExpensesColumns | any) = [
   { title: 'Fecha de Entrega', dataIndex: 'dateDelivery', key: 'dateDelivery' },
   { title: 'Fecha de Creación', dataIndex: 'dateCreated', key: 'dateCreated' },
 ];
+
+
+const renderNamePayment = (record : IPaymenExpenses) => record.name;
+const renderDocumentNumber = (record : IPaymenExpenses) => record.documentNumber;
+export const PaymentExpensesTable: (IPaymenExpenses | any) = [
+  {title:'id',dataIndex:'id',key:'id'},
+  {title:'name',dataIndex:'expense',key:'expense',render:renderNamePayment},
+  {title:'documentNumber',dataIndex:'expense',key:'expense',render:renderDocumentNumber},
+  {title:'amount',dataIndex:'amount',key:'amount'},
+
+]
 
 export const sizeTable: (ISizeGet | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
