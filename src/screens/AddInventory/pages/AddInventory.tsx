@@ -17,7 +17,7 @@ const AddInventory = () => {
     const [disabledRows, setDisabledRows] = useState<boolean[]>(Array(tableData.length).fill(true));
     const [selectedProductId, setSelectedProductId] = useState(0);
 
-    const {sizeOptions} = useSizeOptions(selectedProductId);
+    const { sizeOptions } = useSizeOptions(selectedProductId);
     const { colorOptions } = useColorOptions(selectedProductId);
 
     useEffect(() =>{

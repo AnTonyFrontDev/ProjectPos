@@ -88,14 +88,14 @@ const GenericTable: React.FC<GenericTableProps> = ({
   };
 
   const updateDataSource = async () => {
-    console.log("entro")
+    // console.log("entro")
     await fetchData();
   };
 
   const handleDelete = async (record: any) => {
     Modal.confirm({
-      title: 'Confirm',
-      content: 'Are you sure you want to delete this record?',
+      title: 'Confirmar',
+      content: 'Está seguro de que desea eliminar este registro?',
       okText: 'Yes',
       okType: 'danger',
       cancelText: 'No',

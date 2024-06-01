@@ -28,10 +28,12 @@ export const SaveProductSize = async (formData: IProductSizePost) => {
             "Content-Type": "application/json",
           },
         }
-      ).then((data)=>{
-        console.log(data)
-        return data;
-      });
+      )
+      // .then((data)=>{
+      //   console.log(data)
+      //   return data;
+      // })
+      ;
   
       return response.data;
     } catch (error) {

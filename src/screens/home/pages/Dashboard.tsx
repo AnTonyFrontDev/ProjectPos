@@ -1,3 +1,5 @@
+// import { AppHeroIcon } from '@/components/ui/AppHeroIcon';
+import { AppIcon } from '@/components/ui/AppIcon';
 import { Progress } from 'antd';
 
 
@@ -35,6 +37,12 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+      {/* <AppHeroIcon type="userOutline">
+        <span>User</span>
+      </AppHeroIcon> */}
+      <AppIcon type='checkList' className="cursor-pointer mx-4" width={68}>
+        <span>User</span>
+      </AppIcon>
     </div>
   )
 }

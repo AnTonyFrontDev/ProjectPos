@@ -78,9 +78,9 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
 
       <div className="flex mt-4">
         {/* Botón para editar */}
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-4 rounded">
+        {/* <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-4 rounded">
           Editar
-        </button>
+        </button> */}
         <ButtonModal
               buttonText="Editar"
               modalTitle=""

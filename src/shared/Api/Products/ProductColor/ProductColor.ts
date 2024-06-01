@@ -19,6 +19,7 @@ try {
 export const SaveProductColor = async (formData: IProductColorPost) => {
     try {
       const formattedData = formData;
+      console.log(formData)
       const response = await axios.post(
         `${URL}/ProductColor/AddProductColor`,
         formattedData,

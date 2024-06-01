@@ -1,14 +1,14 @@
 export interface IProductSizePost {
-    fkProduct: number;
-    fkSize: number;
+  idSize: number;
+  idProduct: number;
 }
 
 export class ProductSizeDto implements IProductSizePost {
-    fkProduct: number;
-    fkSize: number;
-  
-    constructor() {
-      this.fkProduct = 0;
-      this.fkSize = 0;
-    }
+  idSize: number;
+  idProduct: number;
+
+  constructor() {
+    this.idSize = 0;
+    this.idProduct = 0;
   }
+}

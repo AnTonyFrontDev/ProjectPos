@@ -22,3 +22,17 @@ export const APP_ICONS = {
     reports: 'mingcute:inventory-line',
     colors: 'solar:t-shirt-bold-duotone'
 }
+
+// icons-constants.ts
+import { HomeIcon, UserIcon, CogIcon } from '@heroicons/react/24/solid';
+import { HomeIcon as HomeIconOutline, UserIcon as UserIconOutline, CogIcon as CogIconOutline } from '@heroicons/react/24/outline';
+
+export const APP_HERO_ICONS = {
+    home: HomeIcon,
+    user: UserIcon,
+    cog: CogIcon,
+    homeOutline: HomeIconOutline,
+    userOutline: UserIconOutline,
+    cogOutline: CogIconOutline,
+    // Agrega más iconos según sea necesario
+};

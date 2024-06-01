@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
-import { getSizes } from '@/shared/Api/InventoryApi';
 import { SaveProductSize } from '@/shared/Api/Products/ProductSize/ProductSize';
+import { getSizes } from '@/shared/Api/Size/SizeApi';
 
 interface IProductSizeProps {
     productId: number;
@@ -33,17 +33,17 @@ const ProductSizeAdd: React.FC<IProductSizeProps> = ({ productId }) => {
         setSelectedSize(selectedOption);
     };
 
-    const handleAddColor = async () => {
+    const handleAddSize = async () => {
         if (!selectedSize) {
-            console.error('Por favor selecciona un color');
+            console.error('Por favor selecciona una Talla');
             return;
         }
 
         const formData = {
-            fkProduct: Number(productId),
-            fkSize: selectedSize.value
+            idSize: selectedSize.value,
+            idProduct: Number(productId),
         };
-        // console.log('Size agregado exitosamente.', formData);
+        console.log('Size agregado exitosamente.', formData);
 
         try {
             await SaveProductSize(formData);
@@ -73,7 +73,7 @@ const ProductSizeAdd: React.FC<IProductSizeProps> = ({ productId }) => {
                     />
                 </div>
                 <button
-                    onClick={handleAddColor}
+                    onClick={handleAddSize}
                     className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 >
                     Agregar Talla
