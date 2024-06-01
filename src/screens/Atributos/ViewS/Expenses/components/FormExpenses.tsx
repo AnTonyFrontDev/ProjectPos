@@ -10,8 +10,7 @@ import Select from 'react-select';
 
 const ExpensesForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }) => {
     const { formData, setFormData, handleInputChange, handleSubmit, handleUpdate } = useExpensesForm();
-    const { typePaymentOptions } = useTypePaymentOptions();
-    const { bankAccountOptions } = useBankAccountOptions();
+
 
     useEffect(() => {
         if (isUpdate && initialFormData) {
@@ -93,40 +92,6 @@ const ExpensesForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate
                 />
             </div>
 
-            <div className="mb-2">
-                <label className="block text-sm font-medium text-gray-600">Tipo de pago:</label>
-                <Select
-                    className={TableSelectsClasses}
-                    options={typePaymentOptions.map(tPay => ({
-                        value: tPay.id,
-                        label: tPay.type
-                    }))}
-                    value={typePaymentOptions.map(tPay => ({
-                        value: tPay.id,
-                        label: tPay.type
-                    })).find(option => option.value === formData.idPaymentType)}
-                    onChange={(selectedOption) => handleSelectChange(selectedOption, 'idPaymentType')}
-                    isSearchable
-                />
-
-            </div>
-            <div className="mb-2">
-                <label className="block text-sm font-medium text-gray-600">Cuenta de Banco:</label>
-                <Select
-                    className={TableSelectsClasses}
-                    options={bankAccountOptions.map(bAccount => ({
-                        value: bAccount.id,
-                        label: `${bAccount.account} - ${bAccount.bankType}`
-                    }))}
-                    value={bankAccountOptions.map(bAccount => ({
-                        value: bAccount.id,
-                        label: `${bAccount.account} - ${bAccount.bankType}`
-                    })).find(option => option.value === formData.fkBankAccount)}
-                    onChange={(selectedOption) => handleSelectChange(selectedOption, 'fkBankAccount')}
-                    isSearchable
-                />
-
-            </div>
 
             {/* Botón de envío */}
             <button type="submit" className="bg-blue-500 text-white p-2 rounded-md">

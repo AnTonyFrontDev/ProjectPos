@@ -5,8 +5,7 @@ export interface IExpensesPost {
   amount: number
   voucher: string
   documentNumber: string
-  idPaymentType: number
-  fkBankAccount?: number
+
   }
   
   export class ExpensesDto implements IExpensesPost {
