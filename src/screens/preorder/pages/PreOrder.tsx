@@ -1,5 +1,5 @@
 import Select from 'react-select';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { addPreOrder } from '@/shared/Api/PreOrder/PreOrderApi';
 import { IPreOrder, PreOrderPostDto } from '@/shared/interfaces/Preorder/IPreOrder';
 import { IProductsDtoAdd, ProductsDtoAdd } from '@/shared/interfaces/Preorder/ProductToAdd';
@@ -11,15 +11,11 @@ import ViewForm from '@/components/FormularioV4/viewForm';
 import useClientOptions from '@/screens/AddInventory/hooks/useClientOptions';
 import { InputNumber } from 'antd';
 import { FormInputsClasses, TableHeadClasses, TableSelectsClasses } from '@/shared/Common/cssComponent';
+import { ISizeGet } from '@/shared/interfaces/size/ISizeGet';
+import { IColorGet } from '@/shared/interfaces/Color/IColorGet';
 
 
 const PreOrders = () => {
-  // const [formData, setFormData] = useState<IPreOrder>({
-  //   fkClient: 0,
-  //   dateDelivery: "",
-  //   user: 1,
-  //   productsDtoAdds: [],
-  // });
   const [formData, setFormData] = useState<IPreOrder>(new PreOrderPostDto());
 
   const [tableData, setTableData] = useState<IProductsDtoAdd[]>([]);
@@ -27,14 +23,32 @@ const PreOrders = () => {
   const { clientOptions } = useClientOptions();
 
   const [disabledRows, setDisabledRows] = useState<boolean[]>(Array(tableData.length).fill(true));
-  const [selectedProductId, setSelectedProductId] = useState(0);
+  const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
 
-  const { sizeOptions } = useSizeOptions(selectedProductId)
-  const { colorOptions } = useColorOptions(selectedProductId);
+  const [rowSizeOptions, setRowSizeOptions] = useState<{ [key: number]: ISizeGet[] }>({});
+  const [rowColorOptions, setRowColorOptions] = useState<{ [key: number]: IColorGet[] }>({});
+
+  const { sizeOptions } = useSizeOptions(selectedProductId ?? 0);
+  const { colorOptions } = useColorOptions(selectedProductId ?? 0);
+
+  useEffect(() => {
+    if (selectedProductId !== null) {
+      const updatedRowSizeOptions = { ...rowSizeOptions };
+      const updatedRowColorOptions = { ...rowColorOptions };
+      tableData.forEach((row, index) => {
+        if (row.fkProduct === selectedProductId) {
+          updatedRowSizeOptions[index] = sizeOptions;
+          updatedRowColorOptions[index] = colorOptions;
+        }
+      });
+      setRowSizeOptions(updatedRowSizeOptions);
+      setRowColorOptions(updatedRowColorOptions);
+    }
+  }, [sizeOptions, colorOptions, selectedProductId, tableData]);
 
   const handleAddRow = () => {
     const newRow: IProductsDtoAdd = {
-        ...new ProductsDtoAdd()
+      ...new ProductsDtoAdd()
     };
     setTableData([...tableData, newRow]);
     setDisabledRows([...disabledRows, true]);
@@ -79,12 +93,15 @@ const PreOrders = () => {
     setTableData(updatedTableData);
 
     if (fieldName == 'fkProduct') {
-      setSelectedProductId(value || 0);
+      setRowSizeOptions(prev => ({ ...prev, [rowIndex]: sizeOptions }));
+      setRowColorOptions(prev => ({ ...prev, [rowIndex]: colorOptions }));
+      setSelectedProductId(value);
     }
 
     const updatedDisabledRows = [...disabledRows];
     updatedDisabledRows[rowIndex] = false;
     setDisabledRows(updatedDisabledRows);
+    handleTest();
   };
 
   const handleInputChange = (
@@ -202,14 +219,14 @@ const PreOrders = () => {
                 <Select
                   className={TableSelectsClasses}
                   isDisabled={disabledRows[index]}
-                  options={colorOptions.map(color => ({
+                  options={(rowColorOptions[index] || []).map(color => ({
                     value: color.id,
-                    label: `${color.colorname} - ${color.code}`
+                    label: `${color.colorname} - ${color.codE_COLOR}`
                   }))}
                   value={{
-                    value: colorOptions.find(color => color.id === row.fkColorPrimary)?.id || 0,
-                    label: `${colorOptions.find(color => color.id === row.fkColorPrimary)?.colorname || ""}
-                           - ${colorOptions.find(color => color.id === row.fkColorPrimary)?.code || ""}`
+                    value: rowColorOptions[index]?.find(color => color.id === row.fkColorPrimary)?.id || 0,
+                    label: `${rowColorOptions[index]?.find(color => color.id === row.fkColorPrimary)?.colorname || ""}
+                           - ${rowColorOptions[index]?.find(color => color.id === row.fkColorPrimary)?.codE_COLOR || ""}`
                   }}
                   onChange={(selectedOption) => handleSelectChange(selectedOption?.value || 0, index, 'fkColorPrimary')}
                   isSearchable
@@ -221,14 +238,14 @@ const PreOrders = () => {
                   <Select
                     className={TableSelectsClasses}
                     isDisabled={disabledRows[index]}
-                    options={sizeOptions.map(size => ({
+                    options={(rowSizeOptions[index] || []).map(size => ({
                       value: size.id,
                       label: size.size + " - " + size.category
                     }))}
                     value={{
-                      value: sizeOptions.find(size => size.id === row.fkSize)?.id || 0,
-                      label: `${sizeOptions.find(size => size.id === row.fkSize)?.size || ""} - 
-                                        ${sizeOptions.find(size => size.id === row.fkSize)?.category || ""}`
+                      value: rowSizeOptions[index]?.find(size => size.id === row.fkSize)?.id || 0,
+                      label: `${rowSizeOptions[index]?.find(size => size.id === row.fkSize)?.size || ""} - 
+                                        ${rowSizeOptions[index]?.find(size => size.id === row.fkSize)?.category || ""}`
                     }}
                     onChange={(selectedOption) => handleSelectChange(selectedOption?.value || 0, index, 'fkSize')}
                     isSearchable

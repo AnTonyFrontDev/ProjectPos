@@ -4,7 +4,6 @@
 //     settings: 'ep:setting',
 //     user: 'mdi:people-outline',
 //     question: 'ph:question',
-//     plus: 'tabler:plus',
 //     search: 'teenyicons:search-outline',
 //     youtube: 'logos:youtube-icon',
 //     instagram: 'skill-icons:instagram',
@@ -17,6 +16,7 @@
 // }
 
 export const APP_ICONS = {
+    plus: 'tabler:plus',
     colors: 'solar:t-shirt-bold-duotone',
     newbuy: 'material-symbols:production-quantity-limits',
     buy: 'fluent-mdl2:product-catalog',

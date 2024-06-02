@@ -8,6 +8,7 @@ import { BuyPostDto, IBuyPost, IInventoryDetailDto } from '@/shared/interfaces/B
 import { InputNumber } from 'antd';
 import { FormInputsClasses, TableHeadClasses, TableSelectsClasses } from '@/shared/Common/cssComponent';
 import { ISizeGet } from '@/shared/interfaces/size/ISizeGet';
+import { IColorGet } from '@/shared/interfaces/Color/IColorGet';
 
 
 const AddInventory = () => {
@@ -19,6 +20,7 @@ const AddInventory = () => {
     const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
 
     const [rowSizeOptions, setRowSizeOptions] = useState<{ [key: number]: ISizeGet[] }>({});
+    const [rowColorOptions, setRowColorOptions] = useState<{ [key: number]: IColorGet[] }>({});
 
     const { sizeOptions } = useSizeOptions(selectedProductId ?? 0);
     const { colorOptions } = useColorOptions(selectedProductId ?? 0);
@@ -26,14 +28,25 @@ const AddInventory = () => {
     useEffect(() => {
         if (selectedProductId !== null) {
             const updatedRowSizeOptions = { ...rowSizeOptions };
+            const updatedRowColorOptions = { ...rowColorOptions };
             tableData.forEach((row, index) => {
                 if (row.fK_PRODUCT === selectedProductId) {
                     updatedRowSizeOptions[index] = sizeOptions;
+                    updatedRowColorOptions[index] = colorOptions;
                 }
             });
             setRowSizeOptions(updatedRowSizeOptions);
+            setRowColorOptions(updatedRowColorOptions);
         }
-    }, [sizeOptions, selectedProductId, tableData]);
+    }, [sizeOptions, colorOptions, selectedProductId, tableData]);
+
+    useEffect(() => {
+        const totalSale = tableData.reduce((total, row) => total + (row.quantity * row.price), 0);
+        setFormData(prevFormData => ({
+            ...prevFormData,
+            totaL_SALE: totalSale
+        }));
+    }, [tableData]);
 
    
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -95,10 +108,9 @@ const AddInventory = () => {
 
         if (fieldName == 'fK_PRODUCT') {
             setRowSizeOptions(prev => ({ ...prev, [rowIndex]: sizeOptions }));
+            setRowColorOptions(prev => ({ ...prev, [rowIndex]: colorOptions }));
             setSelectedProductId(value);
         }
-
-        console.log([rowIndex], sizeOptions)
 
         const updatedDisabledRows = [...disabledRows];
         updatedDisabledRows[rowIndex] = false;
@@ -120,7 +132,6 @@ const AddInventory = () => {
         } else {
             updatedTableData[rowIndex][fieldName] = 0; // Default value or handle null appropriately
         }
-        console.log("Prueba", updatedTableData);
         setTableData(updatedTableData);
     };
 
@@ -147,7 +158,7 @@ const AddInventory = () => {
                 <div className='flex flex-col'>
                     <label>PagoTotal:</label>
                     <input type="number" name="totaL_SALE" min="0.00" value={formData.totaL_SALE} onChange={handleChange}
-                        className={FormInputsClasses} />
+                        className={FormInputsClasses} disabled />
                 </div>
                 <div className='flex'>
                     <button
@@ -196,14 +207,14 @@ const AddInventory = () => {
                                 <Select
                                     className={TableSelectsClasses}
                                     isDisabled={disabledRows[index]}
-                                    options={colorOptions.map(color => ({
+                                    options={(rowColorOptions[index] || []).map(color => ({
                                         value: color.id,
                                         label: `${color.colorname} - ${color.codE_COLOR}`
                                     }))}
                                     value={{
-                                        value: colorOptions.find(color => color.id === row.coloR_PRIMARY)?.id || 0,
-                                        label: `${colorOptions.find(color => color.id === row.coloR_PRIMARY)?.colorname || ""} 
-                                                - ${colorOptions.find(color => color.id === row.coloR_PRIMARY)?.codE_COLOR || ""}`
+                                        value: rowColorOptions[index]?.find(color => color.id === row.coloR_PRIMARY)?.id || 0,
+                                        label: `${rowColorOptions[index]?.find(color => color.id === row.coloR_PRIMARY)?.colorname || ""} 
+                                                - ${rowColorOptions[index]?.find(color => color.id === row.coloR_PRIMARY)?.codE_COLOR || ""}`
                                     }}
                                     onChange={(selectedOption) => handleSelectChange(selectedOption?.value || 0, index, 'coloR_PRIMARY')}
                                     isSearchable
@@ -213,7 +224,7 @@ const AddInventory = () => {
                                 <div className='flex items-center'>
                                     <Select
                                         className={TableSelectsClasses}
-                                        // isDisabled={disabledRows[index]}
+                                        isDisabled={disabledRows[index]}
                                         options={(rowSizeOptions[index] || []).map(size => ({
                                             value: size.id,
                                             label: size.size + " - " + size.category
