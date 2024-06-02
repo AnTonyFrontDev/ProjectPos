@@ -7,6 +7,7 @@ import { AddBuy } from '@/shared/Api/BuyInventory/BuyApi';
 import { BuyPostDto, IBuyPost, IInventoryDetailDto } from '@/shared/interfaces/BuyInventory/IBuyInvPost';
 import { InputNumber } from 'antd';
 import { FormInputsClasses, TableHeadClasses, TableSelectsClasses } from '@/shared/Common/cssComponent';
+import { ISizeGet } from '@/shared/interfaces/size/ISizeGet';
 
 
 const AddInventory = () => {
@@ -15,15 +16,26 @@ const AddInventory = () => {
     const { productOptions } = useProductOptions();
 
     const [disabledRows, setDisabledRows] = useState<boolean[]>(Array(tableData.length).fill(true));
-    const [selectedProductId, setSelectedProductId] = useState(0);
+    const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
 
-    const { sizeOptions } = useSizeOptions(selectedProductId);
-    const { colorOptions } = useColorOptions(selectedProductId);
+    const [rowSizeOptions, setRowSizeOptions] = useState<{ [key: number]: ISizeGet[] }>({});
 
-    useEffect(() =>{
+    const { sizeOptions } = useSizeOptions(selectedProductId ?? 0);
+    const { colorOptions } = useColorOptions(selectedProductId ?? 0);
 
-    },[]);
+    useEffect(() => {
+        if (selectedProductId !== null) {
+            const updatedRowSizeOptions = { ...rowSizeOptions };
+            tableData.forEach((row, index) => {
+                if (row.fK_PRODUCT === selectedProductId) {
+                    updatedRowSizeOptions[index] = sizeOptions;
+                }
+            });
+            setRowSizeOptions(updatedRowSizeOptions);
+        }
+    }, [sizeOptions, selectedProductId, tableData]);
 
+   
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData({
@@ -35,7 +47,7 @@ const AddInventory = () => {
     const handleAddRow = () => {
         const newRow: IInventoryDetailDto = {
             ...new BuyPostDto().inventoryDetailDtoAdd[0],
-            fK_BUY_INVENTORY: tableData.length, 
+            fK_BUY_INVENTORY: tableData.length,
         };
         setTableData([...tableData, newRow]);
         setDisabledRows([...disabledRows, true]);
@@ -82,8 +94,11 @@ const AddInventory = () => {
         setTableData(updatedTableData);
 
         if (fieldName == 'fK_PRODUCT') {
-            setSelectedProductId(value || 0);
+            setRowSizeOptions(prev => ({ ...prev, [rowIndex]: sizeOptions }));
+            setSelectedProductId(value);
         }
+
+        console.log([rowIndex], sizeOptions)
 
         const updatedDisabledRows = [...disabledRows];
         updatedDisabledRows[rowIndex] = false;
@@ -105,7 +120,7 @@ const AddInventory = () => {
         } else {
             updatedTableData[rowIndex][fieldName] = 0; // Default value or handle null appropriately
         }
-        console.log("Prueba",updatedTableData);
+        console.log("Prueba", updatedTableData);
         setTableData(updatedTableData);
     };
 
@@ -198,15 +213,15 @@ const AddInventory = () => {
                                 <div className='flex items-center'>
                                     <Select
                                         className={TableSelectsClasses}
-                                        isDisabled={disabledRows[index]}
-                                        options={sizeOptions.map(size => ({
+                                        // isDisabled={disabledRows[index]}
+                                        options={(rowSizeOptions[index] || []).map(size => ({
                                             value: size.id,
                                             label: size.size + " - " + size.category
                                         }))}
                                         value={{
-                                            value: sizeOptions.find(size => size.id === row.fK_SIZE)?.id || 0,
-                                            label: `${sizeOptions.find(size => size.id === row.fK_SIZE)?.size || ""} - 
-                                        ${sizeOptions.find(size => size.id === row.fK_SIZE)?.category || ""}`
+                                            value: rowSizeOptions[index]?.find(size => size.id === row.fK_SIZE)?.id || 0,
+                                            label: `${rowSizeOptions[index]?.find(size => size.id === row.fK_SIZE)?.size || ""} - 
+                                        ${rowSizeOptions[index]?.find(size => size.id === row.fK_SIZE)?.category || ""}`
                                         }}
                                         onChange={(selectedOption) => handleSelectChange(selectedOption?.value || 0, index, 'fK_SIZE')}
                                         isSearchable

@@ -5,11 +5,11 @@ import InventoryDetail from "./pages/InventoryDetail";
 
 const router: RouteObject[] = [
   {
-    path: "/inventory",
+    path: "/Inventario/Listado",
     element: <Inventory/>,
   },
   {
-    path: "/inventory/inventorDetail/:productId", // Ruta dinámica para el ID del producto
+    path: "/Inventario/inventoryDetail/:productId", // Ruta dinámica para el ID del producto
     element: <InventoryDetail/>,
   },
 ];

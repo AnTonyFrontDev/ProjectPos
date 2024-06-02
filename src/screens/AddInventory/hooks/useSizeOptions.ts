@@ -8,6 +8,10 @@ const useSizeOptions = (prodId : number) => {
     const [error, setError] = useState<Error | null>(null);
 
     useEffect(() => {
+        
+        setSizeOptions([]);
+        if (!prodId) return;
+
         const fetchSizes = async () => {
             setIsLoading(true);
             try {

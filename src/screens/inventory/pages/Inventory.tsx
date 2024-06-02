@@ -25,7 +25,7 @@ const Inventory = () => {
 
   const handleTableRowClick = (record: any) => {
     // Al hacer clic en una fila, establece el ID del producto seleccionado y muestra el detalle
-    navigate(`/inventory/inventorDetail/${record.id}`);
+    navigate(`/Inventario/inventoryDetail/${record.id}`);
   };
 
   const handleSearch = (value: string) => {

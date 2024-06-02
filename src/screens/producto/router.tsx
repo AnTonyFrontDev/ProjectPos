@@ -5,11 +5,11 @@ import ProductDetail from "./pages/ProductDetail";
 
 const router: RouteObject[] = [
   {
-    path: "/product",
+    path: "/productos",
     element: <Product/>,
   },
   {
-    path: "/product/ProductDetail/:productId", // Ruta dinámica para el ID del producto
+    path: "/productos/ProductDetail/:productId", 
     element: <ProductDetail/>,
   },
 ];

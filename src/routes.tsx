@@ -24,7 +24,7 @@ export const privateRoutes: RouteObject[] = [
     children: [homeRouter].flat(),
   },
   {
-    path: "/inventory",
+    path: "/Inventario",
     element: <MainLayout />,
     children: [invetoryRouter].flat(),
   },
@@ -34,12 +34,12 @@ export const privateRoutes: RouteObject[] = [
     children: [customersRouter].flat(),
   },
   {
-    path: "/NewInventory",
+    path: "/Inventario",
     element: <MainLayout />,
     children: [buyInventoryRouter].flat(),
   },
   {
-    path: "/product",
+    path: "/productos",
     element: <MainLayout />,
     children: [productRouter].flat(),
   },

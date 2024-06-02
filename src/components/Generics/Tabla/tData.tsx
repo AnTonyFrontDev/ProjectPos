@@ -38,7 +38,7 @@ export const inventoryTable: (IAvailableSizesColumn | any)[] = [
     },
   },
   { title: 'Cantidad', dataIndex: 'quantity', key: 'quantity' },
-  { title: 'Precio', dataIndex: 'price', key: 'price' },
+  { title: 'Precio de venta', dataIndex: 'price', key: 'price' },
 ];
 
 const combineFirstAndLastName = (record: IClientGet): string => `${record.f_name} ${record.l_name}`;
