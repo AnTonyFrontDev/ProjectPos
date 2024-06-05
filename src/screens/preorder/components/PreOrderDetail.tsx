@@ -95,7 +95,7 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
                 </Descriptions.Item>
             </Descriptions>
             <OrderForm id={preorderId} />
-            {/* <div className='flex'>
+            <div className='flex'>
                 <div className="mb-4 ml-4 ">
                     <Link to={`/billing/NewDetail/${preorderId}`}>
                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
@@ -103,7 +103,7 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
                         </button>
                     </Link>
                 </div>
-            </div> */}
+            </div>
 
             <PreOrderReport id={preorderId} />
 
