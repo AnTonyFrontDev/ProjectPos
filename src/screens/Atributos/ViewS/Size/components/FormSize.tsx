@@ -3,11 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { useSizeForm } from '../hooks/useSizeForm';
 import { getCategorySizes } from '@/shared/Api/CategorySize/CategorySizeApi';
 import { ICategorySizeColumns } from '@/shared/interfaces/size/CategorySize/ICategorySizeGet';
+import { FormProps } from '@/components/Generics/Interface/IForms';
+import { ISizePost, SizePostDto } from '@/shared/interfaces/size/ISizePost';
 
 
-
-const SizeForm: React.FC = () => {
-  const { formData, handleInputChange, handleSubmit } = useSizeForm();
+const SizeForm: React.FC<FormProps> = ({formData: initialFormData, isUpdate}) => {
+  const { formData, setFormData, handleInputChange, handleSubmit, handleUpdate, handleSelect } = useSizeForm();
   const [categories, setCategories] = useState<ICategorySizeColumns[]>([]);
 
   useEffect(() => {
@@ -23,8 +24,30 @@ const SizeForm: React.FC = () => {
     fetchCategories();
   }, []);
 
+  useEffect(() => {
+    if (isUpdate && initialFormData) {
+      handleSetInitialFormData(initialFormData);
+    }
+  }, [isUpdate, initialFormData]);
+
+  const handleSetInitialFormData = (initialData: ISizePost) => {
+    const initialFormData = new SizePostDto;
+    Object.assign(initialFormData, initialData)
+    setFormData(initialFormData)
+  };
+
+  const onSubmitHandler = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (isUpdate) {
+      await handleUpdate(event);
+    } else {
+      await handleSubmit(event);
+    }
+    window.location.reload();
+  };
+
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8">
+    <form onSubmit={onSubmitHandler} className="max-w-md mx-auto mt-8">
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-600">Size</label>
         <input
@@ -41,7 +64,7 @@ const SizeForm: React.FC = () => {
         <select
           name="fkCategory"
           value={formData.fkCategory}
-          onChange={handleInputChange}
+          onChange={handleSelect}
           className="mt-1 p-2 border border-gray-300 rounded-md w-full"
         >
           <option value="">Select category</option>

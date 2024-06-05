@@ -30,6 +30,7 @@ const CategorySizeForm: React.FC<FormProps> = ({ formData: initialFormData, isUp
         } else {
             await handleSubmit(event);
         }
+        window.location.reload();
     };
 
     return (

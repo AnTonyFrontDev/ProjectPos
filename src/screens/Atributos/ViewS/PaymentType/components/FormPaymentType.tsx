@@ -31,6 +31,7 @@ const PaymentTypeForm: React.FC<FormProps> = ({ formData: initialFormData, isUpd
             await handleUpdate(event);
         } else {
             await handleSubmit(event);
+            window.location.reload();
         }
         // Llama a handleReloadTable después de enviar el formulario
         // handleReloadTable();

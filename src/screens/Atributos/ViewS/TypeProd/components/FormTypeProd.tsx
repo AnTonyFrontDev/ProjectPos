@@ -31,8 +31,6 @@ const TypeProdForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate
             await handleSubmit(event);
         }
         window.location.reload();
-        // Llama a handleReloadTable después de enviar el formulario
-        // handleReloadTable();
     };
 
     return (

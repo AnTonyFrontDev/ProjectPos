@@ -2,11 +2,11 @@ import { useEffect } from 'react';
 import { useExpensesForm } from '../hooks/useExpensesForm';
 import { FormProps } from '@/components/Generics/Interface/IForms';
 import { ExpensesDto, IExpensesPost } from '@/shared/interfaces/Expenses/IExpensesPost';
-import useTypePaymentOptions from '../hooks/useTypePaymentOptions';
+// import useTypePaymentOptions from '../hooks/useTypePaymentOptions';
 // import useBankOptions from '../hooks/useBankOptions';
-import useBankAccountOptions from '../hooks/useBankAccountOptions';
-import { TableSelectsClasses } from '@/shared/Common/cssComponent';
-import Select from 'react-select';
+// import useBankAccountOptions from '../hooks/useBankAccountOptions';
+// import { TableSelectsClasses } from '@/shared/Common/cssComponent';
+// import Select from 'react-select';
 
 const ExpensesForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }) => {
     const { formData, setFormData, handleInputChange, handleSubmit, handleUpdate } = useExpensesForm();
@@ -24,14 +24,25 @@ const ExpensesForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate
         setFormData(initialFormData)
     };
 
-    const handleSelectChange = (selectedOption: any, fieldName: keyof IExpensesPost) => {
-        setFormData({
-            ...formData,
-            [fieldName]: selectedOption.value
-        });
+    // const handleSelectChange = (selectedOption: any, fieldName: keyof IExpensesPost) => {
+    //     setFormData({
+    //         ...formData,
+    //         [fieldName]: selectedOption.value
+    //     });
+    // };
+
+    const onSubmitHandler = async (event: React.FormEvent) => {
+        event.preventDefault();
+        if (isUpdate) {
+            await handleUpdate(event);
+        } else {
+            await handleSubmit(event);
+        }
+        window.location.reload();
+        // Llama a handleReloadTable después de enviar el formulario
+        // handleReloadTable();
     };
 
-    const onSubmitHandler = isUpdate ? handleUpdate : handleSubmit;
 
     return (
         <form onSubmit={onSubmitHandler} className="max-w-md mx-auto mt-8">

@@ -17,13 +17,13 @@ export const useExpensesForm = () => {
     console.log('Expenses Data:', formData);
     GenericRequest(formData, SaveExpenses, "Expenses data submitted successfully");
   };
-  
-const handleSelect = (e : React.ChangeEvent<HTMLSelectElement>) =>{
+
+  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault();
-    const {name,value} = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value } ));
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
     console.log(formData)
-  }
+  };
 
   //no funciona temporal --
   const handleUpdate = (e: React.FormEvent) => {
@@ -33,5 +33,5 @@ const handleSelect = (e : React.ChangeEvent<HTMLSelectElement>) =>{
     GenericRequest(updateData, UpdateExpenses, "Expenses data updated successfully");
   };
 
-  return { formData, setFormData, handleInputChange, handleSubmit, handleUpdate,handleSelect };
+  return { formData, setFormData, handleInputChange, handleSubmit, handleUpdate, handleSelect };
 };

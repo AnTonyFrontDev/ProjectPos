@@ -94,18 +94,16 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
                     ))}
                 </Descriptions.Item>
             </Descriptions>
-            <div className='flex'>
-
             <OrderForm id={preorderId} />
-
-            <div className="mb-4 ml-4 ">
-            <Link to={`/billing/NewDetail/${preorderId}`}>
-                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Generar Factura
-                </button>
-            </Link>
-        </div>
-            </div>
+            {/* <div className='flex'>
+                <div className="mb-4 ml-4 ">
+                    <Link to={`/billing/NewDetail/${preorderId}`}>
+                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Generar Factura
+                        </button>
+                    </Link>
+                </div>
+            </div> */}
 
             <PreOrderReport id={preorderId} />
 

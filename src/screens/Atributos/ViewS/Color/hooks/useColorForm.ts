@@ -23,7 +23,7 @@ export const useColorForm = () => {
     console.log('Color Data:', formData);
     GenericRequest(formData, SaveColor, "Color data submitted successfully");
     // window.location.reload();
-    window.location.href = '/atributos/Color';
+    window.location.reload();
     //navigate('/atributos/Color');
   };
 
