@@ -1,12 +1,12 @@
 export interface IPaymenExpenses {
     id: number
-    expense: Expense
+    expense: IPayExpense
     paymentType: string
-    bankAccount: BankAccount
+    bankAccount: IPayBankAccount
     amount: number
 }
 
-export interface Expense {
+export interface IPayExpense {
     id: number
     name: string
     description: string
@@ -16,7 +16,7 @@ export interface Expense {
     completed: boolean
 }
 
-export interface BankAccount {
+export interface IPayBankAccount {
     id: number
     account: string
     bankType: string

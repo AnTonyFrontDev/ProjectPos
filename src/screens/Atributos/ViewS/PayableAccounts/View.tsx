@@ -1,12 +1,14 @@
-// Banks.tsx
+// PaylableAccount.tsx
 import BreadcrumbData from "@/components/ui/Breadcrumb";
 import ApiTable from '@/components/Generics/Tabla/apiTable';
 import SearchFilter from '../../../../shared/SearchFilter';
 import { useEffect, useState } from 'react';
-
-import { expensesTable } from "@/components/Generics/Tabla/tData";
-import {CompleteExpense, GetAccountsPayable, RemoveExpenses} from "@/shared/Api/Expenses/ExpensesApi";
-import {ExpensesUpdateDto} from "@/shared/interfaces/Expenses/IExpensesUpdate.ts";
+import G_Options from "@/components/Generics/gOptions";
+import { PaymentExpensesTable } from "@/components/Generics/Tabla/tData";
+import {
+  // CompleteExpense, 
+  GetPaymentExpenses} from "@/shared/Api/Expenses/ExpensesApi";
+import GenericPagination from "@/components/PaginationComponents/GenericPagination";
 //import G_Options from "@/components/Generics/gOptions";
 
 const View = () => {
@@ -22,12 +24,12 @@ const View = () => {
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
   //funcion para pagar
   //extraer logica de aqui
-  const payAccount = async (obj: ExpensesUpdateDto)=>{
-    await CompleteExpense(obj.id);
-    //refrescar la pagina cuando termine la ejecucion
-    window.location.reload();
+  // const payAccount = async (obj: ExpensesUpdateDto)=>{
+  //   await CompleteExpense(obj.id);
+  //   //refrescar la pagina cuando termine la ejecucion
+  //   window.location.reload();
 
-  }
+  // }
   useEffect(() => {
     // Puedes realizar alguna acción específica cuando cambia la lista de bancos
   }, [searchTerm, filterColumn, sortDirection]);
@@ -54,21 +56,26 @@ const View = () => {
           onSearch={handleSearch}
           onFilterChange={handleFilterChange}
           onSortToggle={handleSortToggle}
-          columns={expensesTable}
+          columns={PaymentExpensesTable}
         />
-        {/*<G_Options buttonText="Nuevo Gasto" usarForm="Expenses" />*/}
+        <G_Options buttonText="Cuenta Por Pagar" usarForm="PayableAccount" />
       </div>
       <div className="mt-10">
-        <ApiTable
-          getApiData={GetAccountsPayable}
-          delApiData={RemoveExpenses}
-          usarForm='Expenses'
-          columns={expensesTable}
+        <GenericPagination getApiData={GetPaymentExpenses} >
+        {(apiData) => (
+
+          <ApiTable
+          getApiData={async () => apiData.data.data}
+          // delApiData={RemoveExpenses}
+          // usarForm='Expenses'
+          columns={PaymentExpensesTable}
           searchTerm={searchTerm}
           filterColumn={filterColumn}
           sortDirection={sortDirection}
-          customButton= {['Pagar',payAccount]}
-        />
+          // customButton= {['Pagar',payAccount]}
+          />
+        )}
+          </GenericPagination>
       </div>
     </div>
   );

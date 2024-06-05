@@ -1,4 +1,4 @@
-import {View} from '../ViewS/PaymentExpenses'
+import {View} from '../ViewS/PayableAccounts'
 const PayableAccounts = () => {
     return (
         <div>Cuentas por pagar

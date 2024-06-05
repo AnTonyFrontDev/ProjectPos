@@ -1,39 +1,38 @@
-import { useEffect, useState } from 'react';
-import { useExpensesForm } from '../hooks/usePayAccountForm';
+import { useEffect} from 'react';
+import { usePayAccountForm } from '../hooks/usePayAccountForm';
 import { FormProps } from '@/components/Generics/Interface/IForms';
-import { ExpensesDto, IExpensesPost } from '@/shared/interfaces/Expenses/IExpensesPost';
-import { getPaymentTypes } from '@/shared/Api/Payment/PaymentType/PaymentTypeApi';
-import { IPaymentTypeColumns } from '@/shared/interfaces/payment/paymentType/IPaymentTypeColums';
+import { IPaymentExpenseDtoAdd, PaymentExpensesDtoAdd } from '@/shared/interfaces/PaymentExpenses/PaymentExpenseDtoAdd';
+import Select from 'react-select';
+import { TableSelectsClasses } from '@/shared/Common/cssComponent';
 
-const ExpensesForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }) => {
-    const { formData, setFormData, handleInputChange, handleSubmit, handleUpdate } = useExpensesForm();
-    //estado para los tipos de pagos
-    const [typePayments, setTypePayments] = useState<IPaymentTypeColumns[]>()
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                //cargando los tipos de pagos    
-                const typePayments = await getPaymentTypes()
-                //asignandole al estado
-                setTypePayments(typePayments)
-            } catch (error) {
-                console.error('Error al obtener detalle de la preorden:', error);
-            }
-
-        };
-
-        fetchData();
-    }, []);
+const ExpensesForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate 
+}) => {
+    const { 
+        formData,
+        typePaymentOptions,
+        bankAccountOptions,
+        expenseOptions,
+        loadExpenseOptions,
+        loadBankAccountOptions,
+        loadTypePaymentOptions,
+        setFormData,
+        handleInputChange,
+        handleSubmit,
+        handleUpdate,
+    } = usePayAccountForm();
 
     useEffect(() => {
         if (isUpdate && initialFormData) {
             handleSetInitialFormData(initialFormData);
         }
+        loadBankAccountOptions();
+        loadExpenseOptions();
+        loadTypePaymentOptions();
     }, [isUpdate, initialFormData]);
 
-    const handleSetInitialFormData = (initialData: IExpensesPost) => {
-        const initialFormData = new ExpensesDto;
+    const handleSetInitialFormData = (initialData: IPaymentExpenseDtoAdd) => {
+        const initialFormData = new PaymentExpensesDtoAdd;
         Object.assign(initialFormData, initialData)
         setFormData(initialFormData)
     };
@@ -53,24 +52,30 @@ const ExpensesForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate
             {/* Campos del formulario de CategorySize */}
 
             <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">Name</label>
-                <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                <label className="block text-sm font-medium text-gray-600">Numero de Pedido:</label>
+                <Select
+                    className={TableSelectsClasses}
+                    options={expenseOptions}
+                    value={expenseOptions.find((option) => option.value === formData.idExpense)}
+                    onChange={(selectedOption) => setFormData({ ...formData, idExpense: selectedOption?.value || 0 })}
                 />
             </div>
-
             <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">Description</label>
-                <input
-                    type="text"
-                    name="description"
-                    value={formData.description}
-                    onChange={handleInputChange}
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                <label className="block text-sm font-medium text-gray-600">Numero de Pedido:</label>
+                <Select
+                    className={TableSelectsClasses}
+                    options={typePaymentOptions}
+                    value={typePaymentOptions.find((option) => option.value === formData.idPaymentType)}
+                    onChange={(selectedOption) => setFormData({ ...formData, idPaymentType: selectedOption?.value || 0 })}
+                />
+            </div>
+            <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-600">Numero de Pedido:</label>
+                <Select
+                    className={TableSelectsClasses}
+                    options={bankAccountOptions}
+                    value={bankAccountOptions.find((option) => option.value === formData.idBankAccount)}
+                    onChange={(selectedOption) => setFormData({ ...formData, idBankAccount: selectedOption?.value || 0 })}
                 />
             </div>
 
@@ -84,47 +89,6 @@ const ExpensesForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate
                     className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                 />
             </div>
-
-            <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">Voucher</label>
-                <input
-                    type="text"
-                    name="voucher"
-                    value={formData.voucher}
-                    onChange={handleInputChange}
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-                />
-            </div>
-
-            <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">Número de documento</label>
-                <input
-                    type="text"
-                    name="documentNumber"
-                    value={formData.documentNumber}
-                    onChange={handleInputChange}
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-                />
-            </div>
-
-            {/* <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">Category</label>
-                <select
-                    name="fkCategory"
-                    value={formData.documentNumber}
-                    onChange={handleInputChange}
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-                >
-                    <option value="">Select category</option>
-                    {typePayments.map((category) => (
-                        <option key={category.id} value={category.id}>
-                            {category.type}
-                        </option>
-                    ))}
-                </select>
-            </div> */}
-
-
 
             {/* Botón de envío */}
             <button type="submit" className="bg-blue-500 text-white p-2 rounded-md">

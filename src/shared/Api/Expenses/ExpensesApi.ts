@@ -4,6 +4,7 @@ import { IExpensesPost } from "@/shared/interfaces/Expenses/IExpensesPost";
 import { IExpensesUpdate } from "@/shared/interfaces/Expenses/IExpensesUpdate";
 import { IExpensesRemove } from "@/shared/interfaces/Expenses/IExpensesRemove";
 import {IPaymentExpenseDtoAdd} from "@/shared/interfaces/PaymentExpenses/PaymentExpenseDtoAdd.ts";
+import { IPaymentExpenseDtoUpdate } from "@/shared/interfaces/PaymentExpenses/PaymentExpenseDtoUpdate";
 
 // export const GetExpenses = async (page: number, itemsPerPage: number) => {
 export const getExpenses = async () => {
@@ -117,10 +118,30 @@ export const SavePaymentExpenses = async (formData : IPaymentExpenseDtoAdd) =>{
 }
 
 
+export const UpdatePaymentExpenses = async (formData: IPaymentExpenseDtoUpdate) => {
+    try {
+      const formattedData = formData;
+      const response = await axios.put(
+        `${URL}/PaymentExpenses/UpdatePaymentExpense`,
+        formattedData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+  
+      return response.data;
+    } catch (error) {
+      console.error("Error updating expenses:", error);
+      throw error;
+    }
+  };
+
 export const UpdateExpenses = async (formData: IExpensesUpdate) => {
     try {
       const formattedData = formData;
-      const response = await axios.post(
+      const response = await axios.put(
         `${URL}/Expenses/UpdateExpenses`,
         formattedData,
         {
