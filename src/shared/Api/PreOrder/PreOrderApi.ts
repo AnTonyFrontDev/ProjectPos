@@ -57,7 +57,6 @@ export const addPreOrder = async (formData : IPreOrder) => {
 export const GetAccountsReceivable = async ()=>{
   try {
       const response = await axios.get(
-          // `${URL}/Expenses/GetExpenses?Page=${page}&ItemsPerPage=${itemsPerPage}`
           `${URL}/ReportsBalance/GetAccountsReceivable`
       );
 

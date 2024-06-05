@@ -12,6 +12,8 @@ const PaymentForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate,
     const { formData,
         typePaymentOptions,
         bankAccountOptions,
+        preOrderOptions,
+        loadPreOrderOptions,
         loadBankAccountOptions,
         setFormData,
         handleInputChange,
@@ -28,6 +30,7 @@ const PaymentForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate,
             console.log(initialFormData);
         }
         loadBankAccountOptions();
+        loadPreOrderOptions();
         loadTypePaymentOptions();
     }, [isUpdate, initialFormData]);
 
@@ -60,10 +63,19 @@ const PaymentForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate,
                 />
             </div>
             <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-600">Numero de Pedido:</label>
+                <Select
+                    className={TableSelectsClasses}
+                    options={preOrderOptions}
+                    value={preOrderOptions.find((option) => option.value === formData.fkOrder)}
+                    onChange={(selectedOption) => setFormData({ ...formData, fkOrder: selectedOption?.value || 0 })}
+                />
+            </div>
+            <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-600">Cuenta de Pago:</label>
                 <input
                     type="text"
-                    name="category"
+                    name="accountPayment"
                     value={formData.accountPayment}
                     onChange={handleInputChange}
                     className="mt-1 p-2 border border-gray-300 rounded-md w-full"
@@ -92,7 +104,7 @@ const PaymentForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate,
                 <label className="block text-sm font-medium text-gray-600">Cantidad:</label>
                 <input
                     type="number"
-                    name="category"
+                    name="amount"
                     value={formData.amount}
                     onChange={handleInputChange}
                     className="mt-1 p-2 border border-gray-300 rounded-md w-full"

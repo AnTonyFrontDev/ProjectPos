@@ -6,6 +6,7 @@ import { SavePayment, UpdatePayment } from '@/shared/Api/Payment/PaymentApi';
 import { getPaymentTypes } from '@/shared/Api/Payment/PaymentType/PaymentTypeApi';
 import { IOptionSelect } from '@/components/FormularioV4/Config/interface';
 import { getBankAccounts } from '@/shared/Api/BankAccount/BankAccountApi';
+import { getPreOrders } from '@/shared/Api/PreOrder/PreOrderApi';
 
 
 
@@ -13,6 +14,7 @@ export const usePaymentForm = () => {
   const [formData, setFormData] = useState<IPaymentPost>(new PaymentDto());
   const [typePaymentOptions, setTypePaymentOptions] = useState<IOptionSelect[]>([]);
   const [bankAccountOptions, setBankAccountOptions] = useState<IOptionSelect[]>([]);
+  const [preOrderOptions, setPreOrderOptions] = useState<IOptionSelect[]>([]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -58,6 +60,19 @@ export const usePaymentForm = () => {
     }
   };
 
+  const loadPreOrderOptions = async () => {
+    try {
+      const preOrder = await getPreOrders(); // Llama a la función para obtener los tipos de pago
+      const options: IOptionSelect[] = preOrder.map((data : any) => ({
+        value: data.id,
+        label: `${data.id} - ${data.client.f_name}${data.client.l_name} ${data.client.f_surname} ${data.client.l_surname}` 
+      }));
+      setPreOrderOptions(options);
+    } catch (error) {
+      console.error('Error al cargar los pedidos:', error);
+    }
+  };
+
   return { formData, 
     setFormData, 
     handleInputChange, 
@@ -65,6 +80,8 @@ export const usePaymentForm = () => {
     handleUpdate, 
     typePaymentOptions,
     bankAccountOptions,
+    preOrderOptions,
+    loadPreOrderOptions, 
     loadBankAccountOptions, 
     loadTypePaymentOptions };
 };
