@@ -13,7 +13,7 @@ const View = () => {
   const routes = [
     { title: 'Dashboard', path: '/' },
     { title: 'Atributos', path: '/atributos' },
-    { title: 'Banks', path: '/atributos/Banks' }
+    { title: 'Bancos', path: '/atributos/Banks' }
   ];
 
   const [searchTerm, setSearchTerm] = useState<string>('');

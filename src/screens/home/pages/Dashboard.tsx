@@ -1,4 +1,4 @@
-import DOptions from '../components/Opciones';
+import DOptions from '../components/DOptions';
 
 
 const Dashboard = () => {

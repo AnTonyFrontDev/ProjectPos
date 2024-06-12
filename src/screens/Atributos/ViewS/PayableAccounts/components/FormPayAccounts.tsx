@@ -52,7 +52,7 @@ const ExpensesForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate
             {/* Campos del formulario de CategorySize */}
 
             <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">Numero de Pedido:</label>
+                <label className="block text-sm font-medium text-gray-600">Gasto:</label>
                 <Select
                     className={TableSelectsClasses}
                     options={expenseOptions}
@@ -61,7 +61,7 @@ const ExpensesForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate
                 />
             </div>
             <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">Numero de Pedido:</label>
+                <label className="block text-sm font-medium text-gray-600">Tipo de pago:</label>
                 <Select
                     className={TableSelectsClasses}
                     options={typePaymentOptions}
@@ -70,7 +70,7 @@ const ExpensesForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate
                 />
             </div>
             <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">Numero de Pedido:</label>
+                <label className="block text-sm font-medium text-gray-600">Cuenta de Banco</label>
                 <Select
                     className={TableSelectsClasses}
                     options={bankAccountOptions}
@@ -80,7 +80,7 @@ const ExpensesForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate
             </div>
 
             <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">Amount</label>
+                <label className="block text-sm font-medium text-gray-600">Monto</label>
                 <input
                     type="number"
                     name="amount"
@@ -92,7 +92,7 @@ const ExpensesForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate
 
             {/* Botón de envío */}
             <button type="submit" className="bg-blue-500 text-white p-2 rounded-md">
-                {isUpdate ? "Update" : "Submit"}
+                {isUpdate ? "Actualizar " : "Enviar"}
             </button>
         </form>
     );

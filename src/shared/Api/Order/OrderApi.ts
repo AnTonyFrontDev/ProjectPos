@@ -38,7 +38,7 @@ export const getOrderById = async (orderId : number) => {
 };
 
 export const CheckOrder = async (formData: ICheckOrder[]) => {
-  console.log(formData)
+  // console.log(formData)
   try {
     const response = await axios.post(
       `${URL}/Order/GetInvColorAvailableToAddOrder`,
@@ -49,7 +49,7 @@ export const CheckOrder = async (formData: ICheckOrder[]) => {
         },
       }
     );
-    console.log('Response:', response.data.data);
+    // console.log('Response:', response.data.data);
     return response.data.data;
   } catch (error) {
     console.error("Error checking order:", error);

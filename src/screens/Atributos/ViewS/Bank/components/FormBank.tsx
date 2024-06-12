@@ -18,6 +18,7 @@ const BankForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }) 
     const handleSetInitialFormData = (initialData: IBankPost) => {
         const initialFormData = new BankDto;
         Object.assign(initialFormData, initialData)
+        console.log(initialFormData)
         setFormData(initialFormData)
     };
 
@@ -27,8 +28,8 @@ const BankForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }) 
             await handleUpdate(event);
         } else {
             await handleSubmit(event);
-            window.location.reload();
         }
+        window.location.reload();
     };
     return (
         <>
@@ -46,8 +47,8 @@ const BankForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }) 
                     <label className="block text-sm font-medium text-gray-600">Nombre de Banco</label>
                     <input
                         type="text"
-                        name="name"
-                        value={formData.name}
+                        name={isUpdate ? "bankName" : "name"}
+                        value={isUpdate ? formData.bankName: formData.name}
                         onChange={handleInputChange}
                         className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                     />

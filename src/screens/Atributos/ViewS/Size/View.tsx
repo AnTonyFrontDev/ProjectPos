@@ -13,7 +13,7 @@ const SizeView = () => {
   const routes = [
     { title: 'Dashboard', path: '/' },
     { title: 'Atributos', path: '/atributos' },
-    { title: 'Sizes', path: '/atributos/Sizes' }
+    { title: 'Tallas', path: '/atributos/Sizes' }
   ];
 
   const [searchTerm, setSearchTerm] = useState<string>('');

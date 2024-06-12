@@ -87,7 +87,7 @@ const Order: React.FC<{ orderData: any[], client: any, preId: number }> = ({ ord
     }
   };
 
-  console.log('OrderData', orderData)
+  // console.log('OrderData', orderData)
 
   return (
     <div className="container mx-auto">

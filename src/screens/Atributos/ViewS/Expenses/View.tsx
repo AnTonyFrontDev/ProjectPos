@@ -1,4 +1,4 @@
-// Banks.tsx
+// Expenses.tsx
 import BreadcrumbData from "@/components/ui/Breadcrumb";
 import ApiTable from '@/components/Generics/Tabla/apiTable';
 import SearchFilter from '../../../../shared/SearchFilter';
@@ -14,7 +14,7 @@ const View = () => {
   const routes = [
     { title: 'Dashboard', path: '/' },
     { title: 'Atributos', path: '/atributos' },
-    { title: 'Expenses', path: '/atributos/Expenses' }
+    { title: 'Gastos', path: '/atributos/Expenses' }
   ];
 
   const [searchTerm, setSearchTerm] = useState<string>('');

@@ -1,7 +1,7 @@
 // PaylableAccount.tsx
 import BreadcrumbData from "@/components/ui/Breadcrumb";
 import ApiTable from '@/components/Generics/Tabla/apiTable';
-import SearchFilter from '../../../../shared/SearchFilter';
+import SearchFilter from '@/shared/SearchFilter';
 import { useEffect, useState } from 'react';
 import G_Options from "@/components/Generics/gOptions";
 import { PaymentExpensesTable } from "@/components/Generics/Tabla/tData";
@@ -15,7 +15,7 @@ const View = () => {
   const routes = [
     { title: 'Dashboard', path: '/' },
     { title: 'Atributos', path: '/atributos' },
-    { title: 'Expenses', path: '/atributos/Expenses' }
+    { title: 'Cuentas Por Pagar', path: '/atributos/CuentasPagar' }
   ];
 
 

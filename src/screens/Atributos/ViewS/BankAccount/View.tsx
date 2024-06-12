@@ -13,7 +13,7 @@ const View = () => {
   const routes = [
     { title: 'Dashboard', path: '/' },
     { title: 'Atributos', path: '/atributos' },
-    { title: 'Banks', path: '/atributos/Banks' }
+    { title: 'Cuentas de Banco', path: '/atributos/BankAccount' }
   ];
 
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -58,7 +58,7 @@ const View = () => {
               searchTerm={searchTerm}
               filterColumn={filterColumn}
               sortDirection={sortDirection}
-              showActions={true}
+              // showActions={true}
             />
           )}
         </GenericPagination>

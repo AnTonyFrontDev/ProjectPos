@@ -58,7 +58,7 @@ const View = () => {
               filterColumn={filterColumn}
               sortDirection={sortDirection}
               showActions={true}
-            // editable={false}
+              notEditable={true}
             />
           )}
 

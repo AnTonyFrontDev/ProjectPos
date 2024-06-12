@@ -13,7 +13,7 @@ const ColorView = () => {
   const routes = [
     { title: 'Dashboard', path: '/' },
     { title: 'Atributos', path: '/atributos' },
-    { title: 'Colors', path: '/atributos/Colors' }
+    { title: 'Colores', path: '/atributos/Colors' }
   ];
 
 

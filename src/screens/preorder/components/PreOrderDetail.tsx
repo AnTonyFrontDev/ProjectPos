@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Descriptions, Table } from 'antd';
 import { DetalleProps as DetallePreOrdersProps } from '@/shared/interfaces/I_inventario';
 import { getPreOrderById } from '@/shared/Api/PreOrder/PreOrderApi';
-import OrderForm from './CheckOrder';
+// import OrderForm from './CheckOrder';
 import SearchFilter from '@/shared/SearchFilter';
-import PreOrderReport from '../../report/reportPreOrder/components/Report';
+// import PreOrderReport from '../../report/reportPreOrder/components/Report';
 import { Link } from 'react-router-dom';
 
 
@@ -94,8 +94,14 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
                     ))}
                 </Descriptions.Item>
             </Descriptions>
-            <OrderForm id={preorderId} />
             <div className='flex'>
+                <div className="mb-4">
+                    <Link to={`/preOrder/NuevaOrden/${preorderId}`}>
+                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Realizar Orden
+                        </button>
+                    </Link>
+                </div>
                 <div className="mb-4 ml-4 ">
                     <Link to={`/billing/NewDetail/${preorderId}`}>
                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
@@ -105,7 +111,7 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
                 </div>
             </div>
 
-            <PreOrderReport id={preorderId} />
+            {/* <PreOrderReport id={preorderId} /> */}
 
             {/* <h3>Productos</h3> */}
             <div className="col-span-2 bg-gray-50 shadow-lg my-6 p-4 rounded-md flex justify-between">
