@@ -5,7 +5,7 @@ import { Table, Button } from 'antd';
 import { IOrderProduct, IOrderPost } from '@/shared/interfaces/order/IOrderPost';
 import { FormInputsClasses } from '@/shared/Common/cssComponent';
 
-const Order: React.FC<{ orderData: any[], preOrderMap: any[], client: any, preId: number }> = ({ orderData, preOrderMap, client, preId }) => {
+const Order: React.FC<{ preOrderMap: any[], client: any, preId: number }> = ({ preOrderMap, client, preId }) => {
   const [products, setProducts] = useState<IOrderProduct[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [selectedQuantity, setSelectedQuantity] = useState<number>(0);
@@ -13,10 +13,11 @@ const Order: React.FC<{ orderData: any[], preOrderMap: any[], client: any, preId
   const [description, setDescription] = useState<string>('');
   const [sendTo, setSendTo] = useState<string>('');
 
-  const handleProductChange = (selectedOption : any ) => {
+  const handleProductChange = (selectedOption: any) => {
     setSelectedProduct(selectedOption);
-    const selectedItem = preOrderMap.find(item => item.id === selectedOption.value);
-    setMaxQuantity(selectedItem ? selectedItem.quantity : 0);
+    const selectedItem = preOrderMap.flatMap(item => item.invColors).find(invColor => invColor.inventoryColorId === selectedOption.value);
+    console.log('selectItem', selectedItem)
+    setMaxQuantity(selectedItem ? selectedItem.quantityPreOrder : 0);
     setSelectedQuantity(0); // Reset quantity input
   };
   const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -90,8 +91,8 @@ const Order: React.FC<{ orderData: any[], preOrderMap: any[], client: any, preId
     }
   };
 
-  console.log('OrderData',orderData)
-  console.log('PreOrderData',preOrderMap)
+  // console.log('OrderData', orderData)
+  console.log('PreOrderData', preOrderMap)
 
   // console.log('OrderData', orderData)
 
@@ -168,14 +169,14 @@ const Order: React.FC<{ orderData: any[], preOrderMap: any[], client: any, preId
         <div className="flex space-x-4">
           <Select
             className="w-1/2"
-            options={preOrderMap.map(item => ({
-              value: item.id,
-              label: `${item.productName} - ${item.size} - ${item.colorPrimary} - ${item.quantity}`
-            }))}
+            options={preOrderMap.flatMap(item => item.invColors.map((invColor: any) => ({
+              value: invColor.inventoryColorId,
+              label: `${invColor.product.name_prod} - ${invColor.size.size} - ${invColor.colorPrimary.colorname} - ${item.data.quantity}`
+            })))}
             value={selectedProduct}
             onChange={handleProductChange}
             isSearchable
-          />  
+          />
           <input
             type="number"
             value={selectedQuantity}

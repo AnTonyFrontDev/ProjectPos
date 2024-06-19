@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Table } from 'antd';
-import { CheckOrder as apiCheckOrder } from '@/shared/Api/Order/OrderApi';
 import { getPreOrderById } from '@/shared/Api/PreOrder/PreOrderApi';
 import Order from '../../Order/pages/Order';
 import { IClient } from '@/shared/interfaces/order/IOrderGet';
@@ -21,17 +20,10 @@ const NewOrder: React.FC = () => {
     const handleClick = async (id: number) => {
         try {
             const preOrder = await getPreOrderById(id);
+            const itemsData = preOrder.data[0]?.items.flatMap((item: any) => item.invColors) || [];
             setPreOrderData(preOrder.data[0]);
-            setPreOrderMap(preOrder.data[0]?.items)
-            const formData = preOrder.data[0].items.map((item: any) => ({
-                fkSize: item.sizeId,
-                fkProduct: item.productId,
-                fkColorPrimary: item.colorPrimaryId,
-                fkColorSecondary: item.colorSecondaryId,
-            }));
-
-            const orderResponse = await apiCheckOrder(formData);
-            setOrderResult(orderResponse);
+            setPreOrderMap(preOrder.data[0]?.items);
+            setOrderResult(itemsData);
         } catch (error) {
             console.error('Error:', error);
         }
@@ -45,6 +37,7 @@ const NewOrder: React.FC = () => {
 
     const fullClientName = preOrderData ? preOrderData.client : '';
 
+
     const columns = [
         {
             title: 'Product ID',
@@ -57,6 +50,41 @@ const NewOrder: React.FC = () => {
             key: 'productName',
         },
         {
+            title: 'Color',
+            dataIndex: ['colorPrimary', 'colorname'],
+            key: 'primaryColor',
+            render: (text: string, record: any) => {
+                const backgroundColor = record.colorPrimary.code; 
+                return (
+                    <span>
+                        {text} <span style={{
+                            backgroundColor: backgroundColor,
+                            border: '2px solid #000', // Black border
+                            color: backgroundColor, // Inverted text color for better contrast
+                            padding: '0px 4px', // Adjust padding for better spacing
+                            borderRadius: '12px', // Rounded corners
+                            display: 'inline-block' // Ensure proper alignment
+                        }}>@</span>
+                    </span>
+                );
+            },
+        },
+        {
+            title: 'Size',
+            dataIndex: ['size', 'size'],
+            key: 'size',
+        },
+        {
+            title: 'Type',
+            dataIndex: ['product', 'type'],
+            key: 'type',
+        },
+        {
+            title: 'Category',
+            dataIndex: ['size', 'category'],
+            key: 'category',
+        },
+        {
             title: 'Description',
             dataIndex: ['product', 'description'],
             key: 'description',
@@ -65,47 +93,40 @@ const NewOrder: React.FC = () => {
             title: 'Sale Price',
             dataIndex: ['product', 'sale_price'],
             key: 'salePrice',
-        },
-        {
-            title: 'Type',
-            dataIndex: ['product', 'type'],
-            key: 'type',
-        },
-        {
-            title: 'Size',
-            dataIndex: ['size', 'size'],
-            key: 'size',
-        },
-        {
-            title: 'Category',
-            dataIndex: ['size', 'category'],
-            key: 'category',
-        },
-        {
-            title: 'Primary Color',
-            dataIndex: ['colorPrimary', 'colorname'],
-            key: 'primaryColor',
-            render: (text: string, record: any) => (
-                <span style={{ backgroundColor: record.colorPrimary.code, color: '#fff', padding: '2px 4px', borderRadius: '4px' }}>
-                    {text}
-                </span>
-            ),
+            render: (_: any, record: any) => {
+                const salePrice = new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'DOP',
+                }).format(record.product.sale_price);
+                return <span>{salePrice}</span>;
+            }
         },
         {
             title: 'Quantity',
             dataIndex: 'quantity',
             key: 'quantity',
         },
+        {
+            title: 'Total Price',
+            key: 'totalPrice',
+            render: (_: any, record: any) => {
+                const totalPrice = new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'DOP',
+                }).format(record.quantity * record.product.sale_price);
+                return <span>{totalPrice}</span>;
+            }
+        }
     ];
 
     return (
         <div>
             {orderResult && (
                 <>
-                    <Order orderData={orderResult} preOrderMap={preOrderMap} client={fullClientName} preId={Number(preorderId)} />
+                    <Order preOrderMap={preOrderMap} client={fullClientName} preId={Number(preorderId)} />
                     <div className='container my-4'>
-                    <h1 className='text-2xl font-bold mb-4'>Items Disponibles</h1>
-                    <Table columns={columns} dataSource={orderResult} rowKey={(record) => record.product.id} pagination={false}/>
+                        <h1 className='text-2xl font-bold mb-4'>Items Disponibles</h1>
+                        <Table columns={columns} dataSource={orderResult} rowKey={(record) => record.product.id} pagination={false} />
                     </div>
                 </>
             )}
