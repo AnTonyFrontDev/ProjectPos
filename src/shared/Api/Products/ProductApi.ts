@@ -38,7 +38,7 @@ export const SaveProduct = async (formData: IProductPost) => {
 export const UpdateProduct = async (formData: IProductUpdate) => {
   try {
     const formattedData = formData;
-    const response = await axios.post(
+    const response = await axios.put(
       "https://localhost:7065/api/Product/UpdateProduct",
       formattedData,
       {
@@ -58,14 +58,14 @@ export const UpdateProduct = async (formData: IProductUpdate) => {
 export const RemoveProduct = async (formData: IProductRemove) => {
   try {
     const formattedData = formData;
-    const response = await axios.post(
+    const response = await axios.delete(
       "https://localhost:7065/api/Product/RemoveProduct",
-      formattedData,
       {
         headers: {
           "Content-Type": "application/json",
-        },
-      }
+          },
+        data: formattedData,
+          }
     );
 
     return response.data;

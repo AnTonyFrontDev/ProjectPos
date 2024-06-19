@@ -57,6 +57,10 @@ const ProductColorAdd: React.FC<IProductColorProps> = ({ productId }) => {
     }
   };
 
+  // const handleDelete = async () => {
+
+  // };
+
   return (
     <div>
       <h3>Agregar Color:</h3>
@@ -73,10 +77,16 @@ const ProductColorAdd: React.FC<IProductColorProps> = ({ productId }) => {
         </div>
         <button
           onClick={handleAddColor}
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2"
         >
           Agregar Color
         </button>
+        {/* <button
+          className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'
+          onClick={() => handleDelete(record)}
+        >
+          Quitar
+        </button> */}
       </div>
       {showSuccessAlert && (
         <div className="mt-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">

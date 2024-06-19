@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useColorForm } from '../hooks/useColorForm';
 import { ColorPicker } from 'antd';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 
 const ColorForm: React.FC = () => {
@@ -14,8 +14,14 @@ const ColorForm: React.FC = () => {
     setFormData(prevFormData => ({ ...prevFormData, code: newColor }));
   };
 
+  const onSubmitHandler = async (event: React.FormEvent) => {
+    event.preventDefault();
+    await handleSubmit(event);
+    window.location.reload();
+  };
+
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8">
+    <form onSubmit={onSubmitHandler} className="max-w-md mx-auto mt-8">
       {/* Campos del formulario de color */}
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-600">Color Name</label>
@@ -49,9 +55,9 @@ const ColorForm: React.FC = () => {
         <button type="submit" className="bg-blue-500 text-white p-2 rounded-md">
           Submit
         </button>
-        <Link to="/atributos/Color" className="bg-red-500 text-white p-2 rounded-md">
+        {/* <Link to="/atributos/Color" className="bg-red-500 text-white p-2 rounded-md">
           Cancel
-        </Link>
+        </Link> */}
       </div>
 
     </form>

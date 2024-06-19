@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Descriptions } from 'antd';
 // import { getProductById } from '@/shared/Api/Products/ProductsApi';
 import { DetalleProps as DetalleProductoProps } from '../../../shared/interfaces/I_inventario';
-import { getProductById } from '@/shared/Api/Products/ProductApi';
+import { getProductById, RemoveProduct } from '@/shared/Api/Products/ProductApi';
 import { AppIcon } from '../../../components/ui/AppIcon';
 import ProductColorAdd from './ProductColorAdd';
 import ProductSizeAdd from './ProductSizeAdd';
 import ButtonModal from '@/components/Generics/Modal/ButtonModal';
 import ViewForm from '@/components/FormularioV4/viewForm';
+import { Modal } from 'antd';
+import { ProductRemoveDto } from '@/shared/interfaces/Product/IProductRemove';
 
 const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
   const [detalleProducto, setDetalleProducto] = useState<any>(null);
@@ -15,11 +17,11 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        
-          // const productIdNumber = Number(productId);
-          const productData = await getProductById(productId);
-          setDetalleProducto(productData);
-          console.log(productData);
+
+        // const productIdNumber = Number(productId);
+        const productData = await getProductById(productId);
+        setDetalleProducto(productData);
+        console.log(productData);
 
       } catch (error) {
         console.error('Error al obtener detalle del producto:', error);
@@ -33,7 +35,20 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
     return <div>Cargando...</div>;
   }
 
+  
+
   const { name_prod, description, sale_price, type, colorsAsociated, sizesAsociated } = detalleProducto;
+
+  const handleDelete = async () => {
+    try {
+      const productRemoveData = new ProductRemoveDto({ id: Number(productId) });
+      console.log(productRemoveData)
+      await RemoveProduct(productRemoveData);
+      Modal.success({ content: 'Producto eliminado exitosamente' });
+    } catch (error) {
+      Modal.error({ content: 'Error al eliminar el producto' });
+    }
+  };
 
   return (
     <div className="my-8">
@@ -53,7 +68,7 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
                     type="colors"
                     style={{ color: `${color.codE_COLOR}`, cursor: 'pointer' }}
                     width={28}
-                    // onClick={() => console.log(`Color clicked: ${color.colorname}`)}
+                  // onClick={() => console.log(`Color clicked: ${color.colorname}`)}
                   />
                 </div>
               ))}
@@ -72,9 +87,9 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
           </Descriptions.Item>
         )}
       </Descriptions>
-      <ProductColorAdd productId={productId}/>
-     
-      <ProductSizeAdd productId={productId}/>
+      <ProductColorAdd productId={productId} />
+
+      <ProductSizeAdd productId={productId} />
 
       <div className="flex mt-4">
         {/* Botón para editar */}
@@ -82,14 +97,16 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
           Editar
         </button> */}
         <ButtonModal
-              buttonText="Editar"
-              modalTitle=""
-              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-2 rounded'
-              size={15}
-              modalContent={<ViewForm usarForm="Product" formData={detalleProducto} isUpdate={true} updateData={detalleProducto} />}
-            />
+          buttonText="Editar"
+          modalTitle=""
+          className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-2 rounded'
+          size={15}
+          modalContent={<ViewForm usarForm="Product" formData={detalleProducto} isUpdate={true} updateData={detalleProducto} />}
+        />
         {/* Botón para eliminar */}
-        <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+
+        <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" 
+          onClick={handleDelete}>
           Eliminar
         </button>
       </div>

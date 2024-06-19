@@ -22,8 +22,9 @@ export const useColorForm = () => {
     // Additional actions before sending the color data to the database
     console.log('Color Data:', formData);
     GenericRequest(formData, SaveColor, "Color data submitted successfully");
+    console.log('Color Data:', formData);
     // window.location.reload();
-    window.location.reload();
+    // window.location.reload();
     //navigate('/atributos/Color');
   };
 

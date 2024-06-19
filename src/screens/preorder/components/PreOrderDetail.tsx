@@ -78,6 +78,31 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
         { title: 'Tamaño', dataIndex: 'size', key: 'size' },
         { title: 'Precio', dataIndex: 'price', key: 'price' },
         { title: 'Cantidad', dataIndex: 'quantity', key: 'quantity' },
+        {
+            title: 'Actions',
+            key: 'actions',
+            render: () => (
+              <span>   
+                  {/* <ButtonModal
+                    buttonText="Editar"
+                    modalTitle=""
+                    className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-2 rounded'
+                    size={15}
+                    modalContent={<ViewForm usarForm={usarForm} formData={record} isUpdate={true} updateData={updateDataSource} />}
+                  /> */}
+                <button
+                  className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-2 rounded'
+                >
+                  Editar
+                </button>
+                <button
+                  className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'
+                >
+                  Delete
+                </button>
+              </span>
+            ),
+          },
     ];
 
 
@@ -108,6 +133,13 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
                             Generar Factura
                         </button>
                     </Link>
+                </div>
+                <div className="mb-4 ml-4 ">
+                    {/* <Link to={`/billing/NewDetail/${preorderId}`}> */}
+                        <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                            Eliminar
+                        </button>
+                    {/* </Link> */}
                 </div>
             </div>
 

@@ -16,12 +16,13 @@ const NewOrder: React.FC = () => {
     const { preorderId } = useParams<{ preorderId: string }>();
     const [preOrderData, setPreOrderData] = useState<PreOrderData | null>(null);
     const [orderResult, setOrderResult] = useState<any | null>(null);
+    const [preOrderMap, setPreOrderMap] = useState<any | null>(null);
 
     const handleClick = async (id: number) => {
         try {
             const preOrder = await getPreOrderById(id);
             setPreOrderData(preOrder.data[0]);
-
+            setPreOrderMap(preOrder.data[0]?.items)
             const formData = preOrder.data[0].items.map((item: any) => ({
                 fkSize: item.sizeId,
                 fkProduct: item.productId,
@@ -101,7 +102,7 @@ const NewOrder: React.FC = () => {
         <div>
             {orderResult && (
                 <>
-                    <Order orderData={orderResult} client={fullClientName} preId={Number(preorderId)} />
+                    <Order orderData={orderResult} preOrderMap={preOrderMap} client={fullClientName} preId={Number(preorderId)} />
                     <div className='container my-4'>
                     <h1 className='text-2xl font-bold mb-4'>Items Disponibles</h1>
                     <Table columns={columns} dataSource={orderResult} rowKey={(record) => record.product.id} pagination={false}/>

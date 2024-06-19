@@ -5,21 +5,23 @@ import { Table, Button } from 'antd';
 import { IOrderProduct, IOrderPost } from '@/shared/interfaces/order/IOrderPost';
 import { FormInputsClasses } from '@/shared/Common/cssComponent';
 
-const Order: React.FC<{ orderData: any[], client: any, preId: number }> = ({ orderData, client, preId }) => {
+const Order: React.FC<{ orderData: any[], preOrderMap: any[], client: any, preId: number }> = ({ orderData, preOrderMap, client, preId }) => {
   const [products, setProducts] = useState<IOrderProduct[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [selectedQuantity, setSelectedQuantity] = useState<number>(0);
+  const [maxQuantity, setMaxQuantity] = useState(0);
   const [description, setDescription] = useState<string>('');
   const [sendTo, setSendTo] = useState<string>('');
 
-  const handleProductChange = (selectedOption: any) => {
+  const handleProductChange = (selectedOption : any ) => {
     setSelectedProduct(selectedOption);
-    setSelectedQuantity(0);
+    const selectedItem = preOrderMap.find(item => item.id === selectedOption.value);
+    setMaxQuantity(selectedItem ? selectedItem.quantity : 0);
+    setSelectedQuantity(0); // Reset quantity input
   };
-
   const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(event.target.value);
-    setSelectedQuantity(value);
+    const quantity = Math.min(Number(event.target.value), maxQuantity);
+    setSelectedQuantity(quantity);
   };
 
   const handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,6 +43,7 @@ const Order: React.FC<{ orderData: any[], client: any, preId: number }> = ({ ord
       setProducts([...products, newProduct]);
       setSelectedProduct(null);
       setSelectedQuantity(0);
+      // console.log(orderData)
     }
   };
 
@@ -70,7 +73,7 @@ const Order: React.FC<{ orderData: any[], client: any, preId: number }> = ({ ord
         products: products,
       };
 
-      console.log('FormData:', formData);
+      // console.log('FormData:', formData);
       await SaveOrder(formData);
 
       // Reiniciar los estados después de guardar la orden
@@ -86,6 +89,9 @@ const Order: React.FC<{ orderData: any[], client: any, preId: number }> = ({ ord
       alert('Error al guardar la orden. Por favor, inténtalo de nuevo.');
     }
   };
+
+  console.log('OrderData',orderData)
+  console.log('PreOrderData',preOrderMap)
 
   // console.log('OrderData', orderData)
 
@@ -162,19 +168,22 @@ const Order: React.FC<{ orderData: any[], client: any, preId: number }> = ({ ord
         <div className="flex space-x-4">
           <Select
             className="w-1/2"
-            options={orderData.map(item => ({
-              value: item.inventoryColorId,
-              label: `${item.product.name_prod} - ${item.size.size} - ${item.colorPrimary.colorname} - ${item.quantity}`
+            options={preOrderMap.map(item => ({
+              value: item.id,
+              label: `${item.productName} - ${item.size} - ${item.colorPrimary} - ${item.quantity}`
             }))}
             value={selectedProduct}
             onChange={handleProductChange}
             isSearchable
-          />
+          />  
           <input
             type="number"
             value={selectedQuantity}
             onChange={handleQuantityChange}
             className={FormInputsClasses}
+            max={maxQuantity}
+            min={0}
+            step={0}
           />
         </div>
       </div>
