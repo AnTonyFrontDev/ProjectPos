@@ -23,7 +23,7 @@ const NewBill = ({ Id: preorderId }: NewBillProps) => {
         const fetchPreOrderData = async () => {
             try {
                 const data = await getPreOrderById(preorderId);
-                setPreOrderData(data.data[0]);
+                setPreOrderData(data.data[0].items);
             } catch (error) {
                 console.error(error);
             } finally {
@@ -32,6 +32,8 @@ const NewBill = ({ Id: preorderId }: NewBillProps) => {
         };
         fetchPreOrderData();
     }, [preorderId]);
+
+    console.log(preOrderData)
 
     const handleAddSale = async () => {
         try {
@@ -99,7 +101,7 @@ const NewBill = ({ Id: preorderId }: NewBillProps) => {
                     />
                 </div>
             </div>
-            <Table dataSource={preOrderData.items} rowKey="id">
+            <Table dataSource={preOrderData.preOrderProducts} rowKey="id">
                 <Column title="ID" dataIndex="id" key="id" />
                 <Column title="Producto" dataIndex="productName" key="productName" />
                 <Column title="Precio" dataIndex="price" key="price" />

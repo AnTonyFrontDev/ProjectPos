@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { DetalleProps as DetalleOrderProps } from '../../../shared/interfaces/I_inventario';
-import { getOrderById } from '@/shared/Api/Order/OrderApi';
-import { Descriptions, Table } from 'antd';
+import { cancelOrder, getOrderById } from '@/shared/Api/Order/OrderApi';
+import { Descriptions, Modal, Table } from 'antd';
 import SearchFilter from '@/shared/SearchFilter';
-
 // const { Panel } = Collapse;
 
 const OrderDetail: React.FC<DetalleOrderProps> = ({ Id: orderId }) => {
@@ -63,6 +62,26 @@ const OrderDetail: React.FC<DetalleOrderProps> = ({ Id: orderId }) => {
     setSortDirection((prevSortDirection) => (prevSortDirection === 'asc' ? 'desc' : 'asc'));
   };
 
+  const handleDelete = async (record: any,) => {
+    Modal.confirm({
+      title: 'Confirmar',
+      content: 'Está seguro de que desea eliminar este registro?',
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk: async () => {
+        // console.log('Delete:', record);
+        try {
+          await cancelOrder(record);
+          window.location.href = '/Order';
+        } catch (error) {
+          console.error('Error al eliminar el registro', error);
+        }
+      },
+    });
+  };
+
+
   if (!orderDetail) {
     return <div>Cargando...</div>;
   }
@@ -73,11 +92,11 @@ const OrderDetail: React.FC<DetalleOrderProps> = ({ Id: orderId }) => {
     { title: 'ID', dataIndex: 'id', key: 'id' },
     { title: 'Nombre', dataIndex: 'productName', key: 'productName' },
     { title: 'Tamaño', dataIndex: 'size', key: 'size' },
-    { 
-      title: 'Color Primario', 
-      dataIndex: 'colorPrimary', 
+    {
+      title: 'Color Primario',
+      dataIndex: 'colorPrimary',
       key: 'colorPrimary',
-      render: (colorPrimary : any) => (
+      render: (colorPrimary: any) => (
         <span style={{ color: `#${colorPrimary.codE_COLOR}` }}>
           {colorPrimary.colorname}
         </span>
@@ -100,6 +119,20 @@ const OrderDetail: React.FC<DetalleOrderProps> = ({ Id: orderId }) => {
         <Descriptions.Item label="Descripcion de la orden">{descriptionJob}</Descriptions.Item>
         <Descriptions.Item label="Estado de la orden">{statusOrder}</Descriptions.Item>
       </Descriptions>
+      <div className='flex'>
+        <div className="mb-4">
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Editar
+          </button>
+        </div>
+        <div className="mb-4 ml-4 ">
+          <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            onClick={() => handleDelete({ id : orderId })}
+          >
+            Eliminar
+          </button>
+        </div>
+      </div>
 
       {/* Productos */}
       <div className="col-span-2 bg-gray-50 shadow-lg my-6 p-4 rounded-md flex justify-between">

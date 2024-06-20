@@ -20,9 +20,10 @@ const NewOrder: React.FC = () => {
     const handleClick = async (id: number) => {
         try {
             const preOrder = await getPreOrderById(id);
-            const itemsData = preOrder.data[0]?.items.flatMap((item: any) => item.invColors) || [];
-            setPreOrderData(preOrder.data[0]);
-            setPreOrderMap(preOrder.data[0]?.items);
+            const preOrderData = preOrder.data[0];
+            const itemsData = preOrderData.items.invColors;
+            setPreOrderData(preOrderData);
+            setPreOrderMap([preOrderData.items]); // Wrap in an array to ensure it's iterable
             setOrderResult(itemsData);
         } catch (error) {
             console.error('Error:', error);
@@ -118,7 +119,7 @@ const NewOrder: React.FC = () => {
             }
         }
     ];
-
+    console.log('OrderResult',orderResult)
     return (
         <div>
             {orderResult && (
