@@ -27,6 +27,7 @@ interface Client {
   interface PreOrderProduct {
     id: number;
     quantity: number;
+    custoM_PRICE:number;
     size: Size;
     product: Product;
     colorPrimary: Color;
@@ -40,6 +41,7 @@ interface Client {
   
   export interface ISaleData {
     clientName: string;
+    amountBase:number;
     preOrder: PreOrder;
     amount: number;
     itbis: number;
