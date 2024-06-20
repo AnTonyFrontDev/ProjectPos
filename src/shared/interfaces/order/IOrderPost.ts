@@ -7,6 +7,7 @@ export interface IOrderPost {
   checked: boolean
   fkPreOrder: number
   descriptionJob: string
+  observation?: string
   sendTo: string
   products: IOrderProduct[]
 }
