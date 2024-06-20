@@ -10,8 +10,11 @@ const Order: React.FC<{ preOrderMap: any[], client: any, preId: number }> = ({ p
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [selectedQuantity, setSelectedQuantity] = useState<number>(0);
   const [maxQuantity, setMaxQuantity] = useState(0);
-  const [description, setDescription] = useState<string>('');
-  const [sendTo, setSendTo] = useState<string>('');
+  const [formData, setFormData] = useState({
+    descriptionJob: '',
+    sendTo: '',
+    observation: ''
+  });
 
   const handleProductChange = (selectedOption: any) => {
     setSelectedProduct(selectedOption);
@@ -23,17 +26,15 @@ const Order: React.FC<{ preOrderMap: any[], client: any, preId: number }> = ({ p
     setMaxQuantity(selectedItem ? selectedItem.quantityPreOrder : 0);
     setSelectedQuantity(0);
   };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = event.target;
+    setFormData(prevFormData => ({ ...prevFormData, [name]: value }));
+  };
+
   const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const quantity = Math.min(Number(event.target.value), maxQuantity);
     setSelectedQuantity(quantity);
-  };
-
-  const handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDescription(event.target.value);
-  };
-
-  const handleSendToChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSendTo(event.target.value);
   };
 
   const handleAddProduct = () => {
@@ -65,12 +66,12 @@ const Order: React.FC<{ preOrderMap: any[], client: any, preId: number }> = ({ p
 
   const handleSubmit = async () => {
     try {
-      if (!description || products.length === 0) {
+      if (!formData.descriptionJob || products.length === 0) {
         alert('Por favor completa todos los campos.');
         return;
       }
 
-      const formData: IOrderPost = {
+      const orderData: IOrderPost = {
         id: 0,
         user: 1,
         date: new Date().toISOString(),
@@ -78,20 +79,23 @@ const Order: React.FC<{ preOrderMap: any[], client: any, preId: number }> = ({ p
         fkUser: 1,
         checked: true,
         fkPreOrder: preId,
-        descriptionJob: description,
-        sendTo: sendTo,
+        descriptionJob: formData.descriptionJob,
+        sendTo: formData.sendTo,
         products: products,
-        observation: '',
+        observation: formData.observation,
       };
 
-      // console.log('FormData:', formData);
-      await SaveOrder(formData);
+      // console.log('FormData:', orderData);
+      await SaveOrder(orderData);
 
       // Reiniciar los estados después de guardar la orden
       setSelectedProduct(null);
       setSelectedQuantity(0);
-      setDescription('');
-      setSendTo('');
+      setFormData({
+        descriptionJob: '',
+        sendTo: '',
+        observation: ''
+      });
       setProducts([]);
 
       alert('Orden guardada exitosamente');
@@ -103,8 +107,6 @@ const Order: React.FC<{ preOrderMap: any[], client: any, preId: number }> = ({ p
 
   // console.log('OrderData', orderData)
   console.log('PreOrderData', preOrderMap)
-
-  // console.log('OrderData', orderData)
 
   return (
     <div className="container mx-auto">
@@ -124,8 +126,9 @@ const Order: React.FC<{ preOrderMap: any[], client: any, preId: number }> = ({ p
           <label>Descripción:</label>
           <input
             type="text"
-            value={description}
-            onChange={handleDescriptionChange}
+            name="descriptionJob"
+            value={formData.descriptionJob}
+            onChange={handleInputChange}
             className={FormInputsClasses}
           />
         </div>
@@ -133,13 +136,13 @@ const Order: React.FC<{ preOrderMap: any[], client: any, preId: number }> = ({ p
           <label>Enviar a:</label>
           <input
             type="text"
-            value={sendTo}
-            onChange={handleSendToChange}
+            name="sendTo"
+            value={formData.sendTo}
+            onChange={handleInputChange}
             className={FormInputsClasses}
           />
         </div>
       </div>
-
 
       <Table dataSource={products} rowKey={(_record: any, index: any) => index!.toString()}>
         <Table.Column
@@ -199,12 +202,12 @@ const Order: React.FC<{ preOrderMap: any[], client: any, preId: number }> = ({ p
             step={0}
           />
         </div>
-        <div className='flex flex-col w-1/2'>
-          <label>Obsevaciones:</label>
-          <input
-            type="textarea"
-            value={sendTo}
-            onChange={handleSendToChange}
+        <div className='flex flex-col w-1/2 mt-4'>
+          <label>Observaciones:</label>
+          <textarea
+            name="observation"
+            value={formData.observation}
+            onChange={handleInputChange}
             className={FormInputsClasses}
           />
         </div>
