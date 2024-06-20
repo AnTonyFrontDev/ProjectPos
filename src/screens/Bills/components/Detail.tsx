@@ -31,9 +31,9 @@ const BillDetail = ({ Id: saleId }: BillDetailProps) => {
     return <div className="text-center mt-4">Error loading sale data</div>;
   }
 
-  const { preOrder, amount, itbis, fecha } = saleData;
+  const { preOrder, amount, itbis, fecha,amountBase } = saleData;
   const { client, preOrderProducts } = preOrder;
-  const total = amount + itbis;
+
 
   return (
     <div className="container mx-auto p-4">
@@ -51,9 +51,9 @@ const BillDetail = ({ Id: saleId }: BillDetailProps) => {
         <div className="bg-white shadow-md rounded-lg p-6 ml-3 mb-6">
           <h2 className="text-xl font-bold mb-4">Información de la Factura</h2>
           <p><strong>Fecha:</strong> {new Date(fecha).toLocaleString()}</p>
-          <p><strong>Monto:</strong> ${amount}</p>
+          <p><strong>Monto:</strong> ${amountBase}</p>
           <p><strong>ITBIS:</strong> ${itbis}</p>
-          <p><strong>Total a Pagar:</strong> ${total}</p>
+          <p><strong>Total a Pagar:</strong> ${amount}</p>
         </div>
       </div>
 
@@ -66,16 +66,16 @@ const BillDetail = ({ Id: saleId }: BillDetailProps) => {
           <Column title="Cantidad" dataIndex="quantity" key="quantity" />
           <Column title="Tamaño" dataIndex={['size', 'size']} key="size" />
           <Column title="Descripción" dataIndex={['product', 'descriptioN_PRODUCT']} key="description" />
-          <Column title="Precio" dataIndex={['product', 'salE_PRICE']} key="precio" 
+          <Column title="Precio" dataIndex={'custoM_PRICE'} key="precio"
           render={(text) => (
               <span>$ {text}</span>
             )} />
           <Column
             title="Precio Total"
-            dataIndex={['quantity', 'salE_PRICE']}
+            dataIndex={['quantity', 'custoM_PRICE']}
             key="totalPrice"
             render={(text, record: any) => (
-              <span>$ {record.quantity * record.product.salE_PRICE} {text}</span>
+              <span>$ {record.quantity * record.custoM_PRICE} {text}</span>
             )}
           />
         </Table>
