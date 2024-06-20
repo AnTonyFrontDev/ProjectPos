@@ -16,6 +16,18 @@ export const getPreOrders = async () : Promise<IPreOrderGet[]> => {
   }
 };
 // Función para obtener todas las PreOrder
+export const getPreOrdersPending = async () : Promise<IPreOrderGet[]> => {
+  try {
+    const response = await axios.get(
+        `${URL}/preorder/PreOrder/GetPreOrdersPending`);
+    console.log("Response2:", response.data.data);
+    return response.data.data;
+  } catch (error) {
+    console.error('Error fetching PreOrders:', error);
+    throw error;
+  }
+};
+// Función para obtener todas las PreOrder
 export const GetPreOrdersPaginated = async (pages:number,items:number)  => {
   try {
     return await axios.get(

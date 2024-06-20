@@ -6,7 +6,7 @@ import { SavePayment, UpdatePayment } from '@/shared/Api/Payment/PaymentApi';
 import { getPaymentTypes } from '@/shared/Api/Payment/PaymentType/PaymentTypeApi';
 import { IOptionSelect } from '@/components/FormularioV4/Config/interface';
 import { getBankAccounts } from '@/shared/Api/BankAccount/BankAccountApi';
-import { getPreOrders } from '@/shared/Api/PreOrder/PreOrderApi';
+import {getPreOrdersPending} from '@/shared/Api/PreOrder/PreOrderApi';
 
 
 
@@ -62,7 +62,7 @@ export const usePaymentForm = () => {
 
   const loadPreOrderOptions = async () => {
     try {
-      const preOrder = await getPreOrders(); // Llama a la función para obtener los tipos de pago
+      const preOrder = await getPreOrdersPending(); // Llama a la función para obtener los tipos de pago
       const options: IOptionSelect[] = preOrder.map((data : any) => ({
         value: data.id,
         label: `${data.id} - ${data.client.f_name}${data.client.l_name} ${data.client.f_surname} ${data.client.l_surname}` 
