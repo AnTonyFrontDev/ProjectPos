@@ -1,6 +1,11 @@
 import { useState } from 'react';
 import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';
-import { getExpenses, SavePaymentExpenses, UpdatePaymentExpenses } from '@/shared/Api/Expenses/ExpensesApi';
+import {
+  getExpenses,
+  getExpensesPending,
+  SavePaymentExpenses,
+  UpdatePaymentExpenses
+} from '@/shared/Api/Expenses/ExpensesApi';
 import { PaymentExpensesDtoAdd, IPaymentExpenseDtoAdd } from '@/shared/interfaces/PaymentExpenses/PaymentExpenseDtoAdd';
 import { IPaymentExpenseDtoUpdate, PaymentExpensesDtoUpdate } from '@/shared/interfaces/PaymentExpenses/PaymentExpenseDtoUpdate';
 import { IOptionSelect } from '@/components/FormularioV4/Config/interface';
@@ -60,10 +65,10 @@ export const usePayAccountForm = () => {
 
   const loadExpenseOptions = async () => {
     try {
-      const preOrder = await getExpenses(); // Llama a la función para obtener los tipos de pago
+      const preOrder = await getExpensesPending(); // Llama a la función para obtener los tipos de pago
       const options: IOptionSelect[] = preOrder.map((data : any) => ({
         value: data.id,
-        label: `${data.id} - ${data.description} - ${data.documentNumber} - ${data.amount}` 
+        label: `${data.id} - ${data.description} - ${data.documentNumber} - ${data.amountPending}`
       }));
       setExpenseOptions(options);
     } catch (error) {
