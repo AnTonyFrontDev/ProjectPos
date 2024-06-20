@@ -81,6 +81,7 @@ const Order: React.FC<{ preOrderMap: any[], client: any, preId: number }> = ({ p
         descriptionJob: description,
         sendTo: sendTo,
         products: products,
+        observation: '',
       };
 
       // console.log('FormData:', formData);
@@ -196,6 +197,15 @@ const Order: React.FC<{ preOrderMap: any[], client: any, preId: number }> = ({ p
             max={maxQuantity}
             min={0}
             step={0}
+          />
+        </div>
+        <div className='flex flex-col w-1/2'>
+          <label>Obsevaciones:</label>
+          <input
+            type="textarea"
+            value={sendTo}
+            onChange={handleSendToChange}
+            className={FormInputsClasses}
           />
         </div>
       </div>
