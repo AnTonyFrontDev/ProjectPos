@@ -58,7 +58,7 @@ function ListOrders() {
                         searchTerm={searchTerm}
                         filterColumn={filterColumn}
                         sortDirection={sortDirection}
-                        showActions={true}
+                        // showActions={true}
                         // editable={false}
                         handleTableRowClick={handleTableRowClick}
                     />

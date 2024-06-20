@@ -17,7 +17,7 @@ import { IAvailableSizesColumn, ISizeQA } from '@/shared/interfaces/Inventory/I_
 import { IOrderColumns } from '@/shared/interfaces/order/IOrderColumns';
 import { IPreOrderColumns } from '@/shared/interfaces/Preorder/IPreOrderColumns';
 import { ISale } from '@/shared/interfaces/Sale/ISale';
-import {IPayExpense, IPaymenExpenses} from "@/shared/interfaces/PaymentExpenses/IPaymentExpense.ts";
+import { IPayExpense, IPaymenExpenses } from "@/shared/interfaces/PaymentExpenses/IPaymentExpense.ts";
 // #endregion
 
 export const inventoryTable: (IAvailableSizesColumn | any)[] = [
@@ -109,10 +109,32 @@ export const categorySizeTable: (ICategorySizeColumns | any)[] = [
   { title: 'Categoría', dataIndex: 'category', key: 'category' },
 ];
 
+const backgroundColor = (record: IColorGet): string => record.code || '#ffffff';
 export const colorTable: (IColorGet | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
   { title: 'Nombre del Color', dataIndex: 'colorname', key: 'colorname' },
-  { title: 'Código', dataIndex: 'code', key: 'code' },
+  {
+    title: 'Código',
+    dataIndex: 'code',
+    key: 'code',
+    render: (text: string, record: IColorGet) => {
+      const bgColor = backgroundColor(record);
+      return (
+        <span>
+          <span style={{
+            backgroundColor: bgColor,
+            border: '2px solid #000', 
+            color: bgColor, 
+            padding: '0px 4px', 
+            margin: '0px 4px', 
+            borderRadius: '12px', 
+            display: 'inline-block' 
+            }}>@</span>
+          {text} 
+        </span>
+      );
+    },
+  },
 ];
 
 export const expensesTable: (IExpensesColumns | any)[] = [
@@ -134,15 +156,15 @@ export const ReceivableTable: (IExpensesColumns | any) = [
 ];
 
 
-const renderNamePayment = (record : IPayExpense) => record.name;
-const renderDocumentNumber = (record : IPayExpense) => record.documentNumber;
-const renderDescription = (record : IPayExpense) => record.description;
+const renderNamePayment = (record: IPayExpense) => record.name;
+const renderDocumentNumber = (record: IPayExpense) => record.documentNumber;
+const renderDescription = (record: IPayExpense) => record.description;
 export const PaymentExpensesTable: (IPaymenExpenses | any) = [
-  {title:'id',dataIndex:'id',key:'id'},
-  {title:'Nombre',dataIndex:'expense',key:'expense',render:renderNamePayment},
-  {title:'Descripcion',dataIndex:'expense',key:'expense',render:renderDescription},
-  {title:'Numero de Documento',dataIndex:'expense',key:'expense',render:renderDocumentNumber},
-  {title:'Monto',dataIndex:'amount',key:'amount'},
+  { title: 'id', dataIndex: 'id', key: 'id' },
+  { title: 'Nombre', dataIndex: 'expense', key: 'expense', render: renderNamePayment },
+  { title: 'Descripcion', dataIndex: 'expense', key: 'expense', render: renderDescription },
+  { title: 'Numero de Documento', dataIndex: 'expense', key: 'expense', render: renderDocumentNumber },
+  { title: 'Monto', dataIndex: 'amount', key: 'amount' },
 
 ]
 

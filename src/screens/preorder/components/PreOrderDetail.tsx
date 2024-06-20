@@ -20,7 +20,7 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
             try {
                 const preOrderData = await getPreOrderById(preorderId);
                 setDetallePreOrder(preOrderData.data[0]); // Obtén los datos de la preorden
-                setFilteredItems(preOrderData.data[0]?.items.map((item: any) => item.data) || []); // Establecer todos los productos como predeterminado
+                setFilteredItems(preOrderData.data[0]?.items.preOrderProducts || []); // Establecer todos los productos como predeterminado
             } catch (error) {
                 console.error('Error al obtener detalle de la preorden:', error);
             }
@@ -31,7 +31,7 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
 
     const handleSearch = (searchText: string) => {
         if (!detallePreOrder) return;
-        const filtered = detallePreOrder.items.map((item: any) => item.data).filter((item: any) =>
+        const filtered = detallePreOrder.items.preOrderProducts.filter((item: any) =>
             Object.values(item)
                 .join('') // Concatenar todos los valores del objeto en una cadena
                 .toLowerCase()

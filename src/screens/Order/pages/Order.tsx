@@ -15,10 +15,13 @@ const Order: React.FC<{ preOrderMap: any[], client: any, preId: number }> = ({ p
 
   const handleProductChange = (selectedOption: any) => {
     setSelectedProduct(selectedOption);
-    const selectedItem = preOrderMap.flatMap(item => item.invColors).find(invColor => invColor.inventoryColorId === selectedOption.value);
-    console.log('selectItem', selectedItem)
+
+    const selectedItem = preOrderMap.flatMap((item: any) => item.invColors).find((invColor: any) => invColor.inventoryColorId === selectedOption.value);
+
+    console.log('selectedItem', selectedItem);
+
     setMaxQuantity(selectedItem ? selectedItem.quantityPreOrder : 0);
-    setSelectedQuantity(0); // Reset quantity input
+    setSelectedQuantity(0);
   };
   const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const quantity = Math.min(Number(event.target.value), maxQuantity);
@@ -35,6 +38,13 @@ const Order: React.FC<{ preOrderMap: any[], client: any, preId: number }> = ({ p
 
   const handleAddProduct = () => {
     if (selectedProduct && selectedQuantity > 0) {
+      const existingProductIndex = products.findIndex(product => product.fkInventoryColor === selectedProduct.value);
+
+      if (existingProductIndex !== -1) {
+        alert('Este producto ya está en la lista.');
+        return;
+      }
+
       const newProduct: IOrderProduct = {
         fkOrder: 0,
         fkInventoryColor: selectedProduct.value || 0,
@@ -44,7 +54,6 @@ const Order: React.FC<{ preOrderMap: any[], client: any, preId: number }> = ({ p
       setProducts([...products, newProduct]);
       setSelectedProduct(null);
       setSelectedQuantity(0);
-      // console.log(orderData)
     }
   };
 
@@ -169,10 +178,12 @@ const Order: React.FC<{ preOrderMap: any[], client: any, preId: number }> = ({ p
         <div className="flex space-x-4">
           <Select
             className="w-1/2"
-            options={preOrderMap.flatMap(item => item.invColors.map((invColor: any) => ({
-              value: invColor.inventoryColorId,
-              label: `${invColor.product.name_prod} - ${invColor.size.size} - ${invColor.colorPrimary.colorname} - ${item.data.quantity}`
-            })))}
+            options={preOrderMap.flatMap((item: any) =>
+              item.invColors.map((invColor: any) => ({
+                value: invColor.inventoryColorId,
+                label: `${invColor.product.name_prod} - ${invColor.size.size} - ${invColor.colorPrimary.colorname} - ${invColor.quantityPreOrder}`
+              }))
+            )}
             value={selectedProduct}
             onChange={handleProductChange}
             isSearchable
