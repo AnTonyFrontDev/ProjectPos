@@ -65,7 +65,7 @@ export const usePaymentForm = () => {
       const preOrder = await getPreOrdersPending(); // Llama a la función para obtener los tipos de pago
       const options: IOptionSelect[] = preOrder.map((data : any) => ({
         value: data.id,
-        label: `${data.id} - ${data.client.f_name}${data.client.l_name} ${data.client.f_surname} ${data.client.l_surname}` 
+        label: `${data.id} - ${data.client.f_name}${data.client.l_name} ${data.client.f_surname} ${data.client.l_surname} - ${data.amountBase}`
       }));
       setPreOrderOptions(options);
     } catch (error) {
