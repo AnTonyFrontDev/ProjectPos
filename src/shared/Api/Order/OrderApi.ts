@@ -144,7 +144,25 @@ export const cancelOrder = async (formData: any) => {
     throw error;
   }
 };
+export const completeOrder = async (formData: any) => {
+  const OrderId = formData.id;
+  try {
+    const response = await axios.patch(
+        `${URL}/Order/CompleteOrder?id=${OrderId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+    );
 
+    return response.data;
+  } catch (error) {
+    console.error("Error updating cancel order:", error);
+    console.log(OrderId)
+    throw error;
+  }
+};
 
 export const GetInvColorAvailableToAddOrder = async (formData: IPreOrderKeys[]) => {
   try {
