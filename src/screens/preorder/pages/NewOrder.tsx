@@ -16,12 +16,14 @@ const NewOrder: React.FC = () => {
     const [preOrderData, setPreOrderData] = useState<PreOrderData | null>(null);
     const [orderResult, setOrderResult] = useState<any | null>(null);
     const [preOrderMap, setPreOrderMap] = useState<any | null>(null);
+    const [preOrderPerExist, setPreOrderPerExist] = useState<any | null>(null);
 
     const handleClick = async (id: number) => {
         try {
             const preOrder = await getPreOrderById(id);
             const preOrderData = preOrder.data[0];
             const itemsData = preOrderData.items.invColors;
+            setPreOrderPerExist(preOrder.data[0].preOrderInProgress)
             setPreOrderData(preOrderData);
             setPreOrderMap([preOrderData.items]); // Wrap in an array to ensure it's iterable
             setOrderResult(itemsData);
@@ -120,6 +122,7 @@ const NewOrder: React.FC = () => {
         }
     ];
     console.log('OrderResult',orderResult)
+    console.log('preOrderPerExist',preOrderPerExist)
     return (
         <div>
             {orderResult && (

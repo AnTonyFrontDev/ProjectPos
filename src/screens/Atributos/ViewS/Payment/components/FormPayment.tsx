@@ -81,6 +81,16 @@ const PaymentForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate,
                     className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                 />
             </div>
+            <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-600">Numero de Doc:</label>
+                <input
+                    type="text"
+                    name="documentNumber"
+                    value={formData.documentNumber}
+                    onChange={handleInputChange}
+                    className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                />
+            </div>
 
             <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-600">Tipo de Pago:</label>
