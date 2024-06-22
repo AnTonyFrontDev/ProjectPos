@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { DetalleProps as DetalleOrderProps } from '../../../shared/interfaces/I_inventario';
-import { cancelOrder, getOrderById } from '@/shared/Api/Order/OrderApi';
+import {cancelOrder, completeOrder, getOrderById} from '@/shared/Api/Order/OrderApi';
 import { Descriptions, Modal, Table } from 'antd';
 import SearchFilter from '@/shared/SearchFilter';
 // const { Panel } = Collapse;
@@ -80,6 +80,25 @@ const OrderDetail: React.FC<DetalleOrderProps> = ({ Id: orderId }) => {
       },
     });
   };
+  const hanldeComplete = async (record: any,) => {
+    Modal.confirm({
+      title: 'Confirmar',
+      content: 'Está seguro de que desea relizar esta acción??',
+      okText: 'Si',
+      okType: 'link',
+      cancelText: 'No',
+      onOk: async () => {
+        // console.log('Delete:', record);
+        try {
+          await completeOrder(record);
+          window.location.href = '/Order/OrderDetail/'+orderId;
+        } catch (error) {
+          console.error('Error al completar la orden', error);
+        }
+      },
+    });
+  };
+
 
 
   if (!orderDetail) {
@@ -121,8 +140,8 @@ const OrderDetail: React.FC<DetalleOrderProps> = ({ Id: orderId }) => {
       </Descriptions>
       <div className='flex'>
         <div className="mb-4">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Editar
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={()=> hanldeComplete({id:orderId})}>
+            {statusOrder=="pendiente"?"Completar":"Desmarcar"}
           </button>
         </div>
         <div className="mb-4 ml-4 ">
