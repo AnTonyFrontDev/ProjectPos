@@ -16,14 +16,14 @@ const NewOrder: React.FC = () => {
     const [preOrderData, setPreOrderData] = useState<PreOrderData | null>(null);
     const [orderResult, setOrderResult] = useState<any | null>(null);
     const [preOrderMap, setPreOrderMap] = useState<any | null>(null);
-    const [preOrderPerExist, setPreOrderPerExist] = useState<any | null>(null);
+    const [preOrderInProgress, setpreOrderInProgress] = useState<any | null>(null);
 
     const handleClick = async (id: number) => {
         try {
             const preOrder = await getPreOrderById(id);
             const preOrderData = preOrder.data[0];
             const itemsData = preOrderData.items.invColors;
-            setPreOrderPerExist(preOrder.data[0].preOrderInProgress)
+            setpreOrderInProgress(preOrder.data[0].preOrderInProgress)
             setPreOrderData(preOrderData);
             setPreOrderMap([preOrderData.items]); // Wrap in an array to ensure it's iterable
             setOrderResult(itemsData);
@@ -122,12 +122,12 @@ const NewOrder: React.FC = () => {
         }
     ];
     console.log('OrderResult',orderResult)
-    console.log('preOrderPerExist',preOrderPerExist)
+    console.log('preOrderInProgress',preOrderInProgress)
     return (
         <div>
             {orderResult && (
                 <>
-                    <Order preOrderMap={preOrderMap} client={fullClientName} preId={Number(preorderId)} />
+                    <Order preOrderMap={preOrderMap} preOrderInProgress={preOrderInProgress} client={fullClientName} preId={Number(preorderId)} />
                     <div className='container my-4'>
                         <h1 className='text-2xl font-bold mb-4'>Items Disponibles</h1>
                         <Table columns={columns} dataSource={orderResult} rowKey={(record) => record.product.id} pagination={false} />

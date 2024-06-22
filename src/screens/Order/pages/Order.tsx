@@ -5,7 +5,7 @@ import { Table, Button } from 'antd';
 import { IOrderProduct, IOrderPost } from '@/shared/interfaces/order/IOrderPost';
 import { FormInputsClasses } from '@/shared/Common/cssComponent';
 
-const Order: React.FC<{ preOrderMap: any[], client: any, preId: number }> = ({ preOrderMap, client, preId }) => {
+const Order: React.FC<{ preOrderMap: any[], preOrderInProgress: any[]; client: any, preId: number }> = ({ preOrderMap, preOrderInProgress, client, preId }) => {
   const [products, setProducts] = useState<IOrderProduct[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [selectedQuantity, setSelectedQuantity] = useState<number>(0);
@@ -20,10 +20,15 @@ const Order: React.FC<{ preOrderMap: any[], client: any, preId: number }> = ({ p
     setSelectedProduct(selectedOption);
 
     const selectedItem = preOrderMap.flatMap((item: any) => item.invColors).find((invColor: any) => invColor.inventoryColorId === selectedOption.value);
-
+    // const selectedItem = preOrderInProgress.find((item: any) => item.id === selectedOption.value);
     console.log('selectedItem', selectedItem);
+    // const quantityProgress = preOrderInProgress
+    // .find((item: any) => item.id === selectedOption.value)?.quantity || 0;
+    const quantityProgress = preOrderInProgress.find((item: any ) => item.quantity ? item.quantity : 0)
+    console.log('quantityProgress', quantityProgress.quantity);
 
-    setMaxQuantity(selectedItem ? selectedItem.quantityPreOrder : 0);
+    const quantityPerItem = selectedItem ? Math.min(selectedItem.quantityPreOrder, quantityProgress.quantity) : 0;
+    setMaxQuantity(quantityPerItem);
     setSelectedQuantity(0);
   };
 
