@@ -7,7 +7,8 @@ export interface IPaymentUpdate {
   fkOrder: number;
   fkTypePayment: number;
   accountPayment: string;
-  fkBankAccount: number;
+  fkBankAccount: number | null;
+  documentNumber: string;
   amount: number;
 }
 
@@ -19,7 +20,8 @@ export class PaymentUpdateDto implements IPaymentUpdate {
   fkOrder: number;
   fkTypePayment: number;
   accountPayment: string;
-  fkBankAccount: number;
+  fkBankAccount: number | null;
+  documentNumber: string;
   amount: number;
 
   constructor(formData: IPaymentUpdate) {
@@ -29,7 +31,8 @@ export class PaymentUpdateDto implements IPaymentUpdate {
     this.fkOrder = formData.fkOrder;
     this.fkTypePayment = formData.fkTypePayment;
     this.accountPayment = formData.accountPayment;
-    this.fkBankAccount = formData.fkBankAccount;
+    this.fkBankAccount = formData.fkBankAccount ?? null;
+    this.documentNumber = formData.documentNumber;
     this.amount = formData.amount;
   }
 }

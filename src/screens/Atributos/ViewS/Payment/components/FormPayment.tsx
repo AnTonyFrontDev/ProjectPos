@@ -91,13 +91,25 @@ const PaymentForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate,
                     onChange={(selectedOption) => setFormData({ ...formData, fkTypePayment: selectedOption?.value || 0 })}
                 />
             </div>
+            {formData.fkTypePayment > 0 && typePaymentOptions.find(option => option.value === formData.fkTypePayment)?.label !== 'Efectivo' && (
+                <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-600">Cuenta de Banco:</label>
+                    <Select
+                        className={TableSelectsClasses}
+                        options={bankAccountOptions}
+                        value={bankAccountOptions.find((option) => option.value === formData.fkBankAccount)}
+                        onChange={(selectedOption) => setFormData({ ...formData, fkBankAccount: selectedOption?.value || null })}
+                    />
+                </div>
+            )}
             <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">Cuenta de Banco:</label>
-                <Select
-                    className={TableSelectsClasses}
-                    options={bankAccountOptions}
-                    value={bankAccountOptions.find((option) => option.value === formData.fkBankAccount)}
-                    onChange={(selectedOption) => setFormData({ ...formData, fkBankAccount: selectedOption?.value || 0 })}
+                <label className="block text-sm font-medium text-gray-600">Numero de Documento:</label>
+                <input
+                    type="text"
+                    name="documentNumber"
+                    value={formData.documentNumber}
+                    onChange={handleInputChange}
+                    className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                 />
             </div>
             <div className="mb-4">
