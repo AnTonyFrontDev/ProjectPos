@@ -40,6 +40,7 @@ interface Client {
   }
   
   export interface ISaleData {
+    id?: number
     clientName: string;
     amountBase:number;
     preOrder: PreOrder;

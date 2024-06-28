@@ -3,6 +3,8 @@ import { Table } from 'antd';
 import { getSaleById } from '@/shared/Api/Sale/SaleApi';
 import { ISaleData } from '@/shared/interfaces/Sale/ISaleDetail';
 import { DetalleProps as BillDetailProps } from '@/shared/interfaces/I_inventario';
+import Print from './Print';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 const { Column } = Table;
 
 const BillDetail = ({ Id: saleId }: BillDetailProps) => {
@@ -14,6 +16,7 @@ const BillDetail = ({ Id: saleId }: BillDetailProps) => {
       try {
         const data = await getSaleById(saleId);
         setSaleData(data);
+        console.log("data", data)
       } catch (error) {
         console.error(error);
       } finally {
@@ -21,6 +24,7 @@ const BillDetail = ({ Id: saleId }: BillDetailProps) => {
       }
     };
     fetchSaleData();
+    console.log(saleData)
   }, [saleId]);
 
   if (loading) {
@@ -31,56 +35,75 @@ const BillDetail = ({ Id: saleId }: BillDetailProps) => {
     return <div className="text-center mt-4">Error loading sale data</div>;
   }
 
-  const { preOrder, amount, itbis, fecha,amountBase } = saleData;
+  const { preOrder, amount, itbis, fecha, amountBase } = saleData;
   const { client, preOrderProducts } = preOrder;
 
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl mb-4">Factura</h1>
-      <div className="grid grid-cols-2 gap-2">
-        {/* Columna de Información del Cliente */}
-        <div className="bg-white shadow-md rounded-lg p-6 mr-3 mb-6">
-          <h2 className="text-xl font-bold mb-4">Información del Cliente</h2>
-          <p><strong>Nombre:</strong> {client.f_name} {client.f_surname} {client.l_surname}</p>
-          <p><strong>RNC:</strong> {client.rnc}</p>
-          <p><strong>DNI:</strong> {client.dni}</p>
+    <>
+      <div className="container mx-auto p-4">
+        <h1 className="text-2xl mb-4">Factura</h1>
+        <div className="grid grid-cols-2 gap-2">
+          {/* Columna de Información del Cliente */}
+          <div className="bg-white shadow-md rounded-lg p-6 mr-3 mb-6">
+            <h2 className="text-xl font-bold mb-4">Información del Cliente</h2>
+            <p><strong>Nombre:</strong> {client.f_name} {client.f_surname} {client.l_surname}</p>
+            <p><strong>RNC:</strong> {client.rnc}</p>
+            <p><strong>DNI:</strong> {client.dni}</p>
+          </div>
+
+          {/* Columna de Información de la Factura */}
+          <div className="bg-white shadow-md rounded-lg p-6 ml-3 mb-6">
+            <h2 className="text-xl font-bold mb-4">Información de la Factura</h2>
+            <p><strong>Fecha:</strong> {new Date(fecha).toLocaleString()}</p>
+            <p><strong>Monto:</strong> ${amountBase}</p>
+            <p><strong>ITBIS:</strong> ${itbis}</p>
+            <p><strong>Total a Pagar:</strong> ${amount}</p>
+          </div>
         </div>
 
-        {/* Columna de Información de la Factura */}
-        <div className="bg-white shadow-md rounded-lg p-6 ml-3 mb-6">
-          <h2 className="text-xl font-bold mb-4">Información de la Factura</h2>
-          <p><strong>Fecha:</strong> {new Date(fecha).toLocaleString()}</p>
-          <p><strong>Monto:</strong> ${amountBase}</p>
-          <p><strong>ITBIS:</strong> ${itbis}</p>
-          <p><strong>Total a Pagar:</strong> ${amount}</p>
+        <div className="bg-white shadow-md rounded-lg p-6 mb-6">
+          <h2 className="text-xl font-bold mb-4">Productos</h2>
+          <Table dataSource={preOrderProducts} rowKey="id" pagination={false}>
+            <Column title="Id" dataIndex={['product', 'id']} key="id" />
+            <Column title="Producto" dataIndex={['product', 'namE_PRODUCT']} key="product" />
+            <Column title="Color" dataIndex={['colorPrimary', 'colorname']} key="colorPrimary" />
+            <Column title="Cantidad" dataIndex="quantity" key="quantity" />
+            <Column title="Tamaño" dataIndex={['size', 'size']} key="size" />
+            <Column title="Descripción" dataIndex={['product', 'descriptioN_PRODUCT']} key="description" />
+            <Column title="Precio" dataIndex={'custoM_PRICE'} key="precio"
+              render={(text) => (
+                <span>$ {text}</span>
+              )} />
+            <Column
+              title="Precio Total"
+              dataIndex={['quantity', 'custoM_PRICE']}
+              key="totalPrice"
+              render={(text, record: any) => (
+                <span>$ {record.quantity * record.custoM_PRICE} {text}</span>
+              )}
+            />
+          </Table>
+        </div>
+
+        <div className="text-right">
+          <PDFDownloadLink
+            document={<Print saleData={saleData} />}
+            fileName={`Factura_${saleId}.pdf`}
+            style={{
+              textDecoration: 'none',
+              padding: '10px',
+              color: '#fff',
+              backgroundColor: '#007bff',
+              borderRadius: '5px',
+            }}
+          >
+            {({ loading }) => (loading ? 'Generando PDF...' : 'Guardar PDF')}
+          </PDFDownloadLink>
         </div>
       </div>
 
-      <div className="bg-white shadow-md rounded-lg p-6 mb-6">
-        <h2 className="text-xl font-bold mb-4">Productos</h2>
-        <Table dataSource={preOrderProducts} rowKey="id" pagination={false}>
-          <Column title="Id" dataIndex={['product', 'id']} key="id" />
-          <Column title="Producto" dataIndex={['product', 'namE_PRODUCT']} key="product" />
-          <Column title="Color" dataIndex={['colorPrimary', 'colorname']} key="colorPrimary" />
-          <Column title="Cantidad" dataIndex="quantity" key="quantity" />
-          <Column title="Tamaño" dataIndex={['size', 'size']} key="size" />
-          <Column title="Descripción" dataIndex={['product', 'descriptioN_PRODUCT']} key="description" />
-          <Column title="Precio" dataIndex={'custoM_PRICE'} key="precio"
-          render={(text) => (
-              <span>$ {text}</span>
-            )} />
-          <Column
-            title="Precio Total"
-            dataIndex={['quantity', 'custoM_PRICE']}
-            key="totalPrice"
-            render={(text, record: any) => (
-              <span>$ {record.quantity * record.custoM_PRICE} {text}</span>
-            )}
-          />
-        </Table>
-      </div>
-    </div>
+    </>
   );
 };
 
