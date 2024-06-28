@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useProductForm } from "../hooks/useProductForm";
 import { FormProps } from '@/components/Generics/Interface/IForms';
 import Select from 'react-select';
-import { TableSelectsClasses } from '@/shared/Common/cssComponent';
+import { TableSelectsClasses } from '@/shared/Common/stylesConst/cssComponent';
 import { ProductDtoPost, IProductPost } from '@/shared/interfaces/Product/IProductPost';
 
 

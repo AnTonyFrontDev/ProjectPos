@@ -4,7 +4,7 @@ import { usePaymentForm } from "../hooks/usePaymentForm";
 import { FormProps } from '@/components/Generics/Interface/IForms';
 import { IPaymentPost, PaymentDto } from '@/shared/interfaces/payment/IPaymentPost';
 import Select from 'react-select';
-import { TableSelectsClasses } from '@/shared/Common/cssComponent';
+import { TableSelectsClasses } from '@/shared/Common/stylesConst/cssComponent';
 
 
 const PaymentForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate,

@@ -5,7 +5,7 @@ import { useBankAccountForm } from "../hooks/useBankAccountForm";
 import { FormProps } from '@/components/Generics/Interface/IForms';
 import { BankAccountDto, IBankAccountPost } from "@/shared/interfaces/BankAccount/IBankAccountPost";
 import Select from 'react-select';
-import { TableSelectsClasses } from '@/shared/Common/cssComponent';
+import { TableSelectsClasses } from '@/shared/Common/stylesConst/cssComponent';
 
 const BankAccountForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate
 }) => {

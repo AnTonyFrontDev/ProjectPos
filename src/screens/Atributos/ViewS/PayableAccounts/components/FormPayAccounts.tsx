@@ -3,7 +3,7 @@ import { usePayAccountForm } from '../hooks/usePayAccountForm';
 import { FormProps } from '@/components/Generics/Interface/IForms';
 import { IPaymentExpenseDtoAdd, PaymentExpensesDtoAdd } from '@/shared/interfaces/PaymentExpenses/PaymentExpenseDtoAdd';
 import Select from 'react-select';
-import { TableSelectsClasses } from '@/shared/Common/cssComponent';
+import { TableSelectsClasses } from '@/shared/Common/stylesConst/cssComponent';
 
 
 const ExpensesForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate 

@@ -88,7 +88,7 @@ const BillDetail = ({ Id: saleId }: BillDetailProps) => {
 
         <div className="text-right">
           <PDFDownloadLink
-            document={<Print saleData={saleData} />}
+            document={<Print Data={saleData} />}
             fileName={`Factura_${saleId}.pdf`}
             style={{
               textDecoration: 'none',

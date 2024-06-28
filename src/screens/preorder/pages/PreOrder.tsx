@@ -10,7 +10,7 @@ import ButtonModal from '@/components/Generics/Modal/ButtonModal';
 import ViewForm from '@/components/FormularioV4/viewForm';
 import useClientOptions from '@/screens/AddInventory/hooks/useClientOptions';
 import { InputNumber } from 'antd';
-import { FormInputsClasses, TableHeadClasses, TableSelectsClasses } from '@/shared/Common/cssComponent';
+import { FormInputsClasses, TableHeadClasses, TableSelectsClasses } from '@/shared/Common/stylesConst/cssComponent';
 import { ISizeGet } from '@/shared/interfaces/size/ISizeGet';
 import { IColorGet } from '@/shared/interfaces/Color/IColorGet';
 

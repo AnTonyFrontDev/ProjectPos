@@ -4,7 +4,7 @@ import { DetalleProps as NewBillProps } from '@/shared/interfaces/I_inventario';
 import { useEffect, useState } from 'react';
 import { ISalePost } from '@/shared/interfaces/Sale/ISalePost';
 import { Table } from 'antd';
-import { FormInputsClasses } from '@/shared/Common/cssComponent';
+import { FormInputsClasses } from '@/shared/Common/stylesConst/cssComponent';
 // import { IPreOrder } from '@/shared/interfaces/Preorder/IPreOrder';
 
 const { Column } = Table

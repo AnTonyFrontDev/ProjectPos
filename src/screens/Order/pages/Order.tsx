@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Select from 'react-select';
 import { Table, Button } from 'antd';
 import { IOrderProduct, IOrderPost } from '@/shared/interfaces/order/IOrderPost';
-import { FormInputsClasses } from '@/shared/Common/cssComponent';
+import { FormInputsClasses } from '@/shared/Common/stylesConst/cssComponent';
 
 const Order: React.FC<{ preOrderMap: any[], preOrderInProgress: any[]; client: any, preId: number }> = ({ preOrderMap, preOrderInProgress, client, preId }) => {
   const [products, setProducts] = useState<IOrderProduct[]>([]);

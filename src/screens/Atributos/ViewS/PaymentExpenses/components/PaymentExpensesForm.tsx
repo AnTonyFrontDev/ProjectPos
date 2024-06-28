@@ -5,7 +5,7 @@ import { PaymentExpensesDtoAdd, IPaymentExpenseDtoAdd } from '@/shared/interface
 import useTypePaymentOptions from '../hooks/useTypePaymentOptions';
 // import useBankOptions from '../hooks/useBankOptions';
 import useBankAccountOptions from '../hooks/useBankAccountOptions';
-import { TableSelectsClasses } from '@/shared/Common/cssComponent';
+import { TableSelectsClasses } from '@/shared/Common/stylesConst/cssComponent';
 import Select from 'react-select';
 import useExpensesOptions from "@/screens/Atributos/ViewS/PaymentExpenses/hooks/useExpensesOptions.ts";
 
