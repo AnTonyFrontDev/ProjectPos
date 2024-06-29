@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { DetalleProps as DetalleOrderProps } from '../../../shared/interfaces/I_inventario';
-import {cancelOrder, completeOrder, getOrderById} from '@/shared/Api/Order/OrderApi';
+import { cancelOrder, completeOrder, getOrderById } from '@/shared/Api/Order/OrderApi';
 import { Descriptions, Modal, Table } from 'antd';
 import SearchFilter from '@/shared/SearchFilter';
+import Print from './OrderPrint';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 // const { Panel } = Collapse;
 
 const OrderDetail: React.FC<DetalleOrderProps> = ({ Id: orderId }) => {
@@ -21,11 +23,12 @@ const OrderDetail: React.FC<DetalleOrderProps> = ({ Id: orderId }) => {
         console.error('Error al obtener detalle de la orden:', error);
       }
     };
-
+    
     fetchData();
   }, [orderId]);
-
-  console.log(filteredItems)
+  
+  console.log('orderDetail', orderDetail)
+  // console.log(filteredItems)
 
   const handleSearch = (searchText: string) => {
     if (!orderDetail) return;
@@ -91,7 +94,7 @@ const OrderDetail: React.FC<DetalleOrderProps> = ({ Id: orderId }) => {
         // console.log('Delete:', record);
         try {
           await completeOrder(record);
-          window.location.href = '/Order/OrderDetail/'+orderId;
+          window.location.href = '/Order/OrderDetail/' + orderId;
         } catch (error) {
           console.error('Error al completar la orden', error);
         }
@@ -140,13 +143,13 @@ const OrderDetail: React.FC<DetalleOrderProps> = ({ Id: orderId }) => {
       </Descriptions>
       <div className='flex'>
         <div className="mb-4">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={()=> hanldeComplete({id:orderId})}>
-            {statusOrder=="pendiente"?"Completar":"Desmarcar"}
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => hanldeComplete({ id: orderId })}>
+            {statusOrder == "pendiente" ? "Completar" : "Desmarcar"}
           </button>
         </div>
         <div className="mb-4 ml-4 ">
           <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-            onClick={() => handleDelete({ id : orderId })}
+            onClick={() => handleDelete({ id: orderId })}
           >
             Eliminar
           </button>
@@ -166,6 +169,22 @@ const OrderDetail: React.FC<DetalleOrderProps> = ({ Id: orderId }) => {
         columns={columns}
         dataSource={filteredItems}
       />
+
+      <div className="text-right">
+        <PDFDownloadLink
+          document={<Print Data={orderDetail} />}
+          fileName={`Orden_${orderId}.pdf`}
+          style={{
+            textDecoration: 'none',
+            padding: '10px',
+            color: '#fff',
+            backgroundColor: '#007bff',
+            borderRadius: '5px',
+          }}
+        >
+          {({ loading }) => (loading ? 'Generando PDF...' : 'Guardar PDF')}
+        </PDFDownloadLink> 
+      </div>
 
     </div>
   );

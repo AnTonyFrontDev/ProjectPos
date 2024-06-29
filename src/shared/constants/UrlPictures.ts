@@ -1,0 +1,1 @@
+export const LOGORORAIMA = "https://lh4.googleusercontent.com/QOa6Hc4BVXS8rWrTzcNJ2_QB-iXdV0QbpIQDzOBrkgGQCUn1waF9vkcTUL6q5JlZI1Lc_zDFP9Q8jijyh1E0ZcI";

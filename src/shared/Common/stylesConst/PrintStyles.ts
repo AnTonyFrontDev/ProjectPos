@@ -31,6 +31,14 @@ const pdfStyles = StyleSheet.create({
     borderColor: '#e4e4e4',
     borderRadius: 5,
   },
+  sectionComplet: {
+    width: '90%',
+    margin: 'auto',
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#e4e4e4',
+    borderRadius: 5,
+  },
   sectionTitle: {
     fontSize: 16,
     marginBottom: 10,
@@ -54,6 +62,7 @@ const pdfStyles = StyleSheet.create({
     borderColor: '#e4e4e4',
     borderRadius: 5,
     overflow: 'hidden',
+    // margin: '10px 0px'
   },
   tableHeader: {
     flexDirection: 'row',

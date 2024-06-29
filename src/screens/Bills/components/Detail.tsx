@@ -3,7 +3,7 @@ import { Table } from 'antd';
 import { getSaleById } from '@/shared/Api/Sale/SaleApi';
 import { ISaleData } from '@/shared/interfaces/Sale/ISaleDetail';
 import { DetalleProps as BillDetailProps } from '@/shared/interfaces/I_inventario';
-import Print from './Print';
+import Print from './BillPrint';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 const { Column } = Table;
 

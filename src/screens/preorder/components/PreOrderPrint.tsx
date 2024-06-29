@@ -8,11 +8,12 @@ import {
 } from '@react-pdf/renderer';
 import { FormatCurrency } from '@/shared/Common/FormatCurrency';
 import pdfStyles from '@/shared/Common/stylesConst/PrintStyles';
+import { LOGORORAIMA } from '@/shared/constants/UrlPictures';
 
 import { ISaleData } from '@/shared/interfaces/Sale/ISaleDetail';
 
 
-const Print = ({ Data }: { Data: ISaleData }) => {
+const PreOrderPrint = ({ Data }: { Data: ISaleData }) => {
   const { preOrder, amount, itbis, fecha, amountBase } = Data;
   const { client, preOrderProducts } = preOrder;
 
@@ -20,7 +21,7 @@ const Print = ({ Data }: { Data: ISaleData }) => {
     <Document>
       <Page style={pdfStyles.page}>
         <View style={pdfStyles.titleContainer}>
-          <Image style={pdfStyles.logo} src="https://lh4.googleusercontent.com/QOa6Hc4BVXS8rWrTzcNJ2_QB-iXdV0QbpIQDzOBrkgGQCUn1waF9vkcTUL6q5JlZI1Lc_zDFP9Q8jijyh1E0ZcI" />
+          <Image style={pdfStyles.logo} src={LOGORORAIMA} />
           <Text style={pdfStyles.title}>Factura Bordados Roraima</Text>
         </View>
 
@@ -94,4 +95,4 @@ const Print = ({ Data }: { Data: ISaleData }) => {
   );
 };
 
-export default Print;
+export default PreOrderPrint;
