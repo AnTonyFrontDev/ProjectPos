@@ -6,7 +6,8 @@ import { getPreOrderById } from '@/shared/Api/PreOrder/PreOrderApi';
 import SearchFilter from '@/shared/SearchFilter';
 // import PreOrderReport from '../../report/reportPreOrder/components/Report';
 import { Link } from 'react-router-dom';
-
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import Print from './PreOrderPrint';
 
 
 const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => {
@@ -19,7 +20,6 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
         const fetchData = async () => {
             try {
                 const preOrderData = await getPreOrderById(preorderId);
-                console.log(preOrderData);
                 setDetallePreOrder(preOrderData.data[0]); // Obtén los datos de la preorden
                 setFilteredItems(preOrderData.data[0]?.items.preOrderProducts || []); // Establecer todos los productos como predeterminado
             } catch (error) {
@@ -70,8 +70,8 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
     }
 
     const { client } = detallePreOrder;
-    console.log('detallePreOrder ',detallePreOrder)
-    console.log('filteredItems ',filteredItems)
+    console.log('detallePreOrder ', detallePreOrder)
+    // console.log('filteredItems ', filteredItems)
 
     const columns = [
         { title: 'ID', dataIndex: 'id', key: 'id' },
@@ -84,27 +84,27 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
             title: 'Actions',
             key: 'actions',
             render: () => (
-              <span>   
-                  {/* <ButtonModal
+                <span>
+                    {/* <ButtonModal
                     buttonText="Editar"
                     modalTitle=""
                     className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-2 rounded'
                     size={15}
                     modalContent={<ViewForm usarForm={usarForm} formData={record} isUpdate={true} updateData={updateDataSource} />}
                   /> */}
-                <button
-                  className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-2 rounded'
-                >
-                  Editar
-                </button>
-                <button
-                  className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'
-                >
-                  Delete
-                </button>
-              </span>
+                    <button
+                        className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-2 rounded'
+                    >
+                        Editar
+                    </button>
+                    <button
+                        className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'
+                    >
+                        Delete
+                    </button>
+                </span>
             ),
-          },
+        },
     ];
 
 
@@ -138,9 +138,9 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
                 </div>
                 <div className="mb-4 ml-4 ">
                     {/* <Link to={`/billing/NewDetail/${preorderId}`}> */}
-                        <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                            Eliminar
-                        </button>
+                    <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                        Eliminar
+                    </button>
                     {/* </Link> */}
                 </div>
             </div>
@@ -160,6 +160,22 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
                 columns={columns}
                 dataSource={filteredItems}
             />
+
+            <div className="text-right">
+                <PDFDownloadLink
+                    document={<Print Data={detallePreOrder} />}
+                    fileName={`Pedido_${preorderId}.pdf`}
+                    style={{
+                        textDecoration: 'none',
+                        padding: '10px',
+                        color: '#fff',
+                        backgroundColor: '#007bff',
+                        borderRadius: '5px',
+                    }}
+                >
+                    {({ loading }) => (loading ? 'Generando PDF...' : 'Guardar PDF')}
+                </PDFDownloadLink>
+            </div> 
 
         </div >
     );
