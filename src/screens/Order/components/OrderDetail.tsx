@@ -108,7 +108,7 @@ const OrderDetail: React.FC<DetalleOrderProps> = ({ Id: orderId }) => {
     return <div>Cargando...</div>;
   }
 
-  const { detail, descriptionJob, statusOrder } = orderDetail;
+  const { detail, descriptionJob, statusOrder, observation } = orderDetail;
 
   const columns = [
     { title: 'ID', dataIndex: 'id', key: 'id' },
@@ -140,6 +140,7 @@ const OrderDetail: React.FC<DetalleOrderProps> = ({ Id: orderId }) => {
       <Descriptions title="Información de la Orden">
         <Descriptions.Item label="Descripcion de la orden">{descriptionJob}</Descriptions.Item>
         <Descriptions.Item label="Estado de la orden">{statusOrder}</Descriptions.Item>
+        <Descriptions.Item label="Observacion">{detail[0].observation}</Descriptions.Item>
       </Descriptions>
       <div className='flex'>
         <div className="mb-4">

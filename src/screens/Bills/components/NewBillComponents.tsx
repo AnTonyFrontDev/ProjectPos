@@ -53,6 +53,13 @@ const NewBill = ({ Id: preorderId }: NewBillProps) => {
         }));
     };
 
+    const handleChangeDirect = ({ name, value }: { name: string; value: string | number }) => {
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: name === 'itbis' ? Number(value) : value
+        }));
+    };
+
     if (loading) {
         return <div className="text-center mt-4">Loading...</div>;
     }
@@ -65,30 +72,32 @@ const NewBill = ({ Id: preorderId }: NewBillProps) => {
     return (
         <div className="container mx-auto">
             <h1 className="text-2xl mb-4">Agregar Factura</h1>
-            <div className='gap-4 inline-flex w-full'>
+            <div className='gap-4 inline-flex w-full mb-4'>
 
                 <div className="flex flex-col w-1/4">
-                    <label>CodigoIsc: </label>
+                    <label>Comprobante Fiscal: </label>
                     <input
                         name="codIsc"
                         value={formData.codIsc}
                         onChange={handleChange}
-                        placeholder="Código ISC"
+                        placeholder="Comprobante"
                         className={FormInputsClasses}
                     />
                 </div>
-                <div className="flex flex-col w-1/4">
+                <div className="flex flex-col w-1/8">
                     <label>Itbis: </label>
-                    <input
-                        type="number"
+                    <select
                         name="itbis"
-                        value={formData.itbis}
-                        onChange={handleChange}
-                        placeholder="ITBIS"
+                        value={formData.itbis.toString()}
+                        onChange={(e) => {
+                            const value = e.target.value === "1" ? 1 : 0;
+                            handleChangeDirect({ name: 'itbis', value }); // Use the refactored function here
+                        }}
                         className={FormInputsClasses}
-                        max={1}
-                        min={0}
-                    />
+                    >
+                        <option value="0">No</option>
+                        <option value="1">Sí</option>
+                    </select>
                 </div>
                 <div className="flex flex-col w-1/4">
                     <label>b14: </label>
