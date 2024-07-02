@@ -15,6 +15,31 @@ export const getPreOrders = async () : Promise<IPreOrderGet[]> => {
     throw error;
   }
 };
+
+// Función para obtener una PreOrder por su ID
+export const getPreOrderById = async (preorderId : number ) => {
+  try {
+    const response = await axios.get(
+      `${URL}/preorder/PreOrder/GetPreOrder?id=${preorderId}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching PreOrder with ID ${preorderId}:`, error);
+    throw error;
+  }
+};
+
+// Función para obtener una PreOrder por su ID
+export const GetPreOrderInprogressById = async (preorderId : number ) => {
+  try {
+    const response = await axios.get(
+      `${URL}/preorder/PreOrder/GetPreOrderInprogressById?id=${preorderId}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching PreOrder with ID ${preorderId}:`, error);
+    throw error;
+  }
+};
+
 // Función para obtener todas las PreOrder
 export const getPreOrdersPending = async () : Promise<IPreOrderGet[]> => {
   try {
@@ -39,22 +64,10 @@ export const GetPreOrdersPaginated = async (pages:number,items:number)  => {
 };
 
 
-// Función para obtener una PreOrder por su ID
-export const getPreOrderById = async (preorderId : number ) => {
-  try {
-    const response = await axios.get(
-      `${URL}/preorder/PreOrder/GetPreOrder?id=${preorderId}`);
-    return response.data;
-  } catch (error) {
-    console.error(`Error fetching PreOrder with ID ${preorderId}:`, error);
-    throw error;
-  }
-};
-
 // Función para agregar una nueva PreOrder
 export const addPreOrder = async (formData : IPreOrder) => {
   try {
-    const response = await axios.post('https://localhost:7065/api/preorder/PreOrder/AddPreOrder', formData, {
+    const response = await axios.post(`${URL}/preorder/PreOrder/AddPreOrder`, formData, {
       headers: {
         'Content-Type': 'application/json',
       },

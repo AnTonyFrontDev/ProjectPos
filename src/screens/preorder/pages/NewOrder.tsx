@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Table } from 'antd';
-import { getPreOrderById } from '@/shared/Api/PreOrder/PreOrderApi';
+import { getPreOrderById, GetPreOrderInprogressById } from '@/shared/Api/PreOrder/PreOrderApi';
 import Order from '../../Order/pages/Order';
 import { IClient } from '@/shared/interfaces/order/IOrderGet';
 
@@ -18,15 +18,23 @@ const NewOrder: React.FC = () => {
     const [preOrderMap, setPreOrderMap] = useState<any | null>(null);
     const [preOrderInProgress, setpreOrderInProgress] = useState<any | null>(null);
 
-    const handleClick = async (id: number) => {
+    const handlePreOrder = async (id: number) => {
         try {
             const preOrder = await getPreOrderById(id);
             const preOrderData = preOrder.data[0];
             const itemsData = preOrderData.items.invColors;
-            setpreOrderInProgress(preOrder.data[0].preOrderInProgress)
             setPreOrderData(preOrderData);
-            setPreOrderMap([preOrderData.items]); // Wrap in an array to ensure it's iterable
+            setPreOrderMap([preOrderData.items]); 
             setOrderResult(itemsData);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
+    const handlePreOrderProgress = async (id: number) => {
+        try {
+            const preOrderProgress = await GetPreOrderInprogressById(id);
+            setpreOrderInProgress(preOrderProgress.data)
         } catch (error) {
             console.error('Error:', error);
         }
@@ -34,7 +42,8 @@ const NewOrder: React.FC = () => {
 
     useEffect(() => {
         if (preorderId) {
-            handleClick(Number(preorderId));
+            handlePreOrder(Number(preorderId));
+            handlePreOrderProgress(Number(preorderId));
         }
     }, [preorderId]);
 
@@ -122,7 +131,7 @@ const NewOrder: React.FC = () => {
         }
     ];
     console.log('OrderResult',orderResult)
-    console.log('preOrderInProgress',preOrderInProgress)
+    // console.log('preOrderInProgress',preOrderInProgress)
     return (
         <div>
             {orderResult && (

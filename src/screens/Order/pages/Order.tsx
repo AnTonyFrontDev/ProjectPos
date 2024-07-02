@@ -20,16 +20,14 @@ const Order: React.FC<{ preOrderMap: any[], preOrderInProgress: any[]; client: a
     setSelectedProduct(selectedOption);
 
     const selectedItem = preOrderMap.flatMap((item: any) => item.invColors).find((invColor: any) => invColor.inventoryColorId === selectedOption.value);
-    // const selectedItem = preOrderInProgress.find((item: any) => item.id === selectedOption.value);
-    console.log('selectedItem', selectedItem);
-    // const quantityProgress = preOrderInProgress
-    // .find((item: any) => item.id === selectedOption.value)?.quantity || 0;
-    const quantityProgress = preOrderInProgress.find((item: any ) => item.quantity ? item.quantity : 0)
-    console.log('quantityProgress', quantityProgress.quantity);
+    //console.log('selectedItem', selectedItem);
+
+    const quantityProgress = preOrderInProgress.find((item: any) => item.quantity ? item.quantity : 0)
+    //console.log('quantityProgress', quantityProgress.quantity);
 
     const quantityPerItem = selectedItem ? Math.min(selectedItem.quantityPreOrder, quantityProgress.quantity) : 0;
     setMaxQuantity(quantityPerItem);
-    setSelectedQuantity(0);
+    setSelectedQuantity(quantityPerItem);
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -183,29 +181,39 @@ const Order: React.FC<{ preOrderMap: any[], preOrderInProgress: any[]; client: a
       </Table>
 
       <div className="mt-4">
-        <label className="block mb-2">Seleccionar Producto:</label>
-        <div className="flex space-x-4">
-          <Select
-            className="w-1/2"
-            options={preOrderMap.flatMap((item: any) =>
-              item.invColors.map((invColor: any) => ({
-                value: invColor.inventoryColorId,
-                label: `${invColor.product.name_prod} - ${invColor.size.size} - ${invColor.colorPrimary.colorname} - ${invColor.quantityPreOrder}`
-              }))
-            )}
-            value={selectedProduct}
-            onChange={handleProductChange}
-            isSearchable
-          />
-          <input
-            type="number"
-            value={selectedQuantity}
-            onChange={handleQuantityChange}
-            className={FormInputsClasses}
-            max={maxQuantity}
-            min={0}
-            step={0}
-          />
+        <div className='flex justify-between items-start'>
+          <div className='w-1/2 pr-2'>
+            <label className="block mb-2">Seleccionar Producto:</label>
+            <div className="">
+              <Select
+                className="w-full"
+                options={preOrderMap.flatMap((item: any) =>
+                  item.invColors.map((invColor: any) => ({
+                    value: invColor.inventoryColorId,
+                    label: `${invColor.product.name_prod} - ${invColor.size.size} - ${invColor.colorPrimary.colorname}`
+                  }))
+                )}
+                value={selectedProduct}
+                onChange={handleProductChange}
+                isSearchable
+              />
+            </div>
+          </div>
+          <div className='w-1/2 pl-2'>
+
+            <label className="block mb-2">Cantidad:</label>
+            <div className=''>
+              <input
+                type="number"
+                value={selectedQuantity}
+                onChange={handleQuantityChange}
+                className={FormInputsClasses}
+                max={maxQuantity}
+                min={0}
+                step="1"
+              />
+            </div>
+          </div>
         </div>
         <div className='flex flex-col w-1/2 mt-4'>
           <label>Observaciones:</label>
