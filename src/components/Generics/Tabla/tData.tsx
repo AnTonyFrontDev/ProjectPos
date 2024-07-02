@@ -67,7 +67,7 @@ export const ExpensesTable: (IExpensesColumns | any)[] = [
 export const productTable: (IProductColumns | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
   { title: 'Nombre del Producto', dataIndex: 'name_prod', key: 'name_prod' },
-  { title: 'Descripción', dataIndex: 'description', key: 'description' },
+  { title: 'Marca', dataIndex: 'description', key: 'description' },
   { title: 'Precio de Venta', dataIndex: 'sale_price', key: 'sale_price' },
   { title: 'Tipo', dataIndex: 'type', key: 'type' },
 ];

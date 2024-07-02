@@ -38,8 +38,8 @@ const BankAccountForm: React.FC<FormProps> = ({ formData: initialFormData, isUpd
             await handleUpdate(event);
         } else {
             await handleSubmit(event);
-            window.location.reload();
         }
+        window.location.reload();
     };
     return (
         <>

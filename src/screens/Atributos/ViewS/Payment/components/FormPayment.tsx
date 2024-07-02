@@ -47,8 +47,8 @@ const PaymentForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate,
             await handleUpdate(event);
         } else {
             await handleSubmit(event);
-            window.location.reload();
         }
+        window.location.reload();
     };
 
     return (

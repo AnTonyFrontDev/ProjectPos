@@ -17,6 +17,7 @@ const ColorForm: React.FC = () => {
   const onSubmitHandler = async (event: React.FormEvent) => {
     event.preventDefault();
     await handleSubmit(event);
+    console.log(formData)
     window.location.reload();
   };
 
@@ -53,7 +54,7 @@ const ColorForm: React.FC = () => {
       <div className="flex justify-end space-x-2">
 
         <button type="submit" className="bg-blue-500 text-white p-2 rounded-md">
-          Submit
+          Enviar 
         </button>
         {/* <Link to="/atributos/Color" className="bg-red-500 text-white p-2 rounded-md">
           Cancel

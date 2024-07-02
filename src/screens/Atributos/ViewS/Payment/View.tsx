@@ -57,6 +57,8 @@ const View = () => {
               filterColumn={filterColumn}
               sortDirection={sortDirection}
               showActions={true}
+              notEditable={true}
+              
             />
           )}
         </GenericPagination>

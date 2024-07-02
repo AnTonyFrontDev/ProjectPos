@@ -13,7 +13,7 @@ const Product = () => {
   const routes = [
     { title: 'Home', path: '/' },
     { title: 'Dashboard', path: '/' },
-    { title: 'Inventory', path: '/inventory' }
+    { title: 'Productos', path: '/productos' }
   ];
 
   const navigate = useNavigate();
