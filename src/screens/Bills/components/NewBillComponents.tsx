@@ -3,14 +3,14 @@ import { addSale } from '@/shared/Api/Sale/SaleApi';
 import { DetalleProps as NewBillProps } from '@/shared/interfaces/I_inventario';
 import { useEffect, useState } from 'react';
 import { ISalePost } from '@/shared/interfaces/Sale/ISalePost';
-import { Table } from 'antd';
+import { Table, Descriptions } from 'antd';
 import { FormInputsClasses } from '@/shared/Common/stylesConst/cssComponent';
-// import { IPreOrder } from '@/shared/interfaces/Preorder/IPreOrder';
 
 const { Column } = Table
 
 const NewBill = ({ Id: preorderId }: NewBillProps) => {
     const [preOrderData, setPreOrderData] = useState<any | null>(null);
+    const [clientData, setClientData] = useState<any | null>(null);
     const [loading, setLoading] = useState(true);
     const [formData, setFormData] = useState<ISalePost>({
         fkOrder: preorderId,
@@ -24,6 +24,7 @@ const NewBill = ({ Id: preorderId }: NewBillProps) => {
             try {
                 const data = await getPreOrderById(preorderId);
                 setPreOrderData(data.data[0].items);
+                setClientData(data.data[0].client[0]);
             } catch (error) {
                 console.error(error);
             } finally {
@@ -33,7 +34,8 @@ const NewBill = ({ Id: preorderId }: NewBillProps) => {
         fetchPreOrderData();
     }, [preorderId]);
 
-    console.log(preOrderData)
+    console.log('preOrderData',preOrderData)
+    console.log('clientData', clientData)
 
     const handleAddSale = async () => {
         try {
@@ -72,6 +74,17 @@ const NewBill = ({ Id: preorderId }: NewBillProps) => {
     return (
         <div className="container mx-auto">
             <h1 className="text-2xl mb-4">Agregar Factura</h1>
+            <div className='my-2'>
+
+            {clientData && (
+                <Descriptions title="Informacion de Cliente" >
+                    <Descriptions.Item label="Nombre de cliente">{clientData.f_name}{clientData.l_name} {clientData.f_surname} {clientData.l_surname}</Descriptions.Item>
+                    <Descriptions.Item label="RNC">{clientData.rnc}</Descriptions.Item>
+                    <Descriptions.Item label="DNI">{clientData.dni}</Descriptions.Item>
+                    <Descriptions.Item label="Phone Number">{clientData.phones[0]?.number}</Descriptions.Item>
+                </Descriptions>
+            )}
+            </div>
             <div className='gap-4 inline-flex w-full mb-4'>
 
                 <div className="flex flex-col w-1/4">
