@@ -18,6 +18,7 @@ export const useTypeProdForm = () => {
     e.preventDefault();
     console.log('TypeProd Data:', formData);
     GenericRequest(formData, SaveTypeProd, "TypeProd data submitted successfully");
+    window.location.reload();
   };
   
   const handleUpdate = (e: React.FormEvent) => {
@@ -25,6 +26,7 @@ export const useTypeProdForm = () => {
     const updateData: ITypeProdUpdate = new TypeProdUpdateDto(formData);
     console.log('TypeProd Data:', updateData);
     GenericRequest(updateData, UpdateTypeProd, "TypeProd data updated successfully");
+    window.location.reload();
   };
 
   return { formData, setFormData, handleInputChange, handleSubmit, handleUpdate };

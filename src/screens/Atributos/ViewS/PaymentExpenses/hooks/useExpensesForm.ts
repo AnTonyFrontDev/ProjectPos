@@ -19,6 +19,7 @@ export const usePaymentExpensesForm = () => {
     e.preventDefault();
     console.log('Expenses Data:', formData);
     GenericRequest(formData, SavePaymentExpenses, "Payment expenses submitted successfully");
+    window.location.reload();
   };
   
 const handleSelect = (e : React.ChangeEvent<HTMLSelectElement>) =>{
@@ -34,6 +35,7 @@ const handleSelect = (e : React.ChangeEvent<HTMLSelectElement>) =>{
     const updateData: IExpensesUpdate = new ExpensesUpdateDto(formData as IExpensesUpdate);
     console.log('Expenses Data:', updateData);
     GenericRequest(updateData, UpdateExpenses, "Expenses data updated successfully");
+    window.location.reload();
   };
 
   return { formData, setFormData, handleInputChange, handleSubmit, handleUpdate,handleSelect };

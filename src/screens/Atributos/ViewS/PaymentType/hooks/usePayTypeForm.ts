@@ -16,6 +16,7 @@ export const usePaymentTypeForm = () => {
     e.preventDefault();
     console.log('PaymentType Data:', formData);
     GenericRequest(formData, SavePaymentType, "PaymentType data submitted successfully");
+    window.location.reload();
   };
   
   const handleUpdate = (e: React.FormEvent) => {
@@ -23,6 +24,7 @@ export const usePaymentTypeForm = () => {
     const updateData: IPaymentTypeUpdate = new PaymentTypeUpdateDto(formData);
     console.log('PaymentType Data:', updateData);
     GenericRequest(updateData, UpdatePaymentType, "PaymentType data updated successfully");
+    window.location.reload();
   };
 
   return { formData, setFormData, handleInputChange, handleSubmit, handleUpdate };

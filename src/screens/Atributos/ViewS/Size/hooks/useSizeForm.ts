@@ -34,6 +34,7 @@ export const useSizeForm = () => {
     const updateData: ISizeUpdate = new SizeUpdateDto(formData as ISizeUpdate);
     console.log('Expenses Data:', updateData);
     GenericRequest(updateData, UpdateSize, "Expenses data updated successfully");
+    window.location.reload();
   };
 
   return { formData, setFormData, handleInputChange, handleSubmit, handleUpdate, handleSelect };

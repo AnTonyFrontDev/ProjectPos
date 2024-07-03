@@ -37,6 +37,7 @@ export const useClientForm = () => {
     // Additional actions before sending the client data to the database
     console.log('Client Data:', formData);
     GenericRequest(formData, saveClient, "Client data submitted successfully");
+    window.location.reload();
   };
 
   return { formData, handleInputChange, addPhone, handlePhoneInputChange, handleSubmit };

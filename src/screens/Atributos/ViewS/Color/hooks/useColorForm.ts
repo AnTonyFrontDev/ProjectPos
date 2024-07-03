@@ -20,12 +20,8 @@ export const useColorForm = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Additional actions before sending the color data to the database
-    console.log('Color Data:', formData);
     GenericRequest(formData, SaveColor, "Color data submitted successfully");
-    console.log('Color Data:', formData);
-    // window.location.reload();
-    // window.location.reload();
-    //navigate('/atributos/Color');
+    window.location.reload();
   };
 
   return { formData, setFormData, handleInputChange, handleColorChange, handleSubmit };

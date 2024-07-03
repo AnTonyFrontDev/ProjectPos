@@ -12,19 +12,19 @@ export const useBankForm = () => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     console.log('Bank Data:', formData);
     GenericRequest(formData, SaveBank, "Bank data submitted successfully");
+    window.location.reload();
   };
-
-  const handleUpdate = (e: React.FormEvent) => {
+  
+  const handleUpdate = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const updateData: IBankUpdate = new BankUpdateDto(formData);
     console.log('Bank Data:', updateData);
-    GenericRequest(updateData, UpdateBank, "Bank data updated successfully");;
+    GenericRequest(updateData, UpdateBank, "Bank data updated successfully");
   };
-
 
 return { formData, setFormData, handleInputChange, handleSubmit, handleUpdate };
 };

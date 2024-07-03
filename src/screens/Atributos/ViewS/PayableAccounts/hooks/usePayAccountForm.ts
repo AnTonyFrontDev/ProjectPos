@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';
 import {
-  getExpenses,
   getExpensesPending,
   SavePaymentExpenses,
   UpdatePaymentExpenses
@@ -27,6 +26,7 @@ export const usePayAccountForm = () => {
     e.preventDefault();
     // console.log('Expenses Data:', formData);
     GenericRequest(formData, SavePaymentExpenses, "PaymentExpenses data submitted successfully");
+    window.location.reload();
   };
 
   //no funciona temporal --
@@ -35,6 +35,7 @@ export const usePayAccountForm = () => {
     const updateData: IPaymentExpenseDtoUpdate = new PaymentExpensesDtoUpdate(formData as IPaymentExpenseDtoUpdate);
     // console.log('Expenses Data:', updateData);
     GenericRequest(updateData, UpdatePaymentExpenses, "PaymentExpenses data updated successfully");
+    window.location.reload();
   };
 
   const loadTypePaymentOptions = async () => {

@@ -22,14 +22,18 @@ const BankForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }) 
         setFormData(initialFormData)
     };
 
-    const onSubmitHandler = async (event: React.FormEvent) => {
+    const onSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        if (isUpdate) {
-            await handleUpdate(event);
-        } else {
-            await handleSubmit(event);
+        try {
+            // Assuming handleSubmit and handleUpdate have been refactored to return Promises
+            if (isUpdate) {
+                await handleUpdate(event);
+            } else {
+                await handleSubmit(event);
+            }
+        } catch (error) {
+            console.error("Error al enviar el formulario:", error);
         }
-        window.location.reload();
     };
     return (
         <>

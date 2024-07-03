@@ -21,6 +21,7 @@ export const useProductForm = () => {
     e.preventDefault();
     console.log('Product Data:', formData);
     GenericRequest(formData, SaveProduct, "Payment data submitted successfully");
+    window.location.reload();
   };
 
   const handleUpdate = (e: React.FormEvent) => {
@@ -28,6 +29,7 @@ export const useProductForm = () => {
     const updateData: IProductUpdate = new ProductUpdateDto(formData);
     console.log('Product Data:', updateData);
     GenericRequest(updateData, UpdateProduct, "Payment data updated successfully");
+    window.location.reload();
   };
 
   const loadTypeProdOptions = async () => {

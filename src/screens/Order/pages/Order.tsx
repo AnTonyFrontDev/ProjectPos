@@ -102,6 +102,7 @@ const Order: React.FC<{ preOrderMap: any[], preOrderInProgress: any[]; client: a
       setProducts([]);
 
       alert('Orden guardada exitosamente');
+      window.location.reload();
     } catch (error) {
       console.error('Error al guardar la orden:', error);
       alert('Error al guardar la orden. Por favor, inténtalo de nuevo.');

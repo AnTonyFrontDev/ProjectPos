@@ -17,6 +17,7 @@ export const useCategorySizeForm = () => {
     e.preventDefault();
     console.log('CategorySize Data:', formData);
     GenericRequest(formData, SaveCategorySize, "CategorySize data submitted successfully");
+    window.location.reload();
   };
   
   const handleUpdate = (e: React.FormEvent) => {
@@ -24,6 +25,7 @@ export const useCategorySizeForm = () => {
     const updateData: ICategorySizeUpdate = new CategorySizeUpdateDto(formData);
     console.log('CategorySize Data:', updateData);
     GenericRequest(updateData, UpdateCategorySize, "CategorySize data updated successfully");
+    window.location.reload();
   };
 
   return { formData, setFormData, handleInputChange, handleSubmit, handleUpdate };
