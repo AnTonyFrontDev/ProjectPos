@@ -18,17 +18,28 @@ const Order: React.FC<{ preOrderMap: any[], preOrderInProgress: any[]; client: a
 
   const handleProductChange = (selectedOption: any) => {
     setSelectedProduct(selectedOption);
-
-    const selectedItem = preOrderMap.flatMap((item: any) => item.invColors).find((invColor: any) => invColor.inventoryColorId === selectedOption.value);
-    //console.log('selectedItem', selectedItem);
-
-    const quantityProgress = preOrderInProgress.find((item: any) => item.quantity ? item.quantity : 0)
-    //console.log('quantityProgress', quantityProgress.quantity);
-
-    const quantityPerItem = selectedItem ? Math.min(selectedItem.quantityPreOrder, quantityProgress.quantity) : 0;
+  
+    // Buscar el elemento seleccionado en preOrderMap
+    const selectedItem = preOrderMap.flatMap((item: any) => item.invColors)
+      .find((invColor: any) => invColor.inventoryColorId === selectedOption.value);
+    console.log('selectedItem', selectedItem);
+  
+    // Buscar el progreso de la pre-orden correspondiente
+    const quantityProgress = preOrderInProgress.find((item: any) => {
+      return item.productId === selectedItem.product.id &&
+             item.sizeId === selectedItem.size.id &&
+             item.colorPrimaryId === selectedItem.colorPrimary.id &&
+             item.colorSecondary === selectedItem.colorSecondary.id;
+    });
+    console.log('quantityProgress', quantityProgress);
+  
+    // Determinar la cantidad máxima
+    const quantityPerItem = selectedItem && quantityProgress ? Math.min(selectedItem.quantityPreOrder, quantityProgress.quantity) : 0;
     setMaxQuantity(quantityPerItem);
     setSelectedQuantity(quantityPerItem);
   };
+  
+  
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;

@@ -7,15 +7,16 @@ import { DATE } from '@/shared/Common/CurrentDate';
 
 const PaymentDetail: React.FC<DetalleOrderProps> = ({ Id: orderId }) => {
   const [orderDetail, setOrderDetail] = useState<any>(null);
-
+  const [payment, setPaymentDetail] = useState<any>(null);
   const navigate = useNavigate();
   
   useEffect(() => {
     const fetchData = async () => {
       try {
         const orderData = await getPaymentByOrderId(orderId);
-        setOrderDetail(orderData.data.payments); // Obtén los detalles de la orden
-        console.log('orderDetail', orderData);
+        setOrderDetail(orderData.data);
+        setPaymentDetail(orderData.data.payments); // Obtén los detalles de la orden
+        console.log('orderDetail', orderData.data.amountPending);
       } catch (error) {
         console.error('Error al obtener detalle de la orden:', error);
       }
@@ -49,11 +50,11 @@ const PaymentDetail: React.FC<DetalleOrderProps> = ({ Id: orderId }) => {
   };
 
 
-  if (!orderDetail) {
+  if (!payment) {
     return <div>Cargando...</div>;
   }
 
-  const client = orderDetail[0]?.client;
+  const client = payment[0]?.client;
   const columns = [
     {
       title: 'ID',
@@ -85,11 +86,11 @@ const PaymentDetail: React.FC<DetalleOrderProps> = ({ Id: orderId }) => {
       dataIndex: 'documentNumber',
       key: 'documentNumber',
     },
-    {
-      title: 'Monto Pendiente',
-      dataIndex: 'amountPending',
-      key: 'amountPending',
-    },
+    // {
+    //   title: 'Monto Pendiente',
+    //   dataIndex: 'amountPending',
+    //   key: 'amountPending',
+    // },
     {
       title: 'Acciones',
       key: 'action',
@@ -109,11 +110,12 @@ const PaymentDetail: React.FC<DetalleOrderProps> = ({ Id: orderId }) => {
         <Descriptions.Item label="Apellido">{client?.f_surname} {client?.l_surname}</Descriptions.Item>
         <Descriptions.Item label="RNC">{client?.rnc}</Descriptions.Item>
         <Descriptions.Item label="DNI">{client?.dni}</Descriptions.Item>
+        <Descriptions.Item label="Monto Pendiente">{orderDetail.amountPending}</Descriptions.Item>
       </Descriptions>
       
       <Table
         className='mt-4'
-        dataSource={orderDetail}
+        dataSource={payment}
         columns={columns}
         rowKey="id"
         pagination={false}

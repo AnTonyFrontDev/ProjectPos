@@ -35,6 +35,7 @@ const NewOrder: React.FC = () => {
         try {
             const preOrderProgress = await GetPreOrderInprogressById(id);
             setpreOrderInProgress(preOrderProgress.data)
+            // console.log('preOrderProgress',preOrderProgress)
         } catch (error) {
             console.error('Error:', error);
         }
@@ -130,7 +131,7 @@ const NewOrder: React.FC = () => {
             }
         }
     ];
-    console.log('OrderResult',orderResult)
+    // console.log('OrderResult',orderResult)
     // console.log('preOrderInProgress',preOrderInProgress)
     return (
         <div>
