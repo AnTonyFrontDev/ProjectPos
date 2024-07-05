@@ -34,6 +34,7 @@ function ListOrders() {
 
     const handleTableRowClick = (record: any) => {
         // Al hacer clic en una fila, establece el ID del producto seleccionado y muestra el detalle
+        console.log('record', record);
         navigate(`/Order/OrderDetail/${record.id}`);
     };
 

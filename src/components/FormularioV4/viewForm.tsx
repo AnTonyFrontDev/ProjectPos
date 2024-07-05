@@ -16,6 +16,7 @@ const FormPaymentType = lazy(() => import('@/screens/Atributos/ViewS/PaymentType
 const FormPayment = lazy(() => import('@/screens/Atributos/ViewS/Payment/components/FormPayment'));
 const FormExpenses = lazy(() => import('@/screens/Atributos/ViewS/Expenses/components/FormExpenses'));
 const FormPayableAccount = lazy(() => import('@/screens/Atributos/ViewS/PayableAccounts/components/FormPayAccounts'));
+const FormPreOrder = lazy(() => import('@/screens/preorder/components/FormPreOrder'));
 
 const formComponents: IFormComponents = {
   Product: ProductForm,
@@ -29,7 +30,8 @@ const formComponents: IFormComponents = {
   TypePay: FormPaymentType,
   Payment: FormPayment,
   Expenses: FormExpenses,
-  PayableAccount:FormPayableAccount
+  PayableAccount:FormPayableAccount,
+  PreOrder:FormPreOrder
 };
 
 const ViewForm: React.FC<IViewFormProps> = ({ usarForm, formData, isUpdate }) => {

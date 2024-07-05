@@ -6,9 +6,7 @@ import { useEffect, useState } from 'react';
 
 import { ReceivableTable } from "@/components/Generics/Tabla/tData";
 import { GetAccountsReceivable } from "@/shared/Api/PreOrder/PreOrderApi";
-// import {CompleteExpense, GetAccountsPayable, RemoveExpenses } from "@/shared/Api/Expenses/ExpensesApi";
-// import {ExpensesUpdateDto} from "@/shared/interfaces/Expenses/IExpensesUpdate.ts";
-//import G_Options from "@/components/Generics/gOptions";
+import { useNavigate } from "react-router-dom";
 
 const View = () => {
   const routes = [
@@ -17,18 +15,13 @@ const View = () => {
     { title: 'CuentasPorCobrar', path: '/atributos/CuentasPorCobrar' }
   ];
 
+  const navigate = useNavigate();
+
 
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [filterColumn, setFilterColumn] = useState<string>('');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
-  //funcion para pagar
-  //extraer logica de aqui
-//   const payAccount = async (obj: ExpensesUpdateDto)=>{
-//     await CompleteExpense(obj.id);
-//     //refrescar la pagina cuando termine la ejecucion
-//     window.location.reload();
-
-//   }
+ 
   useEffect(() => {
     // Puedes realizar alguna acción específica cuando cambia la lista de bancos
   }, [searchTerm, filterColumn, sortDirection]);
@@ -45,6 +38,12 @@ const View = () => {
   // Function to toggle sorting direction
   const handleSortToggle = () => {
     setSortDirection((prevSortDirection) => (prevSortDirection === 'asc' ? 'desc' : 'asc') as 'asc' | 'desc');
+  };
+
+  const handleTableRowClick = (record: any) => {
+    console.log(record);
+    // Al hacer clic en una fila, establece el ID del producto seleccionado y muestra el detalle
+    navigate(`/preOrder/PreOrderDetail/${record.id}`);
   };
 
   return (
@@ -66,7 +65,7 @@ const View = () => {
           searchTerm={searchTerm}
           filterColumn={filterColumn}
           sortDirection={sortDirection}
-        //   customButton= {['Pagar',payAccount]}
+          handleTableRowClick={handleTableRowClick}
         />
       </div>
     </div>

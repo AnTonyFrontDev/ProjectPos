@@ -65,6 +65,14 @@ const router: RouteObject[] = [
     ),
   },
   {
+    path: '/atributos/Payment/:paymentId',
+    element: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <Payment />
+      </Suspense>
+    ),
+  },
+  {
     path: '/atributos/PaymentType',
     element: (
       <Suspense fallback={<div>Loading...</div>}>

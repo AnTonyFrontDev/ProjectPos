@@ -18,6 +18,17 @@ export const getPayments = async () => {
     throw error;
   }
 };
+
+export const getPaymentByOrderId = async (orderId : number) => {
+  try {
+    const response = await axios.get(`${URL}/Payment/GetPaymentByOrderId?id=${orderId}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error ID ${orderId}:`, error);
+    throw error;
+  }
+};
+
 export const GetPaymentsPaginated = async (page:number,itemsPerPage:number) => {
   try {
         return await axios.get(
@@ -29,6 +40,7 @@ export const GetPaymentsPaginated = async (page:number,itemsPerPage:number) => {
     console.error("Error retrieving payment types:", error);
   }
 };
+
 export const SavePayment = async (formData: IPaymentPost) => {
   try {
     const formattedData = formData;

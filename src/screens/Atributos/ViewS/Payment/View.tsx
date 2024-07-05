@@ -7,6 +7,7 @@ import { paymentTable } from "@/components/Generics/Tabla/tData";
 import { GetPaymentsPaginated, RemovePayment } from "@/shared/Api/Payment/PaymentApi";
 import G_Options from "@/components/Generics/gOptions";
 import GenericPagination from "@/components/PaginationComponents/GenericPagination";
+import { useNavigate } from "react-router-dom";
 
 const View = () => {
   const routes = [
@@ -14,6 +15,8 @@ const View = () => {
     { title: 'Atributos', path: '/atributos' },
     { title: 'Pagos', path: '/atributos/Payment' }
   ];
+
+  const navigate = useNavigate();
 
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [filterColumn, setFilterColumn] = useState<string>('');
@@ -31,6 +34,11 @@ const View = () => {
   // Function to toggle sorting direction
   const handleSortToggle = () => {
     setSortDirection((prevSortDirection) => (prevSortDirection === 'asc' ? 'desc' : 'asc') as 'asc' | 'desc');
+  };
+
+  const handleTableRowClick = (record: any) => {
+    // Al hacer clic en una fila, establece el ID del producto seleccionado y muestra el detalle
+    navigate(`/atributos/Payment/${record.idOrder}`);
   };
 
   return (
@@ -56,9 +64,8 @@ const View = () => {
               searchTerm={searchTerm}
               filterColumn={filterColumn}
               sortDirection={sortDirection}
-              showActions={true}
-              notEditable={true}
-              
+              handleTableRowClick={handleTableRowClick}
+
             />
           )}
         </GenericPagination>

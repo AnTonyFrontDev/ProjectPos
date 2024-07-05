@@ -91,3 +91,23 @@ export const GetAccountsReceivable = async ()=>{
       throw error;
   }
 };
+
+export const RemovePreOrder = async (formData: any) => {
+  try {
+    const formattedData = formData;
+    const response = await axios.delete(
+      `${URL}/preorder/PreOrder/RemovePreOrder?id=${formData}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: formattedData,
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Error updating payment:", error);
+    throw error;
+  }
+};

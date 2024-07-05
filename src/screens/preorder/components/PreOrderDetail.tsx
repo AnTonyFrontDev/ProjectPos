@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Descriptions, Table } from 'antd';
 import { DetalleProps as DetallePreOrdersProps } from '@/shared/interfaces/I_inventario';
-import { getPreOrderById } from '@/shared/Api/PreOrder/PreOrderApi';
-// import OrderForm from './CheckOrder';
+import { getPreOrderById, RemovePreOrder } from '@/shared/Api/PreOrder/PreOrderApi';
 import SearchFilter from '@/shared/SearchFilter';
-// import PreOrderReport from '../../report/reportPreOrder/components/Report';
 import { Link } from 'react-router-dom';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import Print from './PreOrderPrint';
-
+import ButtonModal from '@/components/Generics/Modal/ButtonModal';
+import ViewForm from '@/components/FormularioV4/viewForm';
+import DeleteButton from '@/components/Generics/Modal/DeleteModal';
+import G_Options from '@/components/Generics/gOptions';
+import { RemovePreOrderProduct } from '@/shared/Api/PreOrder/PreOrderProductApi';
 
 const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => {
     const [detallePreOrder, setDetallePreOrder] = useState<any>(null);
@@ -83,25 +85,22 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
         {
             title: 'Actions',
             key: 'actions',
-            render: () => (
+            render: (text : any, record : any) => (
+                console.log('record ', record),
                 <span>
-                    {/* <ButtonModal
-                    buttonText="Editar"
-                    modalTitle=""
-                    className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-2 rounded'
-                    size={15}
-                    modalContent={<ViewForm usarForm={usarForm} formData={record} isUpdate={true} updateData={updateDataSource} />}
-                  /> */}
-                    <button
+                    <ButtonModal
+                        buttonText="Editar"
+                        modalTitle=""
                         className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-2 rounded'
-                    >
-                        Editar
-                    </button>
-                    <button
-                        className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'
-                    >
-                        Delete
-                    </button>
+                        size={15}
+                        modalContent={<ViewForm usarForm="PreOrder" formData={record} isUpdate={true} />}
+                    />
+                    <DeleteButton
+                        onRemove={RemovePreOrderProduct}
+                        formData={{ preorderId: record.id }}
+                        confirmationMessage="¿Estás seguro de que deseas eliminar este Pedido?"
+                        navigatePath={`/preOrder`}
+                    />
                 </span>
             ),
         },
@@ -137,11 +136,12 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
                     </Link>
                 </div>
                 <div className="mb-4 ml-4 ">
-                    {/* <Link to={`/billing/NewDetail/${preorderId}`}> */}
-                    <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                        Eliminar
-                    </button>
-                    {/* </Link> */}
+                    <DeleteButton
+                        onRemove={RemovePreOrder}
+                        formData={preorderId}
+                        confirmationMessage="¿Estás seguro de que deseas eliminar este Pedido?"
+                        navigatePath={`/preOrder`}
+                    />
                 </div>
             </div>
 
@@ -155,6 +155,7 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
                     onSortToggle={handleSortToggle}
                     columns={columns.map((column) => ({ dataIndex: column.dataIndex as string, title: column.title }))}
                 />
+                <G_Options buttonText='Agregar Producto' usarForm="PreOrder"/> 
             </div>
             <Table
                 columns={columns}
@@ -175,7 +176,7 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
                 >
                     {({ loading }) => (loading ? 'Generando PDF...' : 'Guardar PDF')}
                 </PDFDownloadLink>
-            </div> 
+            </div>
 
         </div >
     );
