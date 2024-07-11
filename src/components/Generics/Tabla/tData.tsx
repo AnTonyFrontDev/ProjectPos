@@ -190,6 +190,13 @@ export const paymentTable: (IPaymentColumns | any)[] = [
   { title: 'Cantidad', dataIndex: 'amount', key: 'amount' }
 ];
 
+export const creditNoteTable: (any)[] = [
+  { title: 'ID', dataIndex: 'id', key: 'id' },
+  { title: 'Pago', dataIndex: 'fkPayment', key: 'fkPayment' },
+  { title: 'Numero de Pago', dataIndex: 'dateCreated', key: 'dateCreated' },
+  { title: 'Cantidad', dataIndex: 'amount', key: 'amount' }
+];
+
 export const orderTable: (IOrderColumns | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
   {

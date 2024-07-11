@@ -6,11 +6,11 @@ export interface IPaymentUpdate {
   date: string;
   fkOrder: number;
   fkTypePayment: number;
-  accountPayment: string;
-  fkBankAccount: number;
+  accountPayment: string | null;
+  documentNumber: string | null;
+  fkBankAccount: number | null;
   amount: number;
 }
-
 
 export class PaymentUpdateDto implements IPaymentUpdate {
   id: number;
@@ -18,8 +18,9 @@ export class PaymentUpdateDto implements IPaymentUpdate {
   date: string;
   fkOrder: number;
   fkTypePayment: number;
-  accountPayment: string;
-  fkBankAccount: number;
+  accountPayment: string | null;
+  documentNumber: string | null;
+  fkBankAccount: number | null;
   amount: number;
 
   constructor(formData: IPaymentUpdate) {
@@ -28,8 +29,9 @@ export class PaymentUpdateDto implements IPaymentUpdate {
     this.date = DATE;
     this.fkOrder = formData.fkOrder;
     this.fkTypePayment = formData.fkTypePayment;
-    this.accountPayment = formData.accountPayment;
-    this.fkBankAccount = formData.fkBankAccount;
+    this.accountPayment = formData.accountPayment ?? null; 
+    this.documentNumber = formData.documentNumber ?? null; 
+    this.fkBankAccount = formData.fkBankAccount ?? null;   
     this.amount = formData.amount;
   }
 }

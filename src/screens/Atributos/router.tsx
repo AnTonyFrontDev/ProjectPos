@@ -7,6 +7,7 @@ const BankAccount = lazy(() => import('./pages/BankAccount'));
 const Color = lazy(() => import('./pages/Color'));
 const Size = lazy(() => import('./pages/Size'));
 const Payment = lazy(() => import('./pages/Payment'));
+const NoteCredit = lazy(() => import('./pages/NoteCredit'));
 const PaymentType = lazy(() => import('./pages/PaymentType'));
 const TypeProd = lazy(() => import('./pages/TypeProd'));
 const CategorySize = lazy(() => import('./pages/CategorySize'));
@@ -69,6 +70,22 @@ const router: RouteObject[] = [
     element: (
       <Suspense fallback={<div>Loading...</div>}>
         <Payment />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/atributos/NoteCredit',
+    element: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <NoteCredit />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/atributos/NoteCredit/:notecreditId',
+    element: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <NoteCredit />
       </Suspense>
     ),
   },

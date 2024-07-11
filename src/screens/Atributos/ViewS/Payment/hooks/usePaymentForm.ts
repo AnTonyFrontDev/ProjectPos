@@ -69,6 +69,7 @@ export const usePaymentForm = () => {
         value: data.id,
         label: `${data.id} - ${data.client.f_name}${data.client.l_name} ${data.client.f_surname} ${data.client.l_surname} - ${data.amountBase}`
       }));
+      console.log('PreOrderPending:', preOrder);
       setPreOrderOptions(options);
     } catch (error) {
       console.error('Error al cargar los pedidos:', error);

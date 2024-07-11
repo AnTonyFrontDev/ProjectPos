@@ -6,9 +6,9 @@ export interface IPaymentPost {
   date: string;
   fkOrder: number;
   fkTypePayment: number;
-  accountPayment: string;
-  documentNumber: string;
-  fkBankAccount: number;
+  accountPayment: string | null;
+  documentNumber: string | null;
+  fkBankAccount: number | null;
   amount: number;
 }
 
@@ -18,9 +18,9 @@ export class PaymentDto implements IPaymentPost {
   date: string;
   fkOrder: number;
   fkTypePayment: number;
-  accountPayment: string;
-  documentNumber: string;
-  fkBankAccount: number;
+  accountPayment: string | null;
+  documentNumber: string | null;
+  fkBankAccount: number | null;
   amount: number;
 
   constructor() {
@@ -29,9 +29,9 @@ export class PaymentDto implements IPaymentPost {
     this.date = DATE;
     this.fkOrder = 0;
     this.fkTypePayment = 0;
-    this.accountPayment = '';
-    this.documentNumber = '';
-    this.fkBankAccount = 0;
+    this.accountPayment = null; 
+    this.documentNumber = null;  
+    this.fkBankAccount = null;   
     this.amount = 0;
   }
 }

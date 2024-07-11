@@ -15,7 +15,7 @@ const NewBill = ({ Id: preorderId }: NewBillProps) => {
     const [formData, setFormData] = useState<ISalePost>({
         fkOrder: preorderId,
         codIsc: '',
-        itbis: 0,
+        itbis: 1,
         b14: ''
     });
 
@@ -55,13 +55,6 @@ const NewBill = ({ Id: preorderId }: NewBillProps) => {
         }));
     };
 
-    const handleChangeDirect = ({ name, value }: { name: string; value: string | number }) => {
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: name === 'itbis' ? Number(value) : value
-        }));
-    };
-
     if (loading) {
         return <div className="text-center mt-4">Loading...</div>;
     }
@@ -96,21 +89,6 @@ const NewBill = ({ Id: preorderId }: NewBillProps) => {
                         placeholder="Comprobante"
                         className={FormInputsClasses}
                     />
-                </div>
-                <div className="flex flex-col w-1/8">
-                    <label>Itbis: </label>
-                    <select
-                        name="itbis"
-                        value={formData.itbis.toString()}
-                        onChange={(e) => {
-                            const value = e.target.value === "1" ? 1 : 0;
-                            handleChangeDirect({ name: 'itbis', value }); // Use the refactored function here
-                        }}
-                        className={FormInputsClasses}
-                    >
-                        <option value="0">No</option>
-                        <option value="1">Sí</option>
-                    </select>
                 </div>
                 <div className="flex flex-col w-1/4">
                     <label>b14: </label>
