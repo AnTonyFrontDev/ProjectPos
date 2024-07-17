@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getColors } from '@/shared/Api/Color/ColorApi';
-import { SaveProductColor } from '@/shared/Api/Products/ProductColor/ProductColor';
+import { RemoveProductColor, SaveProductColor, getProductColor } from '@/shared/Api/Products/ProductColor/ProductColor';
 import Select from 'react-select';
 
 interface IProductColorProps {
@@ -10,13 +10,14 @@ interface IProductColorProps {
 const ProductColorAdd: React.FC<IProductColorProps> = ({ productId }) => {
   const [colors, setColors] = useState<{ value: number; label: string }[]>([]);
   const [selectedColor, setSelectedColor] = useState<{ value: number; label: string } | null>(null);
+  const [productColors, setProductColors] = useState<any[]>([]);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
   useEffect(() => {
     const fetchColors = async () => {
       try {
         const colorsResponse = await getColors();
-        const colorOptions = colorsResponse.map((color: any ) => ({
+        const colorOptions = colorsResponse.map((color: any) => ({
           value: color.id,
           label: color.colorname,
         }));
@@ -26,8 +27,36 @@ const ProductColorAdd: React.FC<IProductColorProps> = ({ productId }) => {
       }
     };
 
+    const fetchProductColors = async () => {
+      try {
+        const productColorsResponse = await getProductColor();
+        // console.log('Full productColorsResponse:', productColorsResponse);
+        // console.log('Product ID:', productId);
+
+        const numericProductId = Number(productId);
+        // console.log('Numeric Product ID:', numericProductId);
+
+        if (isNaN(numericProductId)) {
+          console.error('productId is not a valid number:', productId);
+          return;
+        }
+
+        const filteredColors = productColorsResponse.filter((pc: any) => {
+          // console.log('Checking product color:', pc);
+          return pc.fkProduct === numericProductId;
+        });
+
+        // console.log('Filtered product colors:', filteredColors);
+
+        setProductColors(filteredColors);
+      } catch (error) {
+        console.error('Error al obtener los colores del producto:', error);
+      }
+    };
+
     fetchColors();
-  }, []);
+    fetchProductColors();
+  }, [productId]);
 
   const handleColorChange = (selectedOption: { value: number; label: string } | null) => {
     setSelectedColor(selectedOption);
@@ -43,7 +72,6 @@ const ProductColorAdd: React.FC<IProductColorProps> = ({ productId }) => {
       fkProduct: Number(productId),
       fkColor: selectedColor.value,
     };
-    console.log('Color agregado exitosamente.', formData);
 
     try {
       await SaveProductColor(formData);
@@ -52,14 +80,44 @@ const ProductColorAdd: React.FC<IProductColorProps> = ({ productId }) => {
       setTimeout(() => {
         setShowSuccessAlert(false);
       }, 3000);
+      // Update the list of product colors
+      const updatedProductColors = await getProductColor();
+      setProductColors(updatedProductColors.filter((pc: any) => pc.fkProduct === Number(productId)));
     } catch (error) {
       console.error('Error al agregar el color:', error);
     }
   };
 
-  // const handleDelete = async () => {
+  const handleDelete = async () => {
+    if (!selectedColor) {
+      console.error('Por favor selecciona un color para eliminar');
+      return;
+    }
 
-  // };
+    const numericProductId = Number(productId);
+    const colorToDelete = productColors.find(pc => pc.fkColor === selectedColor.value && pc.fkProduct === numericProductId);
+
+    if (!colorToDelete) {
+      console.error('No se encontró el color a eliminar');
+      return;
+    }
+
+    // console.log('Color a eliminar:', colorToDelete.id);
+
+    try {
+      await RemoveProductColor({ id: colorToDelete.id });
+      setShowSuccessAlert(true);
+      setSelectedColor(null);
+      setTimeout(() => {
+        setShowSuccessAlert(false);
+      }, 3000);
+      // Update the list of product colors
+      const updatedProductColors = await getProductColor();
+      setProductColors(updatedProductColors.filter((pc: any) => pc.fkProduct === numericProductId));
+    } catch (error) {
+      console.error('Error al eliminar el color:', error);
+    }
+  };
 
   return (
     <div>
@@ -81,16 +139,16 @@ const ProductColorAdd: React.FC<IProductColorProps> = ({ productId }) => {
         >
           Agregar Color
         </button>
-        {/* <button
+        <button
           className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'
-          onClick={() => handleDelete(record)}
+          onClick={handleDelete}
         >
           Quitar
-        </button> */}
+        </button>
       </div>
       {showSuccessAlert && (
         <div className="mt-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-          <strong className="font-bold">Éxito:</strong> El color se agregó correctamente.
+          <strong className="font-bold">Éxito:</strong> La operación se realizó correctamente.
         </div>
       )}
     </div>

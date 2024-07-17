@@ -192,9 +192,20 @@ export const paymentTable: (IPaymentColumns | any)[] = [
 
 export const creditNoteTable: (any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
-  { title: 'Pago', dataIndex: 'fkPayment', key: 'fkPayment' },
-  { title: 'Numero de Pago', dataIndex: 'dateCreated', key: 'dateCreated' },
-  { title: 'Cantidad', dataIndex: 'amount', key: 'amount' }
+  {
+    title: 'Dni Cliente',
+    dataIndex: 'client',
+    key: 'client',
+    render: (client: any) => `${client.dni}`
+  },
+  {
+    title: 'Cliente',
+    dataIndex: 'client',
+    key: 'client',
+    render: (client: any) => `${client.f_name} ${client.f_surname} ${client.l_surname}`
+  },
+  { title: 'Credito', dataIndex: 'amount', key: 'amount' },
+  { title: 'Fecha de Emision', dataIndex: 'dateCreated', key: 'dateCreated' }
 ];
 
 export const orderTable: (IOrderColumns | any)[] = [

@@ -4,15 +4,10 @@ import { Descriptions, Table } from 'antd';
 import { getInventoryById } from '@/shared/Api/ProductsApi';
 import { DetalleProps as DetalleProductoProps } from '@/shared/interfaces/I_inventario';
 import { AppIcon } from '../../../components/ui/AppIcon';
-// import ApiTable from '@/components/Generics/Tabla/apiTable';
-// import SearchFilter from '@/shared/SearchFilter';
 
 
 const DetalleInventario: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
   const [detalleProducto, setDetalleProducto] = useState<any>(null);
-  // const [searchTerm, setSearchTerm] = useState<string>('');
-  // const [filterColumn, setFilterColumn] = useState<string>('');
-  // const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -126,19 +121,6 @@ const DetalleInventario: React.FC<DetalleProductoProps> = ({ Id: productId }) =>
   ];
 
 
-
-  // const handleSearch = (value: string) => {
-  //   setSearchTerm(value);
-  // };
-
-  // const handleFilterChange = (value: string) => {
-  //   setFilterColumn(value);
-  // };
-
-  // const handleSortToggle = () => {
-  //   setSortDirection((prevSortDirection) => (prevSortDirection === 'asc' ? 'desc' : 'asc') as 'asc' | 'desc');
-  // };
-
   return (
     <div className="my-8">
       <h1 className="text-3xl font-bold mb-4">{name}</h1>
@@ -147,11 +129,7 @@ const DetalleInventario: React.FC<DetalleProductoProps> = ({ Id: productId }) =>
         <Descriptions.Item label="Precio de Venta">${salePrice}</Descriptions.Item>
         <Descriptions.Item label="Tipo">{type}</Descriptions.Item>
         <Descriptions.Item label="Cantidad Total en Inventario">{totalQuantity}</Descriptions.Item>
-        {/* <Descriptions.Item label="Tallas Disponibles" span={2}>
-          {availableSizes && availableSizes.map((size: any) => (
-            <div key={size.idInventory}>{`${size.size}: ${parseInt(size.quantitysize, 10)} ‎`}</div>
-          ))}
-        </Descriptions.Item> */}
+
 
         <Descriptions.Item label="Colores Disponibles" span={3}>
           <div className='flex mx-3'>
@@ -175,32 +153,12 @@ const DetalleInventario: React.FC<DetalleProductoProps> = ({ Id: productId }) =>
       </Descriptions>
 
       <Table dataSource={tableData} columns={columns} />
-      {/* <div className="col-span-2 bg-gray-50 shadow-lg my-14 p-4 rounded-md flex justify-between">
-        <SearchFilter
-          onSearch={handleSearch}
-          onFilterChange={handleFilterChange}
-          onSortToggle={handleSortToggle}
-          columns={columns}
-        />
-      </div>
-      <div className="mt-10">
-        <ApiTable
-          // dataSource={tableData}
-          columns={columns}
-          searchTerm={searchTerm}
-          filterColumn={filterColumn}
-          sortDirection={sortDirection}
-
-        />
-      </div> */}
-
-      {/* <Tabla /> */}
 
       <div className="flex mt-4">
         {/* Botón para editar */}
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-4 rounded">
+        {/* <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-4 rounded">
           Editar
-        </button>
+        </button> */}
         {/* Botón para eliminar */}
         {/* <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
           Eliminar

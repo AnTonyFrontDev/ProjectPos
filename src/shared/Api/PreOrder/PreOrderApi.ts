@@ -1,6 +1,7 @@
 import { URL } from "@/shared/Common/url";
 import { IPreOrder } from "@/shared/interfaces/Preorder/IPreOrder";
 import { IPreOrderGet } from "@/shared/interfaces/Preorder/IPreOrderGet";
+import { IPreOrderGetPending } from "@/shared/interfaces/Preorder/IPreOrderPending";
 import axios from "axios";
 
 // Función para obtener todas las PreOrder
@@ -41,7 +42,7 @@ export const GetPreOrderInprogressById = async (preorderId : number ) => {
 };
 
 // Función para obtener todas las PreOrder
-export const getPreOrdersPending = async () : Promise<IPreOrderGet[]> => {
+export const getPreOrdersPending = async () : Promise<IPreOrderGetPending[]> => {
   try {
     const response = await axios.get(
         `${URL}/preorder/PreOrder/GetPreOrdersPending`);

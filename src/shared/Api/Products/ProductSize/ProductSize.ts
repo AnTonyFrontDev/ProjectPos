@@ -63,7 +63,7 @@ export const UpdateProductSize = async (formData: IProductSizeUpdate) => {
     }
   };
 
-  export const RemoveProductSize = async (formData: IProductSizeUpdate ) => {
+  export const RemoveProductSize = async (formData: any ) => {
     try {
       const formattedData = formData;
       const response = await axios.delete(

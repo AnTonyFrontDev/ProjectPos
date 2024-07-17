@@ -4,7 +4,6 @@ import ApiTable from '@/components/Generics/Tabla/apiTable';
 import SearchFilter from '@/shared/SearchFilter';
 import { useState } from 'react';
 import { creditNoteTable } from "@/components/Generics/Tabla/tData";
-import G_Options from "@/components/Generics/gOptions";
 import { useNavigate } from "react-router-dom";
 import { getNoteCredits } from "@/shared/Api/NoteCredit/NoteCreditApi";
 
@@ -37,7 +36,7 @@ const View = () => {
 
   const handleTableRowClick = (record: any) => {
     // Al hacer clic en una fila, establece el ID del producto seleccionado y muestra el detalle
-    navigate(`/atributos/NoteCredit/${record.idOrder}`);
+    navigate(`/atributos/NoteCredit/${record.id}`);
   };
 
   return (
@@ -50,7 +49,6 @@ const View = () => {
           onSortToggle={handleSortToggle}
           columns={creditNoteTable}
         />
-        <G_Options buttonText="Nuevo Pago" usarForm="Payment" />
       </div>
       <div className="mt-10">
             <ApiTable
