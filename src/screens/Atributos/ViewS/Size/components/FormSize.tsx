@@ -8,7 +8,7 @@ import { ISizePost, SizePostDto } from '@/shared/interfaces/size/ISizePost';
 
 
 const SizeForm: React.FC<FormProps> = ({formData: initialFormData, isUpdate}) => {
-  const { formData, setFormData, handleInputChange, handleSubmit, handleUpdate, handleSelect } = useSizeForm();
+  const { formData, setFormData, handleInputChange, handleSubmit, handleSelect } = useSizeForm();
   const [categories, setCategories] = useState<ICategorySizeColumns[]>([]);
 
   useEffect(() => {
@@ -36,18 +36,18 @@ const SizeForm: React.FC<FormProps> = ({formData: initialFormData, isUpdate}) =>
     setFormData(initialFormData)
   };
 
-  const onSubmitHandler = async (event: React.FormEvent) => {
-    event.preventDefault();
-    if (isUpdate) {
-      await handleUpdate(event);
-    } else {
-      await handleSubmit(event);
-    }
-    window.location.reload();
-  };
+  // const onSubmitHandler = async (event: React.FormEvent) => {
+  //   event.preventDefault();
+  //   if (isUpdate) {
+  //     await handleUpdate(event);
+  //   } else {
+  //     await handleSubmit(event);
+  //   }
+  //   // window.location.reload();
+  // };
 
   return (
-    <form onSubmit={onSubmitHandler} className="max-w-md mx-auto mt-8">
+    <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8">
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-600">Size</label>
         <input

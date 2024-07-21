@@ -77,12 +77,11 @@ export const UpdateSize = async (formData: ISizeUpdate) => {
     try {
       const formattedData = formData.id;
       const response = await axios.delete(
-        `${URL}/Size/RemoveSize`,
+        `${URL}/Size/RemoveSize?id=${formattedData}`,
         {
           headers: {
             "Content-Type": "application/json",
           },
-          data: formattedData,
         }
       );
   

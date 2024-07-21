@@ -14,15 +14,15 @@ const ColorForm: React.FC = () => {
     setFormData(prevFormData => ({ ...prevFormData, code: newColor }));
   };
 
-  const onSubmitHandler = async (event: React.FormEvent) => {
-    event.preventDefault();
-    await handleSubmit(event);
-    console.log(formData)
-    window.location.reload();
-  };
+  // const onSubmitHandler = async (event: React.FormEvent) => {
+  //   event.preventDefault();
+  //   await handleSubmit(event);
+  //   console.log(formData)
+  //   // window.location.reload();
+  // };
 
   return (
-    <form onSubmit={onSubmitHandler} className="max-w-md mx-auto mt-8">
+    <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8">
       {/* Campos del formulario de color */}
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-600">Color Name</label>
@@ -52,13 +52,9 @@ const ColorForm: React.FC = () => {
 
       {/* Botón de envío */}
       <div className="flex justify-end space-x-2">
-
         <button type="submit" className="bg-blue-500 text-white p-2 rounded-md">
           Enviar 
         </button>
-        {/* <Link to="/atributos/Color" className="bg-red-500 text-white p-2 rounded-md">
-          Cancel
-        </Link> */}
       </div>
 
     </form>

@@ -1,5 +1,5 @@
 // Componente Dashboard
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getPreOrdersPending } from '@/shared/Api/PreOrder/PreOrderApi';
 import DOptions from '../components/DOptions';
 
@@ -32,7 +32,7 @@ const Dashboard = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
               {orders.map((order) => (
-                <div key={order.id} className="bg-white p-4 shadow-md rounded-md">
+                <div key={order.id} className="bg-yellow-200 p-4 shadow-md rounded-md">
                   <h2 className="text-xl font-semibold">Pedido ID: {order.id}</h2>
                   <p>Cliente: {order.client.f_name} {order.client.l_name}</p>
                   <p>Fecha de entrega: {new Date(order.dateDelivery).toLocaleDateString()}</p>

@@ -15,12 +15,17 @@ export const useSizeForm = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Additional actions before sending the size data to the database
     console.log('Size Data:', formData);
-    GenericRequest(formData, SaveSize, "Size data submitted successfully");
-    window.location.reload();
+  
+    GenericRequest(formData, SaveSize, "Datos de Size enviados correctamente")
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error("Error submitting size data:", error);
+      });
   };
-
+  
   const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault();
     const { name, value } = e.target;

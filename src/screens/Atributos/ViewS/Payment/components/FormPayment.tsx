@@ -113,6 +113,7 @@ const PaymentForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate 
                     type="number"
                     name="amount"
                     value={formData.amount}
+                    min={0}
                     onChange={handleInputChange}
                     className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                 />

@@ -17,11 +17,18 @@ export const useColorForm = () => {
     setFormData((prevData) => ({ ...prevData, code: color.color }));
   };
 
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Additional actions before sending the color data to the database
-    GenericRequest(formData, SaveColor, "Color data submitted successfully");
-    window.location.reload();
+    console.log('Color Data:', formData);
+  
+    GenericRequest(formData, SaveColor, "Color data submitted successfully")
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error("Error submitting color data:", error);
+      });
   };
 
   return { formData, setFormData, handleInputChange, handleColorChange, handleSubmit };

@@ -25,7 +25,7 @@ export const usePaymentForm = () => {
     e.preventDefault();
     console.log('Payment Data:', formData);
     GenericRequest(formData, SavePayment, "Payment data submitted successfully");
-    window.location.reload();
+    // window.location.reload();
   };
   
   const handleUpdate = (e: React.FormEvent) => {
@@ -33,7 +33,7 @@ export const usePaymentForm = () => {
     const updateData: IPaymentUpdate = new PaymentUpdateDto(formData);
     console.log('Payment Data:', updateData);
     GenericRequest(updateData, UpdatePayment, "Payment data updated successfully");
-    window.location.reload();
+    // window.location.reload();
   };
 
   const loadTypePaymentOptions = async () => {

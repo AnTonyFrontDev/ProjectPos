@@ -58,6 +58,7 @@ const View = () => {
               searchTerm={searchTerm}
               filterColumn={filterColumn}
               sortDirection={sortDirection}
+              notEditable={true}
               showActions={true}
             />
           )}
