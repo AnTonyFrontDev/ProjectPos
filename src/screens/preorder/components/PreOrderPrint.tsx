@@ -13,7 +13,7 @@ import { LOGORORAIMA } from '@/shared/constants/UrlPictures';
 const PreOrderPrint = ({ Data }: { Data: any }) => {
   const { client, items, dateCreated, dateDelivery } = Data;
   const { preOrderProducts, invColors } = items;
-  const { phones } = client[0]; // Accessing the first client's phones
+  const { phones } = client[0]; 
 
   return (
     <Document>
@@ -38,7 +38,7 @@ const PreOrderPrint = ({ Data }: { Data: any }) => {
             </View>
             <View style={pdfStyles.row}>
               <Text style={pdfStyles.label}>Teléfono del Cliente:</Text>
-              <Text style={pdfStyles.value}>{phones[0].number}</Text>
+              <Text style={pdfStyles.value}>{phones[0]?.number}</Text>
             </View>
             <View style={pdfStyles.row}>
               <Text style={pdfStyles.label}>Fecha:</Text>

@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { ClientPhoneDto } from '../../../shared/interfaces/Client/IClientPhone';
-import { ClientPostDto, IClientPost } from '../../../shared/interfaces/Client/IClientPost';
-import { saveClient } from '@/shared/Api/Customers/CustomersApi';
+import { ClientPhoneDto } from '@/shared/interfaces/Client/IClientPhone';
+import { ClientPostDto, IClientPost } from '@/shared/interfaces/Client/IClientPost';
+import { saveClient, UpdateClient } from '@/shared/Api/Customers/CustomersApi';
 import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';
+import { ClientUpdateDto, IClientUpdate } from '@/shared/interfaces/Client/IClientUpdate';
 
 export const useClientForm = () => {
   const [formData, setFormData] = useState<IClientPost>(new ClientPostDto());
@@ -34,11 +35,29 @@ export const useClientForm = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Additional actions before sending the client data to the database
     console.log('Client Data:', formData);
-    GenericRequest(formData, saveClient, "Client data submitted successfully");
-    window.location.reload();
+  
+    GenericRequest(formData, saveClient, "Client data submitted successfully")
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error("Error submitting Client data:", error);
+      });
   };
 
-  return { formData, handleInputChange, addPhone, handlePhoneInputChange, handleSubmit };
+  const handleUpdate = (e: React.FormEvent) => {
+    e.preventDefault();
+    const updateData: IClientUpdate = new ClientUpdateDto(formData);
+    console.log('Client Data:', updateData);
+    GenericRequest(updateData, UpdateClient, "Client data updated successfully")
+    .then(() => {
+      window.location.reload();
+    })
+    .catch((error) => {
+      console.error("Error submitting Client data:", error);
+    });
+  };
+
+  return { formData, setFormData, handleInputChange, addPhone, handlePhoneInputChange, handleSubmit, handleUpdate };
 };

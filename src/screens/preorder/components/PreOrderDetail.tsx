@@ -85,7 +85,7 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
         {
             title: 'Actions',
             key: 'actions',
-            render: (text : any, record : any) => (
+            render: (_text : any, record : any) => (
                 console.log('record ', record),
                 <span>
                     <ButtonModal

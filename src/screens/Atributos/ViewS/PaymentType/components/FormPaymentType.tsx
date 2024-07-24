@@ -32,7 +32,6 @@ const PaymentTypeForm: React.FC<FormProps> = ({ formData: initialFormData, isUpd
         } else {
             await handleSubmit(event);
         }
-        window.location.reload();
     };
 
     return (

@@ -1,15 +1,40 @@
 // TuComponente.tsx
 
+import { FormProps } from "@/components/Generics/Interface/IForms";
 import { useClientForm } from "../hooks/useClientForm";
+import { useEffect } from "react";
+import { ClientPostDto, IClientPost } from '@/shared/interfaces/Client/IClientPost';
 
-const ClientForm = () => {
-    const { formData, handleInputChange, addPhone, handlePhoneInputChange, handleSubmit } = useClientForm();
+const ClientForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }) => {
+    const { formData, setFormData, handleInputChange, addPhone, handlePhoneInputChange, handleSubmit, handleUpdate } = useClientForm();
+
+    useEffect(() => {
+        if (isUpdate && initialFormData) {
+            handleSetInitialFormData(initialFormData);
+            console.log(initialFormData);
+        }
+    }, [isUpdate, initialFormData]);
+
+    const handleSetInitialFormData = (initialData: IClientPost) => {
+        const initialFormData = new ClientPostDto;
+        Object.assign(initialFormData, initialData)
+        setFormData(initialFormData)
+    };
+    
+    const onSubmitHandler = async (event: React.FormEvent) => {
+         event.preventDefault();
+         if (isUpdate) {
+             await handleUpdate(event);
+         } else {
+             await handleSubmit(event);
+         }
+    };
 
     return (
-        <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8">
+        <form onSubmit={onSubmitHandler} className="max-w-md mx-auto mt-8">
             {/* Campos del formulario cliente */}
             <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">Nombre:</label>
+                <label className="block text-sm font-medium text-gray-600">Primer Nombre:</label>
                 <input
                     type="text"
                     name="f_name"
@@ -20,7 +45,7 @@ const ClientForm = () => {
             </div>
 
             <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">Last Name</label>
+                <label className="block text-sm font-medium text-gray-600">Segundo Nombre</label>
                 <input
                     type="text"
                     name="l_name"
@@ -77,15 +102,6 @@ const ClientForm = () => {
             {/* Sección de teléfonos */}
             {formData.phonesClient.map((phone, index) => (
                 <div className="mb-4" key={index}>
-                    <label className="text-sm font-medium text-gray-600">Tipo Telefono</label>
-                    <input
-                        type="text"
-                        name={`type-${index}`}
-                        value={phone.type}
-                        onChange={(e) => handlePhoneInputChange(index, 'type', e.target.value)}
-                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-                    />
-
                     <label className="block text-sm font-medium text-gray-600">Numero Telefono</label>
                     <input
                         type="text"
@@ -94,6 +110,15 @@ const ClientForm = () => {
                         onChange={(e) => handlePhoneInputChange(index, 'number', e.target.value)}
                         className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                     />
+                        <label className="text-sm font-medium text-gray-600">Tipo Telefono</label>
+                        <input
+                            type="text"
+                            name={`type-${index}`}
+                            value={phone.type}
+                            onChange={(e) => handlePhoneInputChange(index, 'type', e.target.value)}
+                            className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                        />
+
                 </div>
             ))}
 

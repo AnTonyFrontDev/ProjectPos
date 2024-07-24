@@ -12,11 +12,18 @@ export const usePaymentTypeForm = () => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('PaymentType Data:', formData);
-    GenericRequest(formData, SavePaymentType, "PaymentType data submitted successfully");
-    window.location.reload();
+  
+    GenericRequest(formData, SavePaymentType, "PaymentType data submitted successfully")
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error("Error submitting PaymentType data:", error);
+      });
   };
   
   const handleUpdate = (e: React.FormEvent) => {

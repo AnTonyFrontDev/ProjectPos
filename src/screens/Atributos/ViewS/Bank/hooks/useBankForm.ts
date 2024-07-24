@@ -15,8 +15,13 @@ export const useBankForm = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     console.log('Bank Data:', formData);
-    GenericRequest(formData, SaveBank, "Bank data submitted successfully");
-    window.location.reload();
+    GenericRequest(formData, SaveBank, "Bank data submitted successfully")
+    .then(() => {
+      window.location.reload();
+    })
+    .catch((error) => {
+      console.error("Error submitting Bank data:", error);
+    });
   };
   
   const handleUpdate = (e: React.FormEvent<HTMLFormElement>): void => {

@@ -24,8 +24,27 @@ export const usePaymentForm = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Payment Data:', formData);
-    GenericRequest(formData, SavePayment, "Payment data submitted successfully");
-    // window.location.reload();
+  
+    GenericRequest(formData, SavePayment, "Payment data submitted successfully")
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error("Error submitting Payment data:", error);
+      });
+  };
+
+  const handleSubmitCredit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Payment Data:', formData);
+  
+    GenericRequest(formData, SavePayment, "Payment data submitted successfully")
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error("Error submitting Payment data:", error);
+      });
   };
   
   const handleUpdate = (e: React.FormEvent) => {
@@ -79,7 +98,8 @@ export const usePaymentForm = () => {
   return { formData, 
     setFormData, 
     handleInputChange, 
-    handleSubmit, 
+    handleSubmit,
+    handleSubmitCredit, 
     handleUpdate, 
     typePaymentOptions,
     bankAccountOptions,

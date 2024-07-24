@@ -16,9 +16,16 @@ export const useCategorySizeForm = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('CategorySize Data:', formData);
-    GenericRequest(formData, SaveCategorySize, "CategorySize data submitted successfully");
-    window.location.reload();
+  
+    GenericRequest(formData, SaveCategorySize, "CategorySize data submitted successfully")
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error("Error submitting CategorySize data:", error);
+      });
   };
+
   
   const handleUpdate = (e: React.FormEvent) => {
     e.preventDefault();

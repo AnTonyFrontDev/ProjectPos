@@ -56,7 +56,7 @@ const CategorySizeForm: React.FC<FormProps> = ({ formData: initialFormData, isUp
 
             {/* Botón de envío */}
             <button type="submit" className="bg-blue-500 text-white p-2 rounded-md">
-                {isUpdate ? "Update" : "Submit"}
+                {isUpdate ? "Actualizar" : "Guardar"}
             </button>
         </form>
     );

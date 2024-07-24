@@ -24,16 +24,13 @@ const BankForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }) 
 
     const onSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        try {
-            // Assuming handleSubmit and handleUpdate have been refactored to return Promises
-            if (isUpdate) {
-                await handleUpdate(event);
-            } else {
-                await handleSubmit(event);
-            }
-        } catch (error) {
-            console.error("Error al enviar el formulario:", error);
+
+        if (isUpdate) {
+            await handleUpdate(event);
+        } else {
+            await handleSubmit(event);
         }
+
     };
     return (
         <>
@@ -52,7 +49,7 @@ const BankForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }) 
                     <input
                         type="text"
                         name={isUpdate ? "bankName" : "name"}
-                        value={isUpdate ? formData.bankName: formData.name}
+                        value={isUpdate ? formData.bankName : formData.name}
                         onChange={handleInputChange}
                         className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                     />
@@ -61,7 +58,7 @@ const BankForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }) 
                 {/* Botón de envío */}
 
                 <button type="submit" className="bg-blue-500 text-white p-2 rounded-md" >
-                    {isUpdate ? "Update" : "Submit"}
+                    {isUpdate ? "Actualizar" : "Guardar"}
                 </button>
             </form>
         </>
