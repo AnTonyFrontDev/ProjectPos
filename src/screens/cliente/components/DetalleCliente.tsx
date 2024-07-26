@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Descriptions } from 'antd';
+import { Descriptions, Modal } from 'antd';
 // import { as DetalleClienteProps } from '@/shared/interfaces/I_cliente';
-import { getClientById } from '@/shared/Api/Customers/CustomersApi';
-import { DetalleProps as DetalleClienteProps } from '../../../shared/interfaces/I_inventario';
+import { getClientById, RemoveClient } from '@/shared/Api/Customers/CustomersApi';
+import { DetalleProps as DetalleClienteProps } from '@/shared/interfaces/I_inventario';
+import ButtonModal from '../../../components/Generics/Modal/ButtonModal';
+import ViewForm from '../../../components/FormularioV4/viewForm';
 
 const DetalleCliente: React.FC<DetalleClienteProps> = ({ Id: clientId }) => {
   const [detalleCliente, setDetalleCliente] = useState<any>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,6 +24,31 @@ const DetalleCliente: React.FC<DetalleClienteProps> = ({ Id: clientId }) => {
     fetchData();
   }, [clientId]);
 
+  const handleRemoveClient = async () => {
+    const clientData = {
+      id: clientId
+    };
+    try {
+      const response = await RemoveClient(clientData);
+      window.location.href = '/customers';
+      console.log('Client removed successfully:', response);
+      // Realiza cualquier acción adicional necesaria después de eliminar el cliente
+    } catch (error: any) {
+      setErrorMessage(error.message);
+    }
+  };
+
+  const showConfirm = () => {
+    Modal.confirm({
+        title: 'Confirmar',
+        content: '¿Está seguro de que desea eliminar este registro?',
+        okText: 'Sí',
+        okType: 'danger',
+        cancelText: 'No',
+        onOk: handleRemoveClient,
+    });
+};
+
   if (!detalleCliente) {
     return <div>Cargando...</div>;
   }
@@ -29,6 +57,7 @@ const DetalleCliente: React.FC<DetalleClienteProps> = ({ Id: clientId }) => {
 
   return (
     <div className="my-8">
+      {errorMessage && <p className="text-red-500 w-full">{errorMessage}</p>}
       <h1 className="text-3xl font-bold mb-4">{`${f_name} ${l_name} ${f_surname} ${l_surname}`}</h1>
       <Descriptions title='Detalles del Cliente' className="mb-4">
         <Descriptions.Item label="RNC">{rnc}</Descriptions.Item>
@@ -45,11 +74,18 @@ const DetalleCliente: React.FC<DetalleClienteProps> = ({ Id: clientId }) => {
 
       <div className="flex mt-4">
         {/* Botón para editar */}
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-4 rounded">
-          Editar
-        </button>
+        <ButtonModal
+          buttonText="Editar"
+          modalTitle=""
+          className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-2 rounded'
+          size={15}
+          modalContent={<ViewForm usarForm="Client" formData={detalleCliente} isUpdate={true} updateData={detalleCliente} />}
+        />
         {/* Botón para eliminar */}
-        <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+        <button
+          onClick={showConfirm}
+          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+        >
           Eliminar
         </button>
       </div>

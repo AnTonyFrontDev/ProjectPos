@@ -8,7 +8,8 @@ import { TableSelectsClasses } from '@/shared/Common/stylesConst/cssComponent';
 const PaymentForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }) => {
     const { formData, typePaymentOptions, bankAccountOptions, preOrderOptions,
         loadPreOrderOptions, loadBankAccountOptions, setFormData, handleInputChange, 
-        handleSubmit, handleUpdate, loadTypePaymentOptions, handleSubmitCredit } = usePaymentForm();
+        handleSubmit, handleUpdate, loadTypePaymentOptions, handleSubmitCredit 
+    } = usePaymentForm();
 
     const [selectedPaymentType, setSelectedPaymentType] = useState<string | null>(null);
 

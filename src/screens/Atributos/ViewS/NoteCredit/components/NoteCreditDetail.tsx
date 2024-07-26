@@ -3,33 +3,30 @@ import { Descriptions, Table } from 'antd';
 import { DetalleProps as DetalleOrderProps } from '@/shared/interfaces/I_inventario';
 import { getNoteCreditId } from '@/shared/Api/NoteCredit/NoteCreditApi';
 
-
 const NoteCreditDetail: React.FC<DetalleOrderProps> = ({ Id: notecreditId }) => {
   const [orderDetail, setOrderDetail] = useState<any>(null);
-  const [payment, setPaymentDetail] = useState<any>(null);
-  
+  const [client, setClient] = useState<any>(null);
+  const [payments, setPayments] = useState<any[]>([]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const orderData = await getNoteCreditId(notecreditId);
         setOrderDetail(orderData.data);
-        setPaymentDetail(orderData.data.payments); // Obtén los detalles de la orden
-        console.log('orderDetail', orderData.data.amountPending);
+        setClient(orderData.data.client);
+        setPayments(orderData.data.payments || []); // Asegúrate de que `payments` sea un array
       } catch (error) {
         console.error('Error al obtener detalle de la orden:', error);
       }
     };
-    
+
     fetchData();
   }, [notecreditId]);
-  
 
-
-  if (!payment) {
+  if (!orderDetail || !client) {
     return <div>Cargando...</div>;
   }
 
-  const client = payment[0]?.client;
   const columns = [
     {
       title: 'ID',
@@ -57,7 +54,7 @@ const NoteCreditDetail: React.FC<DetalleOrderProps> = ({ Id: notecreditId }) => 
       key: 'account',
     },
     {
-      title: 'Numero De Documento',
+      title: 'Número de Documento',
       dataIndex: 'documentNumber',
       key: 'documentNumber',
     },
@@ -65,18 +62,18 @@ const NoteCreditDetail: React.FC<DetalleOrderProps> = ({ Id: notecreditId }) => 
 
   return (
     <div>
-      <Descriptions title="Informacion del Cliente">
-        <Descriptions.Item label="NO.">{client?.id}</Descriptions.Item>
-        <Descriptions.Item label="Nombre">{client?.f_name} {client?.l_name}</Descriptions.Item>
-        <Descriptions.Item label="Apellido">{client?.f_surname} {client?.l_surname}</Descriptions.Item>
-        <Descriptions.Item label="RNC">{client?.rnc}</Descriptions.Item>
-        <Descriptions.Item label="DNI">{client?.dni}</Descriptions.Item>
+      <Descriptions title="Información del Cliente">
+        <Descriptions.Item label="NO.">{client.id}</Descriptions.Item>
+        <Descriptions.Item label="Nombre">{`${client.f_name} ${client.l_name}`}</Descriptions.Item>
+        <Descriptions.Item label="Apellido">{`${client.f_surname} ${client.l_surname}`}</Descriptions.Item>
+        <Descriptions.Item label="RNC">{client.rnc}</Descriptions.Item>
+        <Descriptions.Item label="DNI">{client.dni}</Descriptions.Item>
         <Descriptions.Item label="Monto Pendiente">{orderDetail.amountPending}</Descriptions.Item>
       </Descriptions>
       
       <Table
         className='mt-4'
-        dataSource={payment}
+        dataSource={payments}
         columns={columns}
         rowKey="id"
         pagination={false}

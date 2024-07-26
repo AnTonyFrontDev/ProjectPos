@@ -11,9 +11,6 @@ const Payment = () => {
 
   // Verifica si numericId es un número antes de usarlo
   const isValidId = !isNaN(numericId as number);
-  console.log('id',paymentId);
-  console.log('isValidId',isValidId);
-  console.log('numericId',numericId);
   return (
     <div>
       Payment

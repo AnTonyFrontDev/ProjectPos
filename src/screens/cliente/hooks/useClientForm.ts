@@ -6,12 +6,12 @@ import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';
 import { ClientUpdateDto, IClientUpdate } from '@/shared/interfaces/Client/IClientUpdate';
 
 export const useClientForm = () => {
-  const [formData, setFormData] = useState<IClientPost>(new ClientPostDto());
+  const [formData, setFormData] = useState<IClientPost | IClientUpdate>(new ClientPostDto());
 
   const addPhone = () => {
     setFormData((prevClientPost) => ({ 
       ...prevClientPost,
-      phonesClient: [...prevClientPost.phonesClient, { ...new ClientPhoneDto() }],
+      phonesClient: [...(prevClientPost.phonesClient ?? []), new ClientPhoneDto()],
     }));
   };
 
@@ -22,7 +22,7 @@ export const useClientForm = () => {
 
   const handlePhoneInputChange = (index: number, field: string, value: string) => {
     setFormData((prevClientPost) => {
-      const updatedPhonesClient = prevClientPost.phonesClient.map((phone, i) =>
+      const updatedPhonesClient = (prevClientPost.phonesClient ?? []).map((phone, i) =>
         i === index ? { ...phone, [field]: value } : phone
       );
 

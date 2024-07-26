@@ -15,7 +15,7 @@ export const getNoteCredits = async () => {
 
 export const getNoteCreditId = async (CreditId : number) => {
   try {
-    const response = await axios.get(`${URL}NoteCredit/GetById?id=${CreditId}`);
+    const response = await axios.get(`${URL}/NoteCredit/GetById?id=${CreditId}`);
     console.log('Response:', response.data);
     return response.data;
   } catch (error) {
@@ -23,9 +23,10 @@ export const getNoteCreditId = async (CreditId : number) => {
     throw error;
   }
 };
+
 export const getNoteCreditClientId = async (ClientId : number) => {
   try {
-    const response = await axios.get(`${URL}NoteCredit/GetNotesByIdClient?id=${ClientId}`);
+    const response = await axios.get(`${URL}/NoteCredit/GetNotesByIdClient?id=${ClientId}`);
     console.log('Response:', response.data);
     return response.data;
   } catch (error) {

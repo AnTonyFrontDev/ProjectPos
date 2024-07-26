@@ -10,7 +10,8 @@ export interface IClientPost {
   l_surname: string;
   rnc?: string;
   dni: string;
-  phonesClient: IClientPhone[];
+  phones?: any[];
+  phonesClient?: IClientPhone[];
 }
 
 export class ClientPostDto implements IClientPost {
@@ -23,7 +24,8 @@ export class ClientPostDto implements IClientPost {
   l_surname: string;
   rnc?: string;
   dni: string;
-  phonesClient: IClientPhone[];
+  phones?: any[];
+  phonesClient?: IClientPhone[];
 
   constructor() {
     this.id = 0;

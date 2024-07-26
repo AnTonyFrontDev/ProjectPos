@@ -2,6 +2,7 @@ import axios from "axios";
 import { IClientPost } from "@/shared/interfaces/Client/IClientPost";
 import { IClientUpdate } from "@/shared/interfaces/Client/IClientUpdate";
 import { IClientRemove } from "@/shared/interfaces/Client/IClientRemove";
+import { format } from 'date-fns';
 
 export const getClients = async () => {
     try {
@@ -76,18 +77,24 @@ export const saveClient = async (formData: IClientPost) => {
 };
 
 export const RemoveClient = async (formData: IClientRemove) => {
+    const formattedData = {
+        ...formData,
+        user : 0,
+        date: format(new Date(), 'yyyy-MM-dd'),
+    };
     try {
-      const formattedData = formData 
-        const response = await axios.post('https://localhost:7065/api/Client/RemoveClient', formattedData, {
+        const response = await axios.delete('https://localhost:7065/api/Client/RemoveClient', {
+            data: formattedData,
             headers: {
                 'Content-Type': 'application/json',
             },
         });
 
         return response.data;
-    } catch (error) {
-        console.error('Error removing client:', error);
-        throw error;
+    } catch (error: any) {
+        const errorMessage = error.response?.data?.message || error.message || 'Error removing client';
+        console.error('Error removing client:', errorMessage);
+        throw new Error(errorMessage);
     }
 };
 

@@ -1,4 +1,4 @@
-import { useEffect} from 'react';
+import { useEffect, useState } from 'react';
 import { usePayAccountForm } from '../hooks/usePayAccountForm';
 import { FormProps } from '@/components/Generics/Interface/IForms';
 import { IPaymentExpenseDtoAdd, PaymentExpensesDtoAdd } from '@/shared/interfaces/PaymentExpenses/PaymentExpenseDtoAdd';
@@ -6,9 +6,9 @@ import Select from 'react-select';
 import { TableSelectsClasses } from '@/shared/Common/stylesConst/cssComponent';
 
 
-const ExpensesForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate 
+const ExpensesForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate
 }) => {
-    const { 
+    const {
         formData,
         typePaymentOptions,
         bankAccountOptions,
@@ -21,6 +21,8 @@ const ExpensesForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate
         handleSubmit,
         handleUpdate,
     } = usePayAccountForm();
+    
+    const [selectedPaymentType, setSelectedPaymentType] = useState<string | null>(null);
 
     useEffect(() => {
         if (isUpdate && initialFormData) {
@@ -35,6 +37,12 @@ const ExpensesForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate
         const initialFormData = new PaymentExpensesDtoAdd;
         Object.assign(initialFormData, initialData)
         setFormData(initialFormData)
+    };
+
+    const onPaymentTypeChange = (selectedOption: any) => {
+        setFormData({ ...formData, idPaymentType: selectedOption?.value || 0 });
+        setSelectedPaymentType(selectedOption?.label || null);
+        // onChange={(selectedOption) => setFormData({ ...formData, idPaymentType: selectedOption?.value || 0 })}
     };
 
     const onSubmitHandler = async (event: React.FormEvent) => {
@@ -66,18 +74,22 @@ const ExpensesForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate
                     className={TableSelectsClasses}
                     options={typePaymentOptions}
                     value={typePaymentOptions.find((option) => option.value === formData.idPaymentType)}
-                    onChange={(selectedOption) => setFormData({ ...formData, idPaymentType: selectedOption?.value || 0 })}
+                    onChange={onPaymentTypeChange}
                 />
             </div>
-            <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">Cuenta de Banco</label>
-                <Select
-                    className={TableSelectsClasses}
-                    options={bankAccountOptions}
-                    value={bankAccountOptions.find((option) => option.value === formData.idBankAccount)}
-                    onChange={(selectedOption) => setFormData({ ...formData, idBankAccount: selectedOption?.value || 0 })}
-                />
-            </div>
+            {selectedPaymentType !== "Efectivo" && (
+                <>
+                    <div className="mb-4">
+                        <label className="block text-sm font-medium text-gray-600">Cuenta de Banco</label>
+                        <Select
+                            className={TableSelectsClasses}
+                            options={bankAccountOptions}
+                            value={bankAccountOptions.find((option) => option.value === formData.idBankAccount)}
+                            onChange={(selectedOption) => setFormData({ ...formData, idBankAccount: selectedOption?.value || 0 })}
+                        />
+                    </div>
+                </>
+            )}
 
             <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-600">Monto</label>

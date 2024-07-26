@@ -137,6 +137,14 @@ const router: RouteObject[] = [
         </Suspense>
     ),
   },
+  {
+    path: '/atributos/CuentasPorCobrar/:accountId',
+    element: (
+        <Suspense fallback={<div>Loading...</div>}>
+          <AccountsReceivable />
+        </Suspense>
+    ),
+  },
   // {
   //   path: '/atributos/PagoGastos',
   //   element: (

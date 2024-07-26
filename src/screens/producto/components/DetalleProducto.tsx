@@ -17,7 +17,6 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-
         // const productIdNumber = Number(productId);
         const productData = await getProductById(productId);
         setDetalleProducto(productData);

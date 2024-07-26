@@ -43,7 +43,7 @@ const View = () => {
   const handleTableRowClick = (record: any) => {
     console.log(record);
     // Al hacer clic en una fila, establece el ID del producto seleccionado y muestra el detalle
-    navigate(`/preOrder/PreOrderDetail/${record.id}`);
+    navigate(`/atributos/CuentasPorCobrar/${record.id}`);
   };
 
   return (

@@ -82,6 +82,8 @@ export const bankAccountTable: (IBankColumns | any)[] = [
   { title: 'Nombre', dataIndex: 'account', key: 'account' },
   { title: 'Banco', dataIndex: 'bankType', key: 'bankType' },
   { title: 'Monto', dataIndex: 'balance', key: 'balance' },
+  { title: 'Debito', dataIndex: 'debitAmount', key: 'debitAmount' },
+  { title: 'Credito', dataIndex: 'creditAmount', key: 'creditAmount' },
 ];
 
 export const saleTableTable: (ISale | any)[] = [
@@ -185,8 +187,13 @@ export const paymentTypeTable: (IPaymentTypeColumns | any)[] = [
 
 export const paymentTable: (IPaymentColumns | any)[] = [
   { title: 'ID', dataIndex: 'idOrder', key: 'idOrder' },
-  { title: 'Cuenta', dataIndex: 'accountPayment', key: 'accountPayment' },
-  { title: 'Numero de Pago', dataIndex: 'paymentNumbers', key: 'paymentNumbers' },
+  {
+    title: 'Cliente',
+    dataIndex: 'client',
+    key: 'client',
+    render: (client: any) => `${client.f_name} ${client.f_surname} ${client.l_surname}`
+  },
+  { title: 'Numero de Pagos', dataIndex: 'paymentNumbers', key: 'paymentNumbers' },
   { title: 'Cantidad', dataIndex: 'amount', key: 'amount' }
 ];
 

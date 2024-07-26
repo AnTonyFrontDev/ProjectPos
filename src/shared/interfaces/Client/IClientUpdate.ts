@@ -1,4 +1,5 @@
 import { DATE } from "@/shared/Common/CurrentDate";
+import { IClientPhone } from "./IClientPhone";
 
 export interface IClientUpdate {
   id?: number;
@@ -10,7 +11,10 @@ export interface IClientUpdate {
   l_surname: string;
   rnc?: string;
   dni: string;
+  phones?: any[];
+  phonesClient?: IClientPhone[] ;
 }
+
 
 export class ClientUpdateDto implements IClientUpdate {
   id?: number;
@@ -22,6 +26,8 @@ export class ClientUpdateDto implements IClientUpdate {
   l_surname: string;
   rnc?: string;
   dni: string;
+  phones?: any[] | undefined;
+  phonesClient?: IClientPhone[];
 
   constructor(formData: IClientUpdate) {
     this.id = formData.id;
@@ -33,6 +39,7 @@ export class ClientUpdateDto implements IClientUpdate {
     this.l_surname = formData.l_surname;
     this.rnc = formData.rnc;
     this.dni = formData.dni;
+    this.phonesClient = formData.phonesClient ?? [];
   }
 }
   
