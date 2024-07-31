@@ -6,7 +6,7 @@ import { FormProps } from '@/components/Generics/Interface/IForms';
 import useProductOptions from '@/screens/AddInventory/hooks/useProductOptions';
 import useSizeOptions from '@/screens/AddInventory/hooks/useSizeOptions';
 import useColorOptions from '@/screens/AddInventory/hooks/useColorOptions';
-import { InputNumber } from 'antd';
+import { InputNumber, notification } from 'antd';
 import { FormInputsClasses, TableSelectsClasses } from '@/shared/Common/stylesConst/cssComponent';
 import { IPreOrderProduct, PreOrderProductDto, UpdatePreOrderProductDto } from '@/shared/interfaces/Preorder/IPreOrderProduct';
 import { addPreOrderProduct, UpdatePreOrderProduct } from '@/shared/Api/PreOrder/PreOrderProductApi';
@@ -84,8 +84,13 @@ const AddProduct: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }
                     fkPreOrder: parseInt(preorderId ?? '0'),
                     user: formData.user,
                 };
-                await addPreOrderProduct(dataToSave);
-                alert('Producto agregado exitosamente');
+                await addPreOrderProduct(dataToSave)
+                .then (() => {
+                    notification.success({
+                        message: 'Pedido Agregado',
+                        description: 'La pedido se ha agregado exitosamente.',
+                    })
+                });
             }
             setFormData(new PreOrderProductDto());
             // window.location.reload();

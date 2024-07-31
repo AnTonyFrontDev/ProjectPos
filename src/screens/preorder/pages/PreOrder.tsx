@@ -9,7 +9,7 @@ import useColorOptions from '@/screens/AddInventory/hooks/useColorOptions';
 import ButtonModal from '@/components/Generics/Modal/ButtonModal';
 import ViewForm from '@/components/FormularioV4/viewForm';
 import useClientOptions from '@/screens/AddInventory/hooks/useClientOptions';
-import { InputNumber } from 'antd';
+import { InputNumber, notification } from 'antd';
 import { FormInputsClasses, TableHeadClasses, TableSelectsClasses } from '@/shared/Common/stylesConst/cssComponent';
 import { ISizeGet } from '@/shared/interfaces/size/ISizeGet';
 import { IColorGet } from '@/shared/interfaces/Color/IColorGet';
@@ -65,12 +65,18 @@ const PreOrders = () => {
         ...formData,
         productsDtoAdds: tableData,
       };
-      await addPreOrder(formDataWithProducts);
+      await addPreOrder(formDataWithProducts)
+      .then (() => {
+        notification.success({
+            message: 'Pedido Agregado',
+            description: 'El Pedido se ha agregado exitosamente.',
+        })
+      });
       // Limpiar el formulario después de guardar
       setFormData(new PreOrderPostDto);
       setTableData([]);
       setDisabledRows([]);
-      alert('Pedido guardado exitosamente');
+      // alert('Pedido guardado exitosamente');
     } catch (error) {
       console.error('Error al guardar el pedido:', error);
       alert('Error al guardar el pedido. Por favor, inténtalo de nuevo.');

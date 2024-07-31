@@ -5,6 +5,7 @@ import { SaveProduct, UpdateProduct } from '@/shared/Api/Products/ProductApi';
 import { getTypes } from '@/shared/Api/Products/TypeProd/TypeProduct';
 import { IProductPost, ProductDtoPost } from '@/shared/interfaces/Product/IProductPost';
 import { IProductUpdate, ProductUpdateDto } from '@/shared/interfaces/Product/IProductUpdate';
+import showGenericNotification from '@/util/antd/notification';
 
 
 
@@ -20,15 +21,40 @@ export const useProductForm = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Product Data:', formData);
-    GenericRequest(formData, SaveProduct, "Payment data submitted successfully");
-    window.location.reload();
+    GenericRequest(formData, SaveProduct, "Product data submitted successfully")
+      .then(() => {
+        // Muestra notificación de éxito
+        showGenericNotification({
+          isSuccess: true,
+          title: 'Éxito',
+          message: 'Los datos del producto se han enviado con éxito.'
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000); // Esperar 2 segundos antes de recargar
+      })
+      .catch((error) => {
+        console.error("Error submitting Product data:", error);
+        // Muestra notificación de error
+        showGenericNotification({
+          isSuccess: false,
+          title: 'Error',
+          message: 'Hubo un problema al enviar los datos del producto.'
+        });
+      });
   };
 
   const handleUpdate = (e: React.FormEvent) => {
     e.preventDefault();
     const updateData: IProductUpdate = new ProductUpdateDto(formData);
-    console.log('Product Data:', updateData);
-    GenericRequest(updateData, UpdateProduct, "Payment data updated successfully");
+    // console.log('Product Data:', updateData);
+    GenericRequest(updateData, UpdateProduct, "Payment data updated successfully")
+    .then(() => {
+      window.location.reload();
+    })
+    .catch((error) => {
+      console.error("Error submitting data:", error);
+    });
     window.location.reload();
   };
 

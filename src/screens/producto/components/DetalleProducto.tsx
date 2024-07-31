@@ -10,6 +10,8 @@ import ButtonModal from '@/components/Generics/Modal/ButtonModal';
 import ViewForm from '@/components/FormularioV4/viewForm';
 import { Modal } from 'antd';
 import { ProductRemoveDto } from '@/shared/interfaces/Product/IProductRemove';
+import showConfirm from '@/util/antd/confirm';
+import showGenericNotification from '@/util/antd/notification';
 
 const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
   const [detalleProducto, setDetalleProducto] = useState<any>(null);
@@ -34,7 +36,7 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
     return <div>Cargando...</div>;
   }
 
-  
+
 
   const { name_prod, description, sale_price, type, colorsAsociated, sizesAsociated } = detalleProducto;
 
@@ -42,11 +44,40 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
     try {
       const productRemoveData = new ProductRemoveDto({ id: Number(productId) });
       console.log(productRemoveData)
-      await RemoveProduct(productRemoveData);
-      Modal.success({ content: 'Producto eliminado exitosamente' });
+      await RemoveProduct(productRemoveData)
+        .then(() => {
+          showGenericNotification({
+            isSuccess: true,
+            title: 'Éxito',
+            message: 'Los datos del producto se han removido con éxito.'
+          });
+          setTimeout(() => {
+            window.location.href = '/productos';
+          }, 1000); // Esperar 2 segundos antes de recargar
+        })
     } catch (error) {
       Modal.error({ content: 'Error al eliminar el producto' });
     }
+  };
+
+  const handleConfirmDelete = () => {
+    showConfirm({
+      title: 'Confirmar eliminación',
+      content: '¿Estás seguro de que deseas eliminar este producto?',
+      // Callback para cuando se confirma la acción
+      onOk: () => {
+        handleDelete(); // Llamada a la función handleDelete
+      },
+      // Callback para cuando se cancela la acción
+      onCancel: () => {
+        showGenericNotification({
+          isSuccess: true,
+          title: 'Éxito',
+          message: 'Cancelado.'
+        });
+        // Aquí puedes agregar lógica adicional si es necesario
+      },
+    });
   };
 
   return (
@@ -104,8 +135,8 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
         />
         {/* Botón para eliminar */}
 
-        <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" 
-          onClick={handleDelete}>
+        <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          onClick={handleConfirmDelete}>
           Eliminar
         </button>
       </div>

@@ -19,7 +19,7 @@ const ProductSizeAdd: React.FC<IProductSizeProps> = ({ productId }) => {
                 const sizesResponse = await getSizes();
                 const sizeOptions = sizesResponse.map((size: any) => ({
                     value: size.id,
-                    label: size.size,
+                    label: `${size.size}  -  ${size.category}`,
                 }));
                 setSize(sizeOptions);
             } catch (error) {
@@ -76,12 +76,15 @@ const ProductSizeAdd: React.FC<IProductSizeProps> = ({ productId }) => {
         // console.log('Size agregado exitosamente.', formData);
 
         try {
-            await SaveProductSize(formData);
-            setShowSuccessAlert(true);
-            setSelectedSize(null);
-            setTimeout(() => {
-                setShowSuccessAlert(false);
-            }, 3000);
+            await SaveProductSize(formData)
+            .then(() => {
+                setShowSuccessAlert(true);
+                setSelectedSize(null);
+                setTimeout(() => {
+                    window.location.reload();
+                    setShowSuccessAlert(false);
+                }, 1000);
+            })
             const updatedProductColors = await getProductSize();
             setProductSizes(updatedProductColors.filter((pc: any) => pc.idProduct === Number(productId)));
         } catch (error) {
@@ -96,13 +99,14 @@ const ProductSizeAdd: React.FC<IProductSizeProps> = ({ productId }) => {
         }
         const numericProductId = Number(productId);
         const sizeToDelete = productSizes.find(pc => pc.idSize === selectedSize.value && pc.idProduct === numericProductId);
+        console.log('Size a eliminar:', sizeToDelete.id);
+        console.log('Size a eliminar:', sizeToDelete);
 
         if (!sizeToDelete) {
             console.error('No se encontró el color a eliminar');
             return;
         }
 
-        console.log('Color a eliminar:', sizeToDelete.id);
 
         try {
             await RemoveProductSize({ id: sizeToDelete.id });

@@ -40,9 +40,9 @@ export const SaveProductColor = async (formData: IProductColorPost) => {
 
 export const RemoveProductColor = async (formData: any) => {
   try {
-    const formattedData = formData;
+    const formattedData = formData.id;
     const response = await axios.delete(
-      `${URL}/ProductColor/RemoveProductColor`, { data: formattedData.id, }
+      `${URL}/ProductColor/RemoveProductColor?id=${formattedData}`
     );
 
     return response.data;

@@ -65,9 +65,9 @@ export const UpdateProductSize = async (formData: IProductSizeUpdate) => {
 
   export const RemoveProductSize = async (formData: any ) => {
     try {
-      const formattedData = formData;
+      const formattedData = formData.id;
       const response = await axios.delete(
-        `${URL}/ProductSize/RemoveProductSize`, {data: formattedData,}
+        `${URL}/ProductSize/RemoveProductSize?id=${formattedData}`
       );
   
       return response.data;

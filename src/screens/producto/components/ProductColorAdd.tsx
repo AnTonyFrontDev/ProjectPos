@@ -74,12 +74,15 @@ const ProductColorAdd: React.FC<IProductColorProps> = ({ productId }) => {
     };
 
     try {
-      await SaveProductColor(formData);
-      setShowSuccessAlert(true);
-      setSelectedColor(null);
-      setTimeout(() => {
-        setShowSuccessAlert(false);
-      }, 3000);
+      await SaveProductColor(formData)
+      .then(() => {
+        setShowSuccessAlert(true);
+        setSelectedColor(null);
+        setTimeout(() => {
+          window.location.reload();
+          setShowSuccessAlert(false);
+        }, 1000);
+      })
       // Update the list of product colors
       const updatedProductColors = await getProductColor();
       setProductColors(updatedProductColors.filter((pc: any) => pc.fkProduct === Number(productId)));

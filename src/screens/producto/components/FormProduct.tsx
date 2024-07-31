@@ -38,7 +38,7 @@ const ProductForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate 
         } else {
             await handleSubmit(event);
         }
-        window.location.reload();
+        // window.location.reload();
     };
 
     return (
