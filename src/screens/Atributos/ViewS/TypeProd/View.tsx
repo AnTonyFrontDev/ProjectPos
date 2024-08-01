@@ -51,13 +51,13 @@ const View = () => {
 
             <ApiTable
               getApiData={() => apiData.data.data}
-              delApiData={RemoveTypeProd}
               usarForm={'Types'}
               columns={typeProdTable}
               searchTerm={searchTerm}
               filterColumn={filterColumn}
               sortDirection={sortDirection}
               showActions={true}
+              deleteProps={{ onRemove: RemoveTypeProd, navigatePath: `/TypeProd` }}
             />
           )}
         </GenericPagination>

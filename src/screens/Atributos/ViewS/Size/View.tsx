@@ -51,13 +51,13 @@ const SizeView = () => {
 
             <ApiTable
               getApiData={() => apiData.data.data}
-              delApiData={RemoveSize}
               columns={sizeTable}
               searchTerm={searchTerm}
               filterColumn={filterColumn}
               sortDirection={sortDirection}
               notEditable={true}
               showActions={true}
+              deleteProps={{ onRemove: RemoveSize, navigatePath: `/Size` }}
             />
           )}
         </GenericPagination>

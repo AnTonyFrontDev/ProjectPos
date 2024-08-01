@@ -50,7 +50,6 @@ const View = () => {
 
             <ApiTable
               getApiData={() => apiData.data.data}
-              delApiData={RemoveCategorySize}
               usarForm='CSize'
               columns={categorySizeTable}
               searchTerm={searchTerm}
@@ -58,6 +57,7 @@ const View = () => {
               sortDirection={sortDirection}
               showActions={true}
               notEditable={true}
+              deleteProps={{ onRemove: RemoveCategorySize, navigatePath: `/CategorySize` }}
             />
           )}
         </GenericPagination>

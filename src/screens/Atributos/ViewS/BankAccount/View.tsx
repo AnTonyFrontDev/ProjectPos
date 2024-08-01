@@ -6,7 +6,9 @@ import { useState } from 'react';
 
 import { bankAccountTable } from "@/components/Generics/Tabla/tData";
 import G_Options from "@/components/Generics/gOptions";
-import { GetBankAccountsPaginated, RemoveBankAccount } from "@/shared/Api/BankAccount/BankAccountApi";
+import { GetBankAccountsPaginated, 
+//  RemoveBankAccount 
+} from "@/shared/Api/BankAccount/BankAccountApi";
 import GenericPagination from '@/components/PaginationComponents/GenericPagination';
 
 const View = () => {
@@ -52,7 +54,7 @@ const View = () => {
 
             <ApiTable
               getApiData={() => apiData.data.data}
-              delApiData={RemoveBankAccount}
+              // delApiData={RemoveBankAccount}
               usarForm='BankAccount'
               columns={bankAccountTable}
               searchTerm={searchTerm}

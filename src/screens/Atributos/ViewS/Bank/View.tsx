@@ -51,7 +51,6 @@ const View = () => {
 
             <ApiTable
               getApiData={() => apiData.data.data}
-              delApiData={RemoveBank}
               usarForm='Bank'
               columns={banksTable}
               searchTerm={searchTerm}
@@ -59,6 +58,7 @@ const View = () => {
               sortDirection={sortDirection}
               showActions={true}
               notEditable={true}
+              deleteProps={{ onRemove: RemoveBank, navigatePath: `/Bank` }}
             />
           )}
         </GenericPagination>

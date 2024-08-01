@@ -51,13 +51,13 @@ const ColorView = () => {
 
             <ApiTable
               getApiData={() => apiData.data.data}
-              delApiData={RemoveColor}
               columns={colorTable}
               searchTerm={searchTerm}
               filterColumn={filterColumn}
               sortDirection={sortDirection}
               showActions={true}
               notEditable={true}
+              deleteProps={{ onRemove: RemoveColor, navigatePath: `/Color` }}
             />
           )}
 

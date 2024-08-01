@@ -1,7 +1,7 @@
 // Expenses.tsx
 import BreadcrumbData from "@/components/ui/Breadcrumb";
 import ApiTable from '@/components/Generics/Tabla/apiTable';
-import SearchFilter from '../../../../shared/SearchFilter';
+import SearchFilter from '@/shared/SearchFilter';
 import { useState } from 'react';
 
 import { expensesTable } from "@/components/Generics/Tabla/tData";
@@ -52,7 +52,6 @@ const View = () => {
 
             <ApiTable
               getApiData={async () => apiData.data.data}
-              delApiData={RemoveExpenses}
               usarForm='Expenses'
               columns={expensesTable}
               searchTerm={searchTerm}
@@ -60,6 +59,7 @@ const View = () => {
               sortDirection={sortDirection}
               notEditable={true}
               showActions={true}
+              deleteProps={{ onRemove: RemoveExpenses, navigatePath: `/Expenses` }}
             />
           )}
 

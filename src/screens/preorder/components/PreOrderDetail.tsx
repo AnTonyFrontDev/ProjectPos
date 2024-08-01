@@ -21,7 +21,7 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const preOrderData = await getPreOrderById(preorderId);
+                   const preOrderData = await getPreOrderById(preorderId);
                 setDetallePreOrder(preOrderData.data[0]); // Obtén los datos de la preorden
                 setFilteredItems(preOrderData.data[0]?.items.preOrderProducts || []); // Establecer todos los productos como predeterminado
             } catch (error) {

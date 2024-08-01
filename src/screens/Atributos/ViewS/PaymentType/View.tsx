@@ -51,7 +51,6 @@ const View = () => {
 
             <ApiTable
               getApiData={async () => apiData.data.data}
-              delApiData={RemovePaymentType}
               usarForm='TypePay'
               columns={paymentTypeTable}
               searchTerm={searchTerm}
@@ -59,6 +58,7 @@ const View = () => {
               sortDirection={sortDirection}
               showActions={true}
               notEditable={true}
+              deleteProps={{ onRemove: RemovePaymentType, navigatePath: `/PaymentType` }}
             />
           )}
 
