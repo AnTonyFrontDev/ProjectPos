@@ -2,7 +2,7 @@ import { Modal } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
 interface DeleteButtonProps {
-    onRemove: (formData: any) => Promise<void>;
+    onRemove: (formData: any) => Promise<void> | undefined;
     formData: any;
     confirmationMessage: string;
     navigatePath: string;

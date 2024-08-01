@@ -4,27 +4,33 @@ import { getPaymentByOrderId, RemovePayment } from '@/shared/Api/Payment/Payment
 import { DetalleProps as DetalleOrderProps } from '@/shared/interfaces/I_inventario';
 import { useNavigate } from 'react-router-dom';
 import { DATE } from '@/shared/Common/CurrentDate';
+import { getPreOrderById } from '@/shared/Api/PreOrder/PreOrderApi';
+import ApiTable from '@/components/Generics/Tabla/apiTable';
 
 const AReceivableDetail: React.FC<DetalleOrderProps> = ({ Id: accountId }) => {
   const [orderDetail, setOrderDetail] = useState<any>(null);
   const [payment, setPaymentDetail] = useState<any>(null);
+
+  const [filteredItems, setFilteredItems] = useState<any[]>(['']);
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const orderData = await getPaymentByOrderId(accountId);
+        const preOrderData = await getPreOrderById(accountId);
         setOrderDetail(orderData.data);
+        setFilteredItems(preOrderData?.data[0]?.items.preOrderProducts || []);
         setPaymentDetail(orderData.data.payments); // Obtén los detalles de la orden
         console.log('orderDetail', orderData.data.amountPending);
       } catch (error) {
         console.error('Error al obtener detalle de la orden:', error);
       }
     };
-    
+
     fetchData();
   }, [accountId]);
-  
+
 
   const handleDelete = async (paymentId: number) => {
     Modal.confirm({
@@ -53,6 +59,15 @@ const AReceivableDetail: React.FC<DetalleOrderProps> = ({ Id: accountId }) => {
   if (!payment) {
     return <div>Cargando...</div>;
   }
+
+  const columns2 = [
+    { title: 'ID', dataIndex: 'id', key: 'id' },
+    { title: 'Nombre', dataIndex: 'productName', key: 'productName' },
+    { title: 'Color Primario', dataIndex: 'colorPrimary', key: 'colorPrimary' },
+    { title: 'Tamaño', dataIndex: 'size', key: 'size' },
+    { title: 'Precio', dataIndex: 'price', key: 'price' },
+    { title: 'Cantidad', dataIndex: 'quantity', key: 'quantity' },
+  ];
 
   const client = payment[0]?.client;
   const columns = [
@@ -86,11 +101,6 @@ const AReceivableDetail: React.FC<DetalleOrderProps> = ({ Id: accountId }) => {
       dataIndex: 'documentNumber',
       key: 'documentNumber',
     },
-    // {
-    //   title: 'Monto Pendiente',
-    //   dataIndex: 'amountPending',
-    //   key: 'amountPending',
-    // },
     {
       title: 'Acciones',
       key: 'action',
@@ -112,14 +122,35 @@ const AReceivableDetail: React.FC<DetalleOrderProps> = ({ Id: accountId }) => {
         <Descriptions.Item label="DNI">{client?.dni}</Descriptions.Item>
         <Descriptions.Item label="Monto Pendiente">{orderDetail.amountPending}</Descriptions.Item>
       </Descriptions>
-      
-      <Table
-        className='mt-4'
-        dataSource={payment}
-        columns={columns}
-        rowKey="id"
-        pagination={false}
-      />
+      {filteredItems.length > 0 && (
+
+        <div className='my-8'>
+          <h2 className='my-4'>Productos</h2>
+
+          <ApiTable
+            dataSource={filteredItems}
+            columns={columns2}
+            // searchTerm={searchTerm}
+            // filterColumn={filterColumn}
+            // sortDirection={sortDirection}
+            usarForm='PreOrder'
+          // showActions={true}
+          // deleteProps={{ onRemove: RemovePreOrderProduct, navigatePath: `/preOrder` }}
+          />
+        </div>
+      )}
+      {payment.length > 0 && (
+        <>
+          <h2 className='my-4'>Pagos</h2>
+          <Table
+            className='mt-4'
+            dataSource={payment}
+            columns={columns}
+            rowKey="id"
+            pagination={false}
+          />
+        </>
+      )}
     </div>
   );
 }

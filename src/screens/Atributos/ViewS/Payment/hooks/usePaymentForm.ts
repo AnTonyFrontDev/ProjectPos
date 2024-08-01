@@ -15,6 +15,7 @@ export const usePaymentForm = () => {
   const [typePaymentOptions, setTypePaymentOptions] = useState<IOptionSelect[]>([]);
   const [bankAccountOptions, setBankAccountOptions] = useState<IOptionSelect[]>([]);
   const [preOrderOptions, setPreOrderOptions] = useState<IOptionSelect[]>([]);
+  const [preOrderPending, setPreOrderPending] = useState<any[]>([]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -23,7 +24,7 @@ export const usePaymentForm = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Payment Data:', formData);
+    // console.log('Payment Data:', formData);
   
     GenericRequest(formData, SavePayment, "Payment data submitted successfully")
       .then(() => {
@@ -36,7 +37,7 @@ export const usePaymentForm = () => {
 
   const handleSubmitCredit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Payment Data:', formData);
+    // console.log('Payment Data:', formData);
   
     GenericRequest(formData, SavePayment, "Payment data submitted successfully")
       .then(() => {
@@ -50,7 +51,7 @@ export const usePaymentForm = () => {
   const handleUpdate = (e: React.FormEvent) => {
     e.preventDefault();
     const updateData: IPaymentUpdate = new PaymentUpdateDto(formData);
-    console.log('Payment Data:', updateData);
+    // console.log('Payment Data:', updateData);
     GenericRequest(updateData, UpdatePayment, "Payment data updated successfully");
     // window.location.reload();
   };
@@ -89,11 +90,13 @@ export const usePaymentForm = () => {
         label: `${data.id} - ${data.client.f_name}${data.client.l_name} ${data.client.f_surname} ${data.client.l_surname} - ${data.amountBase}`
       }));
       console.log('PreOrderPending:', preOrder);
+      setPreOrderPending(preOrder);
       setPreOrderOptions(options);
     } catch (error) {
       console.error('Error al cargar los pedidos:', error);
     }
   };
+  
 
   return { formData, 
     setFormData, 
@@ -104,6 +107,7 @@ export const usePaymentForm = () => {
     typePaymentOptions,
     bankAccountOptions,
     preOrderOptions,
+    preOrderPending,
     loadPreOrderOptions, 
     loadBankAccountOptions, 
     loadTypePaymentOptions };

@@ -53,7 +53,7 @@ export const UpdatePreOrderProduct = async (formData: IUpdatePreOrderProduct) =>
 
 export const RemovePreOrderProduct = async (formData: any) => {
   try {
-    const formattedData = { id: Number(formData.preorderId) };
+    const formattedData = { id: Number(formData.id) };
     console.log("formData", formData);
     console.log("formattedData", formattedData);
     const response = await axios.delete(

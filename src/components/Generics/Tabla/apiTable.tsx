@@ -1,17 +1,15 @@
 // apiTable.tsx
 import React, { useEffect, useState } from 'react';
-import { Modal, Table } from 'antd';
-import PropTypes from 'prop-types';
+import {Table } from 'antd';
 import ButtonModal from '../Modal/ButtonModal';
 import ViewForm from '@/components/FormularioV4/viewForm';
 import { ExpensesUpdateDto } from "@/shared/interfaces/Expenses/IExpensesUpdate.ts";
-
+import DeleteButton from '@/components/Generics/Modal/DeleteModal';
 interface GenericTableProps {
   getApiData?: () => Promise<any[]>;
-  putApiData?: (data: any) => Promise<any[]>;
   delApiData?: (data: any) => Promise<any[]>;
   columns: any[];
-  searchTerm: string;
+  searchTerm?: string;
   filterColumn?: string;
   sortDirection?: 'asc' | 'desc';
   handleTableRowClick?: any;
@@ -19,14 +17,17 @@ interface GenericTableProps {
   usarForm?: any;
   dataSource?: any[];
   notEditable?: boolean;
-  //boton personalizable para poner en la tabla
-  //useCustomButton: boolean;
   customButton?: [text: string, onClick: (id: ExpensesUpdateDto) => Promise<void>];
+  deleteProps?: {
+    onRemove: (data: any) => Promise<any> | undefined;
+    navigatePath?: string;
+  };
 }
 
 const GenericTable: React.FC<GenericTableProps> = ({
   getApiData,
   delApiData,
+  deleteProps,
   columns,
   usarForm,
   searchTerm,
@@ -44,7 +45,7 @@ const GenericTable: React.FC<GenericTableProps> = ({
     if (!dataSource) {
       fetchData();
     }
-  }, [getApiData, delApiData , searchTerm, filterColumn, sortDirection, dataSource]);
+  }, [getApiData, delApiData, searchTerm, filterColumn, sortDirection, dataSource]);
 
   const fetchData = async () => {
     try {
@@ -59,8 +60,6 @@ const GenericTable: React.FC<GenericTableProps> = ({
           )
         );
       };
-
-      console.log(filteredData)
 
       if (filterColumn) {
         filteredData = filteredData.filter(item => item[filterColumn] !== undefined && item[filterColumn] !== null);
@@ -87,34 +86,6 @@ const GenericTable: React.FC<GenericTableProps> = ({
     }
   };
 
-  const updateDataSource = async () => {
-    // console.log("entro")
-    await fetchData();
-  };
-
-  const handleDelete = async (record: any) => {
-    Modal.confirm({
-      title: 'Confirmar',
-      content: 'Está seguro de que desea eliminar este registro?',
-      okText: 'Yes',
-      okType: 'danger',
-      cancelText: 'No',
-      onOk: async () => {
-        console.log('Delete:', record);
-        if (delApiData) {
-          try {
-            await delApiData(record);
-            const updatedData = data.filter(item => item.id !== record.id);
-            setData(updatedData);
-            // updateDataSource();
-            await fetchData();
-          } catch (error) {
-            console.error('Error al eliminar el registro', error);
-          }
-        }
-      },
-    });
-  };
 
   const actionsColumn = showActions
     ? [
@@ -129,15 +100,17 @@ const GenericTable: React.FC<GenericTableProps> = ({
                 modalTitle=""
                 className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-2 rounded'
                 size={15}
-                modalContent={<ViewForm usarForm={usarForm} formData={record} isUpdate={true} updateData={updateDataSource} />}
+                modalContent={<ViewForm usarForm={usarForm} formData={record} isUpdate={true} />}
               />
             )}
-            <button
-              className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'
-              onClick={() => handleDelete(record)}
-            >
-              Delete
-            </button>
+            {deleteProps && (
+              <DeleteButton
+              onRemove={deleteProps.onRemove }
+              formData={record}
+              confirmationMessage="¿Estás seguro de que deseas remover este Registro?"
+              navigatePath={deleteProps.navigatePath || '/'}
+              />
+            )}
           </span>
         ),
       },
@@ -174,14 +147,4 @@ const GenericTable: React.FC<GenericTableProps> = ({
     />
   );
 };
-
-GenericTable.propTypes = {
-  getApiData: PropTypes.func.isRequired,
-  columns: PropTypes.array.isRequired,
-  searchTerm: PropTypes.string.isRequired,
-  filterColumn: PropTypes.string.isRequired,
-  sortDirection: PropTypes.oneOf(['asc', 'desc'] as const).isRequired,
-  showActions: PropTypes.bool,
-};
-
 export default GenericTable;

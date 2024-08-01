@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { Descriptions, Table } from 'antd';
+import { Descriptions } from 'antd';
 import { DetalleProps as DetallePreOrdersProps } from '@/shared/interfaces/I_inventario';
 import { getPreOrderById, RemovePreOrder } from '@/shared/Api/PreOrder/PreOrderApi';
 import SearchFilter from '@/shared/SearchFilter';
 import { Link } from 'react-router-dom';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import Print from './PreOrderPrint';
-import ButtonModal from '@/components/Generics/Modal/ButtonModal';
-import ViewForm from '@/components/FormularioV4/viewForm';
 import DeleteButton from '@/components/Generics/Modal/DeleteModal';
 import G_Options from '@/components/Generics/gOptions';
 import { RemovePreOrderProduct } from '@/shared/Api/PreOrder/PreOrderProductApi';
+import ApiTable from '@/components/Generics/Tabla/apiTable';
 
 const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => {
     const [detallePreOrder, setDetallePreOrder] = useState<any>(null);
+    const [searchTerm, setSearchTerm] = useState<string>('');
     const [filteredItems, setFilteredItems] = useState<any[]>(['']);
     const [filterColumn, setFilterColumn] = useState<string>('');
     const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
@@ -33,6 +33,7 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
     }, [preorderId]);
 
     const handleSearch = (searchText: string) => {
+        setSearchTerm(searchText);
         if (!detallePreOrder) return;
         const filtered = detallePreOrder.items.preOrderProducts.filter((item: any) =>
             Object.values(item)
@@ -82,28 +83,6 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
         { title: 'Tamaño', dataIndex: 'size', key: 'size' },
         { title: 'Precio', dataIndex: 'price', key: 'price' },
         { title: 'Cantidad', dataIndex: 'quantity', key: 'quantity' },
-        {
-            title: 'Actions',
-            key: 'actions',
-            render: (_text : any, record : any) => (
-                console.log('record ', record),
-                <span>
-                    <ButtonModal
-                        buttonText="Editar"
-                        modalTitle=""
-                        className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-2 rounded'
-                        size={15}
-                        modalContent={<ViewForm usarForm="PreOrder" formData={record} isUpdate={true} />}
-                    />
-                    <DeleteButton
-                        onRemove={RemovePreOrderProduct}
-                        formData={{ preorderId: record.id }}
-                        confirmationMessage="¿Estás seguro de que deseas eliminar este Pedido?"
-                        navigatePath={`/preOrder`}
-                    />
-                </span>
-            ),
-        },
     ];
 
 
@@ -155,12 +134,25 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
                     onSortToggle={handleSortToggle}
                     columns={columns.map((column) => ({ dataIndex: column.dataIndex as string, title: column.title }))}
                 />
-                <G_Options buttonText='Agregar Producto' usarForm="PreOrder"/> 
+                <G_Options buttonText='Agregar Producto' usarForm="PreOrder" />
             </div>
-            <Table
+            {/* <Table
                 columns={columns}
                 dataSource={filteredItems}
-            />
+            /> */}
+            <div className='my-8'>
+
+                <ApiTable
+                    dataSource={filteredItems}
+                    columns={columns}
+                    searchTerm={searchTerm}
+                    filterColumn={filterColumn}
+                    sortDirection={sortDirection}
+                    usarForm='PreOrder'
+                    showActions={true}
+                    deleteProps={{ onRemove: RemovePreOrderProduct, navigatePath: `/preOrder` }}
+                />
+            </div>
 
             <div className="text-right">
                 <PDFDownloadLink
