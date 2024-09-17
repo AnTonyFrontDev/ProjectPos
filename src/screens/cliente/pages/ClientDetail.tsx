@@ -8,7 +8,7 @@ const InventoryDetail = () => {
     return (
       <div>
         <h1>Detalle Cliente</h1>
-        <Detail Id={clientId} />
+        <Detail id={clientId} />
       </div>
     );
   };

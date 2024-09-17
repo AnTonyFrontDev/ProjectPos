@@ -3,34 +3,50 @@
 import { format } from 'date-fns';
 // #region Constants
 // import React from 'react';
-import { ISizeGet } from '@/shared/interfaces/size/ISizeGet';
-import { IBankColumns } from '@/shared/interfaces/Bank/IBankGet';
-import { IColorGet } from '@/shared/interfaces/Color/IColorGet';
-import { IExpensesColumns } from '@/shared/interfaces/Expenses/IExpensesGet';
-import { ITypeProdColumns } from '@/shared/interfaces/Product/TypeProd/ITypeProdGet';
-import { ICategorySizeColumns } from '@/shared/interfaces/size/CategorySize/ICategorySizeGet';
-import { IProductColumns } from '@/shared/interfaces/Product/IProductGet';
-import { ICustomersColumns, IClientGet } from '@/shared/interfaces/Client/IClientGet';
-import { IPaymentTypeColumns } from '@/shared/interfaces/payment/paymentType/IPaymentTypeColums';
-import { IPaymentColumns } from '@/shared/interfaces/payment/IPaymentColumns';
-import { IAvailableSizesColumn, ISizeQA } from '@/shared/interfaces/Inventory/I_InventoryTable';
-import { IOrderColumns } from '@/shared/interfaces/order/IOrderColumns';
+import { ISize } from '@/shared/interfaces/ISize';
+import { IBank } from '@/shared/interfaces/IBank';
+import { IColor } from '@/shared/interfaces/IColor';
+import { IExpenses } from '@/shared/interfaces/IExpenses';
+import { ITypeProd } from '@/shared/interfaces/ITypeProd';
+import { ICategorySize } from '@/shared/interfaces/ICategorySize';
+import { IProduct } from '@/shared/interfaces/IProduct';
+import { IClient } from '@/shared/interfaces/IClient';
+import { IPaymentType } from '@/shared/interfaces/IPaymentType';
+import { IPayment } from '@/shared/interfaces/IPayment';
+import { IOrder } from '@/shared/interfaces/IOrder';
 import { IPreOrderColumns } from '@/shared/interfaces/Preorder/IPreOrderColumns';
-import { ISale } from '@/shared/interfaces/Sale/ISale';
-import { IPayExpense, IPaymenExpenses } from "@/shared/interfaces/PaymentExpenses/IPaymentExpense.ts";
+import { ISale } from '@/shared/interfaces/ISale';
+import { IPaymenExpenses } from "@/shared/interfaces/IPaymentExpense";
+import { IBuyInventoryGet, IDetails } from '@/shared/interfaces/IBuyInventory';
+import { ISupplier } from '@/shared/interfaces/ISupplier';
 // #endregion
 
-export const inventoryTable: (IAvailableSizesColumn | any)[] = [
+
+const isColorLight = (hexColor: string) => {
+  // Remover el '#' si está presente
+  const color = hexColor.replace('#', '');
+
+  // Obtener los valores RGB
+  const r = parseInt(color.substring(0, 2), 16);
+  const g = parseInt(color.substring(2, 4), 16);
+  const b = parseInt(color.substring(4, 6), 16);
+
+  // Fórmula para calcular la luminancia relativa
+  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+  return luminance > 0.7;
+};
+
+export const inventoryTable: (IBuyInventoryGet | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
   { title: 'Nombre del Producto', dataIndex: 'product_name', key: 'product_name' },
   {
     title: 'Tallas Disponibles',
     dataIndex: 'availableSizes',
     key: 'availableSizes',
-    render: (availableSizes: ISizeQA[]) => {
+    render: (availableSizes: ISize[]) => {
       return (
         <ul className="flex space-x-4">
-          {availableSizes.map((size: ISizeQA) => (
+          {availableSizes.map((size: ISize) => (
             <li key={size.idInventory}>{`${size.size}: ${size.quantity}`}</li>
           ))}
         </ul>
@@ -41,11 +57,11 @@ export const inventoryTable: (IAvailableSizesColumn | any)[] = [
   { title: 'Precio de venta', dataIndex: 'price', key: 'price' },
 ];
 
-const combineFirstAndLastName = (record: IClientGet): string => `${record.f_name} ${record.l_name}`;
+const combineFirstAndLastName = (record: IClient): string => `${record.f_name} ${record.l_name}`;
 
-const combineSurname = (record: IClientGet): string => `${record.f_surname} ${record.l_surname}`;
+const combineSurname = (record: IClient): string => `${record.f_surname} ${record.l_surname}`;
 
-export const customersTable: (ICustomersColumns | any)[] = [
+export const customersTable: (IClient | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
   { title: 'Nombre Completo', dataIndex: '', key: 'full_name', render: combineFirstAndLastName },
   { title: 'Apellido Completo', dataIndex: '', key: 'full_surname', render: combineSurname },
@@ -53,7 +69,45 @@ export const customersTable: (ICustomersColumns | any)[] = [
   { title: 'DNI', dataIndex: 'dni', key: 'dni' },
 ];
 
-export const ExpensesTable: (IExpensesColumns | any)[] = [
+const formatDate = (date: string) => new Date(date).toLocaleDateString();
+const formatCurrency = (amount: number) => `$${amount.toLocaleString()}`;
+
+export const buyInventoryTable: (IBuyInventoryGet | any)[] = [
+  { title: 'ID', dataIndex: 'id', key: 'id' },
+  { title: 'Empresa', dataIndex: 'company', key: 'company' },
+  { title: 'RNC', dataIndex: 'rnc', key: 'rnc' },
+  { title: 'NCF', dataIndex: 'ncf', key: 'ncf' },
+  { title: 'Fecha de Compra', dataIndex: 'datE_MADE', key: 'date_made', render: formatDate },
+  { title: 'Compra Total', dataIndex: 'totaL_SALE', key: 'total_sale', render: formatCurrency },
+];
+
+export const BuyDetailTable: (IDetails | any)[] = [
+  { title: 'Producto', dataIndex: ['product', 'namE_PRODUCT'], key: 'product' },
+  { title: 'Descripción', dataIndex: ['product', 'descriptioN_PRODUCT'], key: 'description' },
+  { title: 'Tamaño', dataIndex: ['size', 'size'], key: 'size' },
+  {
+    title: 'Color Primario', dataIndex: ['colorPrimary', 'colorname'], key: 'colorPrimary',
+    render: (color: string, record: any) => {
+      // Comprobamos si el color es claro
+      const isLight = isColorLight(record.colorPrimary.codE_COLOR);
+      const textColor = isLight ? '#FFF' : record.colorPrimary.codE_COLOR;
+      return (
+        <span
+          style={{ color: textColor, backgroundColor: isLight ? '#c2c2c2' : '', padding: isLight ? '2px' : '0', borderRadius: '4px', }}
+        >
+          {color}
+        </span>
+      );
+    }
+  },
+  {
+    title: 'Precio', dataIndex: 'price', key: 'price',
+    render: (price: number) => `$${price}`,
+  },
+  { title: 'Cantidad', dataIndex: 'quantity', key: 'quantity' }
+];
+
+export const ExpensesTable: (IExpenses | any)[] = [
   { Title: 'ID', dataIndex: 'id', key: 'id' },
   { title: 'Nombre', dataIndex: 'name', key: 'name' },
   { title: 'Descripción', dataIndex: 'description', key: 'description' },
@@ -64,7 +118,7 @@ export const ExpensesTable: (IExpensesColumns | any)[] = [
   { title: 'idPaymentType', dataIndex: 'idPaymentType', key: 'idPaymentType' },
 ];
 
-export const productTable: (IProductColumns | any)[] = [
+export const productTable: (IProduct | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
   { title: 'Nombre del Producto', dataIndex: 'name_prod', key: 'name_prod' },
   { title: 'Marca', dataIndex: 'description', key: 'description' },
@@ -72,12 +126,12 @@ export const productTable: (IProductColumns | any)[] = [
   { title: 'Tipo', dataIndex: 'type', key: 'type' },
 ];
 
-export const banksTable: (IBankColumns | any)[] = [
+export const banksTable: (IBank | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
   { title: 'Nombre del Banco', dataIndex: 'bankName', key: 'bankName' },
 ];
 
-export const bankAccountTable: (IBankColumns | any)[] = [
+export const bankAccountTable: (IBank | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
   { title: 'Nombre', dataIndex: 'account', key: 'account' },
   { title: 'Banco', dataIndex: 'bankType', key: 'bankType' },
@@ -106,40 +160,40 @@ export const saleTableTable: (ISale | any)[] = [
   },
 ];
 
-export const categorySizeTable: (ICategorySizeColumns | any)[] = [
+export const categorySizeTable: (ICategorySize | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
   { title: 'Categoría', dataIndex: 'category', key: 'category' },
 ];
 
-const backgroundColor = (record: IColorGet): string => record.code || '#ffffff';
-export const colorTable: (IColorGet | any)[] = [
+const backgroundColor = (record: IColor): string => record.code || '#ffffff';
+export const colorTable: (IColor | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
   { title: 'Nombre del Color', dataIndex: 'colorname', key: 'colorname' },
   {
     title: 'Código',
     dataIndex: 'code',
     key: 'code',
-    render: (text: string, record: IColorGet) => {
+    render: (text: string, record: IColor) => {
       const bgColor = backgroundColor(record);
       return (
         <span>
           <span style={{
             backgroundColor: bgColor,
-            border: '2px solid #000', 
-            color: bgColor, 
-            padding: '0px 4px', 
-            margin: '0px 4px', 
-            borderRadius: '12px', 
-            display: 'inline-block' 
-            }}>@</span>
-          {text} 
+            border: '2px solid #000',
+            color: bgColor,
+            padding: '0px 4px',
+            margin: '0px 4px',
+            borderRadius: '12px',
+            display: 'inline-block'
+          }}>@</span>
+          {text}
         </span>
       );
     },
   },
 ];
 
-export const expensesTable: (IExpensesColumns | any)[] = [
+export const expensesTable: (IExpenses | any)[] = [
   { Title: 'ID', dataIndex: 'id', key: 'id' },
   { title: 'Nombre', dataIndex: 'name', key: 'name' },
   { title: 'Descripción', dataIndex: 'description', key: 'description' },
@@ -148,8 +202,8 @@ export const expensesTable: (IExpensesColumns | any)[] = [
   { title: 'Número de documento', dataIndex: 'documentNumber', key: 'documentNumber' },
 ];
 
-const combineCliente = (record: IClientGet): string => `${record.f_name} ${record.l_name} ${record.f_surname} ${record.l_surname}`;
-export const ReceivableTable: (IExpensesColumns | any) = [
+const combineCliente = (record: IClient): string => `${record.f_name} ${record.l_name} ${record.f_surname} ${record.l_surname}`;
+export const ReceivableTable: (IExpenses | any) = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
   { title: 'Cliente', dataIndex: 'client', key: 'client', render: combineCliente },
   { title: 'Fecha de Entrega', dataIndex: 'dateDelivery', key: 'dateDelivery' },
@@ -158,9 +212,9 @@ export const ReceivableTable: (IExpensesColumns | any) = [
 ];
 
 
-const renderNamePayment = (record: IPayExpense) => record.name;
-const renderDocumentNumber = (record: IPayExpense) => record.documentNumber;
-const renderDescription = (record: IPayExpense) => record.description;
+const renderNamePayment = (record: IExpenses) => record.name;
+const renderDocumentNumber = (record: IExpenses) => record.documentNumber;
+const renderDescription = (record: IExpenses) => record.description;
 export const PaymentExpensesTable: (IPaymenExpenses | any) = [
   { title: 'id', dataIndex: 'id', key: 'id' },
   { title: 'Nombre', dataIndex: 'expense', key: 'expense', render: renderNamePayment },
@@ -170,22 +224,26 @@ export const PaymentExpensesTable: (IPaymenExpenses | any) = [
 
 ]
 
-export const sizeTable: (ISizeGet | any)[] = [
+export const sizeTable: (ISize | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
   { title: 'Tamaño', dataIndex: 'size', key: 'size' },
   { title: 'Categoría', dataIndex: 'category', key: 'category' },
 ];
-export const typeProdTable: (ITypeProdColumns | any)[] = [
+export const SupplierTable: (ISupplier | any)[] = [
+  { title: 'ID', dataIndex: 'id', key: 'id' },
+  { title: 'Suplidor', dataIndex: 'nombre', key: 'nombre' },
+];
+export const typeProdTable: (ITypeProd | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
   { title: 'Tipo', dataIndex: 'type', key: 'type' },
 ];
 
-export const paymentTypeTable: (IPaymentTypeColumns | any)[] = [
+export const paymentTypeTable: (IPaymentType | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
   { title: 'Tipo', dataIndex: 'type', key: 'type' },
 ];
 
-export const paymentTable: (IPaymentColumns | any)[] = [
+export const paymentTable: (IPayment | any)[] = [
   { title: 'ID', dataIndex: 'idOrder', key: 'idOrder' },
   {
     title: 'Cliente',
@@ -215,7 +273,7 @@ export const creditNoteTable: (any)[] = [
   { title: 'Fecha de Emision', dataIndex: 'dateCreated', key: 'dateCreated' }
 ];
 
-export const orderTable: (IOrderColumns | any)[] = [
+export const orderTable: (IOrder | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
   {
     title: 'Cliente',

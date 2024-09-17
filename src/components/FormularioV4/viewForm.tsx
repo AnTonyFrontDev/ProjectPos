@@ -12,6 +12,7 @@ const FormBankAccount = lazy(() => import('@/screens/Atributos/ViewS/BankAccount
 const FormCSize = lazy(() => import('@/screens/Atributos/ViewS/CategorySize/components/FormCSize'));
 const FormColor = lazy(() => import('@/screens/Atributos/ViewS/Color/components/FormColor'));
 const FormSize = lazy(() => import('@/screens/Atributos/ViewS/Size/components/FormSize'));
+const FormSupplier = lazy(() => import('@/screens/Atributos/ViewS/Supplier/components/FormSupplier'));
 const FormPaymentType = lazy(() => import('@/screens/Atributos/ViewS/PaymentType/components/FormPaymentType'));
 const FormPayment = lazy(() => import('@/screens/Atributos/ViewS/Payment/components/FormPayment'));
 const FormExpenses = lazy(() => import('@/screens/Atributos/ViewS/Expenses/components/FormExpenses'));
@@ -31,7 +32,8 @@ const formComponents: IFormComponents = {
   Payment: FormPayment,
   Expenses: FormExpenses,
   PayableAccount:FormPayableAccount,
-  PreOrder:FormPreOrder
+  PreOrder:FormPreOrder,
+  Supplier: FormSupplier,
 };
 
 const ViewForm: React.FC<IViewFormProps> = ({ usarForm, formData, isUpdate }) => {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getBanks } from '@/shared/Api/Bank/BankApi';
-import { IBankColumns } from '@/shared/interfaces/Bank/IBankGet';
+import { IBankColumns } from '@/shared/interfaces/IBank';
 
 const useBankOptions = () => {
     const [bankOptions, setBankOptions] = useState<IBankColumns[]>([]);

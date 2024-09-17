@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ClientPhoneDto } from '@/shared/interfaces/Client/IClientPhone';
+import { ClientPhoneDto } from '@/shared/interfaces/IClientPhone';
 import { ClientPostDto, IClientPost } from '@/shared/interfaces/Client/IClientPost';
 import { saveClient, UpdateClient } from '@/shared/Api/Customers/CustomersApi';
 import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';

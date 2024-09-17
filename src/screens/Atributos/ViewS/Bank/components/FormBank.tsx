@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 import { useBankForm } from "../hooks/useBankForm";
 import { FormProps } from '@/components/Generics/Interface/IForms';
-import { BankDto, IBankPost } from '@/shared/interfaces/Bank/IBankPost';
+import { BankDto, IBank } from "@/shared/interfaces/IBank";
 
 const BankForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }) => {
     const { formData, setFormData, handleInputChange, handleSubmit, handleUpdate } = useBankForm();
@@ -15,7 +15,7 @@ const BankForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }) 
         }
     }, [isUpdate, initialFormData]);
 
-    const handleSetInitialFormData = (initialData: IBankPost) => {
+    const handleSetInitialFormData = (initialData: IBank) => {
         const initialFormData = new BankDto;
         Object.assign(initialFormData, initialData)
         console.log(initialFormData)

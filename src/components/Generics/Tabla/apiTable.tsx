@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import {Table } from 'antd';
 import ButtonModal from '../Modal/ButtonModal';
 import ViewForm from '@/components/FormularioV4/viewForm';
-import { ExpensesUpdateDto } from "@/shared/interfaces/Expenses/IExpensesUpdate.ts";
+import { ExpensesUpdateDto } from "@/shared/interfaces/IExpenses";
 import DeleteButton from '@/components/Generics/Modal/DeleteModal';
 interface GenericTableProps {
   getApiData?: () => Promise<any[]>;

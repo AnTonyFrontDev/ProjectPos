@@ -1,4 +1,4 @@
-import IPagination from "@/shared/interfaces/Pagination/IPagination.ts";
+import IPagination from "@/shared/interfaces/IPagination";
 
 const ButtonsPagination = ({ dataPagination, HandleClickPage }: {
     dataPagination: IPagination,

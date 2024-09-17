@@ -2,14 +2,14 @@
 import React, { useState, useEffect } from 'react';
 import { useSizeForm } from '../hooks/useSizeForm';
 import { getCategorySizes } from '@/shared/Api/CategorySize/CategorySizeApi';
-import { ICategorySizeColumns } from '@/shared/interfaces/size/CategorySize/ICategorySizeGet';
 import { FormProps } from '@/components/Generics/Interface/IForms';
-import { ISizePost, SizePostDto } from '@/shared/interfaces/size/ISizePost';
+import { ISize, SizePostDto } from '@/shared/interfaces/ISize';
+import { ICategorySize } from '@/shared/interfaces/ICategorySize';
 
 
 const SizeForm: React.FC<FormProps> = ({formData: initialFormData, isUpdate}) => {
   const { formData, setFormData, handleInputChange, handleSubmit, handleSelect } = useSizeForm();
-  const [categories, setCategories] = useState<ICategorySizeColumns[]>([]);
+  const [categories, setCategories] = useState<ICategorySize[]>([]);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -30,7 +30,7 @@ const SizeForm: React.FC<FormProps> = ({formData: initialFormData, isUpdate}) =>
     }
   }, [isUpdate, initialFormData]);
 
-  const handleSetInitialFormData = (initialData: ISizePost) => {
+  const handleSetInitialFormData = (initialData: ISize) => {
     const initialFormData = new SizePostDto;
     Object.assign(initialFormData, initialData)
     setFormData(initialFormData)

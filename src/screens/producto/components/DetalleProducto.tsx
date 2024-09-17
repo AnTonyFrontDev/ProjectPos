@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Descriptions } from 'antd';
-// import { getProductById } from '@/shared/Api/Products/ProductsApi';
-import { DetalleProps as DetalleProductoProps } from '../../../shared/interfaces/I_inventario';
 import { getProductById, RemoveProduct } from '@/shared/Api/Products/ProductApi';
 import { AppIcon } from '../../../components/ui/AppIcon';
 import ProductColorAdd from './ProductColorAdd';
@@ -9,17 +7,21 @@ import ProductSizeAdd from './ProductSizeAdd';
 import ButtonModal from '@/components/Generics/Modal/ButtonModal';
 import ViewForm from '@/components/FormularioV4/viewForm';
 import { Modal } from 'antd';
-import { ProductRemoveDto } from '@/shared/interfaces/Product/IProductRemove';
+import { ProductRemoveDto } from '@/shared/interfaces/IProduct';
 import showConfirm from '@/util/antd/confirm';
 import showGenericNotification from '@/util/antd/notification';
+import { IBaseModel } from '@/shared/interfaces/IBaseModel';
 
-const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
+const DetalleProducto: React.FC<IBaseModel> = ({ id: productId }) => {
   const [detalleProducto, setDetalleProducto] = useState<any>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         // const productIdNumber = Number(productId);
+        if (!productId) {
+          return;
+        }
         const productData = await getProductById(productId);
         setDetalleProducto(productData);
         console.log(productData);
@@ -117,9 +119,12 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
           </Descriptions.Item>
         )}
       </Descriptions>
+
       <ProductColorAdd productId={productId} />
 
       <ProductSizeAdd productId={productId} />
+
+
 
       <div className="flex mt-4">
         {/* Botón para editar */}

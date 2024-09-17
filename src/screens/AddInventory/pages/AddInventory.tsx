@@ -4,23 +4,23 @@ import useProductOptions from '../hooks/useProductOptions';
 import useSizeOptions from '../hooks/useSizeOptions';
 import useColorOptions from '../hooks/useColorOptions';
 import { AddBuy } from '@/shared/Api/BuyInventory/BuyApi';
-import { BuyPostDto, IBuyPost, IInventoryDetailDto } from '@/shared/interfaces/BuyInventory/IBuyInvPost';
 import { InputNumber } from 'antd';
 import { FormInputsClasses, TableHeadClasses, TableSelectsClasses } from '@/shared/Common/stylesConst/cssComponent';
-import { ISizeGet } from '@/shared/interfaces/size/ISizeGet';
-import { IColorGet } from '@/shared/interfaces/Color/IColorGet';
+import { BuyPostDto, IBuyInventoryGet, IInventoryDetail } from '@/shared/interfaces/IBuyInventory';
+import { ISize } from '@/shared/interfaces/ISize';
+import { IColor } from '@/shared/interfaces/IColor';
 
 
 const AddInventory = () => {
-    const [formData, setFormData] = useState<IBuyPost>(new BuyPostDto());
-    const [tableData, setTableData] = useState<IInventoryDetailDto[]>([]);
+    const [formData, setFormData] = useState<IBuyInventoryGet>(new BuyPostDto());
+    const [tableData, setTableData] = useState<IInventoryDetail[]>([]);
     const { productOptions } = useProductOptions();
 
     const [disabledRows, setDisabledRows] = useState<boolean[]>(Array(tableData.length).fill(true));
     const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
 
-    const [rowSizeOptions, setRowSizeOptions] = useState<{ [key: number]: ISizeGet[] }>({});
-    const [rowColorOptions, setRowColorOptions] = useState<{ [key: number]: IColorGet[] }>({});
+    const [rowSizeOptions, setRowSizeOptions] = useState<{ [key: number]: ISize[] }>({});
+    const [rowColorOptions, setRowColorOptions] = useState<{ [key: number]: IColor[] }>({});
 
     const { sizeOptions } = useSizeOptions(selectedProductId ?? 0);
     const { colorOptions } = useColorOptions(selectedProductId ?? 0);
@@ -58,7 +58,7 @@ const AddInventory = () => {
     };
 
     const handleAddRow = () => {
-        const newRow: IInventoryDetailDto = {
+        const newRow: IInventoryDetail = {
             ...new BuyPostDto().inventoryDetailDtoAdd[0],
             fK_BUY_INVENTORY: tableData.length,
         };
@@ -101,7 +101,7 @@ const AddInventory = () => {
     };
 
 
-    const handleSelectChange = (value: number, rowIndex: number, fieldName: keyof IInventoryDetailDto) => {
+    const handleSelectChange = (value: number, rowIndex: number, fieldName: keyof IInventoryDetail) => {
         const updatedTableData = [...tableData];
         updatedTableData[rowIndex][fieldName] = value;
         setTableData(updatedTableData);
@@ -120,7 +120,7 @@ const AddInventory = () => {
     const handleInputChange = (
         e: React.ChangeEvent<HTMLInputElement> | { target: { value: number | null } },
         rowIndex: number,
-        fieldName: keyof IInventoryDetailDto
+        fieldName: keyof IInventoryDetail
     ) => {
         const value = e.target.value;
         const updatedTableData = [...tableData];
@@ -208,7 +208,7 @@ const AddInventory = () => {
                                     className={TableSelectsClasses}
                                     isDisabled={disabledRows[index]}
                                     options={(rowColorOptions[index] || []).map(color => ({
-                                        value: color.id,
+                                        value: color.id || 0,
                                         label: `${color.colorname} - ${color.codE_COLOR}`
                                     }))}
                                     value={{
@@ -226,7 +226,7 @@ const AddInventory = () => {
                                         className={TableSelectsClasses}
                                         isDisabled={disabledRows[index]}
                                         options={(rowSizeOptions[index] || []).map(size => ({
-                                            value: size.id,
+                                            value: size.id || 0,
                                             label: size.size + " - " + size.category
                                         }))}
                                         value={{

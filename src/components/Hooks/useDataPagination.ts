@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import IPagination from "@/shared/interfaces/Pagination/IPagination.ts";
+import IPagination from "@/shared/interfaces/IPagination";
 
 
 const useDataPagination = (dataPagination: any) => {

@@ -1,5 +1,5 @@
 import { URL } from "@/shared/Common/url";
-import { IPreOrder } from "@/shared/interfaces/Preorder/IPreOrder";
+import { IPreOrder } from "@/shared/interfaces/IPreOrder";
 import { IPreOrderGet } from "@/shared/interfaces/Preorder/IPreOrderGet";
 import { IPreOrderGetPending } from "@/shared/interfaces/Preorder/IPreOrderPending";
 import axios from "axios";

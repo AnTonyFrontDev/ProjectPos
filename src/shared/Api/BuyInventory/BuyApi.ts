@@ -1,11 +1,29 @@
 import axios from 'axios';
-import { IBuyPost } from '@/shared/interfaces/BuyInventory/IBuyInvPost';
-import { IBuyUpdate } from '@/shared/interfaces/BuyInventory/IBuyInvUpdate';
 import { URL } from '@/shared/Common/url';
+import { IBuyInventoryGet, IBuyUpdate } from '@/shared/interfaces/IBuyInventory';
 
+export const GetBuyPaginated = async (pages:number,items:number)  => {
+    try {
+      return await axios.get(
+        `${URL}/BuyInventory/GetBuys?Page=${pages}&ItemsPerPage=${items}`);
+  
+    } catch (error) {
+      console.error('Error fetching BuyInvetory:', error);
+    }
+};
 
+export const getBuyById = async (buyId: number) => {
+    try {
+        const response = await axios.get(`${URL}/BuyInventory/GetBuyById?id=${buyId}`);
+        console.log(response.data.data)
+        return response.data.data; 
+    } catch (error) {
+        console.error('Error fetching client details:', error);
+        throw error;
+    }
+};
 
-export const AddBuy = async (formData: IBuyPost) => {
+export const AddBuy = async (formData: IBuyInventoryGet) => {
     console.log("aver", formData)
     try {
         const response = await axios.post(
@@ -40,10 +58,8 @@ export const UpdateOnlyBuyInfo = async (formData: IBuyUpdate) => {
 
 export const RemoveBuy = async (id: number) => {
     try {
-        const response = await axios.post('https://localhost:7065/RemoveBuy', { id }, {
-            headers: {
-                'Content-Type': 'application/json',
-            },
+        const response = await axios.delete(`${URL}/BuyInventory/RemoveBuy`, {
+            data: { id }
         });
 
         return response.data;

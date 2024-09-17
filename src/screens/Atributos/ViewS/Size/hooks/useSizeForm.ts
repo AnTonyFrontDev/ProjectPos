@@ -2,11 +2,10 @@
 import { useState } from 'react';
 import { SaveSize, UpdateSize } from '@/shared/Api/Size/SizeApi';
 import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';
-import { SizePostDto, ISizePost } from '@/shared/interfaces/size/ISizePost';
-import { ISizeUpdate, SizeUpdateDto } from '@/shared/interfaces/size/ISizeUpdate';
+import { SizePostDto, ISize, SizeUpdateDto } from '@/shared/interfaces/ISize';
 
 export const useSizeForm = () => {
-  const [formData, setFormData] = useState<ISizePost>(new SizePostDto());
+  const [formData, setFormData] = useState<ISize>(new SizePostDto());
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -36,7 +35,7 @@ export const useSizeForm = () => {
   //no funciona temporal --
   const handleUpdate = (e: React.FormEvent) => {
     e.preventDefault();
-    const updateData: ISizeUpdate = new SizeUpdateDto(formData as ISizeUpdate);
+    const updateData: ISize = new SizeUpdateDto(formData as ISize);
     console.log('Expenses Data:', updateData);
     GenericRequest(updateData, UpdateSize, "Expenses data updated successfully");
     window.location.reload();

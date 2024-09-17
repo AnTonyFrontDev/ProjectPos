@@ -21,6 +21,7 @@ const linkConfigs = [
   { to: "/atributos/CuentasPagar", text: "Cuentas por Pagar", color: "text-red-500", bgColor: "bg-red-100", type: 'for_pay' },
   { to: "/atributos/CuentasPorCobrar", text: "Cuentas por Cobrar", color: "text-green-500", bgColor: "bg-green-100", type: 'for_collect' },
   { to: "/atributos/NoteCredit", text: "Nota de credito", color: "text-orange-500", bgColor: "bg-amber-100", type: 'for_collect' },
+  { to: "/atributos/Supplier", text: "Suplidores", color: "text-orange-500", bgColor: "bg-amber-100", type: 'for_collect' },
 ];
 
 const Atributos = () => {

@@ -4,7 +4,7 @@ import { getProductSize, RemoveProductSize, SaveProductSize } from '@/shared/Api
 import { getSizes } from '@/shared/Api/Size/SizeApi';
 
 interface IProductSizeProps {
-    productId: number;
+    productId: number | undefined;
 }
 
 const ProductSizeAdd: React.FC<IProductSizeProps> = ({ productId }) => {

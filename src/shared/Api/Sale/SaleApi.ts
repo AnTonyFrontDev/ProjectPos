@@ -1,5 +1,5 @@
 import { URL } from "@/shared/Common/url";
-import { ISale } from "@/shared/interfaces/Sale/ISale";
+import { ISale } from "@/shared/interfaces/ISale";
 import { ISalePost } from "@/shared/interfaces/Sale/ISalePost";
 import { ISaleRemove } from "@/shared/interfaces/Sale/ISaleRemove";
 import { ISaleUpdate } from "@/shared/interfaces/Sale/ISaleUpdate";
@@ -19,7 +19,7 @@ export const getSales = async () : Promise<ISale[]> => {
 };
 
 // Función para obtener todas las PreOrder
-export const getSalesPaginated = async (page:number,items:number) : Promise<ISale[]> => {
+export const getSalesPaginated = async (page:number,items:number) => {
   try {
     return await axios.get(
         `${URL}/Sale/GetSales?Page=${page}&ItemsPerPage=${items}`);

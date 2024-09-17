@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { Descriptions, Modal } from 'antd';
-// import { as DetalleClienteProps } from '@/shared/interfaces/I_cliente';
 import { getClientById, RemoveClient } from '@/shared/Api/Customers/CustomersApi';
-import { DetalleProps as DetalleClienteProps } from '@/shared/interfaces/I_inventario';
 import ButtonModal from '../../../components/Generics/Modal/ButtonModal';
 import ViewForm from '../../../components/FormularioV4/viewForm';
+import { IClient } from '@/shared/interfaces/IClient';
 
-const DetalleCliente: React.FC<DetalleClienteProps> = ({ Id: clientId }) => {
+const DetalleCliente: React.FC<IClient> = ({ id: clientId}) => {
   const [detalleCliente, setDetalleCliente] = useState<any>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        if (!clientId) {
+          return;
+        }
         const clienteData = await getClientById(clientId);
         setDetalleCliente(clienteData);
         console.log(clienteData);
@@ -25,14 +27,17 @@ const DetalleCliente: React.FC<DetalleClienteProps> = ({ Id: clientId }) => {
   }, [clientId]);
 
   const handleRemoveClient = async () => {
-    const clientData = {
-      id: clientId
+    const clientData : IClient = {
+      id: clientId,
+      user: 1,
     };
     try {
+      if (!clientData.id) {
+        return;
+      }
       const response = await RemoveClient(clientData);
       window.location.href = '/customers';
       console.log('Client removed successfully:', response);
-      // Realiza cualquier acción adicional necesaria después de eliminar el cliente
     } catch (error: any) {
       setErrorMessage(error.message);
     }

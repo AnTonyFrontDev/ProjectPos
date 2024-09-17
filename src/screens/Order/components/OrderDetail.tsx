@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { DetalleProps as DetalleOrderProps } from '../../../shared/interfaces/I_inventario';
+import { DetalleProps as DetalleOrderProps } from '@/shared/interfaces/I_inventario';
 import { cancelOrder, completeOrder, getOrderById } from '@/shared/Api/Order/OrderApi';
 import { Descriptions, Modal, Table } from 'antd';
 import SearchFilter from '@/shared/SearchFilter';

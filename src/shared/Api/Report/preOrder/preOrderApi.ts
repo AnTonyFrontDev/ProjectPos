@@ -1,4 +1,4 @@
-import { IReportDiffItems } from "@/shared/interfaces/report/IReportDiffItems";
+import { IReportDiffItems } from "@/shared/interfaces/IReportDiffItems";
 import axios from "axios";
 
 export const getReportDiffItemsToComplete = async (idPreorder: number) => {

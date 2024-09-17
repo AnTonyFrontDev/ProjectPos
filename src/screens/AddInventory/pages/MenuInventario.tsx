@@ -13,7 +13,7 @@ const linkConfigsInventario = [
     { to: "/productos", text: "Productos", color: "text-indigo-500", bgColor: "bg-indigo-100", type: 'Product' },
     { to: "/Inventario/Listado", text: "Inventario", color: "text-blue-500", bgColor: "bg-blue-100", type: 'inventory2' },
     { to: "/Inventario/NuevaCompra", text: "Nueva Compra", color: "text-lime-500", bgColor: "bg-lime-100", type: 'newbuy' },
-    { to: "/Inventario", text: "Compras", color: "text-green-500", bgColor: "bg-green-100", type: 'buy' },
+    { to: "/Inventario/Compras", text: "Compras", color: "text-green-500", bgColor: "bg-green-100", type: 'buy' },
 ];
 
 const Inventario = () => {

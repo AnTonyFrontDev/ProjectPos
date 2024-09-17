@@ -6,7 +6,8 @@ import ApiTable from '@/components/Generics/Tabla/apiTable';
 import { preOrderTable } from '@/components/Generics/Tabla/tData';
 import { Link, useNavigate } from 'react-router-dom';
 import GenericPagination from '@/components/PaginationComponents/GenericPagination';
-
+import { GetBuyPaginated } from '@/shared/Api/BuyInventory/BuyApi';
+GetBuyPaginated
 const ListPreOrder = () => {
     const routes = [
         { title: 'Home', path: '/' },
@@ -37,31 +38,6 @@ const ListPreOrder = () => {
         navigate(`/preOrder/PreOrderDetail/${record.id}`);
     };
 
-
-    //#region 
-
-    // useEffect(() => {
-    //     const fetchPreOrders = async () => {
-    //         try {
-    //             const response = await getPreOrders();
-    //             setPreOrders(response.data);
-    //         } catch (error) {
-    //             console.error('Error fetching pre-orders:', error);
-    //         }
-    //     };
-
-    //     fetchPreOrders();
-    // }, []);
-
-    // const handleOrderClick = async (preOrder: IPreOrderGet) => {
-    //     // Convertir la data de IPreOrderGet a ICheckOrder
-    //     const checkOrderData = mapPreOrderToCheckOrder(preOrder);
-    //     console.log(error)
-    //     // Procesar la orden
-    //     await processOrder([checkOrderData], preOrder);
-    // };
-
-    //#endregion
 
     return (
         <>

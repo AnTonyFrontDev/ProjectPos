@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';
-import { BankDto, IBankPost } from '@/shared/interfaces/Bank/IBankPost';
 import { SaveBank, UpdateBank } from '@/shared/Api/Bank/BankApi';
-import { BankUpdateDto, IBankUpdate } from '@/shared/interfaces/Bank/IBankUpdate';
+import { BankDto, IBank, BankUpdateDto } from '@/shared/interfaces/IBank';
 
 export const useBankForm = () => {
-  const [formData, setFormData] = useState<IBankPost>(new BankDto());
+  const [formData, setFormData] = useState<IBank>(new BankDto());
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -26,7 +25,7 @@ export const useBankForm = () => {
   
   const handleUpdate = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    const updateData: IBankUpdate = new BankUpdateDto(formData);
+    const updateData: IBank = new BankUpdateDto(formData);
     console.log('Bank Data:', updateData);
     GenericRequest(updateData, UpdateBank, "Bank data updated successfully");
   };

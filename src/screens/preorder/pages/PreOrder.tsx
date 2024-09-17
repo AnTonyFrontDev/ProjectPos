@@ -1,7 +1,7 @@
 import Select from 'react-select';
 import React, { useEffect, useState } from 'react';
 import { addPreOrder } from '@/shared/Api/PreOrder/PreOrderApi';
-import { IPreOrder, PreOrderPostDto } from '@/shared/interfaces/Preorder/IPreOrder';
+import { IPreOrder, PreOrderPostDto } from '@/shared/interfaces/IPreOrder';
 import { IProductsDtoAdd, ProductsDtoAdd } from '@/shared/interfaces/Preorder/ProductToAdd';
 import useProductOptions from '@/screens/AddInventory/hooks/useProductOptions';
 import useSizeOptions from '@/screens/AddInventory/hooks/useSizeOptions';
@@ -11,8 +11,8 @@ import ViewForm from '@/components/FormularioV4/viewForm';
 import useClientOptions from '@/screens/AddInventory/hooks/useClientOptions';
 import { InputNumber, notification } from 'antd';
 import { FormInputsClasses, TableHeadClasses, TableSelectsClasses } from '@/shared/Common/stylesConst/cssComponent';
-import { ISizeGet } from '@/shared/interfaces/size/ISizeGet';
-import { IColorGet } from '@/shared/interfaces/Color/IColorGet';
+import { ISize } from '@/shared/interfaces/ISize';
+import { IColor } from '@/shared/interfaces/IColor';
 
 
 const PreOrders = () => {
@@ -25,8 +25,8 @@ const PreOrders = () => {
   const [disabledRows, setDisabledRows] = useState<boolean[]>(Array(tableData.length).fill(true));
   const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
 
-  const [rowSizeOptions, setRowSizeOptions] = useState<{ [key: number]: ISizeGet[] }>({});
-  const [rowColorOptions, setRowColorOptions] = useState<{ [key: number]: IColorGet[] }>({});
+  const [rowSizeOptions, setRowSizeOptions] = useState<{ [key: number]: ISize[] }>({});
+  const [rowColorOptions, setRowColorOptions] = useState<{ [key: number]: IColor[] }>({});
 
   const { sizeOptions } = useSizeOptions(selectedProductId ?? 0);
   const { colorOptions } = useColorOptions(selectedProductId ?? 0);

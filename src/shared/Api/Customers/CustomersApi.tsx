@@ -1,12 +1,11 @@
+import { URL } from "@/shared/Common/url";
+import { IClient } from "@/shared/interfaces/IClient";
 import axios from "axios";
-import { IClientPost } from "@/shared/interfaces/Client/IClientPost";
-import { IClientUpdate } from "@/shared/interfaces/Client/IClientUpdate";
-import { IClientRemove } from "@/shared/interfaces/Client/IClientRemove";
 import { format } from 'date-fns';
 
 export const getClients = async () => {
     try {
-        const response = await axios.get('https://localhost:7065/api/Client/GetClients?Page=1&ItemsPerPage=10');
+        const response = await axios.get(`${URL}/Client/GetClients?Page=1&ItemsPerPage=10`);
         console.log(response.data.data)
         return response.data.data;
     } catch (error) {
@@ -16,7 +15,7 @@ export const getClients = async () => {
 };
 export const  getClientsPaginated = async (page:number,items:number) => {
     try {
-        return await axios.get(`https://localhost:7065/api/Client/GetClients?Page=${page}&ItemsPerPage=${items}`);
+        return await axios.get(`${URL}/Client/GetClients?Page=${page}&ItemsPerPage=${items}`);
     } catch (error) {
         console.error('Error fetching products:', error);
         }
@@ -24,7 +23,7 @@ export const  getClientsPaginated = async (page:number,items:number) => {
 
 export const getClientById = async (clientId: number) => {
     try {
-        const response = await axios.get(`https://localhost:7065/api/Client/GetClient?id=${clientId}`);
+        const response = await axios.get(`${URL}/Client/GetClient?id=${clientId}`);
         console.log(response.data.data)
         return response.data.data[0]; 
     } catch (error) {
@@ -35,7 +34,7 @@ export const getClientById = async (clientId: number) => {
 
 export const getAllClients = async () => {
     try {
-        const response = await axios.get('https://localhost:7065/api/Client/GetAllClients');
+        const response = await axios.get(`${URL}/Client/GetAllClients`);
         console.log(response.data.data)
         return response.data.data;
     } catch (error) {
@@ -44,9 +43,9 @@ export const getAllClients = async () => {
     }
 };
 
-export const saveClient = async (formData: IClientPost) => {
+export const saveClient = async (formData: IClient) => {
     try {
-        const response = await axios.post('https://localhost:7065/api/Client/SaveClient', formData, {
+        const response = await axios.post(`${URL}/Client/SaveClient`, formData, {
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -60,10 +59,10 @@ export const saveClient = async (formData: IClientPost) => {
 };
 
 
-  export const UpdateClient = async (formData: IClientUpdate) => {
+  export const UpdateClient = async (formData: IClient) => {
     try {
       const formattedData = formData 
-        const response = await axios.post('https://localhost:7065/api/Client/UpdateClient', formattedData, {
+        const response = await axios.post(`${URL}/Client/UpdateClient`, formattedData, {
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -76,14 +75,14 @@ export const saveClient = async (formData: IClientPost) => {
     }
 };
 
-export const RemoveClient = async (formData: IClientRemove) => {
+export const RemoveClient = async (formData: IClient) => {
     const formattedData = {
         ...formData,
         user : 0,
         date: format(new Date(), 'yyyy-MM-dd'),
     };
     try {
-        const response = await axios.delete('https://localhost:7065/api/Client/RemoveClient', {
+        const response = await axios.delete(`${URL}/Client/RemoveClient`, {
             data: formattedData,
             headers: {
                 'Content-Type': 'application/json',

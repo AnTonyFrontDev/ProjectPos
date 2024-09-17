@@ -4,7 +4,7 @@ import { RemoveProductColor, SaveProductColor, getProductColor } from '@/shared/
 import Select from 'react-select';
 
 interface IProductColorProps {
-  productId: number;
+  productId: number | undefined;
 }
 
 const ProductColorAdd: React.FC<IProductColorProps> = ({ productId }) => {

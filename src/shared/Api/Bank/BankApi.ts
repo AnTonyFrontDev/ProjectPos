@@ -1,4 +1,4 @@
-import { IBankColumns } from "@/shared/interfaces/Bank/IBankGet";
+import { IBankColumns } from "@/shared/interfaces/IBank";
 import { IBankPost } from "@/shared/interfaces/Bank/IBankPost";
 import { IBankRemove } from "@/shared/interfaces/Bank/IBankRemove";
 import { IBankUpdate } from "@/shared/interfaces/Bank/IBankUpdate";
