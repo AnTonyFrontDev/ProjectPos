@@ -2,7 +2,7 @@ import { IBankAccount } from "./IBankAccount"
 import { IBaseModel } from "./IBaseModel"
 import { IExpenses } from "./IExpenses"
 
-export interface IPaymenExpenses extends IBaseModel {
+export interface IPaymentExpenses extends IBaseModel {
     expense?: IExpenses
     paymentType?: string
     bankAccount?: IBankAccount
@@ -10,7 +10,7 @@ export interface IPaymenExpenses extends IBaseModel {
     name?: string
 }
 
-export interface IPaymentExpenseSave extends IPaymenExpenses {
+export interface IPaymentExpenseSave extends IPaymentExpenses {
     idExpense: number
     idPaymentType: number
     idBankAccount: number | null

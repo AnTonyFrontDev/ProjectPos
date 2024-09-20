@@ -1,19 +1,19 @@
 import { getPreOrderById } from '@/shared/Api/PreOrder/PreOrderApi'
 import { addSale } from '@/shared/Api/Sale/SaleApi';
-import { DetalleProps as NewBillProps } from '@/shared/interfaces/I_inventario';
 import { useEffect, useState } from 'react';
-import { ISalePost } from '@/shared/interfaces/Sale/ISalePost';
+import { ISale } from '@/shared/interfaces/ISale';
 import { Table, Descriptions, Modal, notification } from 'antd';
 import { FormInputsClasses } from '@/shared/Common/stylesConst/cssComponent';
+import { IBaseModel } from '@/shared/interfaces/IBaseModel';
 
 const { Column } = Table;
 
-const NewBill = ({ Id: preorderId }: NewBillProps) => {
+const NewBill = ({ id: preorderId }: IBaseModel) => {
     const [preOrderData, setPreOrderData] = useState<any | null>(null);
     const [clientData, setClientData] = useState<any | null>(null);
     const [loading, setLoading] = useState(true);
     const [isCodIscEditable, setIsCodIscEditable] = useState(false);
-    const [formData, setFormData] = useState<ISalePost>({
+    const [formData, setFormData] = useState<ISale>({
         fkOrder: preorderId,
         codIsc: null,
         itbis: 1,
@@ -22,6 +22,7 @@ const NewBill = ({ Id: preorderId }: NewBillProps) => {
 
     useEffect(() => {
         const fetchPreOrderData = async () => {
+            if (!preorderId) return;
             try {
                 const data = await getPreOrderById(preorderId);
                 setPreOrderData(data.data[0].items);

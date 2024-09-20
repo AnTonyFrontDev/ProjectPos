@@ -1,18 +1,22 @@
 import { useEffect, useState } from 'react';
 import { Table } from 'antd';
 import { getSaleById } from '@/shared/Api/Sale/SaleApi';
-import { ISaleData } from '@/shared/interfaces/Sale/ISaleDetail';
-import { DetalleProps as BillDetailProps } from '@/shared/interfaces/I_inventario';
+import { ISale, ISaleData } from '@/shared/interfaces/ISale';
+// import { DetalleProps as BillDetailProps } from '@/shared/interfaces/I_inventario';
 import Print from './BillPrint';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 const { Column } = Table;
 
-const BillDetail = ({ Id: saleId }: BillDetailProps) => {
+const BillDetail = ({ id: saleId }: ISale) => {
   const [saleData, setSaleData] = useState<ISaleData | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchSaleData = async () => {
+      if (!saleId) {
+        setLoading(false);
+        return;
+      }
       try {
         const data = await getSaleById(saleId);
         setSaleData(data);
@@ -47,9 +51,9 @@ const BillDetail = ({ Id: saleId }: BillDetailProps) => {
           {/* Columna de Información del Cliente */}
           <div className="bg-white shadow-md rounded-lg p-6 mr-3 mb-6">
             <h2 className="text-xl font-bold mb-4">Información del Cliente</h2>
-            <p><strong>Nombre:</strong> {client.f_name} {client.f_surname} {client.l_surname}</p>
-            <p><strong>RNC:</strong> {client.rnc}</p>
-            <p><strong>DNI:</strong> {client.dni}</p>
+            <p><strong>Nombre:</strong> {client?.f_name} {client?.f_surname} {client?.l_surname}</p>
+            <p><strong>RNC:</strong> {client?.rnc}</p>
+            <p><strong>DNI:</strong> {client?.dni}</p>
           </div>
 
           {/* Columna de Información de la Factura */}

@@ -17,7 +17,7 @@ const Sidebar = () => {
                     </div>
                     <div className="flex justify-center p-8">
                         {/* <AppIcon type='dashboard' className="cursor-pointer mx-2" width={82}></AppIcon> */}
-                        <img src="/logo.png" alt="" className=" bg-slate-100 border rounded-lg"/>
+                        <img src="/logo.png" alt="" className="bg-slate-50 border rounded-lg"/>
                     </div>
                 </div>
                 {/* mapeo de opciones para el menu sidebar Seguir SideData para cambiar contenido */}

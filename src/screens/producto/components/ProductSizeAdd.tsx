@@ -2,161 +2,149 @@ import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import { getProductSize, RemoveProductSize, SaveProductSize } from '@/shared/Api/Products/ProductSize/ProductSize';
 import { getSizes } from '@/shared/Api/Size/SizeApi';
+import showAlert from '@/util/antd/alert';
+import { handleErrorNotification, handleSuccessNotification, fetchOptions } from '@/util/util';
 
 interface IProductSizeProps {
-    productId: number | undefined;
+  productId: number | undefined;
+  onProductSizeChange: () => void;
 }
 
-const ProductSizeAdd: React.FC<IProductSizeProps> = ({ productId }) => {
-    const [sizes, setSize] = useState<{ value: number; label: string }[]>([]);
-    const [selectedSize, setSelectedSize] = useState<{ value: number; label: string } | null>(null);
-    const [productSizes, setProductSizes] = useState<any[]>([]);
-    const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+const ProductSizeAdd: React.FC<IProductSizeProps> = ({ productId, onProductSizeChange }) => {
+  const [sizes, setSizes] = useState<{ value: number; label: string }[]>([]);
+  const [selectedSize, setSelectedSize] = useState<{ value: number; label: string } | null>(null);
+  const [productSizes, setProductSizes] = useState<any[]>([]);
 
-    useEffect(() => {
-        const fetchSizes = async () => {
-            try {
-                const sizesResponse = await getSizes();
-                const sizeOptions = sizesResponse.map((size: any) => ({
-                    value: size.id,
-                    label: `${size.size}  -  ${size.category}`,
-                }));
-                setSize(sizeOptions);
-            } catch (error) {
-                console.error('Error al obtener los Tallas:', error);
-            }
-        };
-
-        const fetchProductSizes = async () => {
-            try {
-                const productSizesResponse = await getProductSize();
-                //   console.log('Full productSizesResponse:', productColorsResponse);
-                //   console.log('Product ID:', productId);
-
-                const numericProductId = Number(productId);
-                //   console.log('Numeric Product ID:', numericProductId);
-
-                if (isNaN(numericProductId)) {
-                    console.error('productId is not a valid number:', productId);
-                    return;
-                }
-
-                const filteredSizes = productSizesResponse.filter((pc: any) => {
-                    console.log('Checking product Size:', pc);
-                    return pc.idProduct === numericProductId;
-                });
-
-                console.log('Filtered product Sizes:', filteredSizes);
-
-                setProductSizes(filteredSizes);
-            } catch (error) {
-                console.error('Error al obtener los Sizes del producto:', error);
-            }
-        };
-
-
-        fetchSizes();
-        fetchProductSizes();
-    }, []);
-
-    const handleSizeChange = (selectedOption: { value: number; label: string } | null) => {
-        setSelectedSize(selectedOption);
+  // Fetch sizes and product sizes on component mount or when productId changes
+  useEffect(() => {
+    const fetchSizes = async () => {
+      await fetchOptions(getSizes, setSizes, (size: any) => ({
+        value: size.id,
+        label: `${size.size} - ${size.category}`,
+      }));
     };
 
-    const handleAddSize = async () => {
-        if (!selectedSize) {
-            console.error('Por favor selecciona una Talla');
-            return;
-        }
-
-        const formData = {
-            idSize: selectedSize.value,
-            idProduct: Number(productId),
-        };
-        // console.log('Size agregado exitosamente.', formData);
-
-        try {
-            await SaveProductSize(formData)
-            .then(() => {
-                setShowSuccessAlert(true);
-                setSelectedSize(null);
-                setTimeout(() => {
-                    window.location.reload();
-                    setShowSuccessAlert(false);
-                }, 1000);
-            })
-            const updatedProductColors = await getProductSize();
-            setProductSizes(updatedProductColors.filter((pc: any) => pc.idProduct === Number(productId)));
-        } catch (error) {
-            console.error('Error al agregar el size:', error);
-        }
-    };
-
-    const handleDelete = async () => {
-        if (!selectedSize) {
-            console.error('Por favor selecciona un color para eliminar');
-            return;
-        }
+    const fetchProductSizes = async () => {
+      try {
+        const productSizesResponse = await getProductSize();
         const numericProductId = Number(productId);
-        const sizeToDelete = productSizes.find(pc => pc.idSize === selectedSize.value && pc.idProduct === numericProductId);
-        console.log('Size a eliminar:', sizeToDelete.id);
-        console.log('Size a eliminar:', sizeToDelete);
 
-        if (!sizeToDelete) {
-            console.error('No se encontró el color a eliminar');
-            return;
+        if (isNaN(numericProductId)) {
+          console.error('productId is not a valid number:', productId);
+          return;
         }
 
-
-        try {
-            await RemoveProductSize({ id: sizeToDelete.id });
-            setShowSuccessAlert(true);
-            setSelectedSize(null);
-            setTimeout(() => {
-                setShowSuccessAlert(false);
-            }, 3000);
-            // Update the list of product colors
-            const updatedProductColors = await getProductSize();
-            setProductSizes(updatedProductColors.filter((pc: any) => pc.idProduct === numericProductId));
-        } catch (error) {
-            console.error('Error al eliminar el color:', error);
-        }
+        const filteredSizes = productSizesResponse.filter((ps: any) => ps.idProduct === numericProductId);
+        setProductSizes(filteredSizes);
+      } catch (error) {
+        handleErrorNotification(error, 'Error al obtener las tallas del producto.');
+      }
     };
 
-    return (
-        <div>
-            <h3>Agregar Talla:</h3>
-            <div className="flex mt-4 items-center">
-                <div className="flex items-center">
-                    <label className="block text-sm font-medium text-gray-700">Selecciona un Talla:</label>
-                    <Select
-                        value={selectedSize}
-                        onChange={handleSizeChange}
-                        options={sizes}
-                        placeholder="Seleccionar Talla"
-                        className="p-4 m-2"
-                    />
-                </div>
-                <button
-                    onClick={handleAddSize}
-                    className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mr-2 rounded focus:outline-none focus:shadow-outline"
-                >
-                    Agregar Talla
-                </button>
-                <button
-                    className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'
-                    onClick={handleDelete}
-                >
-                    Quitar
-                </button>
-            </div>
-            {showSuccessAlert && (
-                <div className="mt-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-                    <strong className="font-bold">Éxito:</strong> El Size se agregó correctamente.
-                </div>
-            )}
+    fetchSizes();
+    fetchProductSizes();
+  }, [productId]);
+
+  // Handle size selection from dropdown
+  const handleSizeChange = (selectedOption: { value: number; label: string } | null) => {
+    setSelectedSize(selectedOption);
+  };
+
+  // Add size to the product
+  const handleAddSize = async () => {
+    if (!selectedSize) {
+      showAlert({ title: 'Advertencia', content: 'Por favor selecciona una talla' });
+      return;
+    }
+
+    // Check if the selected size already exists for the product
+    const sizeExists = productSizes.some(ps => ps.idSize === selectedSize.value);
+    if (sizeExists) {
+      showAlert({ title: 'Advertencia', content: 'La talla ya está agregada al producto' });
+      return;
+    }
+
+    const formData = {
+      idProduct: Number(productId),
+      idSize: selectedSize.value,
+    };
+
+    try {
+      await SaveProductSize(formData)
+        .then(() => {
+          handleSuccessNotification('Talla agregada correctamente.');
+          setSelectedSize(null);
+          onProductSizeChange();
+        });
+
+      // Update the list of product sizes
+      const updatedProductSizes = await getProductSize();
+      setProductSizes(updatedProductSizes.filter((ps: any) => ps.idProduct === Number(productId)));
+    } catch (error) {
+      handleErrorNotification(error, 'Error al agregar la talla.');
+    }
+  };
+
+  // Delete selected size from product
+  const handleDelete = async () => {
+    if (!selectedSize) {
+      showAlert({ title: 'Advertencia', content: 'Por favor selecciona una talla para eliminar' });
+      return;
+    }
+
+    const numericProductId = Number(productId);
+    const sizeToDelete = productSizes.find(ps => ps.idSize === selectedSize.value && ps.idProduct === numericProductId);
+
+    if (!sizeToDelete) {
+      showAlert({ title: 'Error', content: 'No se encontró la talla a eliminar' });
+      return;
+    }
+
+    try {
+      await RemoveProductSize({ id: sizeToDelete.id })
+        .then(() => {
+          handleSuccessNotification('Talla eliminada correctamente.');
+          setSelectedSize(null);
+          onProductSizeChange();
+        });
+
+      // Update the list of product sizes
+      const updatedProductSizes = await getProductSize();
+      setProductSizes(updatedProductSizes.filter((ps: any) => ps.idProduct === numericProductId));
+    } catch (error) {
+      handleErrorNotification(error, 'Error al eliminar la talla.');
+    }
+  };
+
+  return (
+    <div>
+      <h3>Agregar Talla:</h3>
+      <div className="flex mt-4 items-center">
+        <div className="flex items-center">
+          <label className="block text-sm font-medium text-gray-700">Selecciona una talla:</label>
+          <Select
+            value={selectedSize}
+            onChange={handleSizeChange}
+            options={sizes}
+            placeholder="Seleccionar Talla"
+            className="p-4 m-2"
+          />
         </div>
-    );
+        <button
+          onClick={handleAddSize}
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2"
+        >
+          Agregar Talla
+        </button>
+        <button
+          className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'
+          onClick={handleDelete}
+        >
+          Quitar
+        </button>
+      </div>
+    </div>
+  );
 };
 
 export default ProductSizeAdd;

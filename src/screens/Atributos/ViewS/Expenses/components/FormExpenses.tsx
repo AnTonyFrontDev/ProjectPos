@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useExpensesForm } from '../hooks/useExpensesForm';
 import { FormProps } from '@/components/Generics/Interface/IForms';
-import { ExpensesDto, IExpensesPost } from '@/shared/interfaces/Expenses/IExpensesPost';
+import { ExpensesDto, IExpenses } from '@/shared/interfaces/IExpenses';
 
 
 const ExpensesForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }) => {
@@ -14,7 +14,7 @@ const ExpensesForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate
         }
     }, [isUpdate, initialFormData]);
 
-    const handleSetInitialFormData = (initialData: IExpensesPost) => {
+    const handleSetInitialFormData = (initialData: IExpenses) => {
         const initialFormData = new ExpensesDto;
         Object.assign(initialFormData, initialData)
         setFormData(initialFormData)

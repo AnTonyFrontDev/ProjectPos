@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';
-import { PaymentTypeUpdateDto, IPaymentTypeUpdate } from '@/shared/interfaces/payment/paymentType/IPaymentTypeUpdate';
+import { PaymentTypeUpdateDto, IPaymentType , PaymentTypePostDto } from '@/shared/interfaces/IPaymentType';
 import { SavePaymentType, UpdatePaymentType } from '@/shared/Api/Payment/PaymentType/PaymentTypeApi';
-import { IPaymentTypePost, PaymentTypePostDto } from '@/shared/interfaces/payment/paymentType/IPaymentTypePost';
 
 export const usePaymentTypeForm = () => {
-  const [formData, setFormData] = useState<IPaymentTypePost>(new PaymentTypePostDto());
+  const [formData, setFormData] = useState<IPaymentType>(new PaymentTypePostDto());
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -28,7 +27,7 @@ export const usePaymentTypeForm = () => {
   
   const handleUpdate = (e: React.FormEvent) => {
     e.preventDefault();
-    const updateData: IPaymentTypeUpdate = new PaymentTypeUpdateDto(formData);
+    const updateData: IPaymentType = new PaymentTypeUpdateDto(formData);
     console.log('PaymentType Data:', updateData);
     GenericRequest(updateData, UpdatePaymentType, "PaymentType data updated successfully");
     window.location.reload();

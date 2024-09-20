@@ -3,7 +3,7 @@ import { useProductForm } from "../hooks/useProductForm";
 import { FormProps } from '@/components/Generics/Interface/IForms';
 import Select from 'react-select';
 import { TableSelectsClasses } from '@/shared/Common/stylesConst/cssComponent';
-import { ProductDtoPost, IProductPost } from '@/shared/interfaces/Product/IProductPost';
+import { ProductDtoPost, IProduct } from '@/shared/interfaces/IProduct';
 
 
 const ProductForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }) => {
@@ -25,7 +25,7 @@ const ProductForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate 
         loadTypeProdOptions();
     }, [isUpdate, initialFormData]);
 
-    const handleSetInitialFormData = (initialData: IProductPost) => {
+    const handleSetInitialFormData = (initialData: IProduct) => {
         const initialFormData = new ProductDtoPost();
         Object.assign(initialFormData, initialData);
         setFormData(initialFormData);

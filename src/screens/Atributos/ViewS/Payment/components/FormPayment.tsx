@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { usePaymentForm } from "../hooks/usePaymentForm";
 import { FormProps } from '@/components/Generics/Interface/IForms';
-import { IPaymentPost, PaymentDto } from '@/shared/interfaces/payment/IPaymentPost';
+import { IPaymentPostPut, PaymentDto } from '@/shared/interfaces/IPayment';
 import Select from 'react-select';
 import { TableSelectsClasses } from '@/shared/Common/stylesConst/cssComponent';
 
@@ -46,7 +46,7 @@ const PaymentForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate 
         loadTypePaymentOptions();
     }, [isUpdate, initialFormData]);
 
-    const handleSetInitialFormData = (initialData: IPaymentPost) => {
+    const handleSetInitialFormData = (initialData: IPaymentPostPut) => {
         const initialFormData = new PaymentDto();
         Object.assign(initialFormData, initialData);
         setFormData(initialFormData);

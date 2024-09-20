@@ -1,10 +1,10 @@
-// apiTable.tsx
-import React, { useEffect, useState } from 'react';
-import {Table } from 'antd';
+import React, { useEffect, useState, useMemo } from 'react';
+import { Table } from 'antd';
 import ButtonModal from '../Modal/ButtonModal';
 import ViewForm from '@/components/FormularioV4/viewForm';
 import { ExpensesUpdateDto } from "@/shared/interfaces/IExpenses";
 import DeleteButton from '@/components/Generics/Modal/DeleteModal';
+
 interface GenericTableProps {
   getApiData?: () => Promise<any[]>;
   delApiData?: (data: any) => Promise<any[]>;
@@ -36,9 +36,9 @@ const GenericTable: React.FC<GenericTableProps> = ({
   handleTableRowClick,
   dataSource,
   notEditable,
-  //useCustomButton,
   customButton,
-  showActions, }) => {
+  showActions,
+}) => {
   const [data, setData] = useState<any[]>(dataSource || []);
 
   useEffect(() => {
@@ -50,42 +50,48 @@ const GenericTable: React.FC<GenericTableProps> = ({
   const fetchData = async () => {
     try {
       const apiData = await getApiData!();
-
-      let filteredData = apiData
-
-      if (searchTerm) {
-        filteredData = apiData.filter(item =>
-          Object.values(item).some(value =>
-            typeof value === 'string' && value.toLowerCase().includes(searchTerm.toLowerCase())
-          )
-        );
-      };
-
-      if (filterColumn) {
-        filteredData = filteredData.filter(item => item[filterColumn] !== undefined && item[filterColumn] !== null);
-      }
-
-      if (filterColumn) {
-        filteredData = filteredData.sort((a, b) => {
-          const aValue = a[filterColumn];
-          const bValue = b[filterColumn];
-
-          if (typeof aValue === 'string' && typeof bValue === 'string') {
-
-            return sortDirection === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
-          } else {
-
-            return sortDirection === 'asc' ? aValue - bValue : bValue - aValue;
-          }
-        });
-      }
-
-      setData(filteredData);
+      setData(apiData);
     } catch (error) {
       console.error('Error al obtener datos de la API', error);
     }
   };
 
+    // Function to refresh data after a deletion
+    const refreshData = (id: string | number) => {
+      setData(prevData => prevData.filter(item => item.id !== id));  // Filter out the deleted item
+    };
+
+  // Filtrar, buscar y ordenar los datos de la tabla
+  const memoizedData = useMemo(() => {
+    let filteredData = data;
+
+    if (searchTerm) {
+      filteredData = data.filter(item =>
+        Object.values(item).some(value =>
+          typeof value === 'string' && value.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      );
+    }
+
+    if (filterColumn) {
+      filteredData = filteredData.filter(item => item[filterColumn] !== undefined && item[filterColumn] !== null);
+    }
+
+    if (filterColumn) {
+      filteredData = filteredData.sort((a, b) => {
+        const aValue = a[filterColumn];
+        const bValue = b[filterColumn];
+
+        if (typeof aValue === 'string' && typeof bValue === 'string') {
+          return sortDirection === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+        } else {
+          return sortDirection === 'asc' ? aValue - bValue : bValue - aValue;
+        }
+      });
+    }
+
+    return filteredData;
+  }, [data, searchTerm, filterColumn, sortDirection]);
 
   const actionsColumn = showActions
     ? [
@@ -98,45 +104,45 @@ const GenericTable: React.FC<GenericTableProps> = ({
               <ButtonModal
                 buttonText="Editar"
                 modalTitle=""
-                className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-2 rounded'
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-2 rounded"
                 size={15}
                 modalContent={<ViewForm usarForm={usarForm} formData={record} isUpdate={true} />}
               />
             )}
             {deleteProps && (
               <DeleteButton
-              onRemove={deleteProps.onRemove }
-              formData={record}
-              confirmationMessage="¿Estás seguro de que deseas remover este Registro?"
-              navigatePath={deleteProps.navigatePath || '/'}
+                onRemove={deleteProps.onRemove}
+                formData={record}
+                confirmationMessage="¿Estás seguro de que deseas remover este Registro?"
+                refreshData={() => refreshData(record.id)}
               />
             )}
           </span>
         ),
       },
     ]
-    //logica para agregar un boton personalizado
-    : (customButton != null ? [
-      {
-        title: 'Actions',
-        key: 'actions',
-        render: (record: any) => (
-          <span>
-
-            <button
-              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
-              onClick={() => customButton[1](record)}
-            >
-              {customButton[0]}
-            </button>
-          </span>
-        ),
-      },
-    ] : []);
+    : customButton != null
+      ? [
+        {
+          title: 'Actions',
+          key: 'actions',
+          render: (record: any) => (
+            <span>
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                onClick={() => customButton[1](record)}
+              >
+                {customButton[0]}
+              </button>
+            </span>
+          ),
+        },
+      ]
+      : [];
 
   return (
     <Table
-      dataSource={data}
+      dataSource={memoizedData}
       pagination={false}
       columns={[...columns, ...actionsColumn].map(column => ({
         ...column,
@@ -147,4 +153,5 @@ const GenericTable: React.FC<GenericTableProps> = ({
     />
   );
 };
+
 export default GenericTable;

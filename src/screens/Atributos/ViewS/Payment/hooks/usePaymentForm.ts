@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';
-import { PaymentDto, IPaymentPost } from '@/shared/interfaces/payment/IPaymentPost';
-import { PaymentUpdateDto, IPaymentUpdate } from '@/shared/interfaces/payment/IPaymentUpdate';
+import { PaymentDto, PaymentUpdateDto, IPaymentPostPut } from '@/shared/interfaces/IPayment';
 import { SavePayment, UpdatePayment } from '@/shared/Api/Payment/PaymentApi';
 import { getPaymentTypes } from '@/shared/Api/Payment/PaymentType/PaymentTypeApi';
 import { IOptionSelect } from '@/components/FormularioV4/Config/interface';
@@ -11,7 +10,7 @@ import {getPreOrdersPending} from '@/shared/Api/PreOrder/PreOrderApi';
 
 
 export const usePaymentForm = () => {
-  const [formData, setFormData] = useState<IPaymentPost>(new PaymentDto());
+  const [formData, setFormData] = useState<IPaymentPostPut>(new PaymentDto());
   const [typePaymentOptions, setTypePaymentOptions] = useState<IOptionSelect[]>([]);
   const [bankAccountOptions, setBankAccountOptions] = useState<IOptionSelect[]>([]);
   const [preOrderOptions, setPreOrderOptions] = useState<IOptionSelect[]>([]);
@@ -24,7 +23,6 @@ export const usePaymentForm = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // console.log('Payment Data:', formData);
   
     GenericRequest(formData, SavePayment, "Payment data submitted successfully")
       .then(() => {
@@ -37,7 +35,6 @@ export const usePaymentForm = () => {
 
   const handleSubmitCredit = (e: React.FormEvent) => {
     e.preventDefault();
-    // console.log('Payment Data:', formData);
   
     GenericRequest(formData, SavePayment, "Payment data submitted successfully")
       .then(() => {
@@ -50,15 +47,13 @@ export const usePaymentForm = () => {
   
   const handleUpdate = (e: React.FormEvent) => {
     e.preventDefault();
-    const updateData: IPaymentUpdate = new PaymentUpdateDto(formData);
-    // console.log('Payment Data:', updateData);
+    const updateData: IPaymentPostPut = new PaymentUpdateDto(formData);
     GenericRequest(updateData, UpdatePayment, "Payment data updated successfully");
-    // window.location.reload();
   };
 
   const loadTypePaymentOptions = async () => {
     try {
-      const paymentTypes = await getPaymentTypes(); // Llama a la función para obtener los tipos de pago
+      const paymentTypes = await getPaymentTypes(); 
       const options: IOptionSelect[] = paymentTypes.map((type : any) => ({
         value: type.id,
         label: type.type, 
@@ -71,7 +66,7 @@ export const usePaymentForm = () => {
 
   const loadBankAccountOptions = async () => {
     try {
-      const paymentTypes = await getBankAccounts(); // Llama a la función para obtener los tipos de pago
+      const paymentTypes = await getBankAccounts(); 
       const options: IOptionSelect[] = paymentTypes.map((data : any) => ({
         value: data.id,
         label: `${data.account} - ${data.bankType}` 
@@ -89,7 +84,6 @@ export const usePaymentForm = () => {
         value: data.id,
         label: `${data.id} - ${data.client.f_name}${data.client.l_name} ${data.client.f_surname} ${data.client.l_surname} - ${data.amountBase}`
       }));
-      console.log('PreOrderPending:', preOrder);
       setPreOrderPending(preOrder);
       setPreOrderOptions(options);
     } catch (error) {

@@ -1,117 +1,55 @@
 import React, { useEffect, useState } from 'react';
-import { Descriptions, Table, Modal, Button } from 'antd';
-import { getPaymentByOrderId, RemovePayment } from '@/shared/Api/Payment/PaymentApi';
-import { DetalleProps as DetalleOrderProps } from '@/shared/interfaces/I_inventario';
-import { useNavigate } from 'react-router-dom';
-import { DATE } from '@/shared/Common/CurrentDate';
+import { Descriptions, Table } from 'antd';
+import { getPaymentByOrderId } from '@/shared/Api/Payment/PaymentApi';
 import { getPreOrderById } from '@/shared/Api/PreOrder/PreOrderApi';
 import ApiTable from '@/components/Generics/Tabla/apiTable';
+import { IBaseModelID } from '@/shared/interfaces/IBaseModel';
+import { IPreOrder } from '@/shared/interfaces/IPreOrder';
+import { PaymentsTableByOrders, ProductsTableByOrders } from '@/components/Generics/Tabla/tData';
 
-const AReceivableDetail: React.FC<DetalleOrderProps> = ({ Id: accountId }) => {
+const AReceivableDetail: React.FC<IBaseModelID> = ({ id: accountId }) => {
   const [orderDetail, setOrderDetail] = useState<any>(null);
   const [payment, setPaymentDetail] = useState<any>(null);
-
-  const [filteredItems, setFilteredItems] = useState<any[]>(['']);
-  const navigate = useNavigate();
+  const [filteredItems, setFilteredItems] = useState<any[]>([]);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchPreOrderData = async () => {
       try {
-        const orderData = await getPaymentByOrderId(accountId);
+        if (!accountId) return;
         const preOrderData = await getPreOrderById(accountId);
-        setOrderDetail(orderData.data);
         setFilteredItems(preOrderData?.data[0]?.items.preOrderProducts || []);
-        setPaymentDetail(orderData.data.payments); // Obtén los detalles de la orden
-        console.log('orderDetail', orderData.data.amountPending);
+        setOrderDetail(preOrderData.data[0]);
       } catch (error) {
-        console.error('Error al obtener detalle de la orden:', error);
+        console.error('Error al obtener pre-order:', error);
+      }
+    };
+    const fetchPaymentData = async () => {
+      try {
+        if (!accountId) return;
+        const orderData = await getPaymentByOrderId(accountId);
+        setPaymentDetail(orderData.data.payments);
+        setOrderDetail((prevOrderDetail : IPreOrder) => ({
+          ...prevOrderDetail,
+          ...orderData.data, // Actualiza con los datos del pago
+        }));
+      } catch (error) {
+        console.error('Error al obtener el pago:', error);
       }
     };
 
-    fetchData();
+    // Ejecutar ambas llamadas, pero de forma independiente
+    fetchPreOrderData();
+    fetchPaymentData();
   }, [accountId]);
 
-
-  const handleDelete = async (paymentId: number) => {
-    Modal.confirm({
-      title: 'Confirmar',
-      content: '¿Está seguro de que desea eliminar este registro?',
-      okText: 'Sí',
-      okType: 'danger',
-      cancelText: 'No',
-      onOk: async () => {
-        try {
-          const formData = {
-            id: paymentId,
-            user: 1, // Reemplaza con el id del usuario real
-            date: DATE,
-          };
-          await RemovePayment(formData); // Llama a la API para eliminar el pago
-          navigate('/atributos/CuentasPorCobrar'); // Redirige al usuario
-        } catch (error) {
-          console.error('Error al eliminar el registro', error);
-        }
-      },
-    });
-  };
-
-
-  if (!payment) {
+  
+  if (!orderDetail) {
     return <div>Cargando...</div>;
   }
-
-  const columns2 = [
-    { title: 'ID', dataIndex: 'id', key: 'id' },
-    { title: 'Nombre', dataIndex: 'productName', key: 'productName' },
-    { title: 'Color Primario', dataIndex: 'colorPrimary', key: 'colorPrimary' },
-    { title: 'Tamaño', dataIndex: 'size', key: 'size' },
-    { title: 'Precio', dataIndex: 'price', key: 'price' },
-    { title: 'Cantidad', dataIndex: 'quantity', key: 'quantity' },
-  ];
-
-  const client = payment[0]?.client;
-  const columns = [
-    {
-      title: 'No. Pago',
-      dataIndex: 'id',
-      key: 'id',
-    },
-    {
-      title: 'Monto',
-      dataIndex: 'amount',
-      key: 'amount',
-    },
-    {
-      title: 'Tipo de Pago',
-      dataIndex: 'type',
-      key: 'type',
-    },
-    {
-      title: 'Banco',
-      dataIndex: 'bank',
-      key: 'bank',
-    },
-    {
-      title: 'Cuenta',
-      dataIndex: 'account',
-      key: 'account',
-    },
-    {
-      title: 'Numero De Documento',
-      dataIndex: 'documentNumber',
-      key: 'documentNumber',
-    },
-    {
-      title: 'Acciones',
-      key: 'action',
-      render: (_: any, record: any) => (
-        <Button type="link" danger onClick={() => handleDelete(record.id)}>
-          Eliminar
-        </Button>
-      ),
-    },
-  ];
-
+  console.log('orderDetail', orderDetail);
+  console.log('Payment', payment);
+  const client =  orderDetail?.client?.[0];
+  
   return (
     <div>
       <Descriptions title="Informacion del Cliente">
@@ -120,36 +58,29 @@ const AReceivableDetail: React.FC<DetalleOrderProps> = ({ Id: accountId }) => {
         <Descriptions.Item label="Apellido">{client?.f_surname} {client?.l_surname}</Descriptions.Item>
         <Descriptions.Item label="RNC">{client?.rnc}</Descriptions.Item>
         <Descriptions.Item label="DNI">{client?.dni}</Descriptions.Item>
-        <Descriptions.Item label="Monto Pendiente">{orderDetail.amountPending}</Descriptions.Item>
+        <Descriptions.Item label="Monto Pendiente">{orderDetail.amountPending }</Descriptions.Item>
       </Descriptions>
-      {filteredItems.length > 0 && (
-
-        <div className='my-8'>
-          <h2 className='my-4'>Productos</h2>
-
-          <ApiTable
-            dataSource={filteredItems}
-            columns={columns2}
-            // searchTerm={searchTerm}
-            // filterColumn={filterColumn}
-            // sortDirection={sortDirection}
-            usarForm='PreOrder'
-          // showActions={true}
-          // deleteProps={{ onRemove: RemovePreOrderProduct, navigatePath: `/preOrder` }}
-          />
-        </div>
-      )}
-      {payment.length > 0 && (
+      {payment?.length > 0 && (
         <>
           <h2 className='my-4'>Pagos</h2>
           <Table
             className='mt-4'
             dataSource={payment}
-            columns={columns}
+            columns={PaymentsTableByOrders}
             rowKey="id"
             pagination={false}
           />
         </>
+      )}
+      {filteredItems.length > 0 && (
+        <div className='my-8'>
+          <h2 className='my-4'>Productos</h2>
+          <ApiTable
+            dataSource={filteredItems}
+            columns={ProductsTableByOrders}
+            usarForm='PreOrder'
+          />
+        </div>
       )}
     </div>
   );

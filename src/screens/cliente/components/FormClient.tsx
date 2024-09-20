@@ -3,8 +3,7 @@
 import { FormProps } from "@/components/Generics/Interface/IForms";
 import { useClientForm } from "../hooks/useClientForm";
 import { useEffect } from "react";
-import { ClientPostDto, IClientPost } from '@/shared/interfaces/Client/IClientPost';
-import { IClientUpdate } from "@/shared/interfaces/Client/IClientUpdate";
+import { ClientPostDto, IClient } from '@/shared/interfaces/IClient';
 
 const ClientForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }) => {
     const { formData, setFormData, handleInputChange, addPhone, handlePhoneInputChange, handleSubmit, handleUpdate } = useClientForm();
@@ -16,7 +15,7 @@ const ClientForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }
         }
     }, [isUpdate, initialFormData]);
 
-    const handleSetInitialFormData = (initialData: IClientUpdate | IClientPost) => {
+    const handleSetInitialFormData = (initialData: IClient) => {
         const initialFormData = new ClientPostDto;
         Object.assign(initialFormData, initialData)
         setFormData(initialFormData)
@@ -31,8 +30,6 @@ const ClientForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }
         }
     };
 
-    console.log('Phone5', formData);
-
     return (
         <form onSubmit={onSubmitHandler} className="max-w-md mx-auto mt-8">
             {/* Campos del formulario cliente */}
@@ -44,6 +41,9 @@ const ClientForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }
                     value={formData.f_name}
                     onChange={handleInputChange}
                     className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                    required
+                    onInvalid={(e) => (e.target as HTMLInputElement).setCustomValidity('Este campo es obligatorio')}
+                    onInput={(e) => (e.target as HTMLInputElement).setCustomValidity('')} 
                 />
             </div>
 
@@ -104,7 +104,7 @@ const ClientForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }
 
             {/* Sección de teléfonos */}
             {isUpdate ? (
-                formData.phones?.map((phone : any, index : any) => (
+                formData.phones?.map((phone: any, index: any) => (
                     <div className="mb-4" key={index}>
                         <label className="block text-sm font-medium text-gray-600">Número Teléfono</label>
                         <input

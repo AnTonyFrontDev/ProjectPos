@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { usePaymentTypeForm } from "../hooks/usePayTypeForm";
 import { FormProps } from '@/components/Generics/Interface/IForms';
-import { PaymentTypePostDto, IPaymentTypePost } from '@/shared/interfaces/payment/paymentType/IPaymentTypePost';
+import { PaymentTypePostDto, IPaymentType } from '@/shared/interfaces/IPaymentType';
 
 
 const PaymentTypeForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate, 
@@ -17,7 +17,7 @@ const PaymentTypeForm: React.FC<FormProps> = ({ formData: initialFormData, isUpd
         }
     }, [isUpdate, initialFormData]);
 
-    const handleSetInitialFormData = (initialData: IPaymentTypePost) => {
+    const handleSetInitialFormData = (initialData: IPaymentType) => {
         const initialFormData = new PaymentTypePostDto;
         Object.assign(initialFormData, initialData)
         setFormData(initialFormData)

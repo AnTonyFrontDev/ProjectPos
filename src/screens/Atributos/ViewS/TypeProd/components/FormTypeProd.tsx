@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { useTypeProdForm } from "../hooks/useTypeProdForm";
 import { FormProps } from '@/components/Generics/Interface/IForms';
-import { TypeProdDto, ITypeProdPost } from '@/shared/interfaces/Product/TypeProd/ITypeProdPost';
+import { TypeProdDto, ITypeProd } from '@/shared/interfaces/ITypeProd';
 
 const TypeProdForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate,
     //handleReloadTable, onSubmitSuccess 
@@ -16,7 +16,7 @@ const TypeProdForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate
         }
     }, [isUpdate, initialFormData]);
 
-    const handleSetInitialFormData = (initialData: ITypeProdPost) => {
+    const handleSetInitialFormData = (initialData: ITypeProd) => {
         const initialFormData = new TypeProdDto;
         Object.assign(initialFormData, initialData)
         setFormData(initialFormData)

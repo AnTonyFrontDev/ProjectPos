@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { ClientPhoneDto } from '@/shared/interfaces/IClientPhone';
-import { ClientPostDto, IClientPost } from '@/shared/interfaces/Client/IClientPost';
+import { ClientUpdateDto, ClientPostDto, IClient } from '@/shared/interfaces/IClient';
 import { saveClient, UpdateClient } from '@/shared/Api/Customers/CustomersApi';
 import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';
-import { ClientUpdateDto, IClientUpdate } from '@/shared/interfaces/Client/IClientUpdate';
 
 export const useClientForm = () => {
-  const [formData, setFormData] = useState<IClientPost | IClientUpdate>(new ClientPostDto());
+  const [formData, setFormData] = useState<IClient>(new ClientPostDto());
 
   const addPhone = () => {
     setFormData((prevClientPost) => ({ 
@@ -48,7 +47,7 @@ export const useClientForm = () => {
 
   const handleUpdate = (e: React.FormEvent) => {
     e.preventDefault();
-    const updateData: IClientUpdate = new ClientUpdateDto(formData);
+    const updateData: IClient = new ClientUpdateDto(formData);
     console.log('Client Data:', updateData);
     GenericRequest(updateData, UpdateClient, "Client data updated successfully")
     .then(() => {

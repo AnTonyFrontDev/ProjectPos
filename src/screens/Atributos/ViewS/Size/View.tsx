@@ -48,7 +48,6 @@ const SizeView = () => {
       <div className="mt-10">
         <GenericPagination getApiData={GetSizesPaginated}>
           {(apiData) => (
-
             <ApiTable
               getApiData={() => apiData.data.data}
               columns={sizeTable}
@@ -57,7 +56,7 @@ const SizeView = () => {
               sortDirection={sortDirection}
               notEditable={true}
               showActions={true}
-              deleteProps={{ onRemove: RemoveSize, navigatePath: `/Size` }}
+              deleteProps={{ onRemove: RemoveSize, navigatePath: `/atributos/Size` }}
             />
           )}
         </GenericPagination>

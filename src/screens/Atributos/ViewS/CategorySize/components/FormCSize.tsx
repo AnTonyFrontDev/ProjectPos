@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { useCategorySizeForm } from "../hooks/useCSizeForm";
 import { FormProps } from '@/components/Generics/Interface/IForms';
-import { CategorySizeDto, ICategorySizePost } from '@/shared/interfaces/size/CategorySize/ICategorySizePost';
+import { CategorySizeDto, ICategorySize } from '@/shared/interfaces/ICategorySize';
 
 
 const CategorySizeForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate,
@@ -16,7 +16,7 @@ const CategorySizeForm: React.FC<FormProps> = ({ formData: initialFormData, isUp
         }
     }, [isUpdate, initialFormData]);
 
-    const handleSetInitialFormData = (initialData: ICategorySizePost) => {
+    const handleSetInitialFormData = (initialData: ICategorySize) => {
         const initialFormData = new CategorySizeDto;
         Object.assign(initialFormData, initialData)
         setFormData(initialFormData)

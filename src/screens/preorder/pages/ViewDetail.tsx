@@ -8,7 +8,7 @@ const ProductDetail = () => {
     return (
       <div>
         <h1>Detalle Pedido</h1>
-        <Detail Id={preorderId} />
+        <Detail id={preorderId} />
       </div>
     );
   };

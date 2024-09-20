@@ -6,7 +6,7 @@ const ProductDetail = () => {
     const { billId } = useParams<{ billId : any}>();
     return (
       <div>
-        <Detail Id={billId} />
+        <Detail id={billId} />
        
       </div>
     );

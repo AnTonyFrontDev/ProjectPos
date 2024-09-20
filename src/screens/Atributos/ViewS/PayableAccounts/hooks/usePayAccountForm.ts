@@ -5,14 +5,14 @@ import {
   SavePaymentExpenses,
   UpdatePaymentExpenses
 } from '@/shared/Api/Expenses/ExpensesApi';
-import { PaymentExpensesDtoAdd, IPaymentExpenseDtoAdd } from '@/shared/interfaces/PaymentExpenses/PaymentExpenseDtoAdd';
-import { IPaymentExpenseDtoUpdate, PaymentExpensesDtoUpdate } from '@/shared/interfaces/PaymentExpenses/PaymentExpenseDtoUpdate';
+import { PaymentExpensesDtoAdd, IPaymentExpenses, PaymentExpensesDtoUpdate, IPaymentExpenseSave } from '@/shared/interfaces/IPaymentExpense';
+
 import { IOptionSelect } from '@/components/FormularioV4/Config/interface';
 import { getBankAccounts } from '@/shared/Api/BankAccount/BankAccountApi';
 import { getPaymentTypes } from '@/shared/Api/Payment/PaymentType/PaymentTypeApi';
 
 export const usePayAccountForm = () => {
-  const [formData, setFormData] = useState<IPaymentExpenseDtoAdd>(new PaymentExpensesDtoAdd());
+  const [formData, setFormData] = useState<IPaymentExpenseSave>(new PaymentExpensesDtoAdd());
   const [typePaymentOptions, setTypePaymentOptions] = useState<IOptionSelect[]>([]);
   const [bankAccountOptions, setBankAccountOptions] = useState<IOptionSelect[]>([]);
   const [expenseOptions, setExpenseOptions] = useState<IOptionSelect[]>([]);
@@ -24,7 +24,6 @@ export const usePayAccountForm = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // console.log('Expenses Data:', formData);
     GenericRequest(formData, SavePaymentExpenses, "PaymentExpenses data submitted successfully");
     window.location.reload();
   };
@@ -32,8 +31,7 @@ export const usePayAccountForm = () => {
   //no funciona temporal --
   const handleUpdate = (e: React.FormEvent) => {
     e.preventDefault();
-    const updateData: IPaymentExpenseDtoUpdate = new PaymentExpensesDtoUpdate(formData as IPaymentExpenseDtoUpdate);
-    // console.log('Expenses Data:', updateData);
+    const updateData: IPaymentExpenses = new PaymentExpensesDtoUpdate(formData as IPaymentExpenseSave);
     GenericRequest(updateData, UpdatePaymentExpenses, "PaymentExpenses data updated successfully");
     window.location.reload();
   };

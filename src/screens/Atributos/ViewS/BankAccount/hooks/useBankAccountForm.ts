@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';
-import { BankAccountDto, IBankAccountPost } from '@/shared/interfaces/BankAccount/IBankAccountPost';
+import { BankAccountUpdateDto, BankAccountDto, IBankAccount} from '@/shared/interfaces/IBankAccount';
 import { SaveBankAccount, UpdateBankAccount } from '@/shared/Api/BankAccount/BankAccountApi';
-import { BankAccountUpdateDto, IBankAccountUpdate } from '@/shared/interfaces/BankAccount/IBankAccountUpdate';
 import { IOptionSelect } from '@/components/FormularioV4/Config/interface';
 import { getBanks } from '@/shared/Api/Bank/BankApi';
 
 export const useBankAccountForm = () => {
-  const [formData, setFormData] = useState<IBankAccountPost>(new BankAccountDto());
+  const [formData, setFormData] = useState<IBankAccount>(new BankAccountDto());
   const [bankOptions, setBankOptions] = useState<IOptionSelect[]>([]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,7 +22,7 @@ export const useBankAccountForm = () => {
 
   const handleUpdate = (e: React.FormEvent) => {
     e.preventDefault();
-    const updateData: IBankAccountUpdate = new BankAccountUpdateDto(formData);
+    const updateData: IBankAccount = new BankAccountUpdateDto(formData);
     console.log('BankAccount Data:', updateData);
     GenericRequest(updateData, UpdateBankAccount, "BankAccount data updated successfully");;
   };

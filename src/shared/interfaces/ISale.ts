@@ -1,6 +1,7 @@
 import { DATE } from "@/shared/Common/CurrentDate";
-import { IPreOrder } from "./IPreOrder";
+import { IPreOrderGet } from "./IPreOrder";
 import { IBaseModel } from "./IBaseModel";
+import { IClient } from "./IClient";
 
 export interface ISale extends IBaseModel {
     amount?: number;
@@ -13,17 +14,12 @@ export interface ISale extends IBaseModel {
 
   export interface ISaleData extends ISale {
     clientName: string;
+    client: IClient
     amountBase:number;
-    preOrder: IPreOrder;
+    preOrder: IPreOrderGet;
     fecha: string;
   }  
 
-  export interface ISalePost {
-    fkOrder: number;
-    codIsc?: string | null; // Permitimos null para codIsc
-    itbis: number;
-    b14?: string | null;    // Permitimos null para b14
-  }
   
   export class SaleDto implements ISale {
     fkOrder: number;

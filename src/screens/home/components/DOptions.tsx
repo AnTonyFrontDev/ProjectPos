@@ -32,7 +32,7 @@ const DOptions = () => {
     return (
         <div className={containerStyles}>
             <div className={boxStyles}>
-                <div className="grid grid-cols-9 gap-3"> {/* Cambiado a 6 columnas y reducido el gap */}
+                <div className="grid grid-cols-1 gap-3"> {/* Cambiado a 6 columnas y reducido el gap */}
                     {linkConfigs.map(({ to, text, color, bgColor, type }) => (
                         <Link to={to} className={`${linkStyles} ${color} ${bgColor}`} key={to}>
                             <AppIcon type={type as keyof typeof APP_ICONS} className="cursor-pointer" width={30} /> {/* Cambiado el tamaño del icono a 50 */}

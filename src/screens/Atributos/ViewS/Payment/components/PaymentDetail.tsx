@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Descriptions, Table, Modal, Button } from 'antd';
 import { getPaymentByOrderId, RemovePayment } from '@/shared/Api/Payment/PaymentApi';
-import { DetalleProps as DetalleOrderProps } from '@/shared/interfaces/I_inventario';
+// import { DetalleProps as DetalleOrderProps } from '@/shared/interfaces/I_inventario';
 import { useNavigate } from 'react-router-dom';
 import { DATE } from '@/shared/Common/CurrentDate';
+import { IBaseModelID } from '@/shared/interfaces/IBaseModel';
 
-const PaymentDetail: React.FC<DetalleOrderProps> = ({ Id: orderId }) => {
+const PaymentDetail: React.FC<IBaseModelID> = ({ id: orderId }) => {
   const [orderDetail, setOrderDetail] = useState<any>(null);
   const [payment, setPaymentDetail] = useState<any>(null);
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const PaymentDetail: React.FC<DetalleOrderProps> = ({ Id: orderId }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        if (!orderId) return;
         const orderData = await getPaymentByOrderId(orderId);
         setOrderDetail(orderData.data);
         setPaymentDetail(orderData.data.payments); // Obtén los detalles de la orden

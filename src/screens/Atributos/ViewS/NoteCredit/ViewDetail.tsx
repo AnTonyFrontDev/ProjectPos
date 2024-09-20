@@ -14,7 +14,7 @@ const NoteCreditDetail = () => {
 
   return (
     <div>
-      <Detail Id={numericNCreditId as number} />
+      <Detail id={numericNCreditId as number} />
     </div>
   );
 };

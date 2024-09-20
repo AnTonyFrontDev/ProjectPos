@@ -1,5 +1,6 @@
 import { IBaseModel } from "./IBaseModel";
 import { IClient } from "./IClient";
+import { IProduct } from "./IProduct";
 
 export interface IOrder extends IBaseModel {
     orderProducts?: IOrderProduct[];
@@ -10,6 +11,12 @@ export interface IOrder extends IBaseModel {
     observation?: string;
     amount?: number;
     statusOrder?: string;
+}
+export interface ICheckOrder {
+  fkSize: number,
+  fkProduct: number,
+  fkColorPrimary: number,
+  fkColorSecondary: number,
 }
 
 export interface IOrderGets extends IOrder {
@@ -24,9 +31,8 @@ export interface IOrderPost extends IOrder {
     fkUser: number
     fkPreOrder: number
     descriptionJob: string
-    // observation?: string
     sendTo: string
-    products: IOrderProduct[]
+    // products: IOrderProduct[]
   }
   
   export interface IOrderProduct {

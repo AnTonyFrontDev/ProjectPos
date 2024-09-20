@@ -14,11 +14,12 @@ import { IClient } from '@/shared/interfaces/IClient';
 import { IPaymentType } from '@/shared/interfaces/IPaymentType';
 import { IPayment } from '@/shared/interfaces/IPayment';
 import { IOrder } from '@/shared/interfaces/IOrder';
-import { IPreOrderColumns } from '@/shared/interfaces/Preorder/IPreOrderColumns';
+// import { IPreOrderColumns } from '@/shared/interfaces/IPreOrderColumns';
 import { ISale } from '@/shared/interfaces/ISale';
-import { IPaymenExpenses } from "@/shared/interfaces/IPaymentExpense";
+import { IPaymentExpenses } from "@/shared/interfaces/IPaymentExpense";
 import { IBuyInventoryGet, IDetails } from '@/shared/interfaces/IBuyInventory';
 import { ISupplier } from '@/shared/interfaces/ISupplier';
+import { IPreOrder } from '@/shared/interfaces/IPreOrder';
 // #endregion
 
 
@@ -40,16 +41,9 @@ export const inventoryTable: (IBuyInventoryGet | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
   { title: 'Nombre del Producto', dataIndex: 'product_name', key: 'product_name' },
   {
-    title: 'Tallas Disponibles',
-    dataIndex: 'availableSizes',
-    key: 'availableSizes',
+    title: 'Tallas Disponibles', dataIndex: 'availableSizes', key: 'availableSizes',
     render: (availableSizes: ISize[]) => {
-      return (
-        <ul className="flex space-x-4">
-          {availableSizes.map((size: ISize) => (
-            <li key={size.idInventory}>{`${size.size}: ${size.quantity}`}</li>
-          ))}
-        </ul>
+      return (<ul className="flex space-x-4"> {availableSizes.map((size: ISize) => (<li key={size.idInventory}>{`${size.size}: ${size.quantity}`}</li>))}</ul>
       );
     },
   },
@@ -206,7 +200,7 @@ const combineCliente = (record: IClient): string => `${record.f_name} ${record.l
 export const ReceivableTable: (IExpenses | any) = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
   { title: 'Cliente', dataIndex: 'client', key: 'client', render: combineCliente },
-  { title: 'Fecha de Entrega', dataIndex: 'dateDelivery', key: 'dateDelivery' },
+  { title: 'Fecha', dataIndex: 'dateCreated', key: 'dateCreated' },
   { title: 'Fecha de Entrega', dataIndex: 'dateDelivery', key: 'dateDelivery' },
   { title: 'Monto', dataIndex: 'amount', key: 'amount' },
 ];
@@ -215,7 +209,7 @@ export const ReceivableTable: (IExpenses | any) = [
 const renderNamePayment = (record: IExpenses) => record.name;
 const renderDocumentNumber = (record: IExpenses) => record.documentNumber;
 const renderDescription = (record: IExpenses) => record.description;
-export const PaymentExpensesTable: (IPaymenExpenses | any) = [
+export const PaymentExpensesTable: (IPaymentExpenses | any) = [
   { title: 'id', dataIndex: 'id', key: 'id' },
   { title: 'Nombre', dataIndex: 'expense', key: 'expense', render: renderNamePayment },
   { title: 'Descripcion', dataIndex: 'expense', key: 'expense', render: renderDescription },
@@ -286,7 +280,7 @@ export const orderTable: (IOrder | any)[] = [
   { title: 'Estado', dataIndex: 'statuS_ORDER', key: 'statuS_ORDER' },
 ];
 
-export const preOrderTable: (IPreOrderColumns | any)[] = [
+export const preOrderTable: (IPreOrder | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
   {
     title: 'Cliente',
@@ -305,5 +299,56 @@ export const preOrderTable: (IPreOrderColumns | any)[] = [
     dataIndex: 'dateDelivery',
     key: 'dateDelivery',
     render: (dateDelivery: string) => new Date(dateDelivery).toLocaleDateString()
+  },
+  {
+    title: 'Estado',
+    key: 'estado',
+    render: () => (
+      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+        Pendiente
+      </span>
+    )
+  },
+];
+
+export const ProductsTableByOrders: (IProduct | any)[] = [
+  { title: 'ID', dataIndex: 'id', key: 'id' },
+  { title: 'Nombre', dataIndex: 'productName', key: 'productName' },
+  { title: 'Color Primario', dataIndex: 'colorPrimary', key: 'colorPrimary' },
+  { title: 'Tamaño', dataIndex: 'size', key: 'size' },
+  { title: 'Precio', dataIndex: 'price', key: 'price' },
+  { title: 'Cantidad', dataIndex: 'quantity', key: 'quantity' },
+];
+
+export const PaymentsTableByOrders: (IPreOrder | any)[] = [
+  {
+    title: 'No. Pago',
+    dataIndex: 'id',
+    key: 'id',
+  },
+  {
+    title: 'Monto',
+    dataIndex: 'amount',
+    key: 'amount',
+  },
+  {
+    title: 'Tipo de Pago',
+    dataIndex: 'type',
+    key: 'type',
+  },
+  {
+    title: 'Banco',
+    dataIndex: 'bank',
+    key: 'bank',
+  },
+  {
+    title: 'Cuenta',
+    dataIndex: 'account',
+    key: 'account',
+  },
+  {
+    title: 'Numero De Documento',
+    dataIndex: 'documentNumber',
+    key: 'documentNumber',
   },
 ];

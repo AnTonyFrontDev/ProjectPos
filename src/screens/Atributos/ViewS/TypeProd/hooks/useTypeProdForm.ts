@@ -1,13 +1,10 @@
 import { useState } from 'react';
 import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';
-import { TypeProdDto, ITypeProdPost } from '@/shared/interfaces/Product/TypeProd/ITypeProdPost';
+import { TypeProdDto, ITypeProd, TypeProdUpdateDto } from '@/shared/interfaces/ITypeProd';
 import { SaveTypeProd, UpdateTypeProd } from '@/shared/Api/Products/TypeProd/TypeProduct';
-import { ITypeProdUpdate, TypeProdUpdateDto } from '@/shared/interfaces/Product/TypeProd/ITypeProdUpdate';
-
-
 
 export const useTypeProdForm = () => {
-  const [formData, setFormData] = useState<ITypeProdPost>(new TypeProdDto());
+  const [formData, setFormData] = useState<ITypeProd>(new TypeProdDto());
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -29,7 +26,7 @@ export const useTypeProdForm = () => {
 
   const handleUpdate = (e: React.FormEvent) => {
     e.preventDefault();
-    const updateData: ITypeProdUpdate = new TypeProdUpdateDto(formData);
+    const updateData: ITypeProd = new TypeProdUpdateDto(formData);
     console.log('TypeProd Data:', updateData);
     GenericRequest(updateData, UpdateTypeProd, "TypeProd data updated successfully");
     window.location.reload();

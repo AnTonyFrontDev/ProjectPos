@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Descriptions } from 'antd';
-import { DetalleProps as DetallePreOrdersProps } from '@/shared/interfaces/I_inventario';
 import { getPreOrderById, RemovePreOrder } from '@/shared/Api/PreOrder/PreOrderApi';
 import SearchFilter from '@/shared/SearchFilter';
 import { Link } from 'react-router-dom';
@@ -10,8 +9,9 @@ import DeleteButton from '@/components/Generics/Modal/DeleteModal';
 import G_Options from '@/components/Generics/gOptions';
 import { RemovePreOrderProduct } from '@/shared/Api/PreOrder/PreOrderProductApi';
 import ApiTable from '@/components/Generics/Tabla/apiTable';
+import { IBaseModel } from '@/shared/interfaces/IBaseModel';
 
-const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => {
+const PreOrderDetail: React.FC<IBaseModel> = ({ id: preorderId }) => {
     const [detallePreOrder, setDetallePreOrder] = useState<any>(null);
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [filteredItems, setFilteredItems] = useState<any[]>(['']);
@@ -20,6 +20,7 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
 
     useEffect(() => {
         const fetchData = async () => {
+            if (!preorderId) return;
             try {
                    const preOrderData = await getPreOrderById(preorderId);
                 setDetallePreOrder(preOrderData.data[0]); // Obtén los datos de la preorden
