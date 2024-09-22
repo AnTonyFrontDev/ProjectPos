@@ -2,20 +2,20 @@ import Select from 'react-select';
 import React, { useEffect, useState } from 'react';
 import { addPreOrder } from '@/shared/Api/PreOrder/PreOrderApi';
 import { IPreOrder, PreOrderPostDto } from '@/shared/interfaces/IPreOrder';
-// import { IPreOrderProductSave, ProductsDtoAdd } from '@/shared/interfaces/Preorder/ProductToAdd';
 import useProductOptions from '@/screens/AddInventory/hooks/useProductOptions';
 import useSizeOptions from '@/screens/AddInventory/hooks/useSizeOptions';
 import useColorOptions from '@/screens/AddInventory/hooks/useColorOptions';
 import ButtonModal from '@/components/Generics/Modal/ButtonModal';
 import ViewForm from '@/components/FormularioV4/viewForm';
 import useClientOptions from '@/screens/AddInventory/hooks/useClientOptions';
-import { InputNumber} from 'antd';
+import { InputNumber } from 'antd';
 import { FormInputsClasses, TableHeadClasses, TableSelectsClasses } from '@/shared/Common/stylesConst/cssComponent';
 import { ISize } from '@/shared/interfaces/ISize';
 import { IColor } from '@/shared/interfaces/IColor';
 import showGenericNotification from '@/util/antd/notification';
 import showAlert from '@/util/antd/alert';
-import { IPreOrderProductSave, ProductsDtoAdd } from '../../../shared/interfaces/IPreOrderProduct';
+import { IPreOrderProductSave, ProductsDtoAdd } from '@/shared/interfaces/IPreOrderProduct';
+import BackButton from '@/components/Generics/BackButton';
 
 
 const PreOrders = () => {
@@ -62,7 +62,7 @@ const PreOrders = () => {
       showAlert({
         title: 'Error', content: 'Por favor, complete todos los campos.',
         onOk: () => {
-          return; 
+          return;
         }
       });
       return;
@@ -139,7 +139,12 @@ const PreOrders = () => {
 
   return (
     <div className="container mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Agregar Pedido</h1>
+      <div className="flex items-center space-x-4 mb-4">
+        <BackButton />
+        <h2 className="text-2xl font-bold text-gray-800">
+          Agregar Pedido
+        </h2>
+      </div>
       <div className='gap-4 inline-flex w-full'>
         <div className='flex flex-col w-1/4'>
           <label>Cliente:</label>

@@ -7,7 +7,6 @@ const NewBill = () => {
     return (
       <div>
         <NewBillComponents id={preOrderId} />
-       
       </div>
     );
   };

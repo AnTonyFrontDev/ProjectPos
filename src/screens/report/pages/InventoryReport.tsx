@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { Table } from 'antd';
 import { getInventoryDiffReport } from '@/shared/Api/Report/ReportsApi';
+import BackButton from '@/components/Generics/BackButton';
 
 const InventoryReport = () => {
   // State to store the data fetched from the API
@@ -15,7 +16,7 @@ const InventoryReport = () => {
         const result = await getInventoryDiffReport();
         setRawData(result);
         // Transform the data to fit the table structure
-        const transformedData = result.map((item : any) => ({
+        const transformedData = result.map((item: any) => ({
           key: item.id,
           quantity: item.quantity,
           size: item.size.size,
@@ -57,6 +58,12 @@ const InventoryReport = () => {
 
   return (
     <div>
+      <div className="flex items-center space-x-4 mb-4">
+        <BackButton />
+        <h2 className="text-2xl font-semibold text-gray-800">
+          Reporte
+        </h2>
+      </div>
       <Table columns={columns} dataSource={data} />
       <div style={{ marginTop: '20px' }}>
         <h2>Data Completa</h2>

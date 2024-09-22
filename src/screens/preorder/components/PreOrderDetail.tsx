@@ -89,7 +89,7 @@ const PreOrderDetail: React.FC<IBaseModel> = ({ id: preorderId }) => {
 
     return (
         <div>
-            <Descriptions title="Información del Cliente">
+            <Descriptions title={`Información del Cliente Numero: ${preorderId}`}>
                 <Descriptions.Item label="Nombre">{`${client[0].f_name} ${client[0].l_name}`}</Descriptions.Item>
                 <Descriptions.Item label="Apellido">{`${client[0].f_surname} ${client[0].l_surname}`}</Descriptions.Item>
                 <Descriptions.Item label="RNC">{client[0].rnc}</Descriptions.Item>

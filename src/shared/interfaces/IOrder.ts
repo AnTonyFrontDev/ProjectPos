@@ -37,6 +37,7 @@ export interface IOrderPost extends IOrder {
   
   export interface IOrderProduct {
     fkOrder: number
+    name_prod?: string
     fkInventoryColor: number
     quantity: number
   }

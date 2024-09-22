@@ -9,6 +9,7 @@ import { FormInputsClasses, TableHeadClasses, TableSelectsClasses } from '@/shar
 import { BuyPostDto, IBuyInventoryGet, IInventoryDetail } from '@/shared/interfaces/IBuyInventory';
 import { ISize } from '@/shared/interfaces/ISize';
 import { IColor } from '@/shared/interfaces/IColor';
+import BackButton from '@/components/Generics/BackButton';
 
 
 const AddInventory = () => {
@@ -48,7 +49,7 @@ const AddInventory = () => {
         }));
     }, [tableData]);
 
-   
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData({
@@ -138,10 +139,15 @@ const AddInventory = () => {
 
     return (
         <div className="container mx-auto">
-            <h1 className="text-2xl font-bold mb-4">Agregar Compra</h1>
+            <div className="flex items-center space-x-4 mb-4">
+                <BackButton />
+                <h2 className="text-2xl font-bold text-gray-800">
+                    Agregar Compra
+                </h2>
+            </div>
             <div className='flex gap-4'>
                 <div className='flex flex-col'>
-                    <label className='mb-1'>Compañia:</label>
+                    <label>Compañia:</label>
                     <input type="text" name="company" value={formData.company} onChange={handleChange}
                         className={FormInputsClasses} />
                 </div>
@@ -191,8 +197,8 @@ const AddInventory = () => {
                                     <Select
                                         className={TableSelectsClasses}
                                         options={productOptions.map(product => ({
-                                            value: product.id,
-                                            label: product.name_prod
+                                            value: product.id || 0,
+                                            label: product.name_prod || ""
                                         }))}
                                         value={{
                                             value: productOptions.find(product => product.id === row.fK_PRODUCT)?.id || 0,

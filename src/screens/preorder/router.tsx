@@ -1,6 +1,4 @@
 import { RouteObject } from "react-router-dom";
-// import PreOrder from "./components/FormPreOrder";
-// import AddOrder from "../orders/pages/AddOrder";
 import PreOrders from "./pages/PreOrder";
 import ListPreOrder from "./pages/ListPreOrder";
 import PreOrderDetail from "./pages/ViewDetail";
@@ -10,7 +8,7 @@ import NewOrder from "./pages/NewOrder";
 const router: RouteObject[] = [
   {
     path: "/preOrder",
-    element: <ListPreOrder/>,
+    element: <ListPreOrder />,
   },
   {
     path: "/preOrder/PreOrderDetail/:preorderId",

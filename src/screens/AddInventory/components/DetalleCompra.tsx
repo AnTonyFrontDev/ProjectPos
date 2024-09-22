@@ -5,6 +5,7 @@ import { Descriptions, Modal, Table } from 'antd';
 import { IBuyInventoryGet } from '@/shared/interfaces/IBuyInventory';
 import { getBuyById, RemoveBuy } from '@/shared/Api/BuyInventory/BuyApi';
 import { BuyDetailTable } from '@/components/Generics/Tabla/tData';
+import BackButton from '@/components/Generics/BackButton';
 
 const DetalleCompra: React.FC<IBuyInventoryGet> = ({ id: buyId }) => {
     const [detalleCompra, setDetalleCompra] = useState<IBuyInventoryGet>();
@@ -63,10 +64,14 @@ const DetalleCompra: React.FC<IBuyInventoryGet> = ({ id: buyId }) => {
 
 
     return (
-        <div className="my-8">
+        <div className="mt-2 mb-8">
             {errorMessage && <p className="text-red-500 w-full">{errorMessage}</p>}
-            <h1 className="text-3xl font-bold mb-4">Compra Numero {buyId}</h1>
-
+            <div className="flex items-center space-x-4 mb-4">
+                <BackButton />
+                <h2 className="text-2xl font-bold text-gray-800">
+                    Compra Numero {buyId}
+                </h2>
+            </div>
             {/* Descriptions for the main purchase details */}
             <Descriptions title="Detalles de la Compra" className="mb-4">
                 <Descriptions.Item label="Empresa">{company}</Descriptions.Item>

@@ -5,6 +5,7 @@ import { ISale, ISaleData } from '@/shared/interfaces/ISale';
 // import { DetalleProps as BillDetailProps } from '@/shared/interfaces/I_inventario';
 import Print from './BillPrint';
 import { PDFDownloadLink } from '@react-pdf/renderer';
+import BackButton from '@/components/Generics/BackButton';
 const { Column } = Table;
 
 const BillDetail = ({ id: saleId }: ISale) => {
@@ -45,8 +46,13 @@ const BillDetail = ({ id: saleId }: ISale) => {
 
   return (
     <>
+      <div className="flex items-center space-x-4 mb-4">
+        <BackButton />
+        <h2 className="text-2xl font-bold text-gray-800">
+          Factura Numero: {saleId}
+        </h2>
+      </div>
       <div className="container mx-auto p-4">
-        <h1 className="text-2xl mb-4">Factura</h1>
         <div className="grid grid-cols-2 gap-2">
           {/* Columna de Información del Cliente */}
           <div className="bg-white shadow-md rounded-lg p-6 mr-3 mb-6">

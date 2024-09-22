@@ -6,10 +6,11 @@ import ApiTable from '@/components/Generics/Tabla/apiTable';
 import { preOrderTable } from '@/components/Generics/Tabla/tData';
 import { Link, useNavigate } from 'react-router-dom';
 import GenericPagination from '@/components/PaginationComponents/GenericPagination';
+import BackButton from '@/components/Generics/BackButton';
 // import { GetBuyPaginated } from '@/shared/Api/BuyInventory/BuyApi';
 
 interface ListPreOrderProps {
-    onlyData: boolean;
+    onlyData?: boolean;
 }
 
 const ListPreOrder = ({ onlyData }: ListPreOrderProps) => {
@@ -29,7 +30,7 @@ const ListPreOrder = ({ onlyData }: ListPreOrderProps) => {
     useEffect(() => {
         if (onlyData) {
             setFilterColumn('dateCreated');
-            setSortDirection('desc'); 
+            setSortDirection('desc');
         }
     }, [onlyData]);
 
@@ -53,6 +54,12 @@ const ListPreOrder = ({ onlyData }: ListPreOrderProps) => {
     return (
         <>
             {!onlyData && <>
+                <div className="flex items-center space-x-4 mb-4">
+                    <BackButton />
+                    <h2 className="text-2xl font-bold text-gray-800">
+                        Pedidos
+                    </h2>
+                </div>
                 <BreadcrumbData routes={routes} />
                 <div className="col-span-2 bg-gray-50 shadow-lg my-14 p-4 rounded-md flex justify-between">
                     <SearchFilter

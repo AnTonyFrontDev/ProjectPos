@@ -2,8 +2,9 @@ import { SaveOrder } from '@/shared/Api/Order/OrderApi';
 import React, { useState } from 'react';
 import Select from 'react-select';
 import { Table, Button } from 'antd';
-import { IOrderProduct, IOrderPost } from '@/shared/interfaces/order/IOrderPost';
+import { IOrderProduct, IOrderPost } from '@/shared/interfaces/IOrder';
 import { FormInputsClasses } from '@/shared/Common/stylesConst/cssComponent';
+import BackButton from '@/components/Generics/BackButton';
 
 const Order: React.FC<{ preOrderMap: any[], preOrderInProgress: any[]; client: any, preId: number }> = ({ preOrderMap, preOrderInProgress, client, preId }) => {
   const [products, setProducts] = useState<IOrderProduct[]>([]);
@@ -18,28 +19,28 @@ const Order: React.FC<{ preOrderMap: any[], preOrderInProgress: any[]; client: a
 
   const handleProductChange = (selectedOption: any) => {
     setSelectedProduct(selectedOption);
-  
+
     // Buscar el elemento seleccionado en preOrderMap
     const selectedItem = preOrderMap.flatMap((item: any) => item.invColors)
       .find((invColor: any) => invColor.inventoryColorId === selectedOption.value);
     console.log('selectedItem', selectedItem);
-  
+
     // Buscar el progreso de la pre-orden correspondiente
     const quantityProgress = preOrderInProgress.find((item: any) => {
       return item.productId === selectedItem.product.id &&
-             item.sizeId === selectedItem.size.id &&
-             item.colorPrimaryId === selectedItem.colorPrimary.id &&
-             item.colorSecondary === selectedItem.colorSecondary.id;
+        item.sizeId === selectedItem.size.id &&
+        item.colorPrimaryId === selectedItem.colorPrimary.id &&
+        item.colorSecondary === selectedItem.colorSecondary.id;
     });
     console.log('quantityProgress', quantityProgress);
-  
+
     // Determinar la cantidad máxima
     const quantityPerItem = selectedItem && quantityProgress ? Math.min(selectedItem.quantityPreOrder, quantityProgress.quantity) : 0;
     setMaxQuantity(quantityPerItem);
     setSelectedQuantity(quantityPerItem);
   };
-  
-  
+
+
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
@@ -99,7 +100,6 @@ const Order: React.FC<{ preOrderMap: any[], preOrderInProgress: any[]; client: a
         observation: formData.observation,
       };
 
-      console.log('FormData:', orderData);
       await SaveOrder(orderData);
 
       // Reiniciar los estados después de guardar la orden
@@ -113,19 +113,20 @@ const Order: React.FC<{ preOrderMap: any[], preOrderInProgress: any[]; client: a
       setProducts([]);
 
       alert('Orden guardada exitosamente');
-      // window.location.reload();
     } catch (error) {
       console.error('Error al guardar la orden:', error);
       alert('Error al guardar la orden. Por favor, inténtalo de nuevo.');
     }
   };
 
-  // console.log('OrderData', orderData)
-  console.log('PreOrderData', preOrderMap)
-
   return (
     <div className="container mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Agregar Orden</h1>
+      <div className="flex items-center space-x-4 mb-4">
+        <BackButton />
+        <h2 className="text-2xl font-bold text-gray-800">
+          Agregar Orden
+        </h2>
+      </div>
       <div className='gap-4 inline-flex w-full mb-5'>
         <div className='flex flex-col w-1/2'>
           <label>Cliente:</label>

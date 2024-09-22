@@ -5,6 +5,7 @@ import { ISale } from '@/shared/interfaces/ISale';
 import { Table, Descriptions, Modal, notification } from 'antd';
 import { FormInputsClasses } from '@/shared/Common/stylesConst/cssComponent';
 import { IBaseModel } from '@/shared/interfaces/IBaseModel';
+import BackButton from '@/components/Generics/BackButton';
 
 const { Column } = Table;
 
@@ -44,12 +45,12 @@ const NewBill = ({ id: preorderId }: IBaseModel) => {
                 b14: formData.b14?.trim() || null         // If empty string, set to null
             };
             await addSale(processedFormData)
-            .then (() => {
-                notification.success({
-                    message: 'Factura Agregada',
-                    description: 'La factura se ha agregado exitosamente.',
-                })
-            });
+                .then(() => {
+                    notification.success({
+                        message: 'Factura Agregada',
+                        description: 'La factura se ha agregado exitosamente.',
+                    })
+                });
         } catch (error) {
             console.error('Error adding sale:', error);
             notification.error({
@@ -93,7 +94,12 @@ const NewBill = ({ id: preorderId }: IBaseModel) => {
     // Render the table of the pre-order data
     return (
         <div className="container mx-auto">
-            <h1 className="text-2xl mb-4">Agregar Factura</h1>
+            <div className="flex items-center space-x-4 mb-4">
+                <BackButton />
+                <h2 className="text-2xl font-semibold text-gray-800">
+                    Agregar Factura
+                </h2>
+            </div>
             <div className='my-2'>
                 {clientData && (
                     <Descriptions title="Informacion de Cliente" >

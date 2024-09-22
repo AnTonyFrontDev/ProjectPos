@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Table } from 'antd';
 import { getPreOrderById, GetPreOrderInprogressById } from '@/shared/Api/PreOrder/PreOrderApi';
 import Order from '../../Order/pages/Order';
-import { IClient } from '@/shared/interfaces/order/IOrderGet';
+import { IClient } from '@/shared/interfaces/IClient';
 
 interface PreOrderData {
     id: number;
@@ -131,8 +131,7 @@ const NewOrder: React.FC = () => {
             }
         }
     ];
-    // console.log('OrderResult',orderResult)
-    // console.log('preOrderInProgress',preOrderInProgress)
+
     return (
         <div>
             {orderResult && (

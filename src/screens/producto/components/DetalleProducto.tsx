@@ -10,6 +10,7 @@ import { ProductRemoveDto } from '@/shared/interfaces/IProduct';
 import showConfirm from '@/util/antd/confirm';
 import showGenericNotification from '@/util/antd/notification';
 import showAlert from '@/util/antd/alert'; // Alert utility
+import BackButton from '@/components/Generics/BackButton';
 
 const DetalleProducto: React.FC<{ id: number }> = ({ id: productId }) => {
   const [detalleProducto, setDetalleProducto] = useState<any>(null);
@@ -103,9 +104,14 @@ const DetalleProducto: React.FC<{ id: number }> = ({ id: productId }) => {
   };
 
   return (
-    <div className="my-8">
-      <h1 className="text-3xl font-bold mb-4">{name_prod}</h1>
-      <Descriptions title='Detalles del Producto' className="mb-4">
+    <div className="mt-2 mb-8">
+      <div className="flex items-center space-x-4 mb-4">
+        <BackButton />
+        <h2 className="text-2xl font-bold text-gray-800">
+          {name_prod}
+        </h2>
+      </div>
+      <Descriptions title={`Detalles del Producto numero: ${productId}`} className="mb-4">
         <Descriptions.Item label="Descripción">{description}</Descriptions.Item>
         <Descriptions.Item label="Precio de Venta">{sale_price}</Descriptions.Item>
         <Descriptions.Item label="Tipo">{type}</Descriptions.Item>

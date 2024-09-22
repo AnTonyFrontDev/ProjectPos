@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Tooltip } from 'antd';
-import { AppIcon } from '../../ui/AppIcon';
+// import { AppIcon } from '../../ui/AppIcon';
 import { APP_ICONS } from '@/shared/constants/icons-constants';
 
 
@@ -15,7 +15,7 @@ interface ButtonModalProps {
   tooltipTitle?: string;
 }
 
-const ButtonModal: React.FC<ButtonModalProps> = ({ buttonText, className, modalTitle, modalContent, iconType, cssColor, size, tooltipTitle }) => {
+const ButtonModal: React.FC<ButtonModalProps> = ({ buttonText, className, modalTitle, modalContent, tooltipTitle }) => {
   const [visible, setVisible] = useState(false);
 
   const showModal = () => {
@@ -26,20 +26,19 @@ const ButtonModal: React.FC<ButtonModalProps> = ({ buttonText, className, modalT
     setVisible(false);
   };
   const buttonStyle = `
-    my-2 mx-2 inline-flex items-center p-1 rounded-md 
-    transition-colors duration-300 bg-${cssColor}-500 text-white 
-    hover:bg-${cssColor}-600 focus:outline-none 
-    focus:border-${cssColor}-700 focus:ring focus:ring-${cssColor}-200 shadow-md
-  `;
+    inline-block bg-green-500 
+    hover:bg-green-600 focus:outline-none 
+    focus:ring focus:ring-green-200 text-white 
+    font-bold py-2 px-4 rounded-md shadow-md transition-colors duration-300`;
 
   const buttonClasses = className ? className : buttonStyle;
 
   return (
     <>
-    
+
       <Tooltip title={tooltipTitle}>
         <button className={buttonClasses} onClick={showModal}>
-          {iconType && <AppIcon type={iconType} className="cursor-pointer" width={size} />}
+          {/* {iconType && <AppIcon type={iconType} className="cursor-pointer" width={size} />} */}
           {buttonText && buttonText}
         </button>
       </Tooltip>

@@ -7,7 +7,6 @@ const ProductDetail = () => {
     return (
       <div>
         <Detail id={billId} />
-       
       </div>
     );
   };
