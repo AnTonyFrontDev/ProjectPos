@@ -10,12 +10,14 @@ import { BuyPostDto, IBuyInventoryGet, IInventoryDetail } from '@/shared/interfa
 import { ISize } from '@/shared/interfaces/ISize';
 import { IColor } from '@/shared/interfaces/IColor';
 import BackButton from '@/components/Generics/BackButton';
-
+import useSupplierOptions from '../hooks/useSupplierOptions';
+import { AppIcon } from '@/components/ui/AppIcon';
 
 const AddInventory = () => {
     const [formData, setFormData] = useState<IBuyInventoryGet>(new BuyPostDto());
     const [tableData, setTableData] = useState<IInventoryDetail[]>([]);
     const { productOptions } = useProductOptions();
+    const { supplierOptions } = useSupplierOptions();
 
     const [disabledRows, setDisabledRows] = useState<boolean[]>(Array(tableData.length).fill(true));
     const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
@@ -136,6 +138,13 @@ const AddInventory = () => {
         setTableData(updatedTableData);
     };
 
+    const handleClear = () => {
+        setFormData(new BuyPostDto);
+        setTableData([]);
+        setDisabledRows([]);
+    }
+
+    const [isCustomCompany, setIsCustomCompany] = useState(false);
 
     return (
         <div className="container mx-auto">
@@ -145,28 +154,70 @@ const AddInventory = () => {
                     Agregar Compra
                 </h2>
             </div>
-            <div className='flex gap-4'>
-                <div className='flex flex-col'>
+
+            <div className='flex gap-4 items-center '>
+                <div className='flex flex-col w-1/3'>
                     <label>Compañia:</label>
-                    <input type="text" name="company" value={formData.company} onChange={handleChange}
-                        className={FormInputsClasses} />
+                    {isCustomCompany ? (
+                        <input
+                            type="text"
+                            name="company"
+                            value={formData.company || ""}
+                            onChange={handleChange}
+                            className={FormInputsClasses}
+                            placeholder="Ingrese la compañía"
+                        />
+                    ) : (
+                        <Select
+                            className=''
+                            options={supplierOptions.map(supplier => ({
+                                value: supplier.nombre || "",
+                                label: `${supplier.nombre} - ${supplier?.rnc || ''}`
+                            }))}
+                            value={{
+                                value: formData.company || "",
+                                label: supplierOptions.find(supplier => supplier.nombre === formData.company)?.nombre || "Seleccione una compañía"
+                            }}
+                            onChange={(selectedOption) => {
+                                setFormData(prevFormData => ({
+                                    ...prevFormData,
+                                    company: selectedOption?.value || ""
+                                }));
+                            }}
+                            isSearchable
+                        />
+                    )}
                 </div>
-                <div className='flex flex-col'>
+                <div className='flex flex-col w-1/8'>
+                    <button
+                        className="mt-6 p-2 border rounded-md hover:bg-gray-200"
+                        onClick={() => setIsCustomCompany(!isCustomCompany)}
+                    >
+                        <AppIcon type="arrowLeft" width={20} />
+                    </button>
+                </div>
+                <div className='flex flex-col w-1/3'>
                     <label>RNC:</label>
                     <input type="text" name="rnc" value={formData.rnc} onChange={handleChange}
                         className={FormInputsClasses} />
                 </div>
-                <div className='flex flex-col'>
+                <div className='flex flex-col w-1/3'>
                     <label>NCF:</label>
                     <input type="text" name="ncf" value={formData.ncf} onChange={handleChange}
                         className={FormInputsClasses} />
                 </div>
-                <div className='flex flex-col'>
+                <div className='flex flex-col w-1/3'>
                     <label>PagoTotal:</label>
                     <input type="number" name="totaL_SALE" min="0.00" value={formData.totaL_SALE} onChange={handleChange}
                         className={FormInputsClasses} disabled />
                 </div>
-                <div className='flex'>
+                <div className='flex w-1/3'>
+                    <button
+                        onClick={handleClear} // function to clear the fields
+                        className="bg-gray-500 hover:bg-gray-700 text-white font-bold mx-2 mt-5 py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    >
+                        Limpiar
+                    </button>
                     <button
                         onClick={handleSave}
                         className="bg-green-500 hover:bg-green-700 text-white font-bold mx-2 mt-5 py-2 px-4 rounded focus:outline-none focus:shadow-outline"
@@ -175,6 +226,7 @@ const AddInventory = () => {
                     </button>
                 </div>
             </div>
+
 
             <table className="min-w-full divide-y divide-gray-200 mt-3">
                 <thead className="bg-gray-50">

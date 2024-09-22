@@ -5,8 +5,8 @@ import { IPreOrder, PreOrderPostDto } from '@/shared/interfaces/IPreOrder';
 import useProductOptions from '@/screens/AddInventory/hooks/useProductOptions';
 import useSizeOptions from '@/screens/AddInventory/hooks/useSizeOptions';
 import useColorOptions from '@/screens/AddInventory/hooks/useColorOptions';
-import ButtonModal from '@/components/Generics/Modal/ButtonModal';
-import ViewForm from '@/components/FormularioV4/viewForm';
+// import ButtonModal from '@/components/Generics/Modal/ButtonModal';
+// import ViewForm from '@/components/FormularioV4/viewForm';
 import useClientOptions from '@/screens/AddInventory/hooks/useClientOptions';
 import { InputNumber } from 'antd';
 import { FormInputsClasses, TableHeadClasses, TableSelectsClasses } from '@/shared/Common/stylesConst/cssComponent';
@@ -216,15 +216,13 @@ const PreOrders = () => {
                     isSearchable
                   />
 
-                  <ButtonModal
-                    buttonText=""
+                  {/* <ButtonModal
+                    buttonText="+"
                     modalTitle=""
                     tooltipTitle="Agregar Producto"
                     size={16}
                     modalContent={<ViewForm usarForm="Product" formData={null} isUpdate={false} />}
-                    iconType="plus"
-                    cssColor='blue'
-                  />
+                  /> */}
                 </div>
               </td>
               <td>
@@ -263,16 +261,13 @@ const PreOrders = () => {
                     isSearchable
 
                   />
-
-                  <ButtonModal
-                    buttonText=""
+                  {/* <ButtonModal
+                    buttonText="+"
                     modalTitle=""
                     tooltipTitle="Agregar Size"
                     size={16}
                     modalContent={<ViewForm usarForm="Size" formData={null} isUpdate={false} />}
-                    iconType="plus"
-                    cssColor='blue'
-                  />
+                  /> */}
                 </div>
               </td>
               <td className='w-14'>
