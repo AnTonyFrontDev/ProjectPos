@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { usePayAccountForm } from '../hooks/usePayAccountForm';
 import { FormProps } from '@/components/Generics/Interface/IForms';
-import {IPaymentExpenseSave, PaymentExpensesDtoAdd } from '@/shared/interfaces/IPaymentExpense';
+import { IPaymentExpenseSave, PaymentExpensesDtoAdd } from '@/shared/interfaces/IPaymentExpense';
 import Select from 'react-select';
 import { TableSelectsClasses } from '@/shared/Common/stylesConst/cssComponent';
 
@@ -21,7 +21,7 @@ const ExpensesForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate
         handleSubmit,
         handleUpdate,
     } = usePayAccountForm();
-    
+
     const [selectedPaymentType, setSelectedPaymentType] = useState<string | null>(null);
 
     useEffect(() => {
