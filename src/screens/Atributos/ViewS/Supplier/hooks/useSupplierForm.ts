@@ -16,9 +16,9 @@ export const useSupplierForm = () => {
     e.preventDefault();
     console.log('Size Data:', formData);
   
-    GenericRequest(formData, addSupplier, "Datos de Size enviados correctamente")
+    GenericRequest(formData, addSupplier, "Datos de Supplidor enviados correctamente")
       .then(() => {
-        window.location.reload();
+        // window.location.reload();
       })
       .catch((error) => {
         console.error("Error submitting size data:", error);

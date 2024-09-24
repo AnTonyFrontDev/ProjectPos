@@ -29,14 +29,14 @@ export const useBankAccountForm = () => {
 
   const loadBankOptions = async () => {
     try {
-      const paymentTypes = await getBanks(); // Llama a la función para obtener los tipos de pago
-      const options: IOptionSelect[] = paymentTypes.map((type : any) => ({
-        value: type.id,
-        label: type.bankName, 
+      const banks = await getBanks();  
+      const options: IOptionSelect[] = banks.data.map((bank : any) => ({
+        value: bank.id,
+        label: bank.bankName, 
       }));
       setBankOptions(options);
     } catch (error) {
-      console.error('Error al cargar los tipos de pago:', error);
+      console.error('Error al cargar los tipos banco:', error);
     }
   };
 

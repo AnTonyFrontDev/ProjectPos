@@ -41,6 +41,16 @@ const SizeForm: React.FC<FormProps> = ({formData: initialFormData, isUpdate}) =>
           className="mt-1 p-2 border border-gray-300 rounded-md w-full"
         />
       </div>
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-600">rnc</label>
+        <input
+          type="text"
+          name="rnc"
+          value={formData.rnc}
+          onChange={handleInputChange}
+          className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+        />
+      </div>
 
       <button type="submit" className="bg-blue-500 text-white p-2 rounded-md">
         Guardar

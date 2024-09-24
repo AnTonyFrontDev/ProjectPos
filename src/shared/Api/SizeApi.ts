@@ -35,7 +35,7 @@ export const SaveSize = async (formData: ISize) => {
   try {
     const formattedData = formData;
     const response = await axios.post(
-      "${URL}/Size/SaveSize",
+      `${URL}/Size/SaveSize`,
       formattedData,
       {
         headers: {

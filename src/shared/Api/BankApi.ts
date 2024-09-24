@@ -6,7 +6,7 @@ export const getBanks = async () => {
   try {
     const response = await axios.get(`${URL}/Bank/GetBanks?Page=1&ItemsPerPage=20`);
     
-    return response;
+    return response.data;
   } catch (error) {
     console.error('Error fetching banks:', error);
     throw error;

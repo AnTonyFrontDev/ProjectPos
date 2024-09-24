@@ -1,3 +1,4 @@
+import { DATE } from "../Common/CurrentDate";
 import { IBaseModel } from "./IBaseModel";
 import { IColor } from "./IColor";
 import { IProduct } from "./IProduct";
@@ -23,17 +24,19 @@ export interface IPreOrderProduct extends IBaseModel {
     colorSecondary?: IColor;
 }
 
-export interface IPreOrderProductSave {
+export interface IPreOrderProductSave extends IBaseModel {
     fkProduct: number
     fkSize: number
     quantity: number
     fkColorPrimary: number
     fkColorSecondary?: number
-    customPrice: number,
+    customPrice?: number
+    fkPreOrder?: number
     user: number
 }
 
 export class ProductsDtoAdd implements IPreOrderProductSave {
+    id?: number
     fkProduct: number
     fkSize: number
     quantity: number
@@ -49,6 +52,31 @@ export class ProductsDtoAdd implements IPreOrderProductSave {
         this.fkColorSecondary = 1;
         this.customPrice = 0.00;
         this.user = 1
-
+        
     }
+}
+
+export class ProductsDtoUpdate implements IPreOrderProductSave {
+    id: number
+    date?: string;
+    fkProduct: number
+    fkSize: number
+    quantity: number
+    fkColorPrimary: number
+    fkColorSecondary?: number
+    fkPreOrder?: number
+    customPrice?: number
+    user: number
+
+    constructor(formData: IPreOrderProductSave) {
+        this.id = formData.id || 0;
+        this.user = 1;
+        this.date = DATE;
+        this.fkProduct = formData.fkProduct;
+        this.fkSize = formData.fkSize;
+        this.quantity = formData.quantity;
+        this.fkColorPrimary = formData.fkColorPrimary;
+        this.fkColorSecondary = formData.fkColorSecondary;
+        this.fkPreOrder = formData.fkPreOrder;
+      }
 }
