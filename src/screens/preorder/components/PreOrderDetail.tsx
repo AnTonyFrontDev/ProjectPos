@@ -23,8 +23,8 @@ const PreOrderDetail: React.FC<IBaseModel> = ({ id: preorderId }) => {
             if (!preorderId) return;
             try {
                    const preOrderData = await getPreOrderById(preorderId);
-                setDetallePreOrder(preOrderData.data[0]); // Obtén los datos de la preorden
-                setFilteredItems(preOrderData.data[0]?.items.preOrderProducts || []); // Establecer todos los productos como predeterminado
+                setDetallePreOrder(preOrderData.data[0]); 
+                setFilteredItems(preOrderData.data[0]?.items.preOrderProducts || []); 
             } catch (error) {
                 console.error('Error al obtener detalle de la preorden:', error);
             }
@@ -38,7 +38,7 @@ const PreOrderDetail: React.FC<IBaseModel> = ({ id: preorderId }) => {
         if (!detallePreOrder) return;
         const filtered = detallePreOrder.items.preOrderProducts.filter((item: any) =>
             Object.values(item)
-                .join('') // Concatenar todos los valores del objeto en una cadena
+                .join('') 
                 .toLowerCase()
                 .includes(searchText.toLowerCase())
         );
@@ -118,9 +118,9 @@ const PreOrderDetail: React.FC<IBaseModel> = ({ id: preorderId }) => {
                 <div className="mb-4 ml-4 ">
                     <DeleteButton
                         onRemove={RemovePreOrder}
-                        formData={preorderId}
+                        formData={detallePreOrder}
                         confirmationMessage="¿Estás seguro de que deseas eliminar este Pedido?"
-                        navigatePath={`/preOrder`}
+                        // navigatePath={`/preOrder`}
                     />
                 </div>
             </div>
@@ -137,10 +137,6 @@ const PreOrderDetail: React.FC<IBaseModel> = ({ id: preorderId }) => {
                 />
                 <G_Options buttonText='Agregar Producto' usarForm="PreOrder" />
             </div>
-            {/* <Table
-                columns={columns}
-                dataSource={filteredItems}
-            /> */}
             <div className='my-8'>
 
                 <ApiTable

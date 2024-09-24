@@ -91,11 +91,12 @@ export const GetAccountsReceivable = async ()=>{
   }
 };
 
-export const RemovePreOrder = async (formData: any) => {
+export const RemovePreOrder = async (formData: IPreOrder) => {
   try {
+    console.log("formData", formData);
     const formattedData = formData;
     const response = await axios.delete(
-      `${URL}/preorder/PreOrder/RemovePreOrder?id=${formData}`,
+      `${URL}/preorder/PreOrder/RemovePreOrder?id=${formData.id}`,
       {
         headers: {
           "Content-Type": "application/json",

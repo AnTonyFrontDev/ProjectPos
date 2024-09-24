@@ -5,8 +5,6 @@ import { IPreOrder, PreOrderPostDto } from '@/shared/interfaces/IPreOrder';
 import useProductOptions from '@/screens/AddInventory/hooks/useProductOptions';
 import useSizeOptions from '@/screens/AddInventory/hooks/useSizeOptions';
 import useColorOptions from '@/screens/AddInventory/hooks/useColorOptions';
-// import ButtonModal from '@/components/Generics/Modal/ButtonModal';
-// import ViewForm from '@/components/FormularioV4/viewForm';
 import useClientOptions from '@/screens/AddInventory/hooks/useClientOptions';
 import { InputNumber } from 'antd';
 import { FormInputsClasses, TableHeadClasses, TableSelectsClasses } from '@/shared/Common/stylesConst/cssComponent';
@@ -297,7 +295,7 @@ const PreOrders = () => {
                   step="0.001"
                   min="0"
                   max="9999999.99"
-                  value={(row.quantity * row.customPrice).toFixed(2)}
+                  value={(row.quantity * (row.customPrice ? row.customPrice : 0 )).toFixed(2)}
                   disabled
                   className="w-full px-2 py-1 rounded-md border border-gray-300 bg-gray-100 focus:outline-none"
                 />
