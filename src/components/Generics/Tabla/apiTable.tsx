@@ -56,10 +56,10 @@ const GenericTable: React.FC<GenericTableProps> = ({
     }
   };
 
-    // Function to refresh data after a deletion
-    const refreshData = (id: string | number) => {
-      setData(prevData => prevData.filter(item => item.id !== id));  // Filter out the deleted item
-    };
+  // Function to refresh data after a deletion
+  const refreshData = (id: string | number) => {
+    setData(prevData => prevData.filter(item => item.id !== id));  // Filter out the deleted item
+  };
 
   // Filtrar, buscar y ordenar los datos de la tabla
   const memoizedData = useMemo(() => {
@@ -111,10 +111,14 @@ const GenericTable: React.FC<GenericTableProps> = ({
             )}
             {deleteProps && (
               <DeleteButton
-                onRemove={deleteProps.onRemove}
+                onRemove={async (formData: any) => {
+                  if (deleteProps.onRemove) {
+                    await deleteProps.onRemove(formData);
+                  }
+                  refreshData(formData.id); 
+                }}
                 formData={record}
                 confirmationMessage="¿Estás seguro de que deseas remover este Registro?"
-                refreshData={() => refreshData(record.id)}
               />
             )}
           </span>

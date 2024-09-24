@@ -32,7 +32,6 @@ export interface IOrderPost extends IOrder {
     fkPreOrder?: number
     descriptionJob?: string
     sendTo?: string
-    // products: IOrderProduct[]
   }
   
   export interface IOrderProduct {
