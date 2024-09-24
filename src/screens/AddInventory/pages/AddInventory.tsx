@@ -147,7 +147,7 @@ const AddInventory = () => {
     const [isCustomCompany, setIsCustomCompany] = useState(false);
 
     return (
-        <div className="container mx-auto">
+        <div className="container mx-auto pb-56">
             <div className="flex items-center space-x-4 mb-4">
                 <BackButton />
                 <h2 className="text-2xl font-bold text-gray-800">
@@ -179,15 +179,18 @@ const AddInventory = () => {
                                 label: supplierOptions.find(supplier => supplier.nombre === formData.company)?.nombre || "Seleccione una compañía"
                             }}
                             onChange={(selectedOption) => {
+                                const selectedSupplier = supplierOptions.find(supplier => supplier.nombre === selectedOption?.value);
                                 setFormData(prevFormData => ({
                                     ...prevFormData,
-                                    company: selectedOption?.value || ""
+                                    company: selectedOption?.value || "",
+                                    rnc: selectedSupplier?.rnc || ""
                                 }));
                             }}
                             isSearchable
                         />
                     )}
                 </div>
+
                 <div className='flex flex-col w-1/8'>
                     <button
                         className="mt-6 p-2 border rounded-md hover:bg-gray-200"
@@ -196,10 +199,33 @@ const AddInventory = () => {
                         <AppIcon type="arrowLeft" width={20} />
                     </button>
                 </div>
+
                 <div className='flex flex-col w-1/3'>
-                    <label>RNC:</label>
-                    <input type="text" name="rnc" value={formData.rnc} onChange={handleChange}
-                        className={FormInputsClasses} />
+                    {isCustomCompany ? (
+                        <>
+                            <label>RNC:</label>
+                            <input
+                                type="text"
+                                name="rnc"
+                                value={formData.rnc}
+                                onChange={handleChange}
+                                className={FormInputsClasses}
+                                />
+                        </>
+                    ) : (
+                        <>
+                            <label>RNC:</label>
+                            <input
+                                type="text"
+                                name="rnc"
+                                value={formData.rnc || ""}
+                                onChange={handleChange}
+                                className={FormInputsClasses}
+                                disabled={true} 
+                                readOnly 
+                            />
+                        </>
+                    )}
                 </div>
                 <div className='flex flex-col w-1/3'>
                     <label>NCF:</label>

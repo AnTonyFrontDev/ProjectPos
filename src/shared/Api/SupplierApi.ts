@@ -1,6 +1,7 @@
 import { URL } from "@/shared/Common/url";
 import { ISupplier } from "@/shared/interfaces/ISupplier";
 import axios from "axios";
+import { IResponse } from "../interfaces/IResponse";
 
 // Función para obtener todas las PreOrder
 export const getSupplier = async (): Promise<ISupplier[]> => {
@@ -46,6 +47,7 @@ export const addSupplier = async (formData: ISupplier) => {
         'Content-Type': 'application/json',
       },
     });
+    // console.log('Supplier added:', response.data);
     return response.data;
   } catch (error) {
     console.error('Error adding PreOrder:', error);
@@ -55,17 +57,17 @@ export const addSupplier = async (formData: ISupplier) => {
 
 export const UpdateSupplier = async (formData: ISupplier) => {
   try {
-    const formattedData = formData;
-    const response = await axios.put(
+    const response : IResponse<ISupplier> = await axios.put(
       `${URL}/Supplier/Update`,
-      formattedData,
+      formData,
       {
         headers: {
           "Content-Type": "application/json",
         },
       }
     );
-
+    
+    console.log('Supplier added:', response);
     return response.data;
   } catch (error) {
     console.error("Error updating payment:", error);

@@ -1,13 +1,15 @@
-export const GenericRequest = async <T>(
+export const GenericRequest = async <T, R>(
     formData: T,
-    methodGeneric : (formData: T) => Promise<void>,
+    methodGeneric : (formData: T) => Promise<R>,
     messageSuccess:string,
     
-  ): Promise<void> => {
+  ): Promise<R | undefined> => {
     try {
-      await methodGeneric(formData);
-      console.log(messageSuccess);
+      const response = await methodGeneric(formData);
+      console.log('GenericRequest', messageSuccess);
+      return response;
     } catch (error) {
       console.error("Error:", error);
+      return undefined;
     }
   };

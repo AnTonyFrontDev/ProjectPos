@@ -55,9 +55,9 @@ const SupplierView = () => {
               searchTerm={searchTerm}
               filterColumn={filterColumn}
               sortDirection={sortDirection}
-              notEditable={true}
+              usarForm={'Supplier'}
               showActions={true}
-              deleteProps={{ onRemove: RemoveSupplier, navigatePath: `/Supplier` }}
+              deleteProps={{ onRemove: RemoveSupplier }}
             />
           )}
         </GenericPagination>
