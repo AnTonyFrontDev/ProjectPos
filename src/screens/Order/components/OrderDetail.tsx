@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { cancelOrder, completeOrder, getOrderById } from '@/shared/Api/Order/OrderApi';
+import { cancelOrder, completeOrder, getOrderById } from '@/shared/Api/OrderApi';
 import { Descriptions, Modal, Table } from 'antd';
 import SearchFilter from '@/shared/SearchFilter';
 import Print from './OrderPrint';

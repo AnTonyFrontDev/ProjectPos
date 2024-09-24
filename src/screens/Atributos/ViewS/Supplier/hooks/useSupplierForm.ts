@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';
 import { ISupplier, SupplierDto, SupplierUpdateDto } from '@/shared/interfaces/ISupplier';
-import { addSupplier, UpdateSupplier } from '@/shared/Api/Supplier/SupplierApi';
+import { addSupplier, UpdateSupplier } from '@/shared/Api/SupplierApi';
 
 export const useSupplierForm = () => {
   const [formData, setFormData] = useState<ISupplier>(new SupplierDto());

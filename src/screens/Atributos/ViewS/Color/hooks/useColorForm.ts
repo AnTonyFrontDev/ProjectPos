@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ColorPostDto, IColor } from '@/shared/interfaces/IColor';
-import { SaveColor } from '@/shared/Api/Color/ColorApi';
+import { SaveColor } from '@/shared/Api/ColorApi';
 import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';
 // import { useNavigate } from 'react-router-dom';
 

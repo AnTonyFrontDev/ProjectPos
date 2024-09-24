@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getBanks } from '@/shared/Api/Bank/BankApi';
+import { getBanks } from '@/shared/Api/BankApi';
 import { IBankColumns } from '@/shared/interfaces/IBank';
 
 const useBankOptions = () => {

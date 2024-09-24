@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';
 import { TypeProdDto, ITypeProd, TypeProdUpdateDto } from '@/shared/interfaces/ITypeProd';
-import { SaveTypeProd, UpdateTypeProd } from '@/shared/Api/Products/TypeProd/TypeProduct';
+import { SaveTypeProd, UpdateTypeProd } from '@/shared/Api/TypeProduct';
 
 export const useTypeProdForm = () => {
   const [formData, setFormData] = useState<ITypeProd>(new TypeProdDto());

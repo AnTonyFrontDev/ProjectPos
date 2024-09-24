@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Descriptions, Table } from 'antd';
-import { getPaymentByOrderId } from '@/shared/Api/Payment/PaymentApi';
-import { getPreOrderById } from '@/shared/Api/PreOrder/PreOrderApi';
+import { getPaymentByOrderId } from '@/shared/Api/PaymentApi';
+import { getPreOrderById } from '@/shared/Api/PreOrderApi';
 import ApiTable from '@/components/Generics/Tabla/apiTable';
 import { IBaseModelID } from '@/shared/interfaces/IBaseModel';
 import { IPreOrder } from '@/shared/interfaces/IPreOrder';

@@ -1,5 +1,5 @@
-import { getPreOrderById } from '@/shared/Api/PreOrder/PreOrderApi'
-import { addSale } from '@/shared/Api/Sale/SaleApi';
+import { getPreOrderById } from '@/shared/Api/PreOrderApi'
+import { addSale } from '@/shared/Api/SaleApi';
 import { useEffect, useState } from 'react';
 import { ISale } from '@/shared/interfaces/ISale';
 import { Table, Descriptions, Modal, notification } from 'antd';

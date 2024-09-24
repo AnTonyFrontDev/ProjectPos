@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Descriptions, Table, Modal, Button } from 'antd';
-import { getPaymentByOrderId, RemovePayment } from '@/shared/Api/Payment/PaymentApi';
+import { getPaymentByOrderId, RemovePayment } from '@/shared/Api/PaymentApi';
 // import { DetalleProps as DetalleOrderProps } from '@/shared/interfaces/I_inventario';
 import { useNavigate } from 'react-router-dom';
 import { DATE } from '@/shared/Common/CurrentDate';

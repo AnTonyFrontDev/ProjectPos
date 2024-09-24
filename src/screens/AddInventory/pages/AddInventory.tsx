@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import useProductOptions from '../hooks/useProductOptions';
 import useSizeOptions from '../hooks/useSizeOptions';
 import useColorOptions from '../hooks/useColorOptions';
-import { AddBuy } from '@/shared/Api/BuyInventory/BuyApi';
+import { AddBuy } from '@/shared/Api/BuyApi';
 import { InputNumber } from 'antd';
 import { FormInputsClasses, TableHeadClasses, TableSelectsClasses } from '@/shared/Common/stylesConst/cssComponent';
 import { BuyPostDto, IBuyInventoryGet, IInventoryDetail } from '@/shared/interfaces/IBuyInventory';

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import {IExpensesOptions} from "@/shared/interfaces/Expenses/IExpensesOptions.ts";
-import {getExpenses, GetExpensesPaginated, GetPaymentExpenses} from "@/shared/Api/Expenses/ExpensesApi.ts";
+import {getExpenses, GetExpensesPaginated, GetPaymentExpenses} from "@/shared/Api/ExpensesApi";
 
 const   useExpensesOption = () => {
     const [expensesOptions, setTypePaymentOptions] = useState<IExpensesOptions[]>([]);

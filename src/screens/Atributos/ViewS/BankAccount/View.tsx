@@ -8,7 +8,7 @@ import { bankAccountTable } from "@/components/Generics/Tabla/tData";
 import G_Options from "@/components/Generics/gOptions";
 import { GetBankAccountsPaginated, 
 //  RemoveBankAccount 
-} from "@/shared/Api/BankAccount/BankAccountApi";
+} from "@/shared/Api/BankAccountApi";
 import GenericPagination from '@/components/PaginationComponents/GenericPagination';
 
 const View = () => {

@@ -1,7 +1,7 @@
 // Import necessary libraries and components
 import { useEffect, useState } from 'react';
 import { Table } from 'antd';
-import { getInventoryDiffReport } from '@/shared/Api/Report/ReportsApi';
+import { getInventoryDiffReport } from '@/shared/Api/ReportsApi';
 import BackButton from '@/components/Generics/BackButton';
 
 const InventoryReport = () => {

@@ -5,7 +5,7 @@ import SearchFilter from '@/shared/SearchFilter';
 import { useState } from 'react';
 
 import { saleTableTable } from "@/components/Generics/Tabla/tData";
-import { getSalesPaginated, RemoveSale } from "@/shared/Api/Sale/SaleApi";
+import { getSalesPaginated, RemoveSale } from "@/shared/Api/SaleApi";
 import { useNavigate } from "react-router-dom";
 import GenericPagination from "@/components/PaginationComponents/GenericPagination";
 import BackButton from "@/components/Generics/BackButton";

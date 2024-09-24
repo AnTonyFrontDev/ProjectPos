@@ -4,7 +4,7 @@ import ApiTable from '@/components/Generics/Tabla/apiTable';
 import SearchFilter from '@/shared/SearchFilter';
 import { useState } from 'react';
 import { paymentTable } from "@/components/Generics/Tabla/tData";
-import { GetPaymentsPaginated, RemovePayment } from "@/shared/Api/Payment/PaymentApi";
+import { GetPaymentsPaginated, RemovePayment } from "@/shared/Api/PaymentApi";
 import G_Options from "@/components/Generics/gOptions";
 import GenericPagination from "@/components/PaginationComponents/GenericPagination";
 import { useNavigate } from "react-router-dom";

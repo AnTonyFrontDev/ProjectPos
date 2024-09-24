@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';
-import { SavePaymentExpenses, UpdateExpenses} from '@/shared/Api/Expenses/ExpensesApi';
+import { SavePaymentExpenses, UpdateExpenses} from '@/shared/Api/ExpensesApi';
 import { ExpensesUpdateDto, IExpensesUpdate } from '@/shared/interfaces/Expenses/IExpensesUpdate';
 import {
   IPaymentExpenseDtoAdd,

@@ -1,6 +1,6 @@
 import Select from 'react-select';
 import React, { useEffect, useState } from 'react';
-import { addPreOrder } from '@/shared/Api/PreOrder/PreOrderApi';
+import { addPreOrder } from '@/shared/Api/PreOrderApi';
 import { IPreOrder, PreOrderPostDto } from '@/shared/interfaces/IPreOrder';
 import useProductOptions from '@/screens/AddInventory/hooks/useProductOptions';
 import useSizeOptions from '@/screens/AddInventory/hooks/useSizeOptions';

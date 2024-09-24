@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CheckOrder, SaveOrder } from '@/shared/Api/Order/OrderApi';
+import { CheckOrder, SaveOrder } from '@/shared/Api/OrderApi';
 import { ICheckOrder, IOrderPost } from '@/shared/interfaces/order/IOrderPost';
 import { DATE } from '@/shared/Common/CurrentDate';
 import { IPreOrderGet } from '@/shared/interfaces/Preorder/IPreOrderGet';

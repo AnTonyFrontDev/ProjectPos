@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';
-import { SaveBank, UpdateBank } from '@/shared/Api/Bank/BankApi';
+import { SaveBank, UpdateBank } from '@/shared/Api/BankApi';
 import { BankDto, IBank, BankUpdateDto } from '@/shared/interfaces/IBank';
 
 export const useBankForm = () => {

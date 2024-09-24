@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { IClient } from '@/shared/interfaces/IClient';
-import { getClients } from '@/shared/Api/Customers/CustomersApi';
+import { getClients } from '@/shared/Api/CustomersApi';
 
 const useClientOptions = () => {
     const [clientOptions, setClientOptions] = useState<IClient[]>([]);

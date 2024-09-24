@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';
 import { PaymentDto, PaymentUpdateDto, IPaymentPostPut } from '@/shared/interfaces/IPayment';
-import { SavePayment, UpdatePayment } from '@/shared/Api/Payment/PaymentApi';
-import { getPaymentTypes } from '@/shared/Api/Payment/PaymentType/PaymentTypeApi';
+import { SavePayment, UpdatePayment } from '@/shared/Api/PaymentApi';
+import { getPaymentTypes } from '@/shared/Api/PaymentTypeApi';
 import { IOptionSelect } from '@/components/FormularioV4/Config/interface';
-import { getBankAccounts } from '@/shared/Api/BankAccount/BankAccountApi';
-import {getPreOrdersPending} from '@/shared/Api/PreOrder/PreOrderApi';
+import { getBankAccounts } from '@/shared/Api/BankAccountApi';
+import {getPreOrdersPending} from '@/shared/Api/PreOrderApi';
 
 
 

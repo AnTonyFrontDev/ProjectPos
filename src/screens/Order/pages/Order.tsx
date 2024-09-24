@@ -1,4 +1,4 @@
-import { SaveOrder } from '@/shared/Api/Order/OrderApi';
+import { SaveOrder } from '@/shared/Api/OrderApi';
 import React, { useState } from 'react';
 import Select from 'react-select';
 import { Table, Button } from 'antd';

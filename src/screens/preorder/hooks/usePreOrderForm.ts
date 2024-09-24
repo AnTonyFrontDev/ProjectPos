@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';
 import { ExpensesDto, IExpensesPost } from '@/shared/interfaces/Expenses/IExpensesPost';
-import { SaveExpenses, UpdateExpenses } from '@/shared/Api/Expenses/ExpensesApi';
+import { SaveExpenses, UpdateExpenses } from '@/shared/Api/ExpensesApi';
 import { ExpensesUpdateDto, IExpensesUpdate } from '@/shared/interfaces/Expenses/IExpensesUpdate';
 
 export const usePreOrderForm = () => {

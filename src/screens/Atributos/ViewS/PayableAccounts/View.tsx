@@ -7,7 +7,7 @@ import G_Options from "@/components/Generics/gOptions";
 import { PaymentExpensesTable } from "@/components/Generics/Tabla/tData";
 import {
   // CompleteExpense, 
-  GetPaymentExpenses} from "@/shared/Api/Expenses/ExpensesApi";
+  GetPaymentExpenses} from "@/shared/Api/ExpensesApi";
 import GenericPagination from "@/components/PaginationComponents/GenericPagination";
 //import G_Options from "@/components/Generics/gOptions";
 

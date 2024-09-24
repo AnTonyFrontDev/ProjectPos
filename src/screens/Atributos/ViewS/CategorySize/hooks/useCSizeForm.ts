@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { CategorySizeDto, ICategorySize, CategorySizeUpdateDto } from '@/shared/interfaces/ICategorySize';
-import { SaveCategorySize, UpdateCategorySize } from '@/shared/Api/CategorySize/CategorySizeApi';
+import { SaveCategorySize, UpdateCategorySize } from '@/shared/Api/CategorySizeApi';
 import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';
 
 export const useCategorySizeForm = () => {

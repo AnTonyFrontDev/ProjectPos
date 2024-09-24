@@ -7,7 +7,7 @@ import { useState } from 'react'
 import { customersTable } from "@/components/Generics/Tabla/tData";
 import { useNavigate } from 'react-router-dom';
 import G_Options from "@/components/Generics/gOptions";
-import { getClientsPaginated } from "@/shared/Api/Customers/CustomersApi.tsx";
+import { getClientsPaginated } from "@/shared/Api/CustomersApi";
 import GenericPagination from "@/components/PaginationComponents/GenericPagination";
 import BackButton from "@/components/Generics/BackButton";
 

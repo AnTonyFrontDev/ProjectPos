@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable'
-import { getPreOrderById } from '@/shared/Api/PreOrder/PreOrderApi';
+import { getPreOrderById } from '@/shared/Api/PreOrderApi';
 
 
 const PreOrderReport: React.FC<{ id: number }> = ({ id }) => {

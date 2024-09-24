@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Descriptions, Modal } from 'antd';
-import { getClientById, RemoveClient } from '@/shared/Api/Customers/CustomersApi';
+import { getClientById, RemoveClient } from '@/shared/Api/CustomersApi';
 import ButtonModal from '../../../components/Generics/Modal/ButtonModal';
 import ViewForm from '../../../components/FormularioV4/viewForm';
 import { IClient } from '@/shared/interfaces/IClient';

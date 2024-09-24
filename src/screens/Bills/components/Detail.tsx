@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Table } from 'antd';
-import { getSaleById } from '@/shared/Api/Sale/SaleApi';
+import { getSaleById } from '@/shared/Api/SaleApi';
 import { ISale, ISaleData } from '@/shared/interfaces/ISale';
 // import { DetalleProps as BillDetailProps } from '@/shared/interfaces/I_inventario';
 import Print from './BillPrint';

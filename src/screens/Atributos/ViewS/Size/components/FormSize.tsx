@@ -1,7 +1,7 @@
 // SizeForm.tsx
 import React, { useState, useEffect } from 'react';
 import { useSizeForm } from '../hooks/useSizeForm';
-import { getCategorySizes } from '@/shared/Api/CategorySize/CategorySizeApi';
+import { getCategorySizes } from '@/shared/Api/CategorySizeApi';
 import { FormProps } from '@/components/Generics/Interface/IForms';
 import { ISize, SizePostDto } from '@/shared/interfaces/ISize';
 import { ICategorySize } from '@/shared/interfaces/ICategorySize';

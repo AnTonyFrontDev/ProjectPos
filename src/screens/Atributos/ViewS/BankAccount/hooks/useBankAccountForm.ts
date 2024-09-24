@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';
 import { BankAccountUpdateDto, BankAccountDto, IBankAccount} from '@/shared/interfaces/IBankAccount';
-import { SaveBankAccount, UpdateBankAccount } from '@/shared/Api/BankAccount/BankAccountApi';
+import { SaveBankAccount, UpdateBankAccount } from '@/shared/Api/BankAccountApi';
 import { IOptionSelect } from '@/components/FormularioV4/Config/interface';
-import { getBanks } from '@/shared/Api/Bank/BankApi';
+import { getBanks } from '@/shared/Api/BankApi';
 
 export const useBankAccountForm = () => {
   const [formData, setFormData] = useState<IBankAccount>(new BankAccountDto());

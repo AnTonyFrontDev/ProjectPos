@@ -4,12 +4,12 @@ import {
   getExpensesPending,
   SavePaymentExpenses,
   UpdatePaymentExpenses
-} from '@/shared/Api/Expenses/ExpensesApi';
+} from '@/shared/Api/ExpensesApi';
 import { PaymentExpensesDtoAdd, IPaymentExpenses, PaymentExpensesDtoUpdate, IPaymentExpenseSave } from '@/shared/interfaces/IPaymentExpense';
 
 import { IOptionSelect } from '@/components/FormularioV4/Config/interface';
-import { getBankAccounts } from '@/shared/Api/BankAccount/BankAccountApi';
-import { getPaymentTypes } from '@/shared/Api/Payment/PaymentType/PaymentTypeApi';
+import { getBankAccounts } from '@/shared/Api/BankAccountApi';
+import { getPaymentTypes } from '@/shared/Api/PaymentTypeApi';
 
 export const usePayAccountForm = () => {
   const [formData, setFormData] = useState<IPaymentExpenseSave>(new PaymentExpensesDtoAdd());

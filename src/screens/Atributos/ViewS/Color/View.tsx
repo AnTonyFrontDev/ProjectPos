@@ -5,7 +5,7 @@ import SearchFilter from '@/shared/SearchFilter';
 import { useState } from 'react';
 
 import { colorTable } from "@/components/Generics/Tabla/tData";
-import { GetColorsPaginated, RemoveColor } from "@/shared/Api/Color/ColorApi";
+import { GetColorsPaginated, RemoveColor } from "@/shared/Api/ColorApi";
 import G_Options from "@/components/Generics/gOptions";
 import GenericPagination from "@/components/PaginationComponents/GenericPagination";
 

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';
 import { PaymentTypeUpdateDto, IPaymentType , PaymentTypePostDto } from '@/shared/interfaces/IPaymentType';
-import { SavePaymentType, UpdatePaymentType } from '@/shared/Api/Payment/PaymentType/PaymentTypeApi';
+import { SavePaymentType, UpdatePaymentType } from '@/shared/Api/PaymentTypeApi';
 
 export const usePaymentTypeForm = () => {
   const [formData, setFormData] = useState<IPaymentType>(new PaymentTypePostDto());

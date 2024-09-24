@@ -5,7 +5,7 @@ import SearchFilter from '@/shared/SearchFilter';
 import { useState } from 'react';
 
 import { expensesTable } from "@/components/Generics/Tabla/tData";
-import { GetExpensesPaginated, RemoveExpenses } from "@/shared/Api/Expenses/ExpensesApi";
+import { GetExpensesPaginated, RemoveExpenses } from "@/shared/Api/ExpensesApi";
 import G_Options from "@/components/Generics/gOptions";
 
 import GenericPagination from "@/components/PaginationComponents/GenericPagination";
@@ -44,7 +44,11 @@ const View = () => {
           onSortToggle={handleSortToggle}
           columns={expensesTable}
         />
+        <div className="flex space-x-2">
+
+        <G_Options buttonText="Pagar Gasto" usarForm="PayableAccount"/>
         <G_Options buttonText="Nuevo Gasto" usarForm="Expenses" />
+        </div>
       </div>
       <div className="mt-10">
         <GenericPagination getApiData={GetExpensesPaginated}>

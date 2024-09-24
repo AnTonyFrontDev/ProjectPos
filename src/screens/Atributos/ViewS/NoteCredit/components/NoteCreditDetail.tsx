@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Descriptions, Table } from 'antd';
-import { getNoteCreditId } from '@/shared/Api/NoteCredit/NoteCreditApi';
+import { getNoteCreditId } from '@/shared/Api/NoteCreditApi';
 import { IBaseModel } from '@/shared/interfaces/IBaseModel';
 
 const NoteCreditDetail: React.FC<IBaseModel> = ({ id: notecreditId }) => {

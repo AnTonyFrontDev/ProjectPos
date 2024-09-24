@@ -2,12 +2,6 @@
 import { DATE } from "@/shared/Common/CurrentDate";
 import { IBaseModel } from "./IBaseModel";
 
-// export interface IBankAccount {
-//     id: number;
-//     account: string;
-//     bankType: string;
-//     balance: number
-// }
 export interface IBankAccount extends IBaseModel {
     account?: string;
     bankType?: string;
@@ -52,30 +46,4 @@ export class BankAccountUpdateDto implements IBankAccount {
   }
 }
 
-// export interface IBankAccountPost {
-//     id: number;
-//     user: number;
-//     date: string;
-//     bankAccount: string;
-//     fkBank: number;
-//     balance: number;
-// }
-
-
-// export interface IBankAccountRemove {
-//     id: number
-//     user?: number
-//     date?: string
-// }
-
-
-
-// export interface IBankAccountUpdate {
-//     id: number;
-//     user: number;
-//     date: string;
-//     bankAccount: string;
-//     fkBank: number;
-//     balance: number;
-// }
 

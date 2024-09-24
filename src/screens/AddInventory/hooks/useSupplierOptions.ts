@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getSupplier } from '@/shared/Api/Supplier/SupplierApi';
+import { getSupplier } from '@/shared/Api/SupplierApi';
 import { ISupplier } from '@/shared/interfaces/ISupplier';
 
 const useSupplierOptions = () => {

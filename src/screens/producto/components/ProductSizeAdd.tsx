@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
-import { getProductSize, RemoveProductSize, SaveProductSize } from '@/shared/Api/Products/ProductSize/ProductSize';
-import { getSizes } from '@/shared/Api/Size/SizeApi';
+import { getProductSize, RemoveProductSize, SaveProductSize } from '@/shared/Api/ProductSize';
+import { getSizes } from '@/shared/Api/SizeApi';
 import showAlert from '@/util/antd/alert';
 import { handleErrorNotification, handleSuccessNotification, fetchOptions } from '@/util/util';
 

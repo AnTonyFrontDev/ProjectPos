@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getSizeByProdId} from '@/shared/Api/Size/SizeApi';
+import { getSizeByProdId} from '@/shared/Api/SizeApi';
 import { ISize } from '@/shared/interfaces/ISize';
 
 const useSizeOptions = (prodId : number) => {

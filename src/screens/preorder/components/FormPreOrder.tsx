@@ -9,7 +9,7 @@ import useColorOptions from '@/screens/AddInventory/hooks/useColorOptions';
 import { InputNumber, notification } from 'antd';
 import { FormInputsClasses, TableSelectsClasses } from '@/shared/Common/stylesConst/cssComponent';
 import { IPreOrderProduct, PreOrderProductDto, UpdatePreOrderProductDto } from '@/shared/interfaces/Preorder/IPreOrderProduct';
-import { addPreOrderProduct, UpdatePreOrderProduct } from '@/shared/Api/PreOrder/PreOrderProductApi';
+import { addPreOrderProduct, UpdatePreOrderProduct } from '@/shared/Api/PreOrderProductApi';
 
 const AddProduct: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }) => {
     const { preorderId } = useParams<{ preorderId: string }>();

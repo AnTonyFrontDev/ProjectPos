@@ -226,6 +226,7 @@ export const sizeTable: (ISize | any)[] = [
 export const SupplierTable: (ISupplier | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
   { title: 'Suplidor', dataIndex: 'nombre', key: 'nombre' },
+  { title: 'rnc', dataIndex: 'rnc', key: 'rnc' },
 ];
 export const typeProdTable: (ITypeProd | any)[] = [
   { title: 'ID', dataIndex: 'id', key: 'id' },

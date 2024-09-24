@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 // import { IPreOrderGet } from '@/shared/interfaces/Preorder/IPreOrderGet';
-import { getPreOrders } from '@/shared/Api/PreOrder/PreOrderApi';
+import { getPreOrders } from '@/shared/Api/PreOrderApi';
 import { IPreOrder } from '@/shared/interfaces/IPreOrder';
 
 const usePreOrderOptions = () => {

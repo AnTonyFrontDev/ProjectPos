@@ -7,7 +7,7 @@ import { SupplierTable } from '@/components/Generics/Tabla/tData';
 import G_Options from '@/components/Generics/gOptions';
 
 import GenericPagination from '@/components/PaginationComponents/GenericPagination';
-import { getSupplierPaginated, RemoveSupplier } from '@/shared/Api/Supplier/SupplierApi';
+import { getSupplierPaginated, RemoveSupplier } from '@/shared/Api/SupplierApi';
 
 const SupplierView = () => {
   const routes = [

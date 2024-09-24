@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getColorByProdId } from '@/shared/Api/Color/ColorApi';
+import { getColorByProdId } from '@/shared/Api/ColorApi';
 import { IColor } from '@/shared/interfaces/IColor';
 
 

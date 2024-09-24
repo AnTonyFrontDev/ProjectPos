@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { Descriptions } from 'antd';
-import { getProductById, RemoveProduct } from '@/shared/Api/Products/ProductApi';
+import { getProductById, RemoveProduct } from '@/shared/Api/ProductApi';
 import { AppIcon } from '../../../components/ui/AppIcon';
 import ProductColorAdd from './ProductColorAdd';
 import ProductSizeAdd from './ProductSizeAdd';

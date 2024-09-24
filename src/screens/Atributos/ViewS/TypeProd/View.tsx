@@ -5,7 +5,7 @@ import ApiTable from '@/components/Generics/Tabla/apiTable';
 import SearchFilter from '@/shared/SearchFilter';
 
 import { typeProdTable } from "@/components/Generics/Tabla/tData";
-import { GetTypesPaginated, RemoveTypeProd } from "@/shared/Api/Products/TypeProd/TypeProduct";
+import { GetTypesPaginated, RemoveTypeProd } from "@/shared/Api/TypeProduct";
 import G_Options from "@/components/Generics/gOptions";
 import GenericPagination from '@/components/PaginationComponents/GenericPagination';
 

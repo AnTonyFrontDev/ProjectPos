@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Descriptions } from 'antd';
-import { getPreOrderById, RemovePreOrder } from '@/shared/Api/PreOrder/PreOrderApi';
+import { getPreOrderById, RemovePreOrder } from '@/shared/Api/PreOrderApi';
 import SearchFilter from '@/shared/SearchFilter';
 import { Link } from 'react-router-dom';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import Print from './PreOrderPrint';
 import DeleteButton from '@/components/Generics/Modal/DeleteModal';
 import G_Options from '@/components/Generics/gOptions';
-import { RemovePreOrderProduct } from '@/shared/Api/PreOrder/PreOrderProductApi';
+import { RemovePreOrderProduct } from '@/shared/Api/PreOrderProductApi';
 import ApiTable from '@/components/Generics/Tabla/apiTable';
 import { IBaseModel } from '@/shared/interfaces/IBaseModel';
 

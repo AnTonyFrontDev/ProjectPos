@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { getColors } from '@/shared/Api/Color/ColorApi';
-import { RemoveProductColor, SaveProductColor, getProductColor } from '@/shared/Api/Products/ProductColor/ProductColor';
+import { getColors } from '@/shared/Api/ColorApi';
+import { RemoveProductColor, SaveProductColor, getProductColor } from '@/shared/Api/ProductColor';
 import Select from 'react-select';
 import showAlert from '@/util/antd/alert';
 import { handleErrorNotification, handleSuccessNotification, fetchOptions } from '@/util/util';

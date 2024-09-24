@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Table } from 'antd';
-import { getPreOrderById, GetPreOrderInprogressById } from '@/shared/Api/PreOrder/PreOrderApi';
+import { getPreOrderById, GetPreOrderInprogressById } from '@/shared/Api/PreOrderApi';
 import Order from '../../Order/pages/Order';
 import { IClient } from '@/shared/interfaces/IClient';
 

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ClientPhoneDto } from '@/shared/interfaces/IClientPhone';
 import { ClientUpdateDto, ClientPostDto, IClient } from '@/shared/interfaces/IClient';
-import { saveClient, UpdateClient } from '@/shared/Api/Customers/CustomersApi';
+import { saveClient, UpdateClient } from '@/shared/Api/CustomersApi';
 import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';
 
 export const useClientForm = () => {

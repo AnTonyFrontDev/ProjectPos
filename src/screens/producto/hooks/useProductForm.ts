@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';
 import { IOptionSelect } from '@/components/FormularioV4/Config/interface';
-import { SaveProduct, UpdateProduct } from '@/shared/Api/Products/ProductApi';
-import { getTypes } from '@/shared/Api/Products/TypeProd/TypeProduct';
+import { SaveProduct, UpdateProduct } from '@/shared/Api/ProductApi';
+import { getTypes } from '@/shared/Api/TypeProduct';
 import { IProduct, ProductDtoPost, ProductUpdateDto } from '@/shared/interfaces/IProduct';
 import showGenericNotification from '@/util/antd/notification';
 

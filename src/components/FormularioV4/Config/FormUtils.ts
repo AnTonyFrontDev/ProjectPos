@@ -1,8 +1,8 @@
 import { IOption } from "./interface"
 import { getProducts, getTypes } from '@/shared/Api/ProductsApi';
-import { getColors, getSizes } from '@/shared/Api/InventoryApi';
-// FormUtils.ts
 import { useState, useEffect } from 'react';
+import { getColors } from "@/shared/Api/ColorApi";
+import { getSizes } from "@/shared/Api/SizeApi";
 export type OptionDataTypes = 'colors' | 'products' | 'sizes' | 'types';
 
 export type OptionDataObject = {

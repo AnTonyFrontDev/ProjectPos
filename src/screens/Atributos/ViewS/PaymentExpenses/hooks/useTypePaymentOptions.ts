@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getPaymentTypes } from '@/shared/Api/Payment/PaymentType/PaymentTypeApi';
+import { getPaymentTypes } from '@/shared/Api/PaymentTypeApi';
 import { IPaymentTypeColumns } from '@/shared/interfaces/payment/paymentType/IPaymentTypeColums';
 
 const useTypePaymentOptions = () => {

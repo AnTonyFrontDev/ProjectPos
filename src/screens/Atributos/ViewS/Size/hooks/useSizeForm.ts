@@ -1,6 +1,6 @@
 // useSizeForm.ts
 import { useState } from 'react';
-import { SaveSize, UpdateSize } from '@/shared/Api/Size/SizeApi';
+import { SaveSize, UpdateSize } from '@/shared/Api/SizeApi';
 import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';
 import { SizePostDto, ISize, SizeUpdateDto } from '@/shared/interfaces/ISize';
 

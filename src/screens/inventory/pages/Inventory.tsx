@@ -3,7 +3,7 @@ import BreadcrumbData from "@/components/ui/Breadcrumb"
 import ApiTable from '@/components/Generics/Tabla/apiTable'
 import SearchFilter from '@/shared/SearchFilter';
 import { useState } from 'react'
-import { GetInventoryPaginated } from "@/shared/Api/InventoryApi";
+import { GetInventoryPaginated } from "@/shared/Api/InventoryApp";
 import { inventoryTable } from "@/components/Generics/Tabla/tData";
 import { useNavigate } from "react-router-dom";
 import GenericPagination from "../../../components/PaginationComponents/GenericPagination";

@@ -3,7 +3,7 @@ import { Descriptions, Modal, Table } from 'antd';
 // import ButtonModal from '@/components/Generics/Modal/ButtonModal';
 // import ViewForm from '@/components/FormularioV4/viewForm';
 import { IBuyInventoryGet } from '@/shared/interfaces/IBuyInventory';
-import { getBuyById, RemoveBuy } from '@/shared/Api/BuyInventory/BuyApi';
+import { getBuyById, RemoveBuy } from '@/shared/Api/BuyApi';
 import { BuyDetailTable } from '@/components/Generics/Tabla/tData';
 import BackButton from '@/components/Generics/BackButton';
 

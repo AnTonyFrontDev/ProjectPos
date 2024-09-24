@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { cancelOrder, getOrdersPaginated } from '@/shared/Api/Order/OrderApi';
+import { cancelOrder, getOrdersPaginated } from '@/shared/Api/OrderApi';
 import SearchFilter from '@/shared/SearchFilter';
 import BreadcrumbData from "@/components/ui/Breadcrumb";
 import { orderTable } from "@/components/Generics/Tabla/tData";

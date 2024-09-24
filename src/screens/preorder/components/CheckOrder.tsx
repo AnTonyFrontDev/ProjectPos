@@ -1,4 +1,4 @@
-// import { CheckOrder as apiCheckOrder } from '@/shared/Api/Order/OrderApi';
+// import { CheckOrder as apiCheckOrder } from '@/shared/Api/OrderApi';
 // import { getPreOrderById } from '@/shared/Api/PreOrder/PreOrderApi';
 // import { useState } from 'react';
 // // import Order from '../../Order/pages/Order';

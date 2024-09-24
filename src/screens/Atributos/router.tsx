@@ -12,6 +12,7 @@ const PaymentType = lazy(() => import('./pages/PaymentType'));
 const TypeProd = lazy(() => import('./pages/TypeProd'));
 const CategorySize = lazy(() => import('./pages/CategorySize'));
 const Expenses = lazy(() => import('./pages/Expenses'));
+const ExpensesBuy = lazy(() => import('./pages/ExpensesBuy'));
 // const PaymentExpenses = lazy(() => import('./pages/PaymentExpenses'));
 
 const PayableAccounts = lazy(() => import('./pages/PayableAccounts'));
@@ -126,6 +127,14 @@ const router: RouteObject[] = [
     element: (
         <Suspense fallback={<div>Loading...</div>}>
           <Expenses />
+        </Suspense>
+    ),
+  },
+  {
+    path: '/atributos/ExpensesBuy',
+    element: (
+        <Suspense fallback={<div>Loading...</div>}>
+          <ExpensesBuy/>
         </Suspense>
     ),
   },

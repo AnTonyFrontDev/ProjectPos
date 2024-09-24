@@ -5,7 +5,7 @@ import SearchFilter from '@/shared/SearchFilter';
 import { useState } from 'react';
 
 import { banksTable } from "@/components/Generics/Tabla/tData";
-import { GetBanksPaginated, RemoveBank } from "@/shared/Api/Bank/BankApi";
+import { GetBanksPaginated, RemoveBank } from "@/shared/Api/BankApi";
 import G_Options from "@/components/Generics/gOptions";
 import GenericPagination from "@/components/PaginationComponents/GenericPagination";
 

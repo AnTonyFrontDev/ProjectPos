@@ -7,7 +7,7 @@ import { useState } from 'react'
 import { buyInventoryTable } from "@/components/Generics/Tabla/tData";
 import G_Options from "@/components/Generics/gOptions";
 import GenericPagination from "@/components/PaginationComponents/GenericPagination";
-import { GetBuyPaginated } from "@/shared/Api/BuyInventory/BuyApi";
+import { GetBuyPaginated } from "@/shared/Api/BuyApi";
 import { useNavigate } from "react-router-dom";
 import BackButton from "@/components/Generics/BackButton";
 
