@@ -5,7 +5,7 @@ import ApiTable from '@/components/Generics/Tabla/apiTable';
 import SearchFilter from '@/shared/SearchFilter';
 
 import { categorySizeTable } from '@/components/Generics/Tabla/tData';
-import { RemoveCategorySize, GetCategorySizesPaginated } from '@/shared/Api/CategorySize/CategorySizeApi';
+import { RemoveCategorySize, GetCategorySizesPaginated } from '@/shared/Api/CategorySizeApi';
 import G_Options from '@/components/Generics/gOptions';
 import GenericPagination from '@/components/PaginationComponents/GenericPagination';
 

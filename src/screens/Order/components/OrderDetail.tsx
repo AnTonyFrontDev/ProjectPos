@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { DetalleProps as DetalleOrderProps } from '../../../shared/interfaces/I_inventario';
-import { cancelOrder, completeOrder, getOrderById } from '@/shared/Api/Order/OrderApi';
+import { cancelOrder, completeOrder, getOrderById } from '@/shared/Api/OrderApi';
 import { Descriptions, Modal, Table } from 'antd';
 import SearchFilter from '@/shared/SearchFilter';
 import Print from './OrderPrint';
 import { PDFDownloadLink } from '@react-pdf/renderer';
+import { IBaseModel } from '@/shared/interfaces/IBaseModel';
 // const { Panel } = Collapse;
 
-const OrderDetail: React.FC<DetalleOrderProps> = ({ Id: orderId }) => {
+const OrderDetail: React.FC<IBaseModel> = ({ id: orderId }) => {
   const [orderDetail, setOrderDetail] = useState<any>(null);
   const [filteredItems, setFilteredItems] = useState<any[]>(['']);
   const [filterColumn, setFilterColumn] = useState<string>('');
@@ -15,6 +15,7 @@ const OrderDetail: React.FC<DetalleOrderProps> = ({ Id: orderId }) => {
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!orderId) return;
       try {
         const orderData = await getOrderById(orderId);
         setOrderDetail(orderData.data[0]); // Obtén los detalles de la orden

@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Descriptions, Table } from 'antd';
-import { DetalleProps as DetalleOrderProps } from '@/shared/interfaces/I_inventario';
-import { getNoteCreditId } from '@/shared/Api/NoteCredit/NoteCreditApi';
+import { getNoteCreditId } from '@/shared/Api/NoteCreditApi';
+import { IBaseModel } from '@/shared/interfaces/IBaseModel';
 
-const NoteCreditDetail: React.FC<DetalleOrderProps> = ({ Id: notecreditId }) => {
+const NoteCreditDetail: React.FC<IBaseModel> = ({ id: notecreditId }) => {
   const [orderDetail, setOrderDetail] = useState<any>(null);
   const [client, setClient] = useState<any>(null);
   const [payments, setPayments] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!notecreditId) return;
       try {
         const orderData = await getNoteCreditId(notecreditId);
         setOrderDetail(orderData.data);

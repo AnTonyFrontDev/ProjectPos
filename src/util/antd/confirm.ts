@@ -3,8 +3,8 @@ import { Modal } from "antd";
 interface ConfirmOptions {
     title: string;
     content: string;
-    onOk?: () => void; // Callback para cuando se confirma la acción
-    onCancel?: () => void; // Callback para cuando se cancela la acción
+    onOk?: () => void; 
+    onCancel?: () => void; 
 }
 
 const showConfirm = ({ title, content, onOk, onCancel }: ConfirmOptions) => {

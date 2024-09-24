@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { IClientGet } from '../../../shared/interfaces/Client/IClientGet';
-import { getClients } from '@/shared/Api/Customers/CustomersApi';
+import { IClient } from '@/shared/interfaces/IClient';
+import { getClients } from '@/shared/Api/CustomersApi';
 
 const useClientOptions = () => {
-    const [clientOptions, setClientOptions] = useState<IClientGet[]>([]);
+    const [clientOptions, setClientOptions] = useState<IClient[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<Error | null>(null);
 
@@ -11,7 +11,7 @@ const useClientOptions = () => {
         const fetchClients = async () => {
             setIsLoading(true);
             try {
-                const clients: IClientGet[] = await getClients();
+                const clients: IClient[] = await getClients();
                 setClientOptions(clients);
             } catch (error) {
                 setError(error instanceof Error ? error : new Error('An error occurred'));

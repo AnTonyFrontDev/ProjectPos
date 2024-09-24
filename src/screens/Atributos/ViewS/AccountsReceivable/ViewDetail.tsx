@@ -14,7 +14,7 @@ const AReceivableDetail = () => {
 
   return (
     <div>
-      <Detail Id={numericAcccountId as number} />
+      <Detail id={numericAcccountId as number} />
     </div>
   );
 };

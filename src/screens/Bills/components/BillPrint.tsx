@@ -10,7 +10,7 @@ import {
 import { FormatCurrency } from '@/shared/Common/FormatCurrency';
 import pdfStyles from '@/shared/Common/stylesConst/PrintStyles';
 import { LOGORORAIMA } from '@/shared/constants/UrlPictures';
-import { ISaleData } from '@/shared/interfaces/Sale/ISaleDetail';
+import { ISaleData } from '@/shared/interfaces/ISale';
 
 
 const BillPrint = ({ Data }: { Data: ISaleData }) => {
@@ -32,15 +32,15 @@ const BillPrint = ({ Data }: { Data: ISaleData }) => {
             <Text style={pdfStyles.sectionTitle}>Información del Cliente</Text>
             <View style={pdfStyles.row}>
               <Text style={pdfStyles.label}>Nombre:</Text>
-              <Text style={pdfStyles.value}>{`${client.f_name} ${client.f_surname} ${client.l_surname}`}</Text>
+              <Text style={pdfStyles.value}>{`${client?.f_name} ${client?.f_surname} ${client?.l_surname}`}</Text>
             </View>
             <View style={pdfStyles.row}>
               <Text style={pdfStyles.label}>RNC:</Text>
-              <Text style={pdfStyles.value}>{client.rnc}</Text>
+              <Text style={pdfStyles.value}>{client?.rnc}</Text>
             </View>
             <View style={pdfStyles.row}>
               <Text style={pdfStyles.label}>DNI:</Text>
-              <Text style={pdfStyles.value}>{client.dni}</Text>
+              <Text style={pdfStyles.value}>{client?.dni}</Text>
             </View>
           </View>
 
@@ -57,11 +57,11 @@ const BillPrint = ({ Data }: { Data: ISaleData }) => {
             </View>
             <View style={pdfStyles.row}>
               <Text style={pdfStyles.label}>ITBIS:</Text>
-              <Text style={pdfStyles.value}>{FormatCurrency(itbis)}</Text>
+              <Text style={pdfStyles.value}>{FormatCurrency(itbis||0)}</Text>
             </View>
             <View style={pdfStyles.row}>
               <Text style={pdfStyles.label}>Total a Pagar:</Text>
-              <Text style={pdfStyles.value}>{FormatCurrency(amount)}</Text>
+              <Text style={pdfStyles.value}>{FormatCurrency(amount || 0)}</Text>
             </View>
           </View>
         </View>
@@ -78,7 +78,7 @@ const BillPrint = ({ Data }: { Data: ISaleData }) => {
             <Text style={pdfStyles.tableHeaderCell}>Precio</Text>
             <Text style={pdfStyles.tableHeaderCell}>Precio Total</Text>
           </View>
-          {preOrderProducts.map((product) => (
+          {preOrderProducts?.map((product) => (
             <View key={product.id} style={pdfStyles.tableRow}>
               <Text style={pdfStyles.tableBodyCell}>{product.product.id}</Text>
               <Text style={pdfStyles.tableBodyCell}>{product.product.namE_PRODUCT}</Text>

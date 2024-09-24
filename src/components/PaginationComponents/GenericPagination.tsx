@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import IPagination from '@/shared/interfaces/Pagination/IPagination';
+import IPagination from '@/shared/interfaces/IPagination';
 import ButtonsPagination from '@/components/PaginationComponents/ButtonsPagination';
 
 interface IGenericPagination {

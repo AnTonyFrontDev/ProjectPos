@@ -1,5 +1,5 @@
-// TuComponente.tsx
-
+// FormClientUpdate.tsx
+import { ADD_TEXT, DNI_TEXT, FIRST_NAME_TEXT, FIRST_SURNAME_TEXT, MIDDLE_NAME_TEXT, PHONE_TEXT, PHONETYPE_TEXT, RNC_TEXT, SECOND_SURNAME_TEXT, SEND_TEXT } from "@/shared/constants/Labels";
 import { useClientForm } from "../hooks/useClientForm";
 
 const ClientForm = () => {
@@ -9,7 +9,7 @@ const ClientForm = () => {
         <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-8">
             {/* Campos del formulario cliente */}
             <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">First Name</label>
+                <label className="block text-sm font-medium text-gray-600">{FIRST_NAME_TEXT}</label>
                 <input
                     type="text"
                     name="f_name"
@@ -20,7 +20,7 @@ const ClientForm = () => {
             </div>
 
             <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">Last Name</label>
+                <label className="block text-sm font-medium text-gray-600">{MIDDLE_NAME_TEXT}</label>
                 <input
                     type="text"
                     name="l_name"
@@ -31,7 +31,7 @@ const ClientForm = () => {
             </div>
 
             <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">First Surname</label>
+                <label className="block text-sm font-medium text-gray-600">{FIRST_SURNAME_TEXT}</label>
                 <input
                     type="text"
                     name="f_surname"
@@ -42,7 +42,7 @@ const ClientForm = () => {
             </div>
 
             <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">Last Surname</label>
+                <label className="block text-sm font-medium text-gray-600">{SECOND_SURNAME_TEXT}</label>
                 <input
                     type="text"
                     name="l_surname"
@@ -53,7 +53,7 @@ const ClientForm = () => {
             </div>
 
             <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">RNC</label>
+                <label className="block text-sm font-medium text-gray-600">{RNC_TEXT}</label>
                 <input
                     type="text"
                     name="rnc"
@@ -64,7 +64,7 @@ const ClientForm = () => {
             </div>
 
             <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-600">DNI</label>
+                <label className="block text-sm font-medium text-gray-600">{DNI_TEXT}</label>
                 <input
                     type="text"
                     name="dni"
@@ -75,9 +75,9 @@ const ClientForm = () => {
             </div>
 
             {/* Sección de teléfonos */}
-            {formData.phonesClient.map((phone, index) => (
+            {formData.phonesClient?.map((phone, index) => (
                 <div className="mb-4" key={index}>
-                    <label className="text-sm font-medium text-gray-600">Phone Type</label>
+                    <label className="text-sm font-medium text-gray-600">{PHONETYPE_TEXT}</label>
                     <input
                         type="text"
                         name={`type-${index}`}
@@ -86,7 +86,7 @@ const ClientForm = () => {
                         className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                     />
 
-                    <label className="block text-sm font-medium text-gray-600">Phone Number</label>
+                    <label className="block text-sm font-medium text-gray-600">{PHONE_TEXT}</label>
                     <input
                         type="text"
                         name={`number-${index}`}
@@ -97,14 +97,12 @@ const ClientForm = () => {
                 </div>
             ))}
 
-            {/* Botón para agregar más teléfonos */}
             <button type="button" onClick={addPhone} className="bg-gray-300 mx-2 text-gray-700 p-2 rounded-md mb-4">
-                Add Phone
+                {ADD_TEXT} {PHONE_TEXT}
             </button>
 
-            {/* Botón de envío */}
             <button type="submit" className="bg-blue-500 text-white p-2 rounded-md">
-                Submit
+                {SEND_TEXT}
             </button>
         </form>
     );

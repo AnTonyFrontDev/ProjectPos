@@ -1,49 +1,77 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Descriptions } from 'antd';
-// import { getProductById } from '@/shared/Api/Products/ProductsApi';
-import { DetalleProps as DetalleProductoProps } from '../../../shared/interfaces/I_inventario';
-import { getProductById, RemoveProduct } from '@/shared/Api/Products/ProductApi';
+import { getProductById, RemoveProduct } from '@/shared/Api/ProductApi';
 import { AppIcon } from '../../../components/ui/AppIcon';
 import ProductColorAdd from './ProductColorAdd';
 import ProductSizeAdd from './ProductSizeAdd';
 import ButtonModal from '@/components/Generics/Modal/ButtonModal';
 import ViewForm from '@/components/FormularioV4/viewForm';
-import { Modal } from 'antd';
-import { ProductRemoveDto } from '@/shared/interfaces/Product/IProductRemove';
+import { ProductRemoveDto } from '@/shared/interfaces/IProduct';
 import showConfirm from '@/util/antd/confirm';
 import showGenericNotification from '@/util/antd/notification';
+import showAlert from '@/util/antd/alert'; // Alert utility
+import BackButton from '@/components/Generics/BackButton';
 
-const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
+const DetalleProducto: React.FC<{ id: number }> = ({ id: productId }) => {
   const [detalleProducto, setDetalleProducto] = useState<any>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchProductDetails = async () => {
+      if (!productId) return;
       try {
-        // const productIdNumber = Number(productId);
         const productData = await getProductById(productId);
         setDetalleProducto(productData);
-        console.log(productData);
-
       } catch (error) {
         console.error('Error al obtener detalle del producto:', error);
+        showGenericNotification({ isSuccess: false, title: 'Error', message: 'Error al obtener los detalles del producto.' });
       }
     };
 
-    fetchData();
+    fetchProductDetails();
   }, [productId]);
 
-  if (!detalleProducto) {
+  // Utility function to refresh specific product data dynamically (e.g., colors, sizes)
+  const fetchProductData = async (type: 'colorsAsociated' | 'sizesAsociated') => {
+    if (!productId) return;
+    try {
+      const productData = await getProductById(productId);
+      setDetalleProducto((prev: any) => ({
+        ...prev,
+        [type]: productData[type], // Dynamically update the specific field
+      }));
+    } catch (error) {
+      console.error(`Error al actualizar ${type} del producto:`, error);
+      showGenericNotification({ isSuccess: false, title: 'Error', message: `Error al actualizar ${type}.` });
+    }
+  };
+
+  const fetchProductColors = () => fetchProductData('colorsAsociated');
+  const fetchProductSizes = () => fetchProductData('sizesAsociated');
+
+  const productDetails = useMemo(() => {
+    if (!detalleProducto) return null;
+
+    const { name_prod, description, sale_price, type, colorsAsociated, sizesAsociated } = detalleProducto;
+
+    return {
+      name_prod,
+      description,
+      sale_price,
+      type,
+      colorsAsociated,
+      sizesAsociated,
+    };
+  }, [detalleProducto]);
+
+  if (!productDetails) {
     return <div>Cargando...</div>;
   }
 
-
-
-  const { name_prod, description, sale_price, type, colorsAsociated, sizesAsociated } = detalleProducto;
+  const { name_prod, description, sale_price, type, colorsAsociated, sizesAsociated } = productDetails;
 
   const handleDelete = async () => {
     try {
       const productRemoveData = new ProductRemoveDto({ id: Number(productId) });
-      console.log(productRemoveData)
       await RemoveProduct(productRemoveData)
         .then(() => {
           showGenericNotification({
@@ -53,10 +81,10 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
           });
           setTimeout(() => {
             window.location.href = '/productos';
-          }, 1000); // Esperar 2 segundos antes de recargar
-        })
+          }, 1000);
+        });
     } catch (error) {
-      Modal.error({ content: 'Error al eliminar el producto' });
+      showAlert({ title: 'Error', content: 'Error al eliminar el producto.' });
     }
   };
 
@@ -64,29 +92,28 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
     showConfirm({
       title: 'Confirmar eliminación',
       content: '¿Estás seguro de que deseas eliminar este producto?',
-      // Callback para cuando se confirma la acción
-      onOk: () => {
-        handleDelete(); // Llamada a la función handleDelete
-      },
-      // Callback para cuando se cancela la acción
+      onOk: () => handleDelete(),
       onCancel: () => {
         showGenericNotification({
           isSuccess: true,
-          title: 'Éxito',
-          message: 'Cancelado.'
+          title: 'Cancelado',
+          message: 'Operación cancelada.',
         });
-        // Aquí puedes agregar lógica adicional si es necesario
       },
     });
   };
 
   return (
-    <div className="my-8">
-      <h1 className="text-3xl font-bold mb-4">{name_prod}</h1>
-      <Descriptions title='Detalles del Producto' className="mb-4">
+    <div className="mt-2 mb-8">
+      <div className="flex items-center space-x-4 mb-4">
+        <BackButton />
+        <h2 className="text-2xl font-bold text-gray-800">
+          {name_prod}
+        </h2>
+      </div>
+      <Descriptions title={`Detalles del Producto numero: ${productId}`} className="mb-4">
         <Descriptions.Item label="Descripción">{description}</Descriptions.Item>
         <Descriptions.Item label="Precio de Venta">{sale_price}</Descriptions.Item>
-        {/* Puedes mostrar detalles adicionales según tus necesidades */}
         <Descriptions.Item label="Tipo">{type}</Descriptions.Item>
 
         {colorsAsociated && (
@@ -98,13 +125,13 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
                     type="colors"
                     style={{ color: `${color.codE_COLOR}`, cursor: 'pointer' }}
                     width={28}
-                  // onClick={() => console.log(`Color clicked: ${color.colorname}`)}
                   />
                 </div>
               ))}
             </div>
           </Descriptions.Item>
         )}
+
         {sizesAsociated && (
           <Descriptions.Item label="Tallas Disponibles">
             <div className='flex mx-3'>
@@ -117,15 +144,18 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
           </Descriptions.Item>
         )}
       </Descriptions>
-      <ProductColorAdd productId={productId} />
 
-      <ProductSizeAdd productId={productId} />
+      {/* Pass callbacks to refresh data when colors/sizes are updated */}
+      <ProductColorAdd
+        productId={productId}
+        onProductColorChange={fetchProductColors}
+      />
+
+      <ProductSizeAdd productId={productId}
+        onProductSizeChange={fetchProductSizes}
+      />
 
       <div className="flex mt-4">
-        {/* Botón para editar */}
-        {/* <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-4 rounded">
-          Editar
-        </button> */}
         <ButtonModal
           buttonText="Editar"
           modalTitle=""
@@ -133,8 +163,6 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
           size={15}
           modalContent={<ViewForm usarForm="Product" formData={detalleProducto} isUpdate={true} updateData={detalleProducto} />}
         />
-        {/* Botón para eliminar */}
-
         <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
           onClick={handleConfirmDelete}>
           Eliminar

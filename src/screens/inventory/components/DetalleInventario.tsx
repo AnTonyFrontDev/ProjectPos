@@ -2,11 +2,11 @@
 import React, { useEffect, useState } from 'react';
 import { Descriptions, Table } from 'antd';
 import { getInventoryById } from '@/shared/Api/ProductsApi';
-import { DetalleProps as DetalleProductoProps } from '@/shared/interfaces/I_inventario';
 import { AppIcon } from '../../../components/ui/AppIcon';
+import { IBaseModel } from '@/shared/interfaces/IBaseModel';
 
 
-const DetalleInventario: React.FC<DetalleProductoProps> = ({ Id: productId }) => {
+const DetalleInventario: React.FC<IBaseModel> = ({ id: productId }) => {
   const [detalleProducto, setDetalleProducto] = useState<any>(null);
 
   useEffect(() => {

@@ -5,7 +5,7 @@ import SearchFilter from '@/shared/SearchFilter';
 import { useState } from 'react';
 import { creditNoteTable } from "@/components/Generics/Tabla/tData";
 import { useNavigate } from "react-router-dom";
-import { getNoteCredits } from "@/shared/Api/NoteCredit/NoteCreditApi";
+import { getNoteCredits } from "@/shared/Api/NoteCreditApi";
 
 const View = () => {
   const routes = [

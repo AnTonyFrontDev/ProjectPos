@@ -5,7 +5,7 @@ import SearchFilter from '@/shared/SearchFilter';
 import { useEffect, useState } from 'react';
 
 import { ReceivableTable } from "@/components/Generics/Tabla/tData";
-import { GetAccountsReceivable } from "@/shared/Api/PreOrder/PreOrderApi";
+import { GetAccountsReceivable } from "@/shared/Api/PreOrderApi";
 import { useNavigate } from "react-router-dom";
 
 const View = () => {

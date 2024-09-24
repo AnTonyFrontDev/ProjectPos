@@ -5,7 +5,7 @@ import ApiTable from '@/components/Generics/Tabla/apiTable';
 import SearchFilter from '@/shared/SearchFilter';
 
 import { paymentTypeTable } from "@/components/Generics/Tabla/tData";
-import { GetPaymentTypesPaginated, RemovePaymentType } from '@/shared/Api/Payment/PaymentType/PaymentTypeApi';
+import { GetPaymentTypesPaginated, RemovePaymentType } from '@/shared/Api/PaymentTypeApi';
 import G_Options from '@/components/Generics/gOptions';
 
 import GenericPagination from '@/components/PaginationComponents/GenericPagination';

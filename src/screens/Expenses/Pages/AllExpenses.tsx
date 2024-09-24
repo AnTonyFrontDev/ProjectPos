@@ -5,7 +5,7 @@ import SearchFilter from '@/shared/SearchFilter';
 import { useEffect, useState } from 'react'
 
 import { customersTable } from "@/components/Generics/Tabla/tData";
-import { getClients } from "@/shared/Api/Customers/CustomersApi";
+import { getClients } from "@/shared/Api/CustomersApi";
 import { useNavigate} from 'react-router-dom';
 import G_Options from "@/components/Generics/gOptions";
 

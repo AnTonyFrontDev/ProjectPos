@@ -6,8 +6,7 @@ const NewBill = () => {
     const { preOrderId } = useParams<{ preOrderId : any}>();
     return (
       <div>
-        <NewBillComponents Id={preOrderId} />
-       
+        <NewBillComponents id={preOrderId} />
       </div>
     );
   };

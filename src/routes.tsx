@@ -10,7 +10,7 @@ import customersRouter from "./screens/cliente/router";
 import productRouter from "./screens/producto/router";
 import preOrderRouter from "./screens/preorder/router"
 import AtributosRouter from './screens/Atributos/router'
-import Order2Router from "./screens/Order/router";
+import OrderRouter from "./screens/Order/router";
 import ReportRouter from "./screens/report/router";
 import BillingRouter from "./screens/Bills/router";
 import TestingRoutes from "./screens/TestPagination/Router";
@@ -56,7 +56,7 @@ export const privateRoutes: RouteObject[] = [
   {
     path:"/Order",
     element:<MainLayout/>,
-    children: [Order2Router].flat()
+    children: [OrderRouter].flat()
   },
   {
     path:"/billing",

@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';
-import { BankAccountDto, IBankAccountPost } from '@/shared/interfaces/BankAccount/IBankAccountPost';
-import { SaveBankAccount, UpdateBankAccount } from '@/shared/Api/BankAccount/BankAccountApi';
-import { BankAccountUpdateDto, IBankAccountUpdate } from '@/shared/interfaces/BankAccount/IBankAccountUpdate';
+import { BankAccountUpdateDto, BankAccountDto, IBankAccount} from '@/shared/interfaces/IBankAccount';
+import { SaveBankAccount, UpdateBankAccount } from '@/shared/Api/BankAccountApi';
 import { IOptionSelect } from '@/components/FormularioV4/Config/interface';
-import { getBanks } from '@/shared/Api/Bank/BankApi';
+import { getBanks } from '@/shared/Api/BankApi';
 
 export const useBankAccountForm = () => {
-  const [formData, setFormData] = useState<IBankAccountPost>(new BankAccountDto());
+  const [formData, setFormData] = useState<IBankAccount>(new BankAccountDto());
   const [bankOptions, setBankOptions] = useState<IOptionSelect[]>([]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,21 +22,21 @@ export const useBankAccountForm = () => {
 
   const handleUpdate = (e: React.FormEvent) => {
     e.preventDefault();
-    const updateData: IBankAccountUpdate = new BankAccountUpdateDto(formData);
+    const updateData: IBankAccount = new BankAccountUpdateDto(formData);
     console.log('BankAccount Data:', updateData);
     GenericRequest(updateData, UpdateBankAccount, "BankAccount data updated successfully");;
   };
 
   const loadBankOptions = async () => {
     try {
-      const paymentTypes = await getBanks(); // Llama a la función para obtener los tipos de pago
-      const options: IOptionSelect[] = paymentTypes.map((type : any) => ({
-        value: type.id,
-        label: type.bankName, 
+      const banks = await getBanks();  
+      const options: IOptionSelect[] = banks.data.map((bank : any) => ({
+        value: bank.id,
+        label: bank.bankName, 
       }));
       setBankOptions(options);
     } catch (error) {
-      console.error('Error al cargar los tipos de pago:', error);
+      console.error('Error al cargar los tipos banco:', error);
     }
   };
 

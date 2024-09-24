@@ -3,7 +3,7 @@ import { useState } from 'react';
 import BreadcrumbData from "@/components/ui/Breadcrumb";
 import ApiTable from '@/components/Generics/Tabla/apiTable';
 import SearchFilter from '@/shared/SearchFilter';
-import { GetSizesPaginated, RemoveSize } from "@/shared/Api/Size/SizeApi";
+import { GetSizesPaginated, RemoveSize } from "@/shared/Api/SizeApi";
 import { sizeTable } from '@/components/Generics/Tabla/tData';
 import G_Options from '@/components/Generics/gOptions';
 
@@ -48,7 +48,6 @@ const SizeView = () => {
       <div className="mt-10">
         <GenericPagination getApiData={GetSizesPaginated}>
           {(apiData) => (
-
             <ApiTable
               getApiData={() => apiData.data.data}
               columns={sizeTable}
@@ -57,7 +56,7 @@ const SizeView = () => {
               sortDirection={sortDirection}
               notEditable={true}
               showActions={true}
-              deleteProps={{ onRemove: RemoveSize, navigatePath: `/Size` }}
+              deleteProps={{ onRemove: RemoveSize, navigatePath: `/atributos/Size` }}
             />
           )}
         </GenericPagination>

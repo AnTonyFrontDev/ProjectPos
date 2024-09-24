@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table } from 'antd';
-import { IPreOrderGet } from '../../../shared/interfaces/Preorder/IPreOrderGet';
+import { IPreOrderGet } from '../../../shared/interfaces/IPreOrder';
 
 interface InvoiceProps {
   order: IPreOrderGet;
@@ -46,14 +46,14 @@ const Invoice: React.FC<InvoiceProps> = ({ order }) => {
   ];
 
   // Transformamos los datos para la tabla
-  const data = preOrderProducts.map((product) => ({
+  const data = preOrderProducts?.map((product) => ({
     key: product.id,
     productName: product.product.namE_PRODUCT,
     primaryColor: product.colorPrimary.colorname,
     size: product.size.size,
     quantity: product.quantity,
     salePrice: product.product.salE_PRICE,
-    total: product.quantity * product.product.salE_PRICE,
+    total: product.quantity * (product.product.salE_PRICE || 0),
   }));
 
   return (
@@ -74,8 +74,8 @@ const Invoice: React.FC<InvoiceProps> = ({ order }) => {
       <div className="flex justify-end">
         <p className="font-bold">Total: $</p>
         <p className="font-bold">
-          {preOrderProducts.reduce(
-            (total, product) => total + product.quantity * product.product.salE_PRICE,
+          {preOrderProducts?.reduce(
+            (total, product) => total + product.quantity * (product.product.salE_PRICE || 0),
             0
           )}
         </p>

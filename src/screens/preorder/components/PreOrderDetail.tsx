@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Descriptions } from 'antd';
-import { DetalleProps as DetallePreOrdersProps } from '@/shared/interfaces/I_inventario';
-import { getPreOrderById, RemovePreOrder } from '@/shared/Api/PreOrder/PreOrderApi';
+import { getPreOrderById, RemovePreOrder } from '@/shared/Api/PreOrderApi';
 import SearchFilter from '@/shared/SearchFilter';
 import { Link } from 'react-router-dom';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import Print from './PreOrderPrint';
 import DeleteButton from '@/components/Generics/Modal/DeleteModal';
 import G_Options from '@/components/Generics/gOptions';
-import { RemovePreOrderProduct } from '@/shared/Api/PreOrder/PreOrderProductApi';
+import { RemovePreOrderProduct } from '@/shared/Api/PreOrderProductApi';
 import ApiTable from '@/components/Generics/Tabla/apiTable';
+import { IBaseModel } from '@/shared/interfaces/IBaseModel';
 
-const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => {
+const PreOrderDetail: React.FC<IBaseModel> = ({ id: preorderId }) => {
     const [detallePreOrder, setDetallePreOrder] = useState<any>(null);
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [filteredItems, setFilteredItems] = useState<any[]>(['']);
@@ -20,10 +20,11 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
 
     useEffect(() => {
         const fetchData = async () => {
+            if (!preorderId) return;
             try {
                    const preOrderData = await getPreOrderById(preorderId);
-                setDetallePreOrder(preOrderData.data[0]); // Obtén los datos de la preorden
-                setFilteredItems(preOrderData.data[0]?.items.preOrderProducts || []); // Establecer todos los productos como predeterminado
+                setDetallePreOrder(preOrderData.data[0]); 
+                setFilteredItems(preOrderData.data[0]?.items.preOrderProducts || []); 
             } catch (error) {
                 console.error('Error al obtener detalle de la preorden:', error);
             }
@@ -37,7 +38,7 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
         if (!detallePreOrder) return;
         const filtered = detallePreOrder.items.preOrderProducts.filter((item: any) =>
             Object.values(item)
-                .join('') // Concatenar todos los valores del objeto en una cadena
+                .join('') 
                 .toLowerCase()
                 .includes(searchText.toLowerCase())
         );
@@ -88,7 +89,7 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
 
     return (
         <div>
-            <Descriptions title="Información del Cliente">
+            <Descriptions title={`Información del Cliente Numero: ${preorderId}`}>
                 <Descriptions.Item label="Nombre">{`${client[0].f_name} ${client[0].l_name}`}</Descriptions.Item>
                 <Descriptions.Item label="Apellido">{`${client[0].f_surname} ${client[0].l_surname}`}</Descriptions.Item>
                 <Descriptions.Item label="RNC">{client[0].rnc}</Descriptions.Item>
@@ -117,9 +118,9 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
                 <div className="mb-4 ml-4 ">
                     <DeleteButton
                         onRemove={RemovePreOrder}
-                        formData={preorderId}
+                        formData={detallePreOrder}
                         confirmationMessage="¿Estás seguro de que deseas eliminar este Pedido?"
-                        navigatePath={`/preOrder`}
+                        // navigatePath={`/preOrder`}
                     />
                 </div>
             </div>
@@ -136,10 +137,6 @@ const PreOrderDetail: React.FC<DetallePreOrdersProps> = ({ Id: preorderId }) => 
                 />
                 <G_Options buttonText='Agregar Producto' usarForm="PreOrder" />
             </div>
-            {/* <Table
-                columns={columns}
-                dataSource={filteredItems}
-            /> */}
             <div className='my-8'>
 
                 <ApiTable

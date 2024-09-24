@@ -1,19 +1,20 @@
-import { getPreOrderById } from '@/shared/Api/PreOrder/PreOrderApi'
-import { addSale } from '@/shared/Api/Sale/SaleApi';
-import { DetalleProps as NewBillProps } from '@/shared/interfaces/I_inventario';
+import { getPreOrderById } from '@/shared/Api/PreOrderApi'
+import { addSale } from '@/shared/Api/SaleApi';
 import { useEffect, useState } from 'react';
-import { ISalePost } from '@/shared/interfaces/Sale/ISalePost';
+import { ISale } from '@/shared/interfaces/ISale';
 import { Table, Descriptions, Modal, notification } from 'antd';
 import { FormInputsClasses } from '@/shared/Common/stylesConst/cssComponent';
+import { IBaseModel } from '@/shared/interfaces/IBaseModel';
+import BackButton from '@/components/Generics/BackButton';
 
 const { Column } = Table;
 
-const NewBill = ({ Id: preorderId }: NewBillProps) => {
+const NewBill = ({ id: preorderId }: IBaseModel) => {
     const [preOrderData, setPreOrderData] = useState<any | null>(null);
     const [clientData, setClientData] = useState<any | null>(null);
     const [loading, setLoading] = useState(true);
     const [isCodIscEditable, setIsCodIscEditable] = useState(false);
-    const [formData, setFormData] = useState<ISalePost>({
+    const [formData, setFormData] = useState<ISale>({
         fkOrder: preorderId,
         codIsc: null,
         itbis: 1,
@@ -22,6 +23,7 @@ const NewBill = ({ Id: preorderId }: NewBillProps) => {
 
     useEffect(() => {
         const fetchPreOrderData = async () => {
+            if (!preorderId) return;
             try {
                 const data = await getPreOrderById(preorderId);
                 setPreOrderData(data.data[0].items);
@@ -43,12 +45,12 @@ const NewBill = ({ Id: preorderId }: NewBillProps) => {
                 b14: formData.b14?.trim() || null         // If empty string, set to null
             };
             await addSale(processedFormData)
-            .then (() => {
-                notification.success({
-                    message: 'Factura Agregada',
-                    description: 'La factura se ha agregado exitosamente.',
-                })
-            });
+                .then(() => {
+                    notification.success({
+                        message: 'Factura Agregada',
+                        description: 'La factura se ha agregado exitosamente.',
+                    })
+                });
         } catch (error) {
             console.error('Error adding sale:', error);
             notification.error({
@@ -92,7 +94,12 @@ const NewBill = ({ Id: preorderId }: NewBillProps) => {
     // Render the table of the pre-order data
     return (
         <div className="container mx-auto">
-            <h1 className="text-2xl mb-4">Agregar Factura</h1>
+            <div className="flex items-center space-x-4 mb-4">
+                <BackButton />
+                <h2 className="text-2xl font-semibold text-gray-800">
+                    Agregar Factura
+                </h2>
+            </div>
             <div className='my-2'>
                 {clientData && (
                     <Descriptions title="Informacion de Cliente" >

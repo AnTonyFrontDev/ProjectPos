@@ -1,15 +1,19 @@
 // import React from 'react'
+import BackButton from "@/components/Generics/BackButton";
 import { View } from "../ViewS/BankAccount";
 
 const BankAccountView = () => {
   return (
     <div>
-        <div>
-            BankAccount
-        </div>
-        <View/>
+      <div className="flex items-center space-x-4 mb-4">
+        <BackButton />
+        <h2 className="text-2xl font-semibold text-gray-800">
+          Cuenta De Banco
+        </h2>
+      </div>
+      <View />
     </div>
-  )
-}
+  );
+};
 
-export default BankAccountView
+export default BankAccountView;

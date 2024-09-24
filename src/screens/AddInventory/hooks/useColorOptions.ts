@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { getColorByProdId } from '@/shared/Api/Color/ColorApi';
-import { IColorGet } from '@/shared/interfaces/Color/IColorGet';
+import { getColorByProdId } from '@/shared/Api/ColorApi';
+import { IColor } from '@/shared/interfaces/IColor';
 
 
 const useColorOptions = (prodId : number) => {
     // prodId = 1
-    const [colorOptions, setColorOptions] = useState<IColorGet[]>([]);
+    const [colorOptions, setColorOptions] = useState<IColor[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<Error | null>(null);
 
@@ -13,7 +13,7 @@ const useColorOptions = (prodId : number) => {
         const fetchColors = async () => {
             setIsLoading(true);
             try {
-                const colors: IColorGet[] = await getColorByProdId(prodId);
+                const colors: IColor[] = await getColorByProdId(prodId);
                 setColorOptions(colors);
             } catch (error) {
                 setError(error instanceof Error ? error : new Error('An error occurred'));

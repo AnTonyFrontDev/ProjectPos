@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 import { useBankAccountForm } from "../hooks/useBankAccountForm";
 import { FormProps } from '@/components/Generics/Interface/IForms';
-import { BankAccountDto, IBankAccountPost } from "@/shared/interfaces/BankAccount/IBankAccountPost";
+import { BankAccountDto, IBankAccount } from "@/shared/interfaces/IBankAccount";
 import Select from 'react-select';
 import { TableSelectsClasses } from '@/shared/Common/stylesConst/cssComponent';
 
@@ -26,7 +26,7 @@ const BankAccountForm: React.FC<FormProps> = ({ formData: initialFormData, isUpd
         loadBankOptions();
     }, [isUpdate, initialFormData]);
 
-    const handleSetInitialFormData = (initialData: IBankAccountPost) => {
+    const handleSetInitialFormData = (initialData: IBankAccount) => {
         const initialFormData = new BankAccountDto;
         Object.assign(initialFormData, initialData)
         setFormData(initialFormData)

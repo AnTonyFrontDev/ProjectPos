@@ -8,12 +8,12 @@ import useSizeOptions from '@/screens/AddInventory/hooks/useSizeOptions';
 import useColorOptions from '@/screens/AddInventory/hooks/useColorOptions';
 import { InputNumber, notification } from 'antd';
 import { FormInputsClasses, TableSelectsClasses } from '@/shared/Common/stylesConst/cssComponent';
-import { IPreOrderProduct, PreOrderProductDto, UpdatePreOrderProductDto } from '@/shared/interfaces/Preorder/IPreOrderProduct';
-import { addPreOrderProduct, UpdatePreOrderProduct } from '@/shared/Api/PreOrder/PreOrderProductApi';
+import { addPreOrderProduct, UpdatePreOrderProduct } from '@/shared/Api/PreOrderProductApi';
+import { IPreOrderProductSave, ProductsDtoAdd,ProductsDtoUpdate } from '@/shared/interfaces/IPreOrderProduct';
 
 const AddProduct: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }) => {
     const { preorderId } = useParams<{ preorderId: string }>();
-    const [formData, setFormData] = useState<IPreOrderProduct>(new PreOrderProductDto());
+    const [formData, setFormData] = useState<IPreOrderProductSave>(new ProductsDtoAdd());
     const { productOptions } = useProductOptions();
     const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
 
@@ -27,7 +27,7 @@ const AddProduct: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }
     }, [isUpdate, initialFormData]);
 
     const handleSetInitialFormData = (initialData: any) => {
-        const initialFormData = new PreOrderProductDto();
+        const initialFormData = new ProductsDtoAdd();
         initialFormData.id = initialData.id;
         initialFormData.fkProduct = initialData.productId;
         initialFormData.fkSize = initialData.sizeId;
@@ -36,7 +36,7 @@ const AddProduct: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }
         initialFormData.fkColorSecondary = initialData.colorSecondaryId;
         initialFormData.customPrice = initialData.price;
         setFormData(initialFormData);
-        setSelectedProductId(initialData.productId); // Asegurar que selectedProductId también se actualice
+        setSelectedProductId(initialData.productId); 
     };
 
     useEffect(() => {
@@ -59,7 +59,7 @@ const AddProduct: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }
 
         try {
             if (isUpdate) {
-                const dataToSave = new UpdatePreOrderProductDto({
+                const dataToSave = new ProductsDtoUpdate({
                     id: initialFormData.id,
                     user: formData.user,
                     date: new Date().toISOString(),
@@ -68,6 +68,7 @@ const AddProduct: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }
                     quantity: formData.quantity,
                     fkColorPrimary: formData.fkColorPrimary,
                     fkColorSecondary: formData.fkColorSecondary,
+                    customPrice: formData.customPrice,
                     fkPreOrder: parseInt(preorderId ?? '0'),
                 });
                 console.log('dataToSave', dataToSave);
@@ -92,7 +93,7 @@ const AddProduct: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }
                     })
                 });
             }
-            setFormData(new PreOrderProductDto());
+            setFormData(new ProductsDtoAdd());
             // window.location.reload();
         } catch (error) {
             console.error('Error al guardar el producto:', error);
@@ -100,14 +101,14 @@ const AddProduct: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }
         }
     };
 
-    const handleSelectChange = (value: number, fieldName: keyof PreOrderProductDto) => {
+    const handleSelectChange = (value: number, fieldName: keyof ProductsDtoAdd) => {
         setFormData((prevData) => ({ ...prevData, [fieldName]: value }));
         if (fieldName === 'fkProduct') {
             setSelectedProductId(value);
         }
     };
 
-    const handleInputChange = (value: number | null, fieldName: keyof PreOrderProductDto) => {
+    const handleInputChange = (value: number | null, fieldName: keyof ProductsDtoAdd) => {
         setFormData((prevData) => ({ ...prevData, [fieldName]: value ?? 0 }));
     };
 
@@ -121,8 +122,8 @@ const AddProduct: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }
                         <Select
                             className={TableSelectsClasses}
                             options={productOptions.map(product => ({
-                                value: product.id,
-                                label: product.name_prod,
+                                value: product.id || 0,
+                                label: product.name_prod || '',
                             }))}
                             value={{
                                 value: productOptions.find(product => product.id === formData.fkProduct)?.id || 0,
@@ -137,7 +138,7 @@ const AddProduct: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }
                         <Select
                             className={TableSelectsClasses}
                             options={colorOptions.map(color => ({
-                                value: color.id,
+                                value: color.id || 0,
                                 label: `${color.colorname} - ${color.codE_COLOR}`,
                             }))}
                             value={{
@@ -153,7 +154,7 @@ const AddProduct: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }
                         <Select
                             className={TableSelectsClasses}
                             options={sizeOptions.map(size => ({
-                                value: size.id,
+                                value: size.id || 0,
                                 label: `${size.size} - ${size.category}`,
                             }))}
                             value={{

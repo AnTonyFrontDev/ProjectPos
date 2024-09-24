@@ -1,7 +1,7 @@
 import {GetExpensesPaginated} from "@/util/TestPaginationUtils/PaginationController.ts"
 import {useEffect, useState} from "react";
 import {ExpensesUpdateDto} from "@/shared/interfaces/Expenses/IExpensesUpdate.ts";
-import IPagination from "@/shared/interfaces/Pagination/IPagination.ts";
+import IPagination from "@/shared/interfaces/IPagination";
 
 const PaginationParams = () => {
     const [itemsPerPage, setItemsPerPage] = useState(1);

@@ -1,16 +1,15 @@
 import { useState } from 'react';
 import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';
 import { IOptionSelect } from '@/components/FormularioV4/Config/interface';
-import { SaveProduct, UpdateProduct } from '@/shared/Api/Products/ProductApi';
-import { getTypes } from '@/shared/Api/Products/TypeProd/TypeProduct';
-import { IProductPost, ProductDtoPost } from '@/shared/interfaces/Product/IProductPost';
-import { IProductUpdate, ProductUpdateDto } from '@/shared/interfaces/Product/IProductUpdate';
+import { SaveProduct, UpdateProduct } from '@/shared/Api/ProductApi';
+import { getTypes } from '@/shared/Api/TypeProduct';
+import { IProduct, ProductDtoPost, ProductUpdateDto } from '@/shared/interfaces/IProduct';
 import showGenericNotification from '@/util/antd/notification';
 
 
 
 export const useProductForm = () => {
-  const [formData, setFormData] = useState<IProductPost>(new ProductDtoPost());
+  const [formData, setFormData] = useState<IProduct>(new ProductDtoPost());
   const [typeProdOptions, setTypeProdOptions] = useState<IOptionSelect[]>([]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,7 +45,7 @@ export const useProductForm = () => {
 
   const handleUpdate = (e: React.FormEvent) => {
     e.preventDefault();
-    const updateData: IProductUpdate = new ProductUpdateDto(formData);
+    const updateData: IProduct = new ProductUpdateDto(formData);
     // console.log('Product Data:', updateData);
     GenericRequest(updateData, UpdateProduct, "Payment data updated successfully")
     .then(() => {

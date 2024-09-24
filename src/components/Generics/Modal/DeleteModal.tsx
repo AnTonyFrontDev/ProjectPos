@@ -1,41 +1,39 @@
-import { Modal } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import showConfirm from "@/util/antd/confirm";
 
 interface DeleteButtonProps {
-    onRemove: (formData: any) => Promise<void> | undefined;
+    onRemove: (formData: any) => Promise<void>;
     formData: any;
     confirmationMessage: string;
-    navigatePath: string;
+    refreshData?: () => void; 
+    navigatePath?: string;
 }
 
-const DeleteButton: React.FC<DeleteButtonProps> = ({ onRemove, formData, confirmationMessage, navigatePath }) => {
-    const navigate = useNavigate();
-
+const DeleteButton: React.FC<DeleteButtonProps> = ({ onRemove, formData, confirmationMessage, refreshData, navigatePath }) => {
     const handleDelete = async () => {
-        Modal.confirm({
+        showConfirm({
             title: 'Confirmar',
             content: confirmationMessage,
-            okText: 'Sí',
-            okType: 'danger',
-            cancelText: 'No',
             onOk: async () => {
-                try {
-                    await onRemove(formData); // Llama a la función de eliminación
-                    navigate(navigatePath); // Redirige al usuario
-                } catch (error) {
-                    console.error('Error al eliminar el registro', error);
+                if (navigatePath) {
+                    window.location.href = navigatePath; 
+                } else {
+                    try {
+                        await onRemove(formData);
+                        if (refreshData) {
+                            refreshData();  
+                        }
+                    } catch (error) {
+                        console.error('Error al eliminar el registro', error);
+                    }
                 }
             },
         });
     };
 
     return (
-        <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-            onClick={handleDelete}
-        >
+        <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={handleDelete}>
             Eliminar
         </button>
-
     );
 };
 

@@ -2,26 +2,23 @@ import { useEffect } from 'react';
 
 import { useCategorySizeForm } from "../hooks/useCSizeForm";
 import { FormProps } from '@/components/Generics/Interface/IForms';
-import { CategorySizeDto, ICategorySizePost } from '@/shared/interfaces/size/CategorySize/ICategorySizePost';
+import { CategorySizeDto, ICategorySize } from '@/shared/interfaces/ICategorySize';
 
 
-const CategorySizeForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate,
-}) => {
+const CategorySizeForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate }) => {
     const { formData, setFormData, handleInputChange, handleSubmit, handleUpdate } = useCategorySizeForm();
 
     useEffect(() => {
         if (isUpdate && initialFormData) {
             handleSetInitialFormData(initialFormData);
-            console.log(initialFormData);
         }
     }, [isUpdate, initialFormData]);
 
-    const handleSetInitialFormData = (initialData: ICategorySizePost) => {
-        const initialFormData = new CategorySizeDto;
-        Object.assign(initialFormData, initialData)
-        setFormData(initialFormData)
+    const handleSetInitialFormData = (initialData: ICategorySize) => {
+        const initialFormData = new CategorySizeDto();
+        Object.assign(initialFormData, initialData);
+        setFormData(initialFormData);
     };
-
 
     const onSubmitHandler = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -34,7 +31,7 @@ const CategorySizeForm: React.FC<FormProps> = ({ formData: initialFormData, isUp
 
     return (
         <form onSubmit={onSubmitHandler} className="max-w-md mx-auto mt-8">
-            {/* Campos del formulario de CategorySize */}
+            {/* Form Fields */}
             <div className="mb-4">
                 <input
                     type="hidden"
@@ -54,7 +51,7 @@ const CategorySizeForm: React.FC<FormProps> = ({ formData: initialFormData, isUp
                 />
             </div>
 
-            {/* Botón de envío */}
+            {/* Submit Button */}
             <button type="submit" className="bg-blue-500 text-white p-2 rounded-md">
                 {isUpdate ? "Actualizar" : "Guardar"}
             </button>

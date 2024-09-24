@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { getBankAccounts } from '@/shared/Api/BankAccount/BankAccountApi';
-import { IBankAccount } from '@/shared/interfaces/BankAccount/IBankAccountGet';
+import { getBankAccounts } from '@/shared/Api/BankAccountApi';
+import { IBankAccount } from '@/shared/interfaces/IBankAccount';
 
 const useBankAccountOptions = () => {
     const [bankAccountOptions, setBankAccountOptions] = useState<IBankAccount[]>([]);

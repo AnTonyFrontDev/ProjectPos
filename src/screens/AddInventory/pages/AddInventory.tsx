@@ -3,24 +3,27 @@ import React, { useEffect, useState } from 'react';
 import useProductOptions from '../hooks/useProductOptions';
 import useSizeOptions from '../hooks/useSizeOptions';
 import useColorOptions from '../hooks/useColorOptions';
-import { AddBuy } from '@/shared/Api/BuyInventory/BuyApi';
-import { BuyPostDto, IBuyPost, IInventoryDetailDto } from '@/shared/interfaces/BuyInventory/IBuyInvPost';
+import { AddBuy } from '@/shared/Api/BuyApi';
 import { InputNumber } from 'antd';
 import { FormInputsClasses, TableHeadClasses, TableSelectsClasses } from '@/shared/Common/stylesConst/cssComponent';
-import { ISizeGet } from '@/shared/interfaces/size/ISizeGet';
-import { IColorGet } from '@/shared/interfaces/Color/IColorGet';
-
+import { BuyPostDto, IBuyInventoryGet, IInventoryDetail } from '@/shared/interfaces/IBuyInventory';
+import { ISize } from '@/shared/interfaces/ISize';
+import { IColor } from '@/shared/interfaces/IColor';
+import BackButton from '@/components/Generics/BackButton';
+import useSupplierOptions from '../hooks/useSupplierOptions';
+import { AppIcon } from '@/components/ui/AppIcon';
 
 const AddInventory = () => {
-    const [formData, setFormData] = useState<IBuyPost>(new BuyPostDto());
-    const [tableData, setTableData] = useState<IInventoryDetailDto[]>([]);
+    const [formData, setFormData] = useState<IBuyInventoryGet>(new BuyPostDto());
+    const [tableData, setTableData] = useState<IInventoryDetail[]>([]);
     const { productOptions } = useProductOptions();
+    const { supplierOptions } = useSupplierOptions();
 
     const [disabledRows, setDisabledRows] = useState<boolean[]>(Array(tableData.length).fill(true));
     const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
 
-    const [rowSizeOptions, setRowSizeOptions] = useState<{ [key: number]: ISizeGet[] }>({});
-    const [rowColorOptions, setRowColorOptions] = useState<{ [key: number]: IColorGet[] }>({});
+    const [rowSizeOptions, setRowSizeOptions] = useState<{ [key: number]: ISize[] }>({});
+    const [rowColorOptions, setRowColorOptions] = useState<{ [key: number]: IColor[] }>({});
 
     const { sizeOptions } = useSizeOptions(selectedProductId ?? 0);
     const { colorOptions } = useColorOptions(selectedProductId ?? 0);
@@ -48,7 +51,7 @@ const AddInventory = () => {
         }));
     }, [tableData]);
 
-   
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData({
@@ -58,7 +61,7 @@ const AddInventory = () => {
     };
 
     const handleAddRow = () => {
-        const newRow: IInventoryDetailDto = {
+        const newRow: IInventoryDetail = {
             ...new BuyPostDto().inventoryDetailDtoAdd[0],
             fK_BUY_INVENTORY: tableData.length,
         };
@@ -101,7 +104,7 @@ const AddInventory = () => {
     };
 
 
-    const handleSelectChange = (value: number, rowIndex: number, fieldName: keyof IInventoryDetailDto) => {
+    const handleSelectChange = (value: number, rowIndex: number, fieldName: keyof IInventoryDetail) => {
         const updatedTableData = [...tableData];
         updatedTableData[rowIndex][fieldName] = value;
         setTableData(updatedTableData);
@@ -120,7 +123,7 @@ const AddInventory = () => {
     const handleInputChange = (
         e: React.ChangeEvent<HTMLInputElement> | { target: { value: number | null } },
         rowIndex: number,
-        fieldName: keyof IInventoryDetailDto
+        fieldName: keyof IInventoryDetail
     ) => {
         const value = e.target.value;
         const updatedTableData = [...tableData];
@@ -135,32 +138,86 @@ const AddInventory = () => {
         setTableData(updatedTableData);
     };
 
+    const handleClear = () => {
+        setFormData(new BuyPostDto);
+        setTableData([]);
+        setDisabledRows([]);
+    }
+
+    const [isCustomCompany, setIsCustomCompany] = useState(false);
 
     return (
         <div className="container mx-auto">
-            <h1 className="text-2xl font-bold mb-4">Agregar Compra</h1>
-            <div className='flex gap-4'>
-                <div className='flex flex-col'>
-                    <label className='mb-1'>Compañia:</label>
-                    <input type="text" name="company" value={formData.company} onChange={handleChange}
-                        className={FormInputsClasses} />
+            <div className="flex items-center space-x-4 mb-4">
+                <BackButton />
+                <h2 className="text-2xl font-bold text-gray-800">
+                    Agregar Compra
+                </h2>
+            </div>
+
+            <div className='flex gap-4 items-center '>
+                <div className='flex flex-col w-1/3'>
+                    <label>Compañia:</label>
+                    {isCustomCompany ? (
+                        <input
+                            type="text"
+                            name="company"
+                            value={formData.company || ""}
+                            onChange={handleChange}
+                            className={FormInputsClasses}
+                            placeholder="Ingrese la compañía"
+                        />
+                    ) : (
+                        <Select
+                            className=''
+                            options={supplierOptions.map(supplier => ({
+                                value: supplier.nombre || "",
+                                label: `${supplier.nombre} - ${supplier?.rnc || ''}`
+                            }))}
+                            value={{
+                                value: formData.company || "",
+                                label: supplierOptions.find(supplier => supplier.nombre === formData.company)?.nombre || "Seleccione una compañía"
+                            }}
+                            onChange={(selectedOption) => {
+                                setFormData(prevFormData => ({
+                                    ...prevFormData,
+                                    company: selectedOption?.value || ""
+                                }));
+                            }}
+                            isSearchable
+                        />
+                    )}
                 </div>
-                <div className='flex flex-col'>
+                <div className='flex flex-col w-1/8'>
+                    <button
+                        className="mt-6 p-2 border rounded-md hover:bg-gray-200"
+                        onClick={() => setIsCustomCompany(!isCustomCompany)}
+                    >
+                        <AppIcon type="arrowLeft" width={20} />
+                    </button>
+                </div>
+                <div className='flex flex-col w-1/3'>
                     <label>RNC:</label>
                     <input type="text" name="rnc" value={formData.rnc} onChange={handleChange}
                         className={FormInputsClasses} />
                 </div>
-                <div className='flex flex-col'>
+                <div className='flex flex-col w-1/3'>
                     <label>NCF:</label>
                     <input type="text" name="ncf" value={formData.ncf} onChange={handleChange}
                         className={FormInputsClasses} />
                 </div>
-                <div className='flex flex-col'>
+                <div className='flex flex-col w-1/3'>
                     <label>PagoTotal:</label>
                     <input type="number" name="totaL_SALE" min="0.00" value={formData.totaL_SALE} onChange={handleChange}
                         className={FormInputsClasses} disabled />
                 </div>
-                <div className='flex'>
+                <div className='flex w-1/3'>
+                    <button
+                        onClick={handleClear} // function to clear the fields
+                        className="bg-gray-500 hover:bg-gray-700 text-white font-bold mx-2 mt-5 py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    >
+                        Limpiar
+                    </button>
                     <button
                         onClick={handleSave}
                         className="bg-green-500 hover:bg-green-700 text-white font-bold mx-2 mt-5 py-2 px-4 rounded focus:outline-none focus:shadow-outline"
@@ -169,6 +226,7 @@ const AddInventory = () => {
                     </button>
                 </div>
             </div>
+
 
             <table className="min-w-full divide-y divide-gray-200 mt-3">
                 <thead className="bg-gray-50">
@@ -191,8 +249,8 @@ const AddInventory = () => {
                                     <Select
                                         className={TableSelectsClasses}
                                         options={productOptions.map(product => ({
-                                            value: product.id,
-                                            label: product.name_prod
+                                            value: product.id || 0,
+                                            label: product.name_prod || ""
                                         }))}
                                         value={{
                                             value: productOptions.find(product => product.id === row.fK_PRODUCT)?.id || 0,
@@ -208,7 +266,7 @@ const AddInventory = () => {
                                     className={TableSelectsClasses}
                                     isDisabled={disabledRows[index]}
                                     options={(rowColorOptions[index] || []).map(color => ({
-                                        value: color.id,
+                                        value: color.id || 0,
                                         label: `${color.colorname} - ${color.codE_COLOR}`
                                     }))}
                                     value={{
@@ -226,7 +284,7 @@ const AddInventory = () => {
                                         className={TableSelectsClasses}
                                         isDisabled={disabledRows[index]}
                                         options={(rowSizeOptions[index] || []).map(size => ({
-                                            value: size.id,
+                                            value: size.id || 0,
                                             label: size.size + " - " + size.category
                                         }))}
                                         value={{

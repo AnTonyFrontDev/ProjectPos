@@ -1,32 +1,33 @@
 import Select from 'react-select';
 import React, { useEffect, useState } from 'react';
-import { addPreOrder } from '@/shared/Api/PreOrder/PreOrderApi';
-import { IPreOrder, PreOrderPostDto } from '@/shared/interfaces/Preorder/IPreOrder';
-import { IProductsDtoAdd, ProductsDtoAdd } from '@/shared/interfaces/Preorder/ProductToAdd';
+import { addPreOrder } from '@/shared/Api/PreOrderApi';
+import { IPreOrder, PreOrderPostDto } from '@/shared/interfaces/IPreOrder';
 import useProductOptions from '@/screens/AddInventory/hooks/useProductOptions';
 import useSizeOptions from '@/screens/AddInventory/hooks/useSizeOptions';
 import useColorOptions from '@/screens/AddInventory/hooks/useColorOptions';
-import ButtonModal from '@/components/Generics/Modal/ButtonModal';
-import ViewForm from '@/components/FormularioV4/viewForm';
 import useClientOptions from '@/screens/AddInventory/hooks/useClientOptions';
-import { InputNumber, notification } from 'antd';
+import { InputNumber } from 'antd';
 import { FormInputsClasses, TableHeadClasses, TableSelectsClasses } from '@/shared/Common/stylesConst/cssComponent';
-import { ISizeGet } from '@/shared/interfaces/size/ISizeGet';
-import { IColorGet } from '@/shared/interfaces/Color/IColorGet';
+import { ISize } from '@/shared/interfaces/ISize';
+import { IColor } from '@/shared/interfaces/IColor';
+import showGenericNotification from '@/util/antd/notification';
+import showAlert from '@/util/antd/alert';
+import { IPreOrderProductSave, ProductsDtoAdd } from '@/shared/interfaces/IPreOrderProduct';
+import BackButton from '@/components/Generics/BackButton';
 
 
 const PreOrders = () => {
   const [formData, setFormData] = useState<IPreOrder>(new PreOrderPostDto());
 
-  const [tableData, setTableData] = useState<IProductsDtoAdd[]>([]);
+  const [tableData, setTableData] = useState<IPreOrderProductSave[]>([]);
   const { productOptions } = useProductOptions();
   const { clientOptions } = useClientOptions();
 
   const [disabledRows, setDisabledRows] = useState<boolean[]>(Array(tableData.length).fill(true));
   const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
 
-  const [rowSizeOptions, setRowSizeOptions] = useState<{ [key: number]: ISizeGet[] }>({});
-  const [rowColorOptions, setRowColorOptions] = useState<{ [key: number]: IColorGet[] }>({});
+  const [rowSizeOptions, setRowSizeOptions] = useState<{ [key: number]: ISize[] }>({});
+  const [rowColorOptions, setRowColorOptions] = useState<{ [key: number]: IColor[] }>({});
 
   const { sizeOptions } = useSizeOptions(selectedProductId ?? 0);
   const { colorOptions } = useColorOptions(selectedProductId ?? 0);
@@ -47,7 +48,7 @@ const PreOrders = () => {
   }, [sizeOptions, colorOptions, selectedProductId, tableData]);
 
   const handleAddRow = () => {
-    const newRow: IProductsDtoAdd = {
+    const newRow: IPreOrderProductSave = {
       ...new ProductsDtoAdd()
     };
     setTableData([...tableData, newRow]);
@@ -56,44 +57,43 @@ const PreOrders = () => {
 
   const handleSave = async () => {
     if (!formData.fkClient || !tableData.length) {
-      alert('Por favor completa todos los campos.');
+      showAlert({
+        title: 'Error', content: 'Por favor, complete todos los campos.',
+        onOk: () => {
+          return;
+        }
+      });
       return;
     }
-
     try {
       const formDataWithProducts = {
         ...formData,
         productsDtoAdds: tableData,
       };
       await addPreOrder(formDataWithProducts)
-      .then (() => {
-        notification.success({
-            message: 'Pedido Agregado',
-            description: 'El Pedido se ha agregado exitosamente.',
-        })
-      });
+        .then(() => {
+          showGenericNotification({
+            isSuccess: true,
+            title: 'Pedido Agregado',
+            message: 'El Pedido se ha agregado exitosamente.'
+          });
+        });
       // Limpiar el formulario después de guardar
       setFormData(new PreOrderPostDto);
       setTableData([]);
       setDisabledRows([]);
-      // alert('Pedido guardado exitosamente');
     } catch (error) {
       console.error('Error al guardar el pedido:', error);
-      alert('Error al guardar el pedido. Por favor, inténtalo de nuevo.');
+      showGenericNotification({
+        isSuccess: false,
+        title: 'Error addPreOrder',
+        message: 'Error al guardar el pedido. Por favor, inténtalo de nuevo.'
+      });
     }
-    handleTest();
+
   };
 
-  const handleTest = () => {
-    // Añadir los detalles del inventario al formData antes de mostrarlo en la consola
-    const formDataWithDetails = {
-      ...formData,
-      productsDtoAdds: tableData,
-    };
-    console.log(formDataWithDetails);
-  };
-
-  const handleSelectChange = (value: number, rowIndex: number, fieldName: keyof IProductsDtoAdd) => {
+  const handleSelectChange = (value: number, rowIndex: number, fieldName: keyof IPreOrderProductSave) => {
     const updatedTableData = [...tableData];
     updatedTableData[rowIndex][fieldName] = value;
     setTableData(updatedTableData);
@@ -107,13 +107,12 @@ const PreOrders = () => {
     const updatedDisabledRows = [...disabledRows];
     updatedDisabledRows[rowIndex] = false;
     setDisabledRows(updatedDisabledRows);
-    handleTest();
   };
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement> | { target: { value: number | null } },
     rowIndex: number,
-    fieldName: keyof IProductsDtoAdd
+    fieldName: keyof IPreOrderProductSave
   ) => {
     const value = e.target.value;
     const updatedTableData = [...tableData];
@@ -138,14 +137,19 @@ const PreOrders = () => {
 
   return (
     <div className="container mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Agregar Pedido</h1>
+      <div className="flex items-center space-x-4 mb-4">
+        <BackButton />
+        <h2 className="text-2xl font-bold text-gray-800">
+          Agregar Pedido
+        </h2>
+      </div>
       <div className='gap-4 inline-flex w-full'>
         <div className='flex flex-col w-1/4'>
           <label>Cliente:</label>
           <Select
             className={TableSelectsClasses + 'none'}
             options={clientOptions.map(client => ({
-              value: client.id,
+              value: client.id || 0,
               label: `${client.f_name} ${client.l_name} ${client.f_surname} ${client.l_surname}`
             }))}
             value={{
@@ -199,8 +203,8 @@ const PreOrders = () => {
                   <Select
                     className={TableSelectsClasses}
                     options={productOptions.map(product => ({
-                      value: product.id,
-                      label: product.name_prod
+                      value: product.id || 0,
+                      label: product.name_prod || ""
                     }))}
                     value={{
                       value: productOptions.find(product => product.id === row.fkProduct)?.id || 0,
@@ -210,15 +214,13 @@ const PreOrders = () => {
                     isSearchable
                   />
 
-                  <ButtonModal
-                    buttonText=""
+                  {/* <ButtonModal
+                    buttonText="+"
                     modalTitle=""
                     tooltipTitle="Agregar Producto"
                     size={16}
                     modalContent={<ViewForm usarForm="Product" formData={null} isUpdate={false} />}
-                    iconType="plus"
-                    cssColor='blue'
-                  />
+                  /> */}
                 </div>
               </td>
               <td>
@@ -226,7 +228,7 @@ const PreOrders = () => {
                   className={TableSelectsClasses}
                   isDisabled={disabledRows[index]}
                   options={(rowColorOptions[index] || []).map(color => ({
-                    value: color.id,
+                    value: color.id || 0,
                     label: `${color.colorname} - ${color.codE_COLOR}`
                   }))}
                   value={{
@@ -245,7 +247,7 @@ const PreOrders = () => {
                     className={TableSelectsClasses}
                     isDisabled={disabledRows[index]}
                     options={(rowSizeOptions[index] || []).map(size => ({
-                      value: size.id,
+                      value: size.id || 0,
                       label: size.size + " - " + size.category
                     }))}
                     value={{
@@ -257,22 +259,20 @@ const PreOrders = () => {
                     isSearchable
 
                   />
-
-                  <ButtonModal
-                    buttonText=""
+                  {/* <ButtonModal
+                    buttonText="+"
                     modalTitle=""
                     tooltipTitle="Agregar Size"
                     size={16}
                     modalContent={<ViewForm usarForm="Size" formData={null} isUpdate={false} />}
-                    iconType="plus"
-                    cssColor='blue'
-                  />
+                  /> */}
                 </div>
               </td>
               <td className='w-14'>
                 <InputNumber
                   min={0}
                   step={0}
+                  max={10000}
                   value={row.quantity}
                   onChange={(value) => handleInputChange({ target: { value: value ?? 0 } }, index, 'quantity')}
                   disabled={disabledRows[index]}
@@ -295,7 +295,7 @@ const PreOrders = () => {
                   step="0.001"
                   min="0"
                   max="9999999.99"
-                  value={(row.quantity * row.customPrice).toFixed(2)}
+                  value={(row.quantity * (row.customPrice ? row.customPrice : 0 )).toFixed(2)}
                   disabled
                   className="w-full px-2 py-1 rounded-md border border-gray-300 bg-gray-100 focus:outline-none"
                 />

@@ -1,15 +1,19 @@
-// import React from 'react'
+// import React from 'react';
+import BackButton from "@/components/Generics/BackButton";
 import { View } from "../ViewS/TypeProd";
 
 const TypeProd = () => {
   return (
     <div>
-    <div>
-        TypeProd
+      <div className="flex items-center space-x-4 mb-4">
+        <BackButton />
+        <h2 className="text-2xl font-semibold text-gray-800">
+          Tipo de Producto
+        </h2>
+      </div>
+      <View />
     </div>
-    <View/>
-</div>
-  )
+  );
 }
 
-export default TypeProd
+export default TypeProd;

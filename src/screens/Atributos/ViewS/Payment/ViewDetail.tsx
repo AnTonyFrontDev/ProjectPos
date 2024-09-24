@@ -14,7 +14,7 @@ const PaymentDetail = () => {
 
   return (
     <div>
-      <Detail Id={numericPaymentId as number} />
+      <Detail id={numericPaymentId as number} />
     </div>
   );
 };

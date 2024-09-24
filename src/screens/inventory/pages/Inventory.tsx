@@ -3,11 +3,11 @@ import BreadcrumbData from "@/components/ui/Breadcrumb"
 import ApiTable from '@/components/Generics/Tabla/apiTable'
 import SearchFilter from '@/shared/SearchFilter';
 import { useState } from 'react'
-import { GetInventoryPaginated } from "@/shared/Api/InventoryApi";
+import { GetInventoryPaginated } from "@/shared/Api/InventoryApp";
 import { inventoryTable } from "@/components/Generics/Tabla/tData";
 import { useNavigate } from "react-router-dom";
 import GenericPagination from "../../../components/PaginationComponents/GenericPagination";
-
+import BackButton from "@/components/Generics/BackButton";
 
 const Inventory = () => {
   const routes = [
@@ -43,6 +43,12 @@ const Inventory = () => {
 
   return (
     <div>
+      <div className="flex items-center space-x-4 mb-4">
+        <BackButton />
+        <h2 className="text-2xl font-semibold text-gray-800">
+          Inventario
+        </h2>
+      </div>
       <BreadcrumbData routes={routes} />
       <div className="col-span-2 bg-gray-50 shadow-lg my-14 p-4 rounded-md flex justify-between">
         <SearchFilter

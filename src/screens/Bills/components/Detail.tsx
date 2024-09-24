@@ -1,18 +1,23 @@
 import { useEffect, useState } from 'react';
 import { Table } from 'antd';
-import { getSaleById } from '@/shared/Api/Sale/SaleApi';
-import { ISaleData } from '@/shared/interfaces/Sale/ISaleDetail';
-import { DetalleProps as BillDetailProps } from '@/shared/interfaces/I_inventario';
+import { getSaleById } from '@/shared/Api/SaleApi';
+import { ISale, ISaleData } from '@/shared/interfaces/ISale';
+// import { DetalleProps as BillDetailProps } from '@/shared/interfaces/I_inventario';
 import Print from './BillPrint';
 import { PDFDownloadLink } from '@react-pdf/renderer';
+import BackButton from '@/components/Generics/BackButton';
 const { Column } = Table;
 
-const BillDetail = ({ Id: saleId }: BillDetailProps) => {
+const BillDetail = ({ id: saleId }: ISale) => {
   const [saleData, setSaleData] = useState<ISaleData | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchSaleData = async () => {
+      if (!saleId) {
+        setLoading(false);
+        return;
+      }
       try {
         const data = await getSaleById(saleId);
         setSaleData(data);
@@ -41,15 +46,20 @@ const BillDetail = ({ Id: saleId }: BillDetailProps) => {
 
   return (
     <>
+      <div className="flex items-center space-x-4 mb-4">
+        <BackButton />
+        <h2 className="text-2xl font-bold text-gray-800">
+          Factura Numero: {saleId}
+        </h2>
+      </div>
       <div className="container mx-auto p-4">
-        <h1 className="text-2xl mb-4">Factura</h1>
         <div className="grid grid-cols-2 gap-2">
           {/* Columna de Información del Cliente */}
           <div className="bg-white shadow-md rounded-lg p-6 mr-3 mb-6">
             <h2 className="text-xl font-bold mb-4">Información del Cliente</h2>
-            <p><strong>Nombre:</strong> {client.f_name} {client.f_surname} {client.l_surname}</p>
-            <p><strong>RNC:</strong> {client.rnc}</p>
-            <p><strong>DNI:</strong> {client.dni}</p>
+            <p><strong>Nombre:</strong> {client?.f_name} {client?.f_surname} {client?.l_surname}</p>
+            <p><strong>RNC:</strong> {client?.rnc}</p>
+            <p><strong>DNI:</strong> {client?.dni}</p>
           </div>
 
           {/* Columna de Información de la Factura */}

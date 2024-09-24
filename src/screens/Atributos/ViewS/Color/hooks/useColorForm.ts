@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { ColorPostDto, IColorPost } from '@/shared/interfaces/Color/IColorPost';
-import { SaveColor } from '@/shared/Api/Color/ColorApi';
+import { ColorPostDto, IColor } from '@/shared/interfaces/IColor';
+import { SaveColor } from '@/shared/Api/ColorApi';
 import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';
 // import { useNavigate } from 'react-router-dom';
 
 export const useColorForm = () => {
   // const navigate = useNavigate();
-  const [formData, setFormData] = useState<IColorPost>(new ColorPostDto());
+  const [formData, setFormData] = useState<IColor>(new ColorPostDto());
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { usePaymentForm } from "../hooks/usePaymentForm";
 import { FormProps } from '@/components/Generics/Interface/IForms';
-import { IPaymentPost, PaymentDto } from '@/shared/interfaces/payment/IPaymentPost';
+import { IPaymentPostPut, PaymentDto } from '@/shared/interfaces/IPayment';
 import Select from 'react-select';
 import { TableSelectsClasses } from '@/shared/Common/stylesConst/cssComponent';
 
@@ -27,15 +27,6 @@ const PaymentForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate 
     const [hasNoteCredit, setHasNoteCredit] = useState<boolean>(false);
     const [selectedClient, setSelectedClient] = useState<any>(null); // Store the selected client information
 
-    // const creditNotes = preOrderPending.map(data => {
-    //     return {
-    //         id: data.client.id,
-    //         fullName: `${data.client.f_name} ${data.client.l_name} ${data.client.f_surname} ${data.client.l_surname}`,
-    //         hasNoteCredit: data.client.hasNoteCredit,
-    //         amountNoteCredit: data.client.amountNoteCredit
-    //     };
-    // });
-
     useEffect(() => {
         if (isUpdate && initialFormData) {
             handleSetInitialFormData(initialFormData);
@@ -46,7 +37,7 @@ const PaymentForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate 
         loadTypePaymentOptions();
     }, [isUpdate, initialFormData]);
 
-    const handleSetInitialFormData = (initialData: IPaymentPost) => {
+    const handleSetInitialFormData = (initialData: IPaymentPostPut) => {
         const initialFormData = new PaymentDto();
         Object.assign(initialFormData, initialData);
         setFormData(initialFormData);
@@ -135,9 +126,6 @@ const PaymentForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate 
             {selectedPaymentType?.toLowerCase() !== 'efectivo' && (
                 <>
                     <div className="mb-4">
-                        {/* <label className="block text-sm font-medium text-gray-600">
-                            Cuenta de Pago:
-                        </label> */}
                         <input
                             type="text"
                             name="accountPayment"

@@ -1,15 +1,20 @@
-import { IPreOrderGet } from '../../../shared/interfaces/Preorder/IPreOrderGet';
-import { ICheckOrder } from '../../../shared/interfaces/order/IOrderPost';
+import { IPreOrderGet } from '@/shared/interfaces/IPreOrder';
+import { ICheckOrder } from '@/shared/interfaces/IOrder';
 
 
 
-const mapPreOrderToCheckOrder = (preOrder: IPreOrderGet): ICheckOrder => {
+const mapPreOrderToCheckOrder = (preOrder: IPreOrderGet): ICheckOrder | null => {
+  const preOrderProduct = preOrder.preOrderProducts?.[0];
+
+  if (!preOrderProduct) {
+    return null;
+  }
 
   return {
-    fkSize: preOrder.preOrderProducts[0].size.id,
-    fkProduct: preOrder.preOrderProducts[0].fK_PRODUCT,
-    fkColorPrimary: preOrder.preOrderProducts[0].coloR_PRIMARY,
-    fkColorSecondary: preOrder.preOrderProducts[0].coloR_SECONDARY,
+    fkSize: preOrderProduct.size?.id ?? 0, 
+    fkProduct: preOrderProduct.fK_PRODUCT,
+    fkColorPrimary: preOrderProduct.coloR_PRIMARY,
+    fkColorSecondary: preOrderProduct.coloR_SECONDARY,
   };
 };
 
