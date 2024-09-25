@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import { CategorySizeDto, ICategorySize, CategorySizeUpdateDto } from '@/shared/interfaces/ICategorySize';
-import { SaveCategorySize, UpdateCategorySize } from '@/shared/Api/CategorySizeApi';
+import { useEffect, useState } from 'react';
 import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';
+import { ICategorySize, CategorySizeDto, CategorySizeUpdateDto } from '@/shared/interfaces/ICategorySize';
+import { SaveCategorySize, UpdateCategorySize } from '@/shared/Api/CategorySizeApi';
 import showConfirm from '@/util/antd/confirm';
 import showGenericNotification from '@/util/antd/notification';
 
-
 export const useCategorySizeForm = () => {
   const [formData, setFormData] = useState<ICategorySize>(new CategorySizeDto());
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -17,67 +17,55 @@ export const useCategorySizeForm = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Confirmation before submission
     showConfirm({
-      title: "Confirmar Envio",
-      content: "¿Está seguro de que desea enviar este categoría de Talla?",
+      title: "Confirmar envío",
+      content: "¿Está seguro de que desea enviar los datos de la categoría de talla?",
       onOk: () => {
-        GenericRequest(formData, SaveCategorySize, "CategorySize data submitted successfully")
-          .then(() => {
-            showGenericNotification({
-              isSuccess: true,
-              title: "Success",
-              message: "La Categoria de Talla se ha guardado correctamente",
-            });
-            window.location.reload(); // You may want to replace this with a state update for better UX
+        GenericRequest(formData, SaveCategorySize, "Datos de categoría de talla enviados correctamente")
+          .then((response: any) => {
+            showGenericNotification({ isSuccess: true, title: 'Éxito', message: response.message });
+            setIsSuccess(true);
           })
           .catch((error) => {
-            showGenericNotification({
-              isSuccess: false,
-              title: "Submission Error",
-              message: "Failed to submit CategorySize data.",
-            });
+            const errorMessage = 'Hubo un error al crear la categoría de talla'; 
+            showGenericNotification({ isSuccess: false, title: 'Error', message: errorMessage });
             console.error("Error submitting CategorySize data:", error);
           });
-      },
-      onCancel: () => {
-        console.log("Submission cancelled");
       },
     });
   };
 
   const handleUpdate = (e: React.FormEvent) => {
     e.preventDefault();
+  
     const updateData: ICategorySize = new CategorySizeUpdateDto(formData);
-
-    // Confirmation before update
+  
     showConfirm({
-      title: "Confirm Update",
-      content: "Are you sure you want to update this category size?",
+      title: "Confirmar actualización",
+      content: "¿Está seguro de que desea actualizar los datos de la categoría de talla?",
       onOk: () => {
-        GenericRequest(updateData, UpdateCategorySize, "CategorySize data updated successfully")
-          .then(() => {
-            showGenericNotification({
-              isSuccess: true,
-              title: "Update Success",
-              message: "CategorySize has been updated successfully",
-            });
-            window.location.reload();
+        GenericRequest(updateData, UpdateCategorySize, "Datos de categoría de talla actualizados correctamente")
+          .then((response: any) => {
+            showGenericNotification({ isSuccess: true, title: 'Éxito', message: response.message });
+            setIsSuccess(true);
           })
           .catch((error) => {
-            showGenericNotification({
-              isSuccess: false,
-              title: "Update Error",
-              message: "Failed to update CategorySize data.",
-            });
+            const errorMessage = 'Hubo un error al actualizar la categoría de talla'; 
+            showGenericNotification({ isSuccess: false, title: 'Error', message: errorMessage });
             console.error("Error updating CategorySize data:", error);
           });
-      },
-      onCancel: () => {
-        console.log("Update cancelled");
-      },
+      }
     });
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+      setIsSuccess(false);
+    }
+  }, [isSuccess]);
 
   return { formData, setFormData, handleInputChange, handleSubmit, handleUpdate };
 };

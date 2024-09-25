@@ -6,7 +6,7 @@ import { IOrderProduct, IOrderPost } from '@/shared/interfaces/IOrder';
 import { FormInputsClasses } from '@/shared/Common/stylesConst/cssComponent';
 import BackButton from '@/components/Generics/BackButton';
 
-const Order: React.FC<{ preOrderMap: any[], preOrderInProgress: any[]; client: any, preId: number }> = ({ preOrderMap, preOrderInProgress, client, preId }) => {
+const Order: React.FC<{ preOrderMap: any[], preOrderInProgress: any[]; client: any, preId: number }> = ({ preOrderMap, client, preId }) => {
   const [products, setProducts] = useState<IOrderProduct[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [selectedQuantity, setSelectedQuantity] = useState<number>(0);
@@ -19,27 +19,23 @@ const Order: React.FC<{ preOrderMap: any[], preOrderInProgress: any[]; client: a
 
   const handleProductChange = (selectedOption: any) => {
     setSelectedProduct(selectedOption);
-
-    // Buscar el elemento seleccionado en preOrderMap
+    // Buscar el elemento seleccionado en preOrderMap usando invColor
     const selectedItem = preOrderMap.flatMap((item: any) => item.invColors)
       .find((invColor: any) => invColor.inventoryColorId === selectedOption.value);
-    console.log('selectedItem', selectedItem);
-
-    // Buscar el progreso de la pre-orden correspondiente
-    const quantityProgress = preOrderInProgress.find((item: any) => {
-      return item.productId === selectedItem.product.id &&
-        item.sizeId === selectedItem.size.id &&
-        item.colorPrimaryId === selectedItem.colorPrimary.id &&
-        item.colorSecondary === selectedItem.colorSecondary.id;
-    });
-    console.log('quantityProgress', quantityProgress);
-
-    // Determinar la cantidad máxima
-    const quantityPerItem = selectedItem && quantityProgress ? Math.min(selectedItem.quantityPreOrder, quantityProgress.quantity) : 0;
-    setMaxQuantity(quantityPerItem);
-    setSelectedQuantity(quantityPerItem);
+  
+    // Verificar si se encontró el elemento
+    if (selectedItem) {
+      // Determinar la cantidad máxima (mínimo entre la cantidad en preorden y la cantidad en inventario)
+      const quantityPerItem = Math.min(selectedItem.quantityPreOrder, selectedItem.quantity);
+      // Actualizar la cantidad máxima permitida
+      setMaxQuantity(quantityPerItem);
+      setSelectedQuantity(quantityPerItem);
+    } else {
+      // Si no se encuentra el elemento, resetear la cantidad seleccionada y la máxima
+      setMaxQuantity(0);
+      setSelectedQuantity(0);
+    }
   };
-
 
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

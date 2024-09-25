@@ -12,6 +12,9 @@ import { IColor } from '@/shared/interfaces/IColor';
 import BackButton from '@/components/Generics/BackButton';
 import useSupplierOptions from '../hooks/useSupplierOptions';
 import { AppIcon } from '@/components/ui/AppIcon';
+import showGenericNotification from '@/util/antd/notification';
+import showAlert from '@/util/antd/alert';
+import CustomActionAlert from '@/util/antd/actionAlert';
 
 const AddInventory = () => {
     const [formData, setFormData] = useState<IBuyInventoryGet>(new BuyPostDto());
@@ -27,6 +30,8 @@ const AddInventory = () => {
 
     const { sizeOptions } = useSizeOptions(selectedProductId ?? 0);
     const { colorOptions } = useColorOptions(selectedProductId ?? 0);
+
+    const [showBadge, setShowBadge] = useState(false);
 
     useEffect(() => {
         if (selectedProductId !== null) {
@@ -69,9 +74,27 @@ const AddInventory = () => {
         setDisabledRows([...disabledRows, true]);
     };
 
+    const handleRemoveRow = (rowIndex: number) => {
+        const updatedTableData = [...tableData];
+        updatedTableData.splice(rowIndex, 1); 
+
+        const updatedDisabledRows = [...disabledRows];
+        updatedDisabledRows.splice(rowIndex, 1); 
+
+        const updatedRowSizeOptions = { ...rowSizeOptions };
+        const updatedRowColorOptions = { ...rowColorOptions };
+        delete updatedRowSizeOptions[rowIndex]; 
+        delete updatedRowColorOptions[rowIndex]; 
+
+        setTableData(updatedTableData);
+        setDisabledRows(updatedDisabledRows);
+        setRowSizeOptions(updatedRowSizeOptions);
+        setRowColorOptions(updatedRowColorOptions);
+    };
+
     const handleSave = async () => {
         if (!formData.company || !formData.rnc || !formData.ncf || !formData.totaL_SALE || !tableData.length) {
-            alert('Por favor completa todos los campos.');
+            showAlert({ title: 'Error', content: 'Por favor completa todos los campos.' });
             return;
         }
 
@@ -80,29 +103,18 @@ const AddInventory = () => {
                 ...formData,
                 inventoryDetailDtoAdd: tableData,
             };
-            console.log(formDataWithDetails);
             await AddBuy(formDataWithDetails);
             // Limpiar el formulario después de guardar
             setFormData(new BuyPostDto);
             setTableData([]);
             setDisabledRows([]);
-            alert('Compra guardada exitosamente');
+            showGenericNotification({ isSuccess: true, title: 'Éxito', message: 'Compra guardada exitosamente' });
+            setShowBadge(true);
         } catch (error) {
             console.error('Error al guardar la compra:', error);
             alert('Error al guardar la compra. Por favor, inténtalo de nuevo.');
         }
-        handleTest();
     };
-
-    const handleTest = () => {
-        // Añadir los detalles del inventario al formData antes de mostrarlo en la consola
-        const formDataWithDetails = {
-            ...formData,
-            inventoryDetailDtoAdd: tableData,
-        };
-        console.log("Prueba", formDataWithDetails);
-    };
-
 
     const handleSelectChange = (value: number, rowIndex: number, fieldName: keyof IInventoryDetail) => {
         const updatedTableData = [...tableData];
@@ -133,7 +145,7 @@ const AddInventory = () => {
         } else if (typeof value === 'string') {
             updatedTableData[rowIndex][fieldName] = parseFloat(value);
         } else {
-            updatedTableData[rowIndex][fieldName] = 0; // Default value or handle null appropriately
+            updatedTableData[rowIndex][fieldName] = 0;
         }
         setTableData(updatedTableData);
     };
@@ -148,6 +160,13 @@ const AddInventory = () => {
 
     return (
         <div className="container mx-auto pb-56">
+            {showBadge && (
+                <CustomActionAlert
+                    message="Deseas Pagar?"
+                    description="Para pagar la compra seleccionada, presiona el botón de Acceptar."
+                    url="/atributos/ExpensesBuy"
+                />
+            )}
             <div className="flex items-center space-x-4 mb-4">
                 <BackButton />
                 <h2 className="text-2xl font-bold text-gray-800">
@@ -210,7 +229,7 @@ const AddInventory = () => {
                                 value={formData.rnc}
                                 onChange={handleChange}
                                 className={FormInputsClasses}
-                                />
+                            />
                         </>
                     ) : (
                         <>
@@ -221,8 +240,8 @@ const AddInventory = () => {
                                 value={formData.rnc || ""}
                                 onChange={handleChange}
                                 className={FormInputsClasses}
-                                disabled={true} 
-                                readOnly 
+                                disabled={true}
+                                readOnly
                             />
                         </>
                     )}
@@ -257,19 +276,30 @@ const AddInventory = () => {
             <table className="min-w-full divide-y divide-gray-200 mt-3">
                 <thead className="bg-gray-50">
                     <tr>
+                        {/* <th className={TableHeadClasses}></th> */}
                         <th className={TableHeadClasses}>#</th>
                         <th className={TableHeadClasses}>Producto</th>
                         <th className={TableHeadClasses}>Color</th>
                         <th className={TableHeadClasses}>Size</th>
                         <th className={TableHeadClasses}>Unidad</th>
                         <th className={TableHeadClasses}>Precio</th>
-                        {/* <th className={TableHeadClasses}>Color 2</th> */}
                     </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                     {tableData.map((row, index) => (
                         <tr key={index}>
-                            <td className="w-14 px-6 py-4">{index + 1}</td>
+                            <td className="w-8 px-4">
+                                <div className='flex'>
+                                    <button
+                                        onClick={() => handleRemoveRow(index)} // Botón para eliminar la fila
+                                        className="bg-red-500 hover:bg-red-700 text-white font-bold px-2 rounded focus:outline-none focus:shadow-outline"
+                                    >
+                                        -
+                                    </button>
+                                    <span className='ml-2'> {index + 1}</span>
+
+                                </div>
+                            </td>
                             <td>
                                 <div className="flex items-center">
                                     <Select
@@ -284,6 +314,7 @@ const AddInventory = () => {
                                         }}
                                         onChange={(selectedOption) => handleSelectChange(selectedOption?.value || 0, index, 'fK_PRODUCT')}
                                         isSearchable
+                                        required
                                     />
                                 </div>
                             </td>
@@ -302,6 +333,7 @@ const AddInventory = () => {
                                     }}
                                     onChange={(selectedOption) => handleSelectChange(selectedOption?.value || 0, index, 'coloR_PRIMARY')}
                                     isSearchable
+                                    required
                                 />
                             </td>
                             <td className='relative'>
@@ -320,6 +352,7 @@ const AddInventory = () => {
                                         }}
                                         onChange={(selectedOption) => handleSelectChange(selectedOption?.value || 0, index, 'fK_SIZE')}
                                         isSearchable
+                                        required
                                     />
                                 </div>
                             </td>
@@ -332,6 +365,7 @@ const AddInventory = () => {
                                     onChange={(value) => handleInputChange({ target: { value: value ?? 0 } }, index, 'quantity')}
                                     disabled={disabledRows[index]}
                                     className="text-lg w-full py-0.5 rounded-md border border-gray-300 focus:outline-none focus:border-indigo-500"
+                                    required
                                 />
                             </td>
                             <td className='w-14'>
@@ -345,7 +379,6 @@ const AddInventory = () => {
                                     className="text-lg w-full py-0.5 rounded-md border border-gray-300 focus:outline-none focus:border-indigo-500"
                                 />
                             </td>
-
                         </tr>
                     ))}
                     <tr>

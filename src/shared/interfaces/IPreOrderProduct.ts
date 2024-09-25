@@ -1,5 +1,5 @@
 import { DATE } from "../Common/CurrentDate";
-import { IBaseModel } from "./IBaseModel";
+import { IBaseModel, IBaseModelID } from "./IBaseModel";
 import { IColor } from "./IColor";
 import { IProduct } from "./IProduct";
 import { ISize } from "./ISize";
@@ -25,6 +25,16 @@ export interface IPreOrderProduct extends IBaseModel {
 }
 
 export interface IPreOrderProductSave extends IBaseModel {
+    fkProduct: number
+    fkSize: number
+    quantity: number
+    fkColorPrimary: number
+    fkColorSecondary?: number
+    customPrice?: number
+    fkPreOrder?: number
+    user: number
+}
+export interface IPreOrderProductSaveNumber extends IBaseModelID {
     fkProduct: number
     fkSize: number
     quantity: number

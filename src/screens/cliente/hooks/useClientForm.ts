@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ClientPhoneDto } from '@/shared/interfaces/IClientPhone';
 import { ClientUpdateDto, ClientPostDto, IClient } from '@/shared/interfaces/IClient';
 import { saveClient, UpdateClient } from '@/shared/Api/CustomersApi';
@@ -8,6 +8,7 @@ import showConfirm from '@/util/antd/confirm';
 
 export const useClientForm = () => {
   const [formData, setFormData] = useState<IClient>(new ClientPostDto());
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const addPhone = () => {
     setFormData((prevClientPost) => ({
@@ -41,24 +42,15 @@ export const useClientForm = () => {
       title: 'Confirmación',
       content: '¿Estás seguro de que deseas guardar estos datos del cliente?',
       onOk: () => {
-        console.log('Client Data:', formData);
-        
         GenericRequest(formData, saveClient, "Client data submitted successfully")
-          .then(() => {
-            showGenericNotification({
-              isSuccess: true,
-              title: "Éxito",
-              message: "Datos del cliente guardados correctamente",
-            });
-            window.location.reload(); // Recargar la página después del éxito
+          .then((response: any) => {
+            showGenericNotification({ isSuccess: true, title: 'Éxito', message: response.message });
+            setIsSuccess(true);
           })
           .catch((error) => {
-            console.error("Error submitting Client data:", error);
-            showGenericNotification({
-              isSuccess: false,
-              title: "Error",
-              message: "Hubo un error al guardar los datos del cliente",
-            });
+            const errorMessage = 'Hubo un error al crear el cliente';
+            showGenericNotification({ isSuccess: false, title: 'Error', message: errorMessage });
+            console.error("Error submitting CategorySize data:", error);
           });
       },
     });
@@ -66,34 +58,34 @@ export const useClientForm = () => {
 
   const handleUpdate = (e: React.FormEvent) => {
     e.preventDefault();
+    const updateData: IClient = new ClientUpdateDto(formData);
 
     showConfirm({
-      title: 'Confirmación',
+      title: 'Confirmar Actualización',
       content: '¿Estás seguro de que deseas actualizar estos datos del cliente?',
       onOk: () => {
-        const updateData: IClient = new ClientUpdateDto(formData);
-        console.log('Client Data:', updateData);
-        
         GenericRequest(updateData, UpdateClient, "Client data updated successfully")
-          .then(() => {
-            showGenericNotification({
-              isSuccess: true,
-              title: "Éxito",
-              message: "Datos del cliente actualizados correctamente",
-            });
-            window.location.reload(); // Recargar la página después del éxito
+          .then((response: any) => {
+            showGenericNotification({ isSuccess: true, title: 'Éxito', message: response.message });
+            setIsSuccess(true);
           })
           .catch((error) => {
-            console.error("Error submitting Client data:", error);
-            showGenericNotification({
-              isSuccess: false,
-              title: "Error",
-              message: "Hubo un error al actualizar los datos del cliente",
-            });
+            const errorMessage = 'Hubo un error al actualizar el cliente';
+            showGenericNotification({ isSuccess: false, title: 'Error', message: errorMessage });
+            console.error("Error updating Client data:", error);
           });
       },
     });
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+      setIsSuccess(false);
+    }
+  }, [isSuccess]);
 
   return { formData, setFormData, handleInputChange, addPhone, handlePhoneInputChange, handleSubmit, handleUpdate };
 };

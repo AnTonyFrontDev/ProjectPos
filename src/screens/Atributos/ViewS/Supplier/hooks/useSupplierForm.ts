@@ -23,13 +23,13 @@ export const useSupplierForm = () => {
       onOk: () => {
         GenericRequest(formData, addSupplier, "Datos de suplidor enviados correctamente")
           .then((response: any) => {
-            const { message } = response.message; // Extraer el message de la respuesta
-            showGenericNotification({ isSuccess: true, title: 'Éxito', message: message});
+            showGenericNotification({ isSuccess: true, title: 'Éxito', message: response.message });
             setIsSuccess(true);
           })
           .catch((error) => {
-            console.error("Error submitting supplier data:", error);
-            showGenericNotification({ isSuccess: false, title: 'Error', message: 'Hubo un error al agregar el suplidor' });
+            const errorMessage = 'Hubo un error al crear el suplidor'; 
+            showGenericNotification({ isSuccess: false, title: 'Error', message: errorMessage });
+            console.error("Error updating supplier data:", error);
           });
       },
     });
@@ -46,14 +46,13 @@ export const useSupplierForm = () => {
       onOk: () => {
         GenericRequest(updateData, UpdateSupplier, "Datos de suplidor actualizados correctamente")
           .then((response: any) => {
-            const message = response.message;
-            showGenericNotification({ isSuccess: true, title: 'Éxito', message });
+            showGenericNotification({ isSuccess: true, title: 'Éxito', message: response.message });
             setIsSuccess(true);
           })
           .catch((error) => {
-            console.error("Error updating supplier data:", error);
-            const errorMessage = error?.message || 'Hubo un error al actualizar el suplidor'; // Safely access the error message
+            const errorMessage = 'Hubo un error al actualizar el suplidor'; 
             showGenericNotification({ isSuccess: false, title: 'Error', message: errorMessage });
+            console.error("Error updating supplier data:", error);
           });
       }
     });
@@ -61,7 +60,9 @@ export const useSupplierForm = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
       setIsSuccess(false);
     }
   }, [isSuccess]);

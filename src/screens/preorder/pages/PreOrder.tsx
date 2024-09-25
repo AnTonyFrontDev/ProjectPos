@@ -12,7 +12,7 @@ import { ISize } from '@/shared/interfaces/ISize';
 import { IColor } from '@/shared/interfaces/IColor';
 import showGenericNotification from '@/util/antd/notification';
 import showAlert from '@/util/antd/alert';
-import { IPreOrderProductSave, ProductsDtoAdd } from '@/shared/interfaces/IPreOrderProduct';
+import { IPreOrderProductSave, IPreOrderProductSaveNumber, ProductsDtoAdd } from '@/shared/interfaces/IPreOrderProduct';
 import BackButton from '@/components/Generics/BackButton';
 
 
@@ -93,7 +93,7 @@ const PreOrders = () => {
 
   };
 
-  const handleSelectChange = (value: number, rowIndex: number, fieldName: keyof IPreOrderProductSave) => {
+  const handleSelectChange = (value: number, rowIndex: number, fieldName: keyof IPreOrderProductSaveNumber) => {
     const updatedTableData = [...tableData];
     updatedTableData[rowIndex][fieldName] = value;
     setTableData(updatedTableData);
@@ -112,7 +112,7 @@ const PreOrders = () => {
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement> | { target: { value: number | null } },
     rowIndex: number,
-    fieldName: keyof IPreOrderProductSave
+    fieldName: keyof IPreOrderProductSaveNumber
   ) => {
     const value = e.target.value;
     const updatedTableData = [...tableData];

@@ -15,6 +15,7 @@ export const usePaymentForm = () => {
   const [bankAccountOptions, setBankAccountOptions] = useState<IOptionSelect[]>([]);
   const [preOrderOptions, setPreOrderOptions] = useState<IOptionSelect[]>([]);
   const [preOrderPending, setPreOrderPending] = useState<any[]>([]);
+  
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -80,10 +81,12 @@ export const usePaymentForm = () => {
   const loadPreOrderOptions = async () => {
     try {
       const preOrder = await getPreOrdersPending(); // Llama a la función para obtener los tipos de pago
+      console.log('preOrder:', preOrder);
       const options: IOptionSelect[] = preOrder.map((data : any) => ({
         value: data.id,
         label: `${data.id} - ${data.client.f_name}${data.client.l_name} ${data.client.f_surname} ${data.client.l_surname} - ${data.amountBase}`
       }));
+      // setMaxAmount(preOrder[0].amountBase);
       setPreOrderPending(preOrder);
       setPreOrderOptions(options);
     } catch (error) {
@@ -92,7 +95,7 @@ export const usePaymentForm = () => {
   };
   
 
-  return { formData, 
+  return { formData,
     setFormData, 
     handleInputChange, 
     handleSubmit,

@@ -22,13 +22,13 @@ export const useTypeProdForm = () => {
       onOk: () => {
         GenericRequest(formData, SaveTypeProd, "Datos del tipo de producto enviados correctamente")
           .then((response: any) => {
-            const message = response.message; 
+            const message = response.message;
             showGenericNotification({
               isSuccess: true,
               title: 'Éxito',
-              message: message, 
+              message: message,
             });
-            setIsSuccess(true); 
+            setIsSuccess(true);
           })
           .catch((error) => {
             console.error("Error enviando los datos del tipo de producto:", error);
@@ -53,22 +53,22 @@ export const useTypeProdForm = () => {
       onOk: () => {
         GenericRequest(updateData, UpdateTypeProd, "Datos del tipo de producto actualizados correctamente")
           .then((response: any) => {
-            const message = response.message; 
+            const message = response.message;
             showGenericNotification({
               isSuccess: true,
               title: 'Éxito',
-              message: message, 
+              message: message,
             });
-            setIsSuccess(true); 
+            setIsSuccess(true);
           })
           .catch((error) => {
-            console.error("Error actualizando los datos del tipo de producto:", error);
-            const errorMessage = error?.message || 'Falló al actualizar el tipo de producto'; // Mensaje de error seguro
+            const errorMessage = 'Falló al actualizar el tipo de producto'; // Mensaje de error seguro
             showGenericNotification({
               isSuccess: false,
               title: 'Error',
               message: errorMessage,
             });
+            console.error("Error actualizando los datos del tipo de producto:", error);
           });
       },
     });
@@ -76,7 +76,9 @@ export const useTypeProdForm = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
       setIsSuccess(false);
     }
   }, [isSuccess]);

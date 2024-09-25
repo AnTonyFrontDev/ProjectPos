@@ -7,6 +7,7 @@ export const GenericRequest = async <T, R>(
     try {
       const response = await methodGeneric(formData);
       console.log('GenericRequest', messageSuccess);
+      console.log('GenericRequest', response);
       return response;
     } catch (error) {
       console.error("Error:", error);

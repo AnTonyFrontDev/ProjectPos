@@ -1,6 +1,7 @@
 import { ICategorySize } from "@/shared/interfaces/ICategorySize";
 import axios from "axios";
 import { URL } from "../Common/url";
+import { IResponse } from "../interfaces/IResponse";
 
 export const getCategorySizes = async () => {
   try {
@@ -33,7 +34,7 @@ export const getCategorySizeById = async (id : number) => {
 export const SaveCategorySize = async (formData: ICategorySize) => {
   try {
     const formattedData = formData;
-    const response = await axios.post(
+    const response : IResponse<ICategorySize> = await axios.post(
       `${URL}/CategorySize/AddCategorySize`,
       formattedData,
       {

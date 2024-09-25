@@ -1,12 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SaveSize, UpdateSize } from '@/shared/Api/SizeApi';
 import { GenericRequest } from '@/shared/RequestsApi/GenericRequest';
 import { SizePostDto, ISize, SizeUpdateDto } from '@/shared/interfaces/ISize';
 import showGenericNotification from '@/util/antd/notification';
-import { Modal } from 'antd';
+import showConfirm from '@/util/antd/confirm';
 
 export const useSizeForm = () => {
   const [formData, setFormData] = useState<ISize>(new SizePostDto());
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -16,26 +17,20 @@ export const useSizeForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    Modal.confirm({
-      title: 'Confirmación',
-      content: '¿Estás seguro de que deseas guardar este tamaño?',
-      onOk: async () => {
-        try {
-          await GenericRequest(formData, SaveSize, "Datos de tamaño enviados correctamente");
-          showGenericNotification({
-            isSuccess: true,
-            title: "Éxito",
-            message: "Tamaño guardado correctamente",
+    showConfirm({
+      title: "Confirmar envío",
+      content: "¿Está seguro de que desea enviar los datos de la categoría de talla?",
+      onOk: () => {
+        GenericRequest(formData, SaveSize, "Datos de categoría de talla enviados correctamente")
+          .then((response: any) => {
+            showGenericNotification({ isSuccess: true, title: 'Éxito', message: response.message });
+            setIsSuccess(true);
+          })
+          .catch((error) => {
+            const errorMessage = 'Hubo un error al crear la talla'; 
+            showGenericNotification({ isSuccess: false, title: 'Error', message: errorMessage });
+            console.error("Error submitting CategorySize data:", error);
           });
-          window.location.reload();  // Recargar la página después del éxito
-        } catch (error) {
-          console.error("Error enviando datos de tamaño:", error);
-          showGenericNotification({
-            isSuccess: false,
-            title: "Error",
-            message: "Hubo un error al guardar el tamaño",
-          });
-        }
       },
     });
   };
@@ -49,30 +44,34 @@ export const useSizeForm = () => {
   const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    Modal.confirm({
-      title: 'Confirmación',
-      content: '¿Estás seguro de que deseas actualizar este tamaño?',
-      onOk: async () => {
-        try {
-          const updateData: ISize = new SizeUpdateDto(formData as ISize);
-          await GenericRequest(updateData, UpdateSize, "Datos de tamaño actualizados correctamente");
-          showGenericNotification({
-            isSuccess: true,
-            title: "Éxito",
-            message: "Tamaño actualizado correctamente",
+    const updateData: ISize = new SizeUpdateDto(formData);
+
+    showConfirm({
+      title: "Confirmar actualización",
+      content: "¿Está seguro de que desea actualizar los datos de la categoría de talla?",
+      onOk: () => {
+        GenericRequest(updateData, UpdateSize, "Datos de categoría de talla actualizados correctamente")
+          .then((response: any) => {
+            showGenericNotification({ isSuccess: true, title: 'Éxito', message: response.message });
+            setIsSuccess(true);
+          })
+          .catch((error) => {
+            const errorMessage = 'Hubo un error al actualizar las tallas'; 
+            showGenericNotification({ isSuccess: false, title: 'Error', message: errorMessage });
+            console.error("Error updating CategorySize data:", error);
           });
-          window.location.reload();  // Recargar la página después del éxito
-        } catch (error) {
-          console.error("Error actualizando datos de tamaño:", error);
-          showGenericNotification({
-            isSuccess: false,
-            title: "Error",
-            message: "Hubo un error al actualizar el tamaño",
-          });
-        }
-      },
+      }
     });
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+      setIsSuccess(false);
+    }
+  }, [isSuccess]);
 
   return { formData, setFormData, handleInputChange, handleSubmit, handleUpdate, handleSelect };
 };

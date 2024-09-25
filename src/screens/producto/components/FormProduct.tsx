@@ -20,9 +20,8 @@ const ProductForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate 
     useEffect(() => {
         if (isUpdate && initialFormData) {
             handleSetInitialFormData(initialFormData);
-            console.log(initialFormData);
         }
-        loadTypeProdOptions();
+        loadTypeProdOptions(initialFormData?.fk_type, initialFormData?.type); // Pasa el type si no hay fk_type
     }, [isUpdate, initialFormData]);
 
     const handleSetInitialFormData = (initialData: IProduct) => {
@@ -38,8 +37,8 @@ const ProductForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate 
         } else {
             await handleSubmit(event);
         }
-        // window.location.reload();
     };
+    console.log('formdata',formData);
 
     return (
         <form onSubmit={onSubmitHandler} className="max-w-md mx-auto mt-8">
