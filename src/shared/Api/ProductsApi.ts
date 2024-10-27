@@ -121,7 +121,7 @@ export const getInventoryById = async (productId: number) => {
 
 export const getTypes = async () => {
     try {
-        const response = await axios.get('https://localhost:7065/api/TypeProd/GetTypes');
+        const response = await axios.get(`${URL}/TypeProd/GetTypes`);
         return response.data.data;
     } catch (error) {
         console.error('Error fetching types:', error);
@@ -136,7 +136,7 @@ export const addType = async (formData: FormDataType) => {
             typeProd: formData.typeProd,
         };
 
-        const response = await axios.post('https://localhost:7065/api/TypeProd/AddType', formattedData, {
+        const response = await axios.post(`${URL}/TypeProd/AddType`, formattedData, {
             headers: {
                 'Content-Type': 'application/json',
             },
