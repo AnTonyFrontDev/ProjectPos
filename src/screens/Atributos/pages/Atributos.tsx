@@ -36,7 +36,7 @@ const Atributos = () => {
             Menú de Opciones
           </h2>
         </div>
-        <div className="grid grid-cols-7 gap-y-10 gap-x-6">
+        <div className="grid grid-cols-4 gap-y-10 gap-x-6">
           {linkConfigs.map(({ to, text, color, bgColor, type }) => (
             <Link to={to} className={`${linkStyles} ${color} ${bgColor}`} key={to}>
               <AppIcon type={type as keyof typeof APP_ICONS} className="cursor-pointer mb-2" width={78} />

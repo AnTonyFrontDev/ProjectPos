@@ -22,8 +22,8 @@ const linkConfigs = [
     { to: "/atributos/Color", text: "Colores", color: "text-orange-700", bgColor: "bg-orange-100", type: 'color' },
     { to: "/atributos/BankAccount", text: "Cuentas de Banco", color: "text-orange-700", bgColor: "bg-orange-100", type: 'bankAccount' },
     { to: "/atributos/Bank", text: "Bancos", color: "text-orange-700", bgColor: "bg-orange-100", type: 'bank' },
-    { to: "/atributos/Payment", text: "Pagos", color: "text-orange-700", bgColor: "bg-orange-100", type: 'pay' },
-    { to: "/atributos/Expenses", text: "Gastos", color: "text-orange-700", bgColor: "bg-orange-100", type: 'bills' },
+    // { to: "/atributos/Payment", text: "Pagos", color: "text-orange-700", bgColor: "bg-orange-100", type: 'pay' },
+    // { to: "/atributos/Expenses", text: "Gastos", color: "text-orange-700", bgColor: "bg-orange-100", type: 'bills' },
     { to: "/atributos/CuentasPagar", text: "Cuentas por Pagar", color: "text-red-500", bgColor: "bg-red-100", type: 'for_pay' },
     { to: "/atributos/CuentasPorCobrar", text: "Cuentas por Cobrar", color: "text-green-700", bgColor: "bg-green-100", type: 'for_collect' }
 ];

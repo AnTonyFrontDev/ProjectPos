@@ -26,7 +26,7 @@ const CuentasPorPagar = () => {
                         Cuentas por Pagar
                     </h2>
                 </div>
-                <div className="grid grid-cols-4 py-10 gap-6">
+                <div className="grid grid-cols-3 py-10 gap-6">
                     {linkConfigsCuentasPorPagar.map(({ to, text, color, bgColor, type }) => (
                         <Link to={to} className={`${linkStyles} ${color} ${bgColor}`} key={to}>
                             <AppIcon type={type as keyof typeof APP_ICONS} className="cursor-pointer mb-2" width={98} />
