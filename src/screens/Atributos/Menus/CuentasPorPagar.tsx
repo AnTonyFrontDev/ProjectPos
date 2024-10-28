@@ -10,13 +10,13 @@ const boxStyles = "bg-white p-8 w-screen rounded-lg shadow-md";
 const linkStyles = "hover:underline rounded-md block shadow-md p-16 flex flex-col items-center justify-center";
 
 
-const linkConfigsInventario = [
+const linkConfigsCuentasPorPagar = [
     { to: "/atributos/CuentasPagar/detalle", text: "Detalle", color: "text-orange-500", bgColor: "bg-orange-100", type: 'Product' },
     { to: "/atributos/ExpensesBuy", text: "Compras", color: "text-amber-500", bgColor: "bg-amber-100", type: 'inventory2' },
     { to: "/atributos/Expenses", text: "Gastos", color: "text-amber-500", bgColor: "bg-amber-100", type: 'newbuy' },
 ];
 
-const Inventario = () => {
+const CuentasPorPagar = () => {
     return (
         <div className={containerStyles}>
             <div className={boxStyles}>
@@ -27,7 +27,7 @@ const Inventario = () => {
                     </h2>
                 </div>
                 <div className="grid grid-cols-4 py-10 gap-6">
-                    {linkConfigsInventario.map(({ to, text, color, bgColor, type }) => (
+                    {linkConfigsCuentasPorPagar.map(({ to, text, color, bgColor, type }) => (
                         <Link to={to} className={`${linkStyles} ${color} ${bgColor}`} key={to}>
                             <AppIcon type={type as keyof typeof APP_ICONS} className="cursor-pointer mb-2" width={98} />
                             <span className="text-lg font-bold text-center">{text}</span>
@@ -39,4 +39,4 @@ const Inventario = () => {
     );
 };
 
-export default Inventario;
+export default CuentasPorPagar;

@@ -144,8 +144,8 @@ const router: RouteObject[] = [
     path: '/atributos/CuentasPagar',
     element: (
         <Suspense fallback={<div>Loading...</div>}>
+          <CuentasPorPagar/>
           {/*<PayableAccounts />*/}
-          <CuentasPorCobrar/>
         </Suspense>
     ),
   },
@@ -162,7 +162,7 @@ const router: RouteObject[] = [
     path: '/atributos/CuentasPorCobrar',
     element: (
         <Suspense fallback={<div>Loading...</div>}>
-          <CuentasPorPagar/>
+          <CuentasPorCobrar/>
           {/*<AccountsReceivable />*/}
         </Suspense>
     ),
