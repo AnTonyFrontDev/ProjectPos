@@ -70,17 +70,6 @@ const ExpensesForm: React.FC<FormProps> = ({ formData: initialFormData, isUpdate
             </div>
 
             <div className="mb-2">
-                <label className="block text-sm font-medium text-gray-600">Voucher</label>
-                <input
-                    type="text"
-                    name="voucher"
-                    value={formData.voucher}
-                    onChange={handleInputChange}
-                    className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-                />
-            </div>
-
-            <div className="mb-2">
                 <label className="block text-sm font-medium text-gray-600">Número de documento</label>
                 <input
                     type="text"
