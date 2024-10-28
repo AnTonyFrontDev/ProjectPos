@@ -1,5 +1,7 @@
 import { lazy, Suspense } from 'react';
 import { RouteObject } from 'react-router-dom';
+import CuentasPorCobrar from "@/screens/Atributos/Menus/CuentasPorCobrar.tsx";
+import CuentasPorPagar from "@/screens/Atributos/Menus/CuentasPorPagar.tsx";
 const Atributos = lazy(() => import('./pages/Atributos'));
 const Bank = lazy(() => import('./pages/Bank'));
 const BankAccount = lazy(() => import('./pages/BankAccount'));
@@ -142,7 +144,17 @@ const router: RouteObject[] = [
     path: '/atributos/CuentasPagar',
     element: (
         <Suspense fallback={<div>Loading...</div>}>
+          {/*<PayableAccounts />*/}
+          <CuentasPorCobrar/>
+        </Suspense>
+    ),
+  },
+  {
+    path: '/atributos/CuentasPagar/detalle',
+    element: (
+        <Suspense fallback={<div>Loading...</div>}>
           <PayableAccounts />
+          {/*<CuentasPorCobrar/>*/}
         </Suspense>
     ),
   },
@@ -150,6 +162,16 @@ const router: RouteObject[] = [
     path: '/atributos/CuentasPorCobrar',
     element: (
         <Suspense fallback={<div>Loading...</div>}>
+          <CuentasPorPagar/>
+          {/*<AccountsReceivable />*/}
+        </Suspense>
+    ),
+  },
+  {
+    path: '/atributos/CuentasPorCobrar/detalle',
+    element: (
+        <Suspense fallback={<div>Loading...</div>}>
+          {/*<CuentasPorPagar/>*/}
           <AccountsReceivable />
         </Suspense>
     ),
