@@ -11,10 +11,9 @@ const linkStyles = "hover:underline rounded-md block shadow-md p-16 flex flex-co
 
 
 const linkConfigsInventario = [
-    { to: "//atributos/CuentasPorCobrar/detalle", text: "Detalle", color: "text-orange-500", bgColor: "bg-orange-100", type: 'Product' },
-    { to: "/Inventario/Listado", text: "Inventario", color: "text-amber-500", bgColor: "bg-amber-100", type: 'inventory2' },
-    { to: "/Inventario/NuevaCompra", text: "Nueva Compra", color: "text-amber-500", bgColor: "bg-amber-100", type: 'newbuy' },
-    { to: "/Inventario/Compras", text: "Compras", color: "text-orange-500", bgColor: "bg-orange-100", type: 'buy' },
+    { to: "/atributos/CuentasPorCobrar/detalle", text: "Detalle", color: "text-orange-500", bgColor: "bg-orange-100", type: 'Product' },
+    { to: "/atributos/Payment", text: "Pagos", color: "text-amber-500", bgColor: "bg-amber-100", type: 'inventory2' },
+
 ];
 
 const Inventario = () => {
