@@ -19,9 +19,9 @@ const linkConfigs = [
   { to: "/customers", text: "Clientes", color: "text-indigo-500", bgColor: "bg-indigo-100", type: 'user' },
   { to: "/atributos/Color", text: "Colores", color: "text-indigo-500", bgColor: "bg-indigo-100", type: 'color' },
   { to: "/atributos/Supplier", text: "Suplidores", color: "text-indigo-500", bgColor: "bg-indigo-100", type: 'orders' },
-  { to: "/atributos/Payment", text: "Pagos", color: "text-amber-500", bgColor: "bg-amber-100", type: 'pay' },
-  { to: "/atributos/Expenses", text: "Nueva Cuentas por Pagar", color: "text-amber-500", bgColor: "bg-amber-100", type: 'bills' },
-  { to: "/atributos/ExpensesBuy", text: "Pagar Compras", color: "text-amber-500", bgColor: "bg-amber-100", type: 'bills' },
+  // { to: "/atributos/Payment", text: "Pagos", color: "text-amber-500", bgColor: "bg-amber-100", type: 'pay' },
+  // { to: "/atributos/Expenses", text: "Nueva Cuentas por Pagar", color: "text-amber-500", bgColor: "bg-amber-100", type: 'bills' },
+  // { to: "/atributos/ExpensesBuy", text: "Pagar Compras", color: "text-amber-500", bgColor: "bg-amber-100", type: 'bills' },
   { to: "/atributos/NoteCredit", text: "Nota de credito", color: "text-amber-500", bgColor: "bg-amber-100", type: 'for_collect' },
   { to: "/atributos/CuentasPagar", text: "Cuentas por Pagar", color: "text-red-500", bgColor: "bg-red-100", type: 'for_pay' },
 ];
